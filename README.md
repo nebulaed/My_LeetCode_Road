@@ -54,4 +54,4 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 49   | [字母异位词分组](./Code/49.字母异位词分组.cpp)                 | Group Anagrams                                          |   59.3%    |    Medium    |
 | 50   | [Pow(x, n)](./Code/50.Pow(x,n).cpp)                             | Pow(x, n)                                               |   33.4%    |    Medium    |
 | 51   | [N皇后](./Code/51.N皇后.cpp)                                    | N-Queens                                                |   66.9%    |    Hard    |
-| 52   | [N皇后 II](./Code/52.N皇后II.cpp)                               | N-Queens II                                             |   76.2%    |    Hard    |
+| 52   | [N皇后 II](./Code/52.N皇后 II.cpp)                               | N-Queens II                                             |   76.2%    |    Hard    |
