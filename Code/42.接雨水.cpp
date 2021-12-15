@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<stack>
 using namespace std;
 
 // 官方解法1：动态规划，用动态规划的方法得到每个坐标两边的最大高度(包括本身)
