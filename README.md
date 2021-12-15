@@ -55,3 +55,33 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 50   | [Pow(x, n)](./Code/50.Pow(x,n).cpp)                             | Pow(x, n)                                               |   33.4%    |    Medium    |
 | 51   | [N皇后](./Code/51.N皇后.cpp)                                    | N-Queens                                                |   66.9%    |    Hard    |
 | 52   | [N皇后 II](./Code/52.N皇后II.cpp)                               | N-Queens II                                             |   76.2%    |    Hard    |
+| 53   | [最大子序和](./Code/53.最大子序和.cpp)                               | Maximum Subarray | 48.2% | Easy | 
+| 55   | [跳跃游戏](./Code/55.跳跃游戏.cpp)                               | Jump Game                                             |   37.1%    |    Medium    |
+| 56   | [合并区间](./Code/56.合并区间.cpp) | Merge Intervals | 39.3% | Medium |
+| 62   | [不同路径](./Code/62.不同路径.cpp) | Unique Paths | 57.9% | Medium |
+| 64   | [最小路径和](./Code/64.最小路径和.cpp) | Minimum Path Sum | 63.6% | Medium |
+| 70   | [爬楼梯](./Code/70.爬楼梯.cpp) | Climbing Stairs | 47.4% | Easy |
+| 72   | [编辑距离](./Code/72.编辑距离.cpp) | Edit Distance | 55.3% | Hard |
+| 75   | [颜色分类](./Code/75.颜色分类.cpp) | Sort Colors | 54.2% | Medium |
+| 76   | [最小覆盖子串](./Code/76.最小覆盖子串.cpp) | Minimum Window Substring | 34.8% | Hard |
+| 78   | [子集](./Code/78.子集.cpp) | Subsets | 75.7% | Medium |
+| 79   | [单词搜索](./Code/79.单词搜索.cpp) | Word Search | 39.6% | Medium | 
+| 84   | [柱状图中最大的矩形](./Code/84.柱状图中最大的矩形.cpp) | Largest Rectangle in Histogram | 38.0% | Hard |
+| 85   | [最大矩形](./Code/85.最大矩形.cpp) | Maximal Rectangle | 43.5% | Hard |
+| 94   | [二叉树的中序遍历](./Code/94.二叉树的中序遍历.cpp) | Binary Tree Inorder Traversal | 69.3% | Medium |
+| 96   | [不同的二叉搜索树](./Code/96.不同的二叉搜索树.cpp) | Unique Binary Search Trees | 64.1% | Medium |
+| 98   | [验证二叉搜索树](./Code/98.验证二叉搜索树.cpp) | Validate Binary Search Tree | 28.1% | Medium |
+| 101  | [对称二叉树](./Code/101.对称二叉树.cpp) | Symmetric Tree | 49.5% | Easy |
+| 102  | [二叉树的层次遍历](./Code/102.二叉树的层次遍历.cpp) | Binary Tree Level Order Traversal | 60.2% | Medium |
+| 104  | [二叉树的最大深度](./Code/104.二叉树的最大深度.cpp) | Maximum Depth of Binary Tree | 71.9% | Easy |
+| 105  | [从前序与中序遍历序列构造二叉树](./Code/105.从前序与中序遍历序列构造二叉树.cpp) | Construct Binary Tree from Preorder and Inorder Traversal | 63.4% | Medium |
+| 114  | [二叉树展开为链表](./Code/114.二叉树展开为链表.cpp) | Flatten Binary Tree to Linked List | 66.7% | Medium |
+| 121  | [买卖股票的最佳时机](./Code/121.买卖股票的最佳时机.cpp) | Best Time to Buy and Sell Stock | 52.0% | Easy |
+| 124  | [二叉树中的最大路径和](./Code/124.二叉树中的最大路径和.cpp) | Binary Tree Maximum Path Sum | 38.7% | Hard |
+| 128  | [最长连续序列](./Code/128.最长连续序列.cpp) | Longest Consecutive Sequence | 47.3% | Hard |
+| 136  | [只出现一次的数字](./Code/136.只出现一次的数字.cpp) | Single Number | 64.8% | Easy |
+| 139  | [单词拆分](./Code/139.单词拆分.cpp) | Word Break | 42.9% | Medium |
+| 141  | [环形链表](./Code/141.环形链表.cpp) | Linked List Cycle | 45.5% | Easy |
+| 142  | [环形链表 II](./Code/142.环形链表II.cpp) | Linked List Cycle II | 47.5% | Medium |
+| 146  | [LRU缓存机制](./Code/146.LRU缓存机制.cpp) | LRU Cache | 45.0% | Medium |
+| 148  | [排序链表](./Code/148.排序链表.cpp) | Sort List | 63.1% | Medium |
