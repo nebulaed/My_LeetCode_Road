@@ -85,3 +85,6 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 142  | [环形链表 II](./Code/142.环形链表II.cpp) | Linked List Cycle II | 47.5% | Medium |
 | 146  | [LRU缓存机制](./Code/146.LRU缓存机制.cpp) | LRU Cache | 45.0% | Medium |
 | 148  | [排序链表](./Code/148.排序链表.cpp) | Sort List | 63.1% | Medium |
+| 152  | [乘积最大子数组](./Code/152.乘积最大子数组.cpp) | Maximum Product Subarray | 34.1% | Medium |
+| 155  | [最小栈](./Code/155.最小栈.cpp) | Min Stack | 49.1% | Easy |
+| 160  | [相交链表](./Code/160.相交链表.cpp) | Intersection of Two Linked Lists | 48.0% | Easy |
