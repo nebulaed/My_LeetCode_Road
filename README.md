@@ -90,3 +90,5 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 160  | [相交链表](./Code/160.相交链表.cpp) | Intersection of Two Linked Lists | 61.8% | Easy |
 | 169  | [多数元素](./Code/169.多数元素.cpp) | Majority Element | 66.5% | Easy |
 | 198  | [打家劫舍](./Code/198.打家劫舍.cpp) | House Robber | 52.0% | Medium |
+| 200  | [岛屿数量](./Code/200.岛屿数量.cpp) | Number of Islands | 56.3% | Medium |
+| 206  | [反转链表](./Code/206.反转链表.cpp) | Reverse Linked List | 72.4% | Easy |
