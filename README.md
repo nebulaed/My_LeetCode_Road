@@ -92,3 +92,6 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 198  | [打家劫舍](./Code/198.打家劫舍.cpp) | House Robber | 52.0% | Medium |
 | 200  | [岛屿数量](./Code/200.岛屿数量.cpp) | Number of Islands | 56.3% | Medium |
 | 206  | [反转链表](./Code/206.反转链表.cpp) | Reverse Linked List | 72.4% | Easy |
+| 207  | [课程表](./Code/207.课程表.cpp) | Course Schedule | 54.1% | Medium |
+| 208  | [实现Trie(前缀树)](./Code/208.实现Trie(前缀树).cpp) | Implement Trie (Prefix Tree) | 71.8% | Medium |
+| 210  | [课程表II](./Code/210.课程表II.cpp) | Course Schedule II | 54.6% | Medium |
