@@ -6,7 +6,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 1    | [两数之和](./Code/1.两数之和.cpp)                               | Two Sum                                                 |   52.2%    |    Easy    |
 | 2    | [两数相加](./Code/2.两数相加.cpp)                               | Add Two Numbers                                         |   41.1%    |    Medium    |
 | 3    | [无重复字符的最长子串](./Code/3.无重复字符的最长子串.cpp)       | Longest Substring Without Repeating Characters          |   38.3%    |    Medium    |
-| 4    | [寻找两个有序数组的中位数](./Code/4.寻找两个有序数组的中位数.cpp) | Median of Two Sorted Arrays                             |   41.0%    |    Hard    |
+| 4    | [寻找两个正序数组的中位数](./Code/4.寻找两个正序数组的中位数.cpp) | Median of Two Sorted Arrays                             |   41.0%    |    Hard    |
 | 5    | [最长回文子串](./Code/5.最长回文子串.cpp)                      | Longest Palindromic Substring                           |   35.9%    |    Medium    |
 | 6    | [Z 字形变换](./Code/6.Z字形变换.cpp)                            | ZigZag Conversion                                       |   50.9%    |    Medium    |
 | 7    | [整数反转](./Code/7.整数反转.cpp)                               | Reverse Integer                                         |   35.1%    |    Easy    |
