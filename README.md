@@ -95,3 +95,6 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 207  | [课程表](./Code/207.课程表.cpp) | Course Schedule | 54.1% | Medium |
 | 208  | [实现Trie(前缀树)](./Code/208.实现Trie(前缀树).cpp) | Implement Trie (Prefix Tree) | 71.8% | Medium |
 | 210  | [课程表II](./Code/210.课程表II.cpp) | Course Schedule II | 54.6% | Medium |
+| 221  | [最大正方形](./Code/221.最大正方形.cpp) | Maximal Square | 47.9% | Medium |
+| 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
+| 234  | [回文链表](./Code/234.回文链表.cpp) | Palindrome Linked List | 50.2% | Easy |
