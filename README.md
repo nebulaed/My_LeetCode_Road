@@ -99,3 +99,10 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
 | 234  | [回文链表](./Code/234.回文链表.cpp) | Palindrome Linked List | 50.2% | Easy |
 | 236  | [二叉树的最近公共祖先](./Code/236.二叉树的最近公共祖先.cpp) | Lowest Common Ancestor of a Binary Tree | 68.3% | Medium |
+| 238  | [除自身以外数组的乘积](./Code/238.除自身以外数组的乘积.cpp) | Product of Array Except Self | 72.5% | Medium |
+| 239  | [滑动窗口最大值](./Code/239.滑动窗口最大值.cpp) | Sliding Window Maximum | 49.7% | Hard |
+| 240  | [搜索二维矩阵II](./Code/240.搜索二维矩阵II.cpp) | Search a 2D Matrix II | 49.8% | Medium |
+| 253  | [会议室II](./Code/253.会议室II.cpp) | Meeting Rooms II | 50.5% | Medium |
+| 279  | [完全平方数](./Code/279.完全平方数.cpp) | Perfect Squares | 63.6% | Medium |
+| 283  | [移动零](./Code/283.移动零.cpp) | Move Zeroes | 64.0% | Easy |
+| 287  | [寻找重复数](./Code/287.寻找重复数.cpp) | Find the Duplicate Number | 65.5% | Medium |
