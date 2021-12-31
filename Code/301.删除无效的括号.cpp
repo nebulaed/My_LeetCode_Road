@@ -105,23 +105,31 @@ public:
 
 		currSet.emplace(s);
 		while (true) {
+			// 逐个检查currSet中的str是否合法，合法的话放入ret
 			for (const auto& str : currSet) {
 				if (isValid(str)) {
 					ret.emplace_back(str);
 				}
 			}
+			// 如果currSet有一个合法字符串意味着所有合法字符串已进入currSet
 			if (ret.size() > 0) return ret;
+			// 下一轮的字符串集合
 			unordered_set<string> nextSet;
+			// 逐个检查currSet中的str
 			for (const auto& str : currSet) {
+				// 从str的第0位开始，迭代检查每一个字符
 				for (size_t i = 0; i < str.size(); ++i) {
+					// 若遇到连续相同字符，只处理一次(即第一个)
 					if (i > 0 && str[i] == str[i - 1]) {
 						continue;
 					}
+					// 尝试删除当前第i位的'('或')'
 					if (str[i] == '(' || str[i] == ')') {
 						nextSet.emplace(str.substr(0, i) + str.substr(i + 1, str.size()));
 					}
 				}
 			}
+			// nextSet赋值给当前集合currSet
 			currSet = nextSet;
 		}
 	}
