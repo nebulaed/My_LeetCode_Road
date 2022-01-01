@@ -1,8 +1,10 @@
 #include<iostream>
 #include<vector>
+#include<array>
+#include<algorithm>
 using namespace std;
 
-// 官方解法一：动态规划，时间O(n)，空间O(n)
+// 官方解法一：动态规划，时间O(n) 4 ms，空间O(n) 11.3 MB
 // 思路：用f[i]表示第i天结束后的累计最大收益。根据题意，我们会有三种不同状态：
 // 1.我们目前持有一支股票，对应的累计最大收益记为f[i][0];
 // 2.我们目前不持有任何股票且处于冷冻期，对应的累计最大收益记为f[i][1];
@@ -16,9 +18,37 @@ using namespace std;
 // 有了所有的状态转移方程，那么一共有n天，最终答案为
 // max(f[n-1][0],f[n-1][1],f[n-1][2])
 // 由于最后一天结束后仍持有股票无法卖出，故结果为max(f[n-1][1],f[n-1][2])
+// 边界条件为f[0][0]=-prices[0]，f[0][1] = 0, f[0][2] = 0
+//
 class Solution {
 public:
 	int maxProfit(vector<int>& prices) {
-		
+		if (prices.empty()) return 0;
+		size_t n = prices.size();
+		vector<array<int, 3>> f(n, array<int, 3>());
+		f[0][0] = -prices[0];
+		for (size_t i = 1; i < n; ++i) {
+			f[i][0] = max(f[i - 1][0], f[i - 1][2] - prices[i]);
+			f[i][1] = f[i - 1][0] + prices[i];
+			f[i][2] = max(f[i - 1][1], f[i - 1][2]);
+		}
+		return max(f[n - 1][1], f[n - 1][2]);
+	}
+};
+
+// 滚动数组，时间O(n) 0 ms，空间O(1) 10.9 MB
+class Solution {
+public:
+	int maxProfit(vector<int>& prices) {
+		if (prices.empty()) return 0;
+		array<int, 3> f = { 0 };
+		f[0] = -prices[0];
+		for (int price : prices) {
+			int newf2 = max(f[1], f[2]);
+			f[1] = f[0] + price;
+			f[0] = max(f[0], f[2] - price);
+			f[2] = newf2;
+		}
+		return max(f[1], f[2]);
 	}
 };
