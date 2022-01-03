@@ -63,4 +63,52 @@ public:
 	}
 };
 
-// 官方解法二：基于快速排序
+// 官方解法二：基于快速排序，时间最坏O(n^2)，平均O(n) 8 ms，空间O(n) 13.3 MB
+// 堆数组arr[l...r]做快速排序的过程中，将数组划分为两个部分arr[i...q-1]和arr[q+1...j]，并使得arr[i...q-1]中的每一个值都不超过arr[q]，且arr[q+1...j]中的每一个值都大于arr[q]。
+// 根据k与左侧子数组arr[i...q-1]的长度q-i的大小关系：
+// 1. 若k<=q-i，则数组arr[l...r]前k大的值，就等于子数组arr[i...q-1]前k大的值。
+// 2. 否则，arr[l...r]前k大的值，就等于左侧子数组全部元素，加上右侧子数组arr[q+1...j]中前k-(q-i)大的值。
+class Solution {
+private:
+	void qsort(vector<pair<int, int>>& vec, size_t start, size_t end, vector<int>& ret, int k) {
+		int picked = rand() % (end - start + 1) + start;
+		swap(vec[picked], vec[start]);
+		
+		int pivot = vec[start].second;
+		size_t index = start;
+		for (size_t i = start + 1; i <= end; ++i) {
+			if (vec[i].second >= pivot) {
+				swap(vec[index + 1], vec[i]);
+				++index;
+			}
+		}
+		swap(vec[start], vec[index]);
+
+		if (k <= index - start) {
+			qsort(vec, start, index - 1, ret, k);
+		}
+		else {
+			for (size_t i = start; i <= index; ++i) {
+				ret.emplace_back(vec[i].first);
+			}
+			if (k > index - start + 1) {
+				qsort(vec, index + 1, end, ret, k - (index - start + 1));
+			}
+		}
+	}
+
+public:
+	vector<int> topKFrequent(vector<int>& nums, int k) {
+		unordered_map<int, int> numFreqs;
+		for (int num : nums) {
+			++numFreqs[num];
+		}
+		vector<pair<int, int>> values;
+		for (const auto& pair : numFreqs) {
+			values.emplace_back(pair);
+		}
+		vector<int> ret;
+		qsort(values, 0, values.size() - 1, ret, k);
+		return ret;
+	}
+};
