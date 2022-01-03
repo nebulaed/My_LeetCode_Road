@@ -106,3 +106,12 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 279  | [完全平方数](./Code/279.完全平方数.cpp) | Perfect Squares | 63.6% | Medium |
 | 283  | [移动零](./Code/283.移动零.cpp) | Move Zeroes | 64.0% | Easy |
 | 287  | [寻找重复数](./Code/287.寻找重复数.cpp) | Find the Duplicate Number | 65.5% | Medium |
+| 297  | [二叉树的序列化和反序列化](./Code/297.二叉树的序列化和反序列化.cpp) | Serialize and Deserialize Binary Tree | 56.4% | Hard |
+| 300  | [最长递增子序列](./Code/300.最长递增子序列.cpp) | Longest Increasing Subsequence | 52.2% | Medium |
+| 301  | [删除无效的括号](./Code/301.删除无效的括号.cpp) | Remove Invalid Parentheses | 54.8% | Hard |
+| 309  | [最佳买卖股票时机含冷冻期](./Code/309.最佳买卖股票时机含冷冻期.cpp) | Best Time to Buy and Sell Stock with Cooldown | 61.7% | Medium |
+| 312  | [戳气球](./Code/312.戳气球.cpp) | Burst Balloons | 68.5% | Hard |
+| 322  | [零钱兑换](./Code/322.零钱兑换.cpp) | Coin Change | 44.8% | Medium |
+| 337  | [打家劫舍 III](./Code/337.打家劫舍III.cpp) | House Robber III | 60.7% | Medium |
+| 338  | [比特位计数](./Code/338.比特位计数.cpp) | Counting Bits | 78.7% | Easy |
+| 347  | [前 K 个高频元素](./Code/347.前K个高频元素.cpp) | Top K Frequent Elements | 62.4% | Medium |
