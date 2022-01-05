@@ -56,7 +56,7 @@ public:
 	}
 };
 
-// 官方解法优化：动态规划+滚动数组，时间O(n×target) 88 ms, 空间O(target) 9.1 MB
+// 官方解法优化：动态规划+滚动数组，时间O(n×target) 56 ms, 空间O(target) 9.2 MB
 // 用vector<int> 取代 bool 数组，时间 128 ms，空间 9.6 MB
 class Solution {
 public:
@@ -85,6 +85,7 @@ public:
 			for (size_t j = target; j >= nums[i]; --j) {
 				dp[j] |= dp[j - nums[i]];
 			}
+			if (dp[target]) return true;
 		}
 		return dp[target];
 	}
