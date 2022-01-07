@@ -67,6 +67,27 @@ public:
 //	}
 //};
 
+// LeetCode 101解法：快慢指针，时间 8 ms，空间 7.5 MB
+class Solution {
+public:
+	ListNode* detectCycle(ListNode* head) {
+		ListNode* slow = head, * fast = head;
+		// 判断是否存在环路
+		do {
+			if (!fast || !fast->next) return nullptr;
+			fast = fast->next->next;
+			slow = slow->next;
+		} while (fast != slow);
+		// 若存在，查找环路节点
+		slow = head;
+		while (slow != fast) {
+			slow = slow->next;
+			fast = fast->next;
+		}
+		return slow;
+	}
+};
+
 int main() {
 
 	ListNode* node0 = new ListNode(3);

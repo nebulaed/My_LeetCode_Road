@@ -61,3 +61,47 @@ public:
 		}
 	}
 };
+
+
+// LeetCode 101解法：时间 4 ms，空间 7.5 MB
+class Solution {
+private:
+	int ch2ind(char ch) {
+		return ch >= 'a' ? ch - 'a' + 26 : ch - 'A';
+	}
+public:
+	string minWindow(string s, string t) {
+		int chars[52]{};
+		bool flag[52]{ false };
+		// 先统计T中的字符情况
+		for (char ch : t) {
+			int ind = ch2ind(ch);
+			flag[ind] = true;
+			++chars[ind];
+		}
+		// 移动滑动窗口，不断地更新统计数据
+		int cnt = 0, left = 0, minLeft = 0, minSize = s.size() + 1;
+		for (int right = 0; right < s.size(); ++right) {
+			int indRight = ch2ind(s[right]);
+			if (flag[indRight]) {
+				if (--chars[indRight] >= 0) {
+					++cnt;
+				}
+				// 若目前滑动窗口已经包含T中全部字符，
+				// 则尝试将left右移，在不影响结果的情况下获得最短子字符串
+				while (cnt == t.size()) {
+					if (right - left + 1 < minSize) {
+						minLeft = left;
+						minSize = right - left + 1;
+					}
+					int indLeft = ch2ind(s[left]);
+					if (flag[indLeft] && ++chars[indLeft] > 0) {
+						--cnt;
+					}
+					++left;
+				}
+			}
+		}
+		return minSize > s.size() ? "" : s.substr(minLeft, minSize);
+	}
+};
