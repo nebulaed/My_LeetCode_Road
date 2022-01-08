@@ -48,10 +48,29 @@ public:
 	}
 };
 
-// 官方解法一：双指针，时间，空间
+// 官方解法一：双指针，时间 40 ms，空间 19.1 MB
 class Solution {
+private:
+	bool checkPalindrome(const string& str, size_t low, size_t high) {
+		for (; low < high; ++low, --high) {
+			if (str[low] != str[high]) {
+				return false;
+			}
+		}
+		return true;
+	}
 public:
 	bool validPalindrome(string s) {
-
+		size_t low = 0, high = s.size() - 1;
+		while (low < high) {
+			if (s[low] == s[high]) {
+				++low;
+				--high;
+			}
+			else {
+				return checkPalindrome(s, low, high - 1) || checkPalindrome(s, low + 1, high);
+			}
+		}
+		return true;
 	}
 };
