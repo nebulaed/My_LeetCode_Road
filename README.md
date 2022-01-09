@@ -60,14 +60,17 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 56   | [合并区间](./Code/56.合并区间.cpp) | Merge Intervals | 47.4% | Medium |
 | 62   | [不同路径](./Code/62.不同路径.cpp) | Unique Paths | 66.5% | Medium |
 | 64   | [最小路径和](./Code/64.最小路径和.cpp) | Minimum Path Sum | 68.9% | Medium |
+| 69   | [Sqrt(x)](./Code/69.Sqrt(x).cpp) | Sqrt(x) | 39.1% | Easy |
 | 70   | [爬楼梯](./Code/70.爬楼梯.cpp) | Climbing Stairs | 53.2% | Easy |
 | 72   | [编辑距离](./Code/72.编辑距离.cpp) | Edit Distance | 61.5% | Hard |
 | 75   | [颜色分类](./Code/75.颜色分类.cpp) | Sort Colors | 59.9% | Medium |
 | 76   | [最小覆盖子串](./Code/76.最小覆盖子串.cpp) | Minimum Window Substring | 43.0% | Hard |
 | 78   | [子集](./Code/78.子集.cpp) | Subsets | 80.2% | Medium |
 | 79   | [单词搜索](./Code/79.单词搜索.cpp) | Word Search | 45.9% | Medium | 
+| 81   | [搜索旋转排序数组II](./Code/81.搜索旋转排序数组II.cpp) | Search in Rotated Sorted Array II | 41.4% | Medium |
 | 84   | [柱状图中最大的矩形](./Code/84.柱状图中最大的矩形.cpp) | Largest Rectangle in Histogram | 43.4% | Hard |
 | 85   | [最大矩形](./Code/85.最大矩形.cpp) | Maximal Rectangle | 51.7% | Hard |
+| 88   | [合并两个有序数组](./Code/88.合并两个有序数组.cpp) | Merge Sorted Array | 52.0% | Easy |
 | 94   | [二叉树的中序遍历](./Code/94.二叉树的中序遍历.cpp) | Binary Tree Inorder Traversal | 75.6% | Medium |
 | 96   | [不同的二叉搜索树](./Code/96.不同的二叉搜索树.cpp) | Unique Binary Search Trees | 69.9% | Medium |
 | 98   | [验证二叉搜索树](./Code/98.验证二叉搜索树.cpp) | Validate Binary Search Tree | 35.2% | Medium |
@@ -77,8 +80,10 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 105  | [从前序与中序遍历序列构造二叉树](./Code/105.从前序与中序遍历序列构造二叉树.cpp) | Construct Binary Tree from Preorder and Inorder Traversal | 70.6% | Medium |
 | 114  | [二叉树展开为链表](./Code/114.二叉树展开为链表.cpp) | Flatten Binary Tree to Linked List | 72.7% | Medium |
 | 121  | [买卖股票的最佳时机](./Code/121.买卖股票的最佳时机.cpp) | Best Time to Buy and Sell Stock | 57.4% | Easy |
+| 122  | [买卖股票的最佳时机II](./Code/122.买卖股票的最佳时机II.cpp) | Best Time to Buy and Sell Stock II | 69.3% | Medium |
 | 124  | [二叉树中的最大路径和](./Code/124.二叉树中的最大路径和.cpp) | Binary Tree Maximum Path Sum | 44.6% | Hard |
 | 128  | [最长连续序列](./Code/128.最长连续序列.cpp) | Longest Consecutive Sequence | 54.4% | Hard |
+| 135  | [分发糖果](./Code/135.分发糖果.cpp) | Candy | 48.7% | Hard |
 | 136  | [只出现一次的数字](./Code/136.只出现一次的数字.cpp) | Single Number | 64.8% | Easy |
 | 139  | [单词拆分](./Code/139.单词拆分.cpp) | Word Break | 42.9% | Medium |
 | 141  | [环形链表](./Code/141.环形链表.cpp) | Linked List Cycle | 45.5% | Easy |
@@ -86,8 +91,10 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 146  | [LRU缓存机制](./Code/146.LRU缓存机制.cpp) | LRU Cache | 52.4% | Medium |
 | 148  | [排序链表](./Code/148.排序链表.cpp) | Sort List | 66.6% | Medium |
 | 152  | [乘积最大子数组](./Code/152.乘积最大子数组.cpp) | Maximum Product Subarray | 42.2% | Medium |
+| 154  | [寻找旋转排序数组中的最小值II](./Code/154.寻找旋转排序数组中的最小值II.cpp) | Find Minimum in Rotated Sorted Array II | 53.1% | Hard |
 | 155  | [最小栈](./Code/155.最小栈.cpp) | Min Stack | 57.5% | Easy |
 | 160  | [相交链表](./Code/160.相交链表.cpp) | Intersection of Two Linked Lists | 61.8% | Easy |
+| 167  | [两数之和II-输入有序数组](./Code/167.两数之和II-输入有序数组.cpp) | Two Sum II - Input Array Is Sorted | 58.7% | Easy |
 | 169  | [多数元素](./Code/169.多数元素.cpp) | Majority Element | 66.5% | Easy |
 | 198  | [打家劫舍](./Code/198.打家劫舍.cpp) | House Robber | 52.0% | Medium |
 | 200  | [岛屿数量](./Code/200.岛屿数量.cpp) | Number of Islands | 56.3% | Medium |
@@ -109,9 +116,28 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 297  | [二叉树的序列化和反序列化](./Code/297.二叉树的序列化和反序列化.cpp) | Serialize and Deserialize Binary Tree | 56.4% | Hard |
 | 300  | [最长递增子序列](./Code/300.最长递增子序列.cpp) | Longest Increasing Subsequence | 52.2% | Medium |
 | 301  | [删除无效的括号](./Code/301.删除无效的括号.cpp) | Remove Invalid Parentheses | 54.8% | Hard |
+| 304  | [二维区域和检索-矩阵不可变](./Code/304.二维区域和检索-矩阵不可变.cpp) | Range Sum Query 2D - Immutable | 56.0% | Medium |
 | 309  | [最佳买卖股票时机含冷冻期](./Code/309.最佳买卖股票时机含冷冻期.cpp) | Best Time to Buy and Sell Stock with Cooldown | 61.7% | Medium |
 | 312  | [戳气球](./Code/312.戳气球.cpp) | Burst Balloons | 68.5% | Hard |
 | 322  | [零钱兑换](./Code/322.零钱兑换.cpp) | Coin Change | 44.8% | Medium |
 | 337  | [打家劫舍 III](./Code/337.打家劫舍III.cpp) | House Robber III | 60.7% | Medium |
 | 338  | [比特位计数](./Code/338.比特位计数.cpp) | Counting Bits | 78.7% | Easy |
+| 340  | [至多包含K个不同字符的最长子串](./Code/340.至多包含K个不同字符的最长子串.cpp) | Longest Substring with At Most K Distinct Characters | 49.8% | Medium |
 | 347  | [前 K 个高频元素](./Code/347.前K个高频元素.cpp) | Top K Frequent Elements | 62.4% | Medium |
+| 394  | [字符串解码](./Code/394.字符串解码.cpp) | Decode String | 55.5% | Medium |
+| 399  | [除法求值](./Code/399.除法求值.cpp) | Evaluate Division | 59.1% | Medium |
+| 406  | [根据身高重建队列](./Code/406.根据身高重建队列.cpp) | Queue Reconstruction by Height | 74.0% | Medium |
+| 416  | [分割等和子集](./Code/416.分割等和子集.cpp) | Partition Equal Subset Sum | 51.1% | Medium |
+| 435  | [无重叠区间](./Code/435.无重叠区间.cpp) | Non-overlapping Intervals | 50.7% | Medium |
+| 448  | [找到所有数组中消失的数字](./Code/448.找到所有数组中消失的数字.cpp) | Find All Numbers Disappeared in an Array | 65.1% | Easy |
+| 452  | [用最少数量的箭引爆气球](./Code/452.用最少数量的箭引爆气球.cpp) | Minimum Number of Arrows to Burst Balloons | 50.8% | Medium |
+| 455  | [分发饼干](./Code/455.分发饼干.cpp) | Assign Cookies | 57.5% | Easy |
+| 461  | [汉明距离](./Code/461.汉明距离.cpp) | Hamming Distance | 81.3% | Easy |
+| 524  | [通过删除字母匹配到字典里最长单词](./Code/524.通过删除字母匹配到字典里最长单词.cpp) | Longest Word in Dictionary through Deleting | 49.7% | Medium |
+| 540  | [有序数组中的单一元素](./Code/540.有序数组中的单一元素.cpp) | Single Element in a Sorted Array | 58.4% | Medium |
+| 605  | [种花问题](./Code/605.种花问题.cpp) | Can Place Flowers | 33.2% | Easy |
+| 633  | [平方数之和](./Code/633.平方数之和.cpp) | Sum of Square Numbers | 39.5% | Medium |
+| 665  | [非递减数列](./Code/665.非递减数列.cpp) | Non-decreasing Array | 27.2% | Medium |
+| 680  | [验证回文字符串II](./Code/680.验证回文字符串II.cpp) | Valid Palindrome II | 40.0% | Easy |
+| 763  | [划分字母区间](./Code/763.划分字母区间.cpp) | Partition Labels | 76.3% | Medium |
+| 990  | [等式方程的可满足性](./Code/990.等式方程的可满足性.cpp) | Satisfiability of Equality Equations | 50.8% | Medium |
