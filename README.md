@@ -102,6 +102,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 207  | [课程表](./Code/207.课程表.cpp) | Course Schedule | 54.1% | Medium |
 | 208  | [实现Trie(前缀树)](./Code/208.实现Trie(前缀树).cpp) | Implement Trie (Prefix Tree) | 71.8% | Medium |
 | 210  | [课程表II](./Code/210.课程表II.cpp) | Course Schedule II | 54.6% | Medium |
+| 215  | [数组中的第K个最大元素](./Code/215.数组中的第K个最大元素.cpp) | Kth Largest Element in an Array | 64.7% | Medium |
 | 221  | [最大正方形](./Code/221.最大正方形.cpp) | Maximal Square | 47.9% | Medium |
 | 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
 | 234  | [回文链表](./Code/234.回文链表.cpp) | Palindrome Linked List | 50.2% | Easy |
@@ -128,16 +129,20 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 399  | [除法求值](./Code/399.除法求值.cpp) | Evaluate Division | 59.1% | Medium |
 | 406  | [根据身高重建队列](./Code/406.根据身高重建队列.cpp) | Queue Reconstruction by Height | 74.0% | Medium |
 | 416  | [分割等和子集](./Code/416.分割等和子集.cpp) | Partition Equal Subset Sum | 51.1% | Medium |
+| 417  | [太平洋大西洋水流问题](./Code/417.太平洋大西洋水流问题.cpp) | Pacific Atlantic Water Flow | 48.9% | Medium |
 | 435  | [无重叠区间](./Code/435.无重叠区间.cpp) | Non-overlapping Intervals | 50.7% | Medium |
 | 448  | [找到所有数组中消失的数字](./Code/448.找到所有数组中消失的数字.cpp) | Find All Numbers Disappeared in an Array | 65.1% | Easy |
+| 451  | [根据字符出现频率排序](./Code/451.根据字符出现频率排序.cpp) | Sort Characters By Frequency | 71.3% | Medium |
 | 452  | [用最少数量的箭引爆气球](./Code/452.用最少数量的箭引爆气球.cpp) | Minimum Number of Arrows to Burst Balloons | 50.8% | Medium |
 | 455  | [分发饼干](./Code/455.分发饼干.cpp) | Assign Cookies | 57.5% | Easy |
 | 461  | [汉明距离](./Code/461.汉明距离.cpp) | Hamming Distance | 81.3% | Easy |
 | 524  | [通过删除字母匹配到字典里最长单词](./Code/524.通过删除字母匹配到字典里最长单词.cpp) | Longest Word in Dictionary through Deleting | 49.7% | Medium |
 | 540  | [有序数组中的单一元素](./Code/540.有序数组中的单一元素.cpp) | Single Element in a Sorted Array | 58.4% | Medium |
+| 547  | [省份数量](./Code/547.省份数量.cpp) | Number of Provinces | 61.9% | Medium |
 | 605  | [种花问题](./Code/605.种花问题.cpp) | Can Place Flowers | 33.2% | Easy |
 | 633  | [平方数之和](./Code/633.平方数之和.cpp) | Sum of Square Numbers | 39.5% | Medium |
 | 665  | [非递减数列](./Code/665.非递减数列.cpp) | Non-decreasing Array | 27.2% | Medium |
 | 680  | [验证回文字符串II](./Code/680.验证回文字符串II.cpp) | Valid Palindrome II | 40.0% | Easy |
+| 695  | [岛屿的最大面积](./Code/695.岛屿的最大面积.cpp) | Max Area of Island | 66.9% | Medium |
 | 763  | [划分字母区间](./Code/763.划分字母区间.cpp) | Partition Labels | 76.3% | Medium |
 | 990  | [等式方程的可满足性](./Code/990.等式方程的可满足性.cpp) | Satisfiability of Equality Equations | 50.8% | Medium |
