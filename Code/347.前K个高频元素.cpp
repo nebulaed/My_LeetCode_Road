@@ -112,3 +112,34 @@ public:
 		return ret;
 	}
 };
+
+// LeetCode 101解法：桶排序，时间 16 ms，空间 13.5 MB
+// 思路：桶排序的含义是为每个值设立一个桶，桶内记录这个值出现的次数(或其他属性)，然后对桶进行排序。
+// 对样例[1,1,1,1,2,2,3,4]，先通过桶排序得到四个桶[1,2,3,4]，值分别为[4,2,1,1]，表示每个数字出现的次数。
+// 然后对桶的频次进行排序，前k大个桶就是前k个频繁的数。可以使用各种排序算法，甚至可以再进行一次桶排序，把每个旧桶根据频次放在不同的新桶内。
+// 对于样例，因为目前最大频次是4，建立[1,2,3,4]四个新桶，分别放入的旧桶为[[3,4],[2],[],[1]]，表示不同数字出现的频率。最后从后往前遍历，直到找到k个旧桶。
+class Solution {
+public:
+	vector<int> topKFrequent(vector<int>& nums, int k) {
+		unordered_map<int, int> numFreqs;
+		int maxCount = 0;
+		for (int num : nums) {
+			maxCount = max(maxCount, ++numFreqs[num]);
+		}
+
+		vector<vector<int>> buckets(maxCount + 1);
+		for (const auto& pair : numFreqs){
+			buckets[pair.second].emplace_back(pair.first);
+		}
+
+		vector<int> ret(k);
+		int ptr = -1;
+		for (int i = maxCount; i >= 0 && ptr < k - 1; --i) {
+			for (int num : buckets[i]) {
+				ret[++ptr] = num;
+				if (ptr == k - 1) break;
+			}
+		}
+		return ret;
+	}
+};
