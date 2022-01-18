@@ -54,3 +54,24 @@ public:
 		return dp[length];
 	}
 };
+
+// 评论解法=LeetCode 101解法：动态规划+词典查找，时间O(n*m) 0 ms 100%，空间 O(n) 7.4 MB 89.07%
+class Solution {
+public:
+	bool wordBreak(string s, vector<string>& wordDict) {
+		size_t n = s.size();
+		vector<bool> dp(n + 1);
+		dp[0] = true;
+		for (size_t i = 1; i <= n; ++i) {
+			for (const auto& word : wordDict) {
+				size_t wordSize = word.size();
+				if (i >= wordSize) {
+					if (s.substr(i - wordSize, wordSize) == word) {
+						dp[i] = dp[i] | dp[i - wordSize];
+					}
+				}
+			}
+		}
+		return dp[n];
+	}
+};

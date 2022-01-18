@@ -176,6 +176,50 @@ public:
 	}
 };
 
+// 官方解答再优化：时间 224 ms 75.10%，空间 7.7 MB 51%
+class Solution {
+private:
+	int directions[5] = { -1, 0, 1, 0, -1 };
+	bool check(const vector<vector<char>>& board, vector<vector<bool>>& visited, int i, int j, string& s, int k) {
+		if (board[i][j] != s[k]) {
+			return false;
+		}
+		else if (k == s.length() - 1) {
+			return true;
+		}
+		visited[i][j] = true;
+		bool result = false;
+		for (size_t l = 0; l < 4; ++l) {
+			int newi = i + directions[l], newj = j + directions[l + 1];
+			if (newi >= 0 && newi < board.size() && newj >= 0 && newj < board[0].size() && !visited[newi][newj]) {
+				if (!visited[newi][newj]) {
+					bool flag = check(board, visited, newi, newj, s, k + 1);
+					if (flag) {
+						result = true;
+						break;
+					}
+				}
+			}
+		}
+		visited[i][j] = false;
+		return result;
+	}
+public:
+	bool exist(vector<vector<char>>& board, string word) {
+		int h = board.size(), w = board[0].size();
+		vector<vector<bool>> visited(h, vector<bool>(w));
+		for (int i = 0; i < h; ++i) {
+			for (int j = 0; j < w; ++j) {
+				bool flag = check(board, visited, i, j, word, 0);
+				if (flag) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+};
+
 int main() {
 	vector<vector<char>> board = { {'A', 'B', 'C', 'E'},{'S', 'F', 'C', 'S'},{'A', 'D', 'E', 'E'} };
 	string word = "ABCCED";

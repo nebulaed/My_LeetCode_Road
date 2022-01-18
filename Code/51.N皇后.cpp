@@ -26,11 +26,15 @@ public:
 		for (int i = 0; i < n; ++i) {
 			bool flag = true;
 			for (int j = 0; j < queens.size(); ++j) {
+				// 若第i列的新皇后和queens中的旧皇后在对角线上
+				// queens.size()代表的是新皇后的行数，i代表新皇后列数，j代表旧皇后行数，queen[j]代表旧皇后列数
+				// 含义就是新皇后行数列数之和与旧皇后行数列数之和相等或新皇后行数列数之差与旧皇后行数列数之差相等
 				if (queens.size() + i == j + queens[j] || queens.size() - i == j - queens[j]) {
 					flag = false;
 					break;
 				}
 			}
+			// 若新皇后与所有旧皇后不在同一列且不在对角线上
 			if (!count(queens.begin(), queens.end(), i) && flag) {
 				queens.emplace_back(i);
 				dfs(n);
@@ -40,6 +44,50 @@ public:
 	}
 	vector<vector<string>> solveNQueens(int n) {
 		dfs(n);
+		return ret;
+	}
+};
+
+
+// 我的解法优化：时间 4 ms 92.93%，空间 7.2 MB 67.78%
+// 提前给好模版cur，不用每次都重新构造，把重复调用的.size()和queens[j]用int变量接收
+class Solution {
+private:
+	vector<vector<string>> ret;
+	vector<int> queens;
+public:
+	void dfs(vector<string>& cur, int n) {
+		int length = queens.size();
+		if (length == n) {
+			for (int i = 0; i < n; ++i) {
+				cur[i][queens[i]] = 'Q';
+			}
+			ret.emplace_back(cur);
+			for (int i = 0; i < n; ++i) {
+				cur[i][queens[i]] = '.';
+			}
+			return;
+		}
+
+		for (int i = 0; i < n; ++i) {
+			bool flag = true;
+			for (int j = 0; j < length; ++j) {
+				int columnj = queens[j];
+				if (length + i == j + columnj || length - i == j - columnj) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag && !count(queens.begin(), queens.end(), i)) {
+				queens.emplace_back(i);
+				dfs(cur, n);
+				queens.pop_back();
+			}
+		}
+	}
+	vector<vector<string>> solveNQueens(int n) {
+		vector<string> cur(n, string(n, '.'));
+		dfs(cur, n);
 		return ret;
 	}
 };
@@ -138,7 +186,38 @@ public:
 	}
 };
 
-
+// LeetCode 101解法：时间 0 ms 100%，空间 6.9 MB 98.37%
+class Solution {
+public:
+	vector<vector<string>> solveNQueens(int n) {
+		vector<vector<string>> ans;
+		vector<string> board(n, string(n, '.'));
+		vector<bool> column(n, false), ldiag(2 * n - 1, false), rdiag(2 * n - 1, false);
+		backtracking(ans, board, column, ldiag, rdiag, 0, n);
+		return ans;
+	}
+private:
+	void backtracking(vector<vector<string>>& ans, vector<string>& board, vector<bool>& column, vector<bool>& ldiag, vector<bool>& rdiag, int row, int n) {
+		if (row == n) {
+			ans.emplace_back(board);
+			return;
+		}
+		for (int i = 0; i < n; ++i) {
+			if (column[i] || ldiag[n - row + i - 1] || rdiag[row + i]) {
+				continue;
+			}
+			// 修改当前节点状态
+			board[row][i] = 'Q';
+			// 将下一行左下角和右下角都标记为不可放置皇后状态
+			column[i] = ldiag[n - row + i - 1] = rdiag[row + i] = true;
+			// 递归子节点
+			backtracking(ans, board, column, ldiag, rdiag, row + 1, n);
+			// 回改当前节点状态
+			board[row][i] = '.';
+			column[i] = ldiag[n - row + i - 1] = rdiag[row + i] = false;
+		}
+	}
+};
 
 
 int main() {

@@ -24,6 +24,26 @@ public:
 	}
 };
 
+// 我的解法一优化：时间 212 ms 64.05%，空间 10.2 MB 57%
+class Solution {
+public:
+	int lengthOfLIS(vector<int>& nums) {
+		size_t length = nums.size();
+		vector<int> dp(length, 1);
+		int maxLength = 0;
+		for (size_t i = 1; i <= length; ++i) {
+			int& cur = dp[i - 1];
+			for (size_t j = i - 1; j > 0; --j) {
+				if (nums[i - 1] > nums[j - 1]) {
+					cur = max(dp[j - 1] + 1, cur);
+				}
+			}
+			maxLength = max(maxLength, cur);
+		}
+		return maxLength;
+	}
+};
+
 // 我的解法二：贪心+二分查找，时间O(n log n) 8 ms，空间O(n) 10.2 MB
 // 考虑一个简单的贪心，要使单调递增子序列尽可能地长，必须让序列上升得尽可能慢，因此希望每次在上升子序列最后加上得那个数尽可能小。
 // 基于该贪心思路，维护一数组d[i]，表示长度为i的最长单调递增子序列的末尾元素的最小值，用len记录目前最长单调递增子序列的长度
@@ -54,18 +74,36 @@ private:
 public:
 	int lengthOfLIS(vector<int>& nums) {
 		vector<int> endArr(1, nums[0]);
-		size_t len = 1;
 		for (size_t i = 1; i < nums.size(); ++i) {
 			int curr = nums[i];
-			if (curr > endArr[len - 1]) {
+			if (curr > endArr.back()) {
 				endArr.emplace_back(curr);
-				++len;
 			}
 			else {
 				endArr[binarySearch(endArr, curr)] = curr;
 			}
 		}
-		return len;
+		return endArr.size();
+	}
+};
+
+// LeetCode 101解法：动态规划+利用官方二分查找，时间 O(n log n) 8 ms 89.70%，空间 O(n) 10.2 MB 77.92%
+class Solution {
+public:
+	int lengthOfLIS(vector<int>& nums) {
+		size_t length = nums.size();
+		vector<int> dp{ nums[0] };
+		for (size_t i = 1; i < length; ++i) {
+			int num = nums[i];
+			if (dp.back() < num) {
+				dp.emplace_back(num);
+			}
+			else {
+				auto it = lower_bound(dp.begin(), dp.end(), num);
+				*it = num;
+			}
+		}
+		return dp.size();
 	}
 };
 
