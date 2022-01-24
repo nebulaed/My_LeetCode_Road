@@ -30,3 +30,27 @@ public:
 		return dp[n][neg];
 	}
 };
+
+// 我的解法二：0-1背包问题，动态规划+滚动数组，时间O(n*neg) 8 ms 83.44%，空间O(neg) 9 MB 52.30%
+class Solution {
+public:
+	int findTargetSumWays(vector<int>& nums, int target) {
+		int sum = accumulate(nums.begin(), nums.end(), 0);
+		int neg = sum - target;
+		if (neg < 0 || (neg & 1)) return 0;
+		neg >>= 1;
+		int n = nums.size();
+		vector<int> dp(neg + 1, 0);
+		dp[0] = 1;
+
+		for (int i = 1; i <= n; ++i) {
+			for (int j = neg; j >= 0; --j) {
+				int cur = nums[i - 1];
+				if (j >= cur) {
+					dp[j] += dp[j - cur];
+				}
+			}
+		}
+		return dp[neg];
+	}
+};
