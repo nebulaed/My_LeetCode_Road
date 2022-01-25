@@ -42,6 +42,58 @@ public:
 	}
 };
 
+// 我的解法参考LeetCode 101：时间 4 ms 70.82%，空间 6.5 MB 91.05%
+class Solution {
+public:
+	string addStrings(string num1, string num2) {
+		reverse(num1.begin(), num1.end());
+		reverse(num2.begin(), num2.end());
+		string ret;
+		int digit = 0, carry = 0, length1 = num1.size(), length2 = num2.size();
+		while (digit < length1 || digit < length2 || carry) {
+			int cur1 = digit < length1 ? num1[digit] - '0' : 0;
+			int cur2 = digit < length2 ? num2[digit] - '0' : 0;
+			int curNum = cur1 + cur2 + carry;
+			ret += (curNum > 9 ? curNum - 10 : curNum) + '0';
+			carry = curNum > 9 ? 1 : 0;
+			++digit;
+		}
+		reverse(ret.begin(), ret.end());
+		return ret;
+	}
+};
+
+// LeetCode 101解法：先翻转字符串，再逐位计算，最后翻转结果，时间 4 ms 70.82%，空间 6.6 MB 44.45%
+class Solution {
+public:
+	string addStrings(string num1, string num2) {
+		reverse(num1.begin(), num1.end());
+		reverse(num2.begin(), num2.end());
+		string ret;
+		int firstLen = num1.size(), secondLen = num2.size();
+		if (firstLen < secondLen) {
+			num1.swap(num2);
+			swap(firstLen, secondLen);
+		}
+		int carry = 0;
+		for (int i = 0; i < secondLen; ++i) {
+			int curSum = (num1[i] - '0') + (num2[i] - '0') + carry;
+			ret += (curSum % 10) + '0';
+			carry = curSum < 10 ? 0 : 1;
+		}
+		for (int i = secondLen; i < firstLen; ++i) {
+			int curSum = (num1[i] - '0') + carry;
+			ret += (curSum % 10) + '0';
+			carry = curSum < 10 ? 0 : 1;
+		}
+		if (carry) {
+			ret += '1';
+		}
+		reverse(ret.begin(), ret.end());
+		return ret;
+	}
+};
+
 int main() {
 	string num1 = "456";
 	string num2 = "777";
