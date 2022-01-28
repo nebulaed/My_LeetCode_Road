@@ -77,6 +77,7 @@ private:
 		}
 	}
 
+	// 随机选取枢轴
 	inline int randomPartition(vector<int>& nums, int left, int right) {
 		int i = rand() % (right - left + 1) + left;
 		swap(nums[i], nums[right]);
@@ -105,7 +106,58 @@ class Solution {
 private:
 	int quickSelection(vector<int>& nums, int left, int right)
 	{
-		int first = left + 1, last = right, key = nums[first];
+		int first = left, last = right, key = nums[first];
+		while (first < last) {
+			while (first < last && key <= nums[last]) {
+				--last;
+			}
+			nums[first] = nums[last];
+			while (first < last && nums[first] <= key) {
+				++first;
+			}
+			nums[last] = nums[first];
+		}
+		nums[first] = key;
+		return last;
+	}
+public:
+	int findKthLargest(vector<int>& nums, int k) {
+		int left = 0, right = nums.size() - 1, target = nums.size() - k;
+		while (left < right) {
+			int mid = quickSelection(nums, left, right);
+			if (mid == target) {
+				return nums[mid];
+			}
+			else if (mid < target) {
+				left = mid + 1;
+			}
+			else {
+				right = mid - 1;
+			}
+		}
+		return nums[left];
+	}
+};
+
+// LeetCode 101解法优化：三数取中+快速选择，时间 4 ms 96.42%，空间 9.7 MB 80.90%
+class Solution {
+private:
+	int quickSelection(vector<int>& nums, int left, int right)
+	{
+		//=====================================//
+		// 三数取中选取枢轴
+		int mid = (left + right) >> 1;
+		if (nums[left] > nums[right]) {
+			swap(nums[left], nums[right]);
+		}
+		if (nums[mid] > nums[right]) {
+			swap(nums[right], nums[mid]);
+		}
+		if (nums[mid] > nums[left]) {
+			swap(nums[mid], nums[left]);
+		}
+		//=====================================//
+		int first = left, last = right, key = nums[first];
 		while (first < last) {
 			while (first < last && key <= nums[last]) {
 				--last;

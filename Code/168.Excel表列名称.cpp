@@ -5,7 +5,7 @@
 using std::string;
 using std::reverse;
 
-
+// 我的解法：除法+取模，时间 0 ms 100%，空间 5.6 MB 97.50%
 class Solution {
 public:
 	string convertToTitle(int columnNumber) {
