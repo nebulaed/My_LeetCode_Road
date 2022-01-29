@@ -56,3 +56,16 @@ public:
 		return ret;
 	}
 };
+
+// LeetCode 101解法，时间 0 ms 100%，空间 5.8 MB 84.22%
+class Solution {
+public:
+	int hammingDistance(int x, int y) {
+		int num = x ^ y, count = 0;
+		while (num) {
+			++count;
+			num &= num - 1;
+		}
+		return count;
+	}
+};

@@ -85,7 +85,7 @@ public:
 	}
 };
 
-// 我的解法四：自写快速选择算法，时间 8 ms 88.70%，空间 10.5 MB 79.45%
+// 我的解法四：自写随机选取枢轴+快速选择算法，时间 8 ms 88.70%，空间 10.5 MB 79.45%
 class Solution {
 private:
 	int quickSelect(vector<int>& nums, int left, int right, int index) {
@@ -115,6 +115,69 @@ private:
 
 public:
 	int minMoves2(vector<int> & nums) {
+		int n = nums.size(), mid = n >> 1;
+		int median = 0;
+		if (n & 1) {
+			median = quickSelect(nums, 0, n - 1, mid);
+		}
+		else {
+			median = (quickSelect(nums, 0, n - 1, mid - 1) + quickSelect(nums, 0, n - 1, mid)) >> 1;
+		}
+		int ret = 0;
+		for (int num : nums) {
+			ret += abs(num - median);
+		}
+		return ret;
+	}
+};
+
+// 我的解法五：三数取中+快速选择算法，时间 8 ms 88.70%，空间 10.6 MB 67.12%
+class Solution {
+private:
+	int quickSelect(vector<int>& nums, int left, int right, int target) {
+		while (left < right) {
+			int mid = partition(nums, left, right);
+			if (mid == target) {
+				return nums[mid];
+			}
+			else if (mid < target) {
+				left = mid + 1;
+			}
+			else {
+				right = mid - 1;
+			}
+		}
+		return nums[left];
+	}
+
+	int partition(vector<int>& nums, int left, int right) {
+		int mid = (left + right) >> 1;
+		if (nums[left] > nums[right]) {
+			swap(nums[left], nums[right]);
+		}
+		if (nums[mid] > nums[right]) {
+			swap(nums[right], nums[mid]);
+		}
+		if (nums[mid] > nums[left]) {
+			swap(nums[mid], nums[left]);
+		}
+		int key = nums[left];
+		while (left < right) {
+			while (left < right && key <= nums[right]) {
+				--right;
+			}
+			nums[left] = nums[right];
+			while (left < right && nums[left] <= key) {
+				++left;
+			}
+			nums[right] = nums[left];
+		}
+		nums[left] = key;
+		return right;
+	}
+
+public:
+	int minMoves2(vector<int>& nums) {
 		int n = nums.size(), mid = n >> 1;
 		int median = 0;
 		if (n & 1) {
