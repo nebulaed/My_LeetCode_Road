@@ -180,8 +180,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 665  | [非递减数列](./Code/665.非递减数列.cpp) | Non-decreasing Array | 27.2% | Medium |
 | 680  | [验证回文字符串II](./Code/680.验证回文字符串II.cpp) | Valid Palindrome II | 40.0% | Easy |
 | 695  | [岛屿的最大面积](./Code/695.岛屿的最大面积.cpp) | Max Area of Island | 66.9% | Medium |
-| 714  | [买卖股票的最佳时机含手续费](./Code/714.买卖股票的最佳时机含手续费.cpp) | Best Time to Buy and Sell Stock with Transaction Fee | 
-73.0% | Medium |
+| 714  | [买卖股票的最佳时机含手续费](./Code/714.买卖股票的最佳时机含手续费.cpp) | Best Time to Buy and Sell Stock with Transaction Fee | 73.0% | Medium |
 | 763  | [划分字母区间](./Code/763.划分字母区间.cpp) | Partition Labels | 76.3% | Medium |
 | 932  | [漂亮数组](./Code/932.漂亮数组.cpp) | Beautiful Array | 63.8% | Medium |
 | 934  | [最短的桥](./Code/934.最短的桥.cpp) | Shortest Bridge | 47.1% | Medium |
