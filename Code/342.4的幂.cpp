@@ -1,6 +1,6 @@
 #include<iostream>
 
-// 我的解法：时间 0 ms 100%，空间 5.9 MB 40.07%
+// 我的解法：时间 O(1) 0 ms 100%，空间 O(1) 5.9 MB 40.07%
 class Solution {
 public:
 	bool isPowerOfFour(int n) {
@@ -16,10 +16,20 @@ public:
 	}
 };
 
-// LeetCode 101解法：思路同上，更简洁，时间 4 ms 38.04%，空间 5.9 MB 42.55%
+// LeetCode 101解法：思路同上，更简洁，时间 O(1) 4 ms 38.04%，空间 O(1) 5.9 MB 42.55%
 class Solution {
 public:
 	bool isPowerOfFour(int n) {
 		return n > 0 && !(n & (n - 1)) && (n & 1431655765);
+	}
+};
+
+// 官方解法二：取模性质，时间 O(1) 0 ms 100%，空间 O(1) 5.9 MB 26.83%
+// 4^x = (3 + 1)^x = 1^x = 1 (mod 3)
+// 若n是4的幂，会发现它除以3的余数一定是1，若n是2的幂却不是4的幂，它可以表示为4^x×2，此时它除以3的余数一定为2
+class Solution {
+public:
+	bool isPowerOfFour(int n) {
+		return n > 0 && !(n & (n - 1)) && n % 3 == 1;
 	}
 };

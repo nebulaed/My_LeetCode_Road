@@ -107,3 +107,40 @@ public:
 		return dp;
 	}
 };
+
+// 直接使用内置函数，时间 0 ms 100%，空间 7.8 MB 36.09%
+class Solution {
+public:
+	vector<int> countBits(int n) {
+		vector<int> ret(n + 1);
+		for (int i = 0; i <= n; ++i) {
+			ret[i] = __builtin_popcount(i);
+		}
+		return ret;
+	}
+};
+
+// LeetCode 101解法：时间 8 ms 24.79%，空间 7.7 MB 50.06%
+class Solution {
+public:
+	vector<int> countBits(int n) {
+		vector<int> dp(n + 1, 0);
+		for (int i = 1; i <= n; ++i) {
+			dp[i] = i & 1 ? dp[i - 1] + 1 : dp[i >> 1];
+		}
+		return dp;
+	}
+};
+
+
+// LeetCode 101解法：时间 4 ms 86.73%，空间 7.8 MB 40.80%
+class Solution {
+public:
+	vector<int> countBits(int n) {
+		vector<int> dp(n + 1, 0);
+		for (int i = 1; i <= n; ++i) {
+			dp[i] = dp[i & (i - 1)] + 1;
+		}
+		return dp;
+	}
+};
