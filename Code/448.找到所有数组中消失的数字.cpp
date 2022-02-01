@@ -75,6 +75,29 @@ public:
 	}
 };
 
+// LeetCode 101解法：时间 O(n) 40 ms 85.10%，空间 32.8 MB 85.50%
+// 思路：将已出现的数字对应的位置的数字变为负数，然后遍历整个数组将非负的位置对应的数字放入结果中
+// 相当于把原数组当成哈希表来使用或者桶来使用
+class Solution {
+public:
+	vector<int> findDisappearedNumbers(vector<int>& nums) {
+		for (int num : nums) {
+			int& cur = nums[abs(num) - 1];
+			if (cur > 0) {
+				cur = -cur;
+			}
+		}
+		vector<int> ret;
+		int n = nums.size();
+		for (int i = 0; i < n; ++i) {
+			if (nums[i] > 0) {
+				ret.emplace_back(i + 1);
+			}
+		}
+		return ret;
+	}
+};
+
 int main() {
 
 	vector<int> nums = { 4,3,2,7,8,2,3,1 };

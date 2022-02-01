@@ -61,6 +61,34 @@ public:
 	}
 };
 
+
+// 官方解法：辅助栈的vector实现，时间 24 ms 40.77%，空间 15.9 MB 58.35%
+class MinStack {
+private:
+	vector<int> x_stack;
+	vector<int> min_stack;
+public:
+	MinStack() : min_stack{ INT_MAX } {}
+
+	void push(int val) {
+		x_stack.emplace_back(val);
+		min_stack.emplace_back(min(min_stack.back(), val));
+	}
+
+	void pop() {
+		x_stack.pop_back();
+		min_stack.pop_back();
+	}
+
+	int top() {
+		return x_stack.back();
+	}
+
+	int getMin() {
+		return min_stack.back();
+	}
+};
+
 // 评论解法：栈+差值，时间O(1)，空间O(1)
 class MinStack {
 private:
@@ -96,5 +124,67 @@ public:
 
 	int getMin() {
 		return minVal;
+	}
+};
+
+// 我的解法：用vector实现最小栈，时间 24 ms 40.77%，空间 15.9 MB 65.62%
+class MinStack {
+private:
+	vector<int> stk;
+	vector<int> minVal;
+public:
+	MinStack() {}
+
+	void push(int val) {
+		stk.emplace_back(val);
+		if (minVal.empty() || minVal.back() >= val) {
+			minVal.emplace_back(val);
+		}
+	}
+
+	void pop() {
+		if (stk.back() == minVal.back()) {
+			minVal.pop_back();
+		}
+		stk.pop_back();
+	}
+
+	int top() {
+		return stk.back();
+	}
+
+	int getMin() {
+		return minVal.back();
+	}
+};
+
+// LeetCode 101解法：时间 20 ms 74.54%，空间 16 MB 41.69%
+class MinStack {
+private:
+	stack<int> stk;
+	stack<int> minVal;
+public:
+	MinStack() {}
+
+	void push(int val) {
+		stk.emplace(val);
+		if (minVal.empty() || minVal.top() >= val) {
+			minVal.emplace(val);
+		}
+	}
+
+	void pop() {
+		if (stk.top() == minVal.top()) {
+			minVal.pop();
+		}
+		stk.pop();
+	}
+
+	int top() {
+		return stk.top();
+	}
+
+	int getMin() {
+		return minVal.top();
 	}
 };

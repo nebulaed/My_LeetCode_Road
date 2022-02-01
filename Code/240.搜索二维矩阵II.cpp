@@ -103,3 +103,26 @@ public:
 		return false;
 	}
 };
+
+// LeetCode 101解法：时间 72 ms 96.42%，空间 14.5 MB 56.87%
+class Solution {
+public:
+	bool searchMatrix(vector<vector<int>>& matrix, int target) {
+		int m = matrix.size();
+		if (m == 0) return false;
+		int n = matrix[0].size(), i = 0, j = n - 1;
+		while (i < m && j >= 0) {
+			int cur = matrix[i][j];
+			if (cur == target) {
+				return true;
+			}
+			else if (cur > target) {
+				--j;
+			}
+			else {
+				++i;
+			}
+		}
+		return false;
+	}
+};
