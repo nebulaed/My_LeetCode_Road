@@ -141,6 +141,63 @@ public:
 	}
 };
 
+// 我的第二次解法：时间 52 ms 85%，空间 30.1 MB 50%
+class Solution {
+public:
+	int longestConsecutive(vector<int>& nums) {
+		if (nums.empty()) return 0;
+		int maxLength = 1;
+		unordered_map<int, int> numMap;
+		for (int num : nums) {
+			numMap[num] = 1;
+		}
+		for (auto& [curNum, curLength] : numMap) {
+			int nextNum = curNum;
+			while (numMap.count(++nextNum)) {
+				if (numMap[nextNum] != 1) {
+					curLength += numMap[nextNum];
+					numMap.erase(nextNum);
+					break;
+				}
+				else {
+					++curLength;
+					numMap.erase(nextNum);
+				}
+			}
+			int prevNum = curNum;
+			while (numMap.count(--prevNum)) {
+				++curLength;
+				numMap.erase(prevNum);
+			}
+			maxLength = max(curLength, maxLength);
+		}
+		return maxLength;
+	}
+};
+
+// LeetCode 101解法：哈希集合，时间 52 ms 84.57%，空间 28.3 MB 82.71%
+// 把所有数字放到一个哈希表，然后不断地从哈希表中任意取一个值，并删除掉其之前之后的所有连续数字，然后更新目前的最长连续序列长度。重复这一过程，我们就可以找到所有的连续数字序列。
+class Solution {
+public:
+	int longestConsecutive(vector<int>& nums) {
+		unordered_set<int> numSet(nums.begin(), nums.end());
+		int ret = 0;
+		while (!numSet.empty()) {
+			int cur = *(numSet.begin());
+			numSet.erase(cur);
+			int next = cur, prev = cur;
+			while (numSet.count(++next)) {
+				numSet.erase(next);
+			}
+			while (numSet.erase(--prev)) {
+				numSet.erase(prev);
+			}
+			ret = max(ret, next - prev - 1);
+		}
+		return ret;
+	}
+};
+
 int main() {
 
 	vector<int> nums = { 100, 4, 200, 1, 3, 2 };

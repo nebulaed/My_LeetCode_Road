@@ -73,3 +73,40 @@ public:
 		return merge(lists, 0, lists.size() - 1);
 	}
 };
+
+// LeetCode 101解法：优先队列，时间 20 ms 80.19%，空间 13 MB 60.08%
+// 把所有的链表存储在一个优先队列中，每次提取所有链表头部节点值最小的那个节点，直到所有链表都被提取完为止。注意因为Comp 函数默认是对最大堆进行比较并维持递增关系，如果我们想要获取最小的节点值，则我们需要实现一个最小堆，因此比较函数应该维持递减关系，所以operator() 中返回时用大于号而不是等增关系时的小于号进行比较。
+class Comp {
+public:
+	bool operator() (ListNode* lhs, ListNode* rhs) {
+		return lhs->val > rhs->val;
+	}
+};
+
+class Solution {
+public:
+	ListNode* mergeKLists(vector<ListNode*>& lists) {
+		if (lists.empty()) return nullptr;
+		// 构建小顶堆
+		priority_queue<ListNode*, vector<ListNode*>, Comp> q;
+		// 将所有链表的开头放到优先队列中，会自动按照值的大小排列
+		for (ListNode* list : lists) {
+			if (list) {
+				q.emplace(list);
+			}
+		}
+		// 构造头节点，方便循环
+		ListNode* dummy = new ListNode(0), * cur = dummy;
+		while (!q.empty()) {
+			// 从优先队列中取出值最小的节点q.top()接到cur后面
+			cur->next = q.top();
+			q.pop();
+			cur = cur->next;
+			// 若cur->next非空，说明这个链表后面还有节点，将cur->next放回优先队列中按值大小构造小顶堆
+			if (cur->next) {
+				q.emplace(cur->next);
+			}
+		}
+		return dummy->next;
+	}
+};

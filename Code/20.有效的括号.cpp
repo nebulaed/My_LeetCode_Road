@@ -65,6 +65,30 @@ public:
 	}
 };
 
+// 我的解法：时间 4 ms 17.98%，空间 6 MB 96.87%
+class Solution {
+public:
+	bool isValid(string s) {
+		stack<char> parsed;
+		for (char ch : s) {
+			if (ch == '{' || ch == '[' || ch == '(') {
+				parsed.emplace(ch);
+			}
+			else {
+				if (parsed.empty()) return false;
+				char prev = parsed.top();
+				if ((ch == ')' && prev == '(') || (ch == '}' && prev == '{') || (ch == ']' && prev == '[')) {
+					parsed.pop();
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		return parsed.empty();
+	}
+};
+
 int main() {
 	string s = "([)]";
 

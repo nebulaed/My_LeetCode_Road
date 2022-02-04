@@ -97,3 +97,30 @@ public:
 		return ans;
 	}
 };
+
+// LeetCode 101解法：双端单调队列，时间 O(n) 232 ms 48.42%，空间 O(k) 124.1 MB 98.07%
+class Solution {
+public:
+	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+		int n = nums.size(), ind = 0;
+		deque<int> window;
+		vector<int> ret(n - k + 1, 0);
+		for (int i = 0; i < n; ++i) {
+			// 每当向右移动时，把窗口左端的值从队列左端剔除
+			if (!window.empty() && window.front() == i - k) {
+				window.pop_front();
+			}
+			// 每当向右移动时，把队列右边小于窗口右端的值全部剔除
+			while (!window.empty() && nums[window.back()] < nums[i]) {
+				window.pop_back();
+			}
+			// 放入当前位置
+			window.emplace_back(i);
+			// 当位置大于等于窗口大小减1时，更新结果数组对应位置
+			if (i >= k - 1) {
+				ret[ind++] = nums[window.front()];
+			}
+		}
+		return ret;
+	}
+};
