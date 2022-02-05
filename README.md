@@ -87,6 +87,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 124  | [二叉树中的最大路径和](./Code/124.二叉树中的最大路径和.cpp) | Binary Tree Maximum Path Sum | 44.6% | Hard |
 | 126  | [单词接龙II](./Code/126.单词接龙II.cpp) | Word Ladder II | 40.0% | Hard |
 | 128  | [最长连续序列](./Code/128.最长连续序列.cpp) | Longest Consecutive Sequence | 54.4% | Hard |
+| 129  | [求根节点到叶节点数字之和](./Code/129.求根节点到叶节点数字之和.cpp) | Sum Root to Leaf Numbers | 68.8% | Medium |
 | 130  | [被围绕的区域](./Code/130.被围绕的区域.cpp) | Surrounded Regions | 45.1% | Medium |
 | 135  | [分发糖果](./Code/135.分发糖果.cpp) | Candy | 48.7% | Hard |
 | 136  | [只出现一次的数字](./Code/136.只出现一次的数字.cpp) | Single Number | 64.8% | Easy |
@@ -172,6 +173,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 470  | [用Rand7()实现Rand10()](./Code/470.用Rand7()实现Rand10().cpp) | Implement Rand10() Using Rand7() | 54.9% | Medium |
 | 474  | [一和零](./Code/474.一和零.cpp) | Ones and Zeroes | 61.8% | Medium |
 | 476  | [数字的补数](./Code/476.数字的补数.cpp) | Number Complement | 71.2% | Easy |
+| 478  | [在圆内随机生成点](./Code/478.在圆内随机生成点.cpp) | Generate Random Point in a Circle | 44.7% | Medium |
 | 494  | [目标和](./Code/494.目标和.cpp) | Target Sum | 49.1% | Medium |
 | 504  | [七进制数](./Code/504.七进制数.cpp) | Base 7 | 50.3% | Easy |
 | 524  | [通过删除字母匹配到字典里最长单词](./Code/524.通过删除字母匹配到字典里最长单词.cpp) | Longest Word in Dictionary through Deleting | 49.7% | Medium |
