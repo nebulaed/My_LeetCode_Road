@@ -95,6 +95,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 142  | [环形链表 II](./Code/142.环形链表II.cpp) | Linked List Cycle II | 55.4% | Medium |
 | 146  | [LRU缓存机制](./Code/146.LRU缓存机制.cpp) | LRU Cache | 52.4% | Medium |
 | 148  | [排序链表](./Code/148.排序链表.cpp) | Sort List | 66.6% | Medium |
+| 149  | [直线上最多的点数](./Code/149.直线上最多的点数.cpp) | Max Points on a Line | 35.5% | Hard |
 | 152  | [乘积最大子数组](./Code/152.乘积最大子数组.cpp) | Maximum Product Subarray | 42.2% | Medium |
 | 154  | [寻找旋转排序数组中的最小值II](./Code/154.寻找旋转排序数组中的最小值II.cpp) | Find Minimum in Rotated Sorted Array II | 53.1% | Hard |
 | 155  | [最小栈](./Code/155.最小栈.cpp) | Min Stack | 57.5% | Easy |
@@ -115,8 +116,10 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 210  | [课程表II](./Code/210.课程表II.cpp) | Course Schedule II | 54.6% | Medium |
 | 213  | [打家劫舍II](./Code/213.打家劫舍II.cpp) | House Robber II | 43.5% | Medium |
 | 215  | [数组中的第K个最大元素](./Code/215.数组中的第K个最大元素.cpp) | Kth Largest Element in an Array | 64.7% | Medium |
+| 218  | [天际线问题](./Code/218.天际线问题.cpp) | The Skyline Problem | 54.3% | Hard |
 | 221  | [最大正方形](./Code/221.最大正方形.cpp) | Maximal Square | 47.9% | Medium |
 | 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
+| 232  | [用栈实现队列](./Code/232.用栈实现队列.cpp) | Implement Queue using Stacks | 69.0% | Easy |
 | 234  | [回文链表](./Code/234.回文链表.cpp) | Palindrome Linked List | 50.2% | Easy |
 | 236  | [二叉树的最近公共祖先](./Code/236.二叉树的最近公共祖先.cpp) | Lowest Common Ancestor of a Binary Tree | 68.3% | Medium |
 | 238  | [除自身以外数组的乘积](./Code/238.除自身以外数组的乘积.cpp) | Product of Array Except Self | 72.5% | Medium |
@@ -125,6 +128,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 241  | [为运算表达式设计优先级](./Code/241.为运算表达式设计优先级.cpp) | Different Ways to Add Parentheses | 73.6% | Medium |
 | 253  | [会议室II](./Code/253.会议室II.cpp) | Meeting Rooms II | 50.5% | Medium |
 | 257  | [二叉树的所有路径](./Code/257.二叉树的所有路径.cpp) | Binary Tree Paths | 68.9% | Easy |
+| 260  | [只出现一次的数字III](./Code/260.只出现一次的数字III.cpp) | Single Number III | 74.0% | Medium |
 | 268  | [丢失的数字](./Code/268.丢失的数字.cpp) | Missing Number | 65.3% | Easy |
 | 279  | [完全平方数](./Code/279.完全平方数.cpp) | Perfect Squares | 63.6% | Medium |
 | 283  | [移动零](./Code/283.移动零.cpp) | Move Zeroes | 64.0% | Easy |
@@ -133,6 +137,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 297  | [二叉树的序列化和反序列化](./Code/297.二叉树的序列化和反序列化.cpp) | Serialize and Deserialize Binary Tree | 56.4% | Hard |
 | 300  | [最长递增子序列](./Code/300.最长递增子序列.cpp) | Longest Increasing Subsequence | 52.2% | Medium |
 | 301  | [删除无效的括号](./Code/301.删除无效的括号.cpp) | Remove Invalid Parentheses | 54.8% | Hard |
+| 303  | [区域和检索-数组不可变](./Code/303.区域和检索-数组不可变.cpp) | Range Sum Query - Immutable | 73.5% | Easy |
 | 304  | [二维区域和检索-矩阵不可变](./Code/304.二维区域和检索-矩阵不可变.cpp) | Range Sum Query 2D - Immutable | 56.0% | Medium |
 | 309  | [最佳买卖股票时机含冷冻期](./Code/309.最佳买卖股票时机含冷冻期.cpp) | Best Time to Buy and Sell Stock with Cooldown | 61.7% | Medium |
 | 310  | [最小高度树](./Code/310.最小高度树.cpp) | Minimum Height Trees | 38.4% | Medium |
@@ -140,6 +145,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 318  | [最长单词长度乘积](./Code/318.最长单词长度乘积.cpp) | Maximum Product of Word Lengths | 73.8% | Medium |
 | 322  | [零钱兑换](./Code/322.零钱兑换.cpp) | Coin Change | 44.8% | Medium |
 | 326  | [3的幂](./Code/326.3的幂.cpp) | Power of Three | 50.5% | Easy |
+| 332  | [重新安排行程](./Code/332.重新安排行程.cpp) | Reconstruct Itinerary | 45.3% | Hard |
 | 337  | [打家劫舍 III](./Code/337.打家劫舍III.cpp) | House Robber III | 60.7% | Medium |
 | 338  | [比特位计数](./Code/338.比特位计数.cpp) | Counting Bits | 78.7% | Easy |
 | 340  | [至多包含K个不同字符的最长子串](./Code/340.至多包含K个不同字符的最长子串.cpp) | Longest Substring with At Most K Distinct Characters | 49.8% | Medium |
@@ -165,6 +171,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 462  | [最少移动次数使数组元素相等II](./Code/462.最少移动次数使数组元素相等II.cpp) | Minimum Moves to Equal Array Elements II | 61.1% | Medium |
 | 470  | [用Rand7()实现Rand10()](./Code/470.用Rand7()实现Rand10().cpp) | Implement Rand10() Using Rand7() | 54.9% | Medium |
 | 474  | [一和零](./Code/474.一和零.cpp) | Ones and Zeroes | 61.8% | Medium |
+| 476  | [数字的补数](./Code/476.数字的补数.cpp) | Number Complement | 71.2% | Easy |
 | 494  | [目标和](./Code/494.目标和.cpp) | Target Sum | 49.1% | Medium |
 | 504  | [七进制数](./Code/504.七进制数.cpp) | Base 7 | 50.3% | Easy |
 | 524  | [通过删除字母匹配到字典里最长单词](./Code/524.通过删除字母匹配到字典里最长单词.cpp) | Longest Word in Dictionary through Deleting | 49.7% | Medium |
@@ -172,6 +179,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 540  | [有序数组中的单一元素](./Code/540.有序数组中的单一元素.cpp) | Single Element in a Sorted Array | 58.4% | Medium |
 | 542  | [01矩阵](./Code/542.01矩阵.cpp) | 01 Matrix | 45.8% | Medium |
 | 547  | [省份数量](./Code/547.省份数量.cpp) | Number of Provinces | 61.9% | Medium |
+| 560  | [和为K的子数组](./Code/560.和为K的子数组.cpp) | Subarray Sum Equals K | 44.7% | Medium |
 | 583  | [两个字符串的删除操作](./Code/583.两个字符串的删除操作.cpp) | Delete Operation for Two Strings | 63.0% | Medium |
 | 605  | [种花问题](./Code/605.种花问题.cpp) | Can Place Flowers | 33.2% | Easy |
 | 633  | [平方数之和](./Code/633.平方数之和.cpp) | Sum of Square Numbers | 39.5% | Medium |
@@ -179,10 +187,14 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 650  | [只有两个键的键盘](./Code/650.只有两个键的键盘.cpp) | 2 Keys Keyboard | 56.8% | Medium |
 | 665  | [非递减数列](./Code/665.非递减数列.cpp) | Non-decreasing Array | 27.2% | Medium |
 | 680  | [验证回文字符串II](./Code/680.验证回文字符串II.cpp) | Valid Palindrome II | 40.0% | Easy |
+| 693  | [交替位二进制数](./Code/693.交替位二进制数.cpp) | Binary Number with Alternating Bits | 60.9% | Easy |
 | 695  | [岛屿的最大面积](./Code/695.岛屿的最大面积.cpp) | Max Area of Island | 66.9% | Medium |
 | 714  | [买卖股票的最佳时机含手续费](./Code/714.买卖股票的最佳时机含手续费.cpp) | Best Time to Buy and Sell Stock with Transaction Fee | 73.0% | Medium |
+| 739  | [每日温度](./Code/739.每日温度.cpp) | Daily Temperatures | 68.5% | Medium |
 | 763  | [划分字母区间](./Code/763.划分字母区间.cpp) | Partition Labels | 76.3% | Medium |
+| 769  | [最多能完成排序的块](./Code/769.最多能完成排序的块.cpp) | Max Chunks To Make Sorted | 58.4% | Medium |
 | 932  | [漂亮数组](./Code/932.漂亮数组.cpp) | Beautiful Array | 63.8% | Medium |
 | 934  | [最短的桥](./Code/934.最短的桥.cpp) | Shortest Bridge | 47.1% | Medium |
 | 990  | [等式方程的可满足性](./Code/990.等式方程的可满足性.cpp) | Satisfiability of Equality Equations | 50.8% | Medium |
+| 1009  | [十进制整数的反码](./Code/1009.十进制整数的反码.cpp) | Complement of Base 10 Integer | 59.0% | Easy |
 | 1143  | [最长公共子序列](./Code/1143.最长公共子序列.cpp) | Longest Common Subsequence | 63.9% | Medium |
