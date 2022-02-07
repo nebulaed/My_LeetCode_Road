@@ -119,6 +119,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 215  | [数组中的第K个最大元素](./Code/215.数组中的第K个最大元素.cpp) | Kth Largest Element in an Array | 64.7% | Medium |
 | 218  | [天际线问题](./Code/218.天际线问题.cpp) | The Skyline Problem | 54.3% | Hard |
 | 221  | [最大正方形](./Code/221.最大正方形.cpp) | Maximal Square | 47.9% | Medium |
+| 225  | [用队列实现栈](./Code/225.用队列实现栈.cpp) | Implement Stack using Queues | 67.6% | Easy |
 | 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
 | 232  | [用栈实现队列](./Code/232.用栈实现队列.cpp) | Implement Queue using Stacks | 69.0% | Easy |
 | 234  | [回文链表](./Code/234.回文链表.cpp) | Palindrome Linked List | 50.2% | Easy |
@@ -182,6 +183,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 542  | [01矩阵](./Code/542.01矩阵.cpp) | 01 Matrix | 45.8% | Medium |
 | 547  | [省份数量](./Code/547.省份数量.cpp) | Number of Provinces | 61.9% | Medium |
 | 560  | [和为K的子数组](./Code/560.和为K的子数组.cpp) | Subarray Sum Equals K | 44.7% | Medium |
+| 566  | [重塑矩阵](./Code/566.重塑矩阵.cpp) | Reshape the Matrix | 67.5% | Easy |
 | 583  | [两个字符串的删除操作](./Code/583.两个字符串的删除操作.cpp) | Delete Operation for Two Strings | 63.0% | Medium |
 | 605  | [种花问题](./Code/605.种花问题.cpp) | Can Place Flowers | 33.2% | Easy |
 | 633  | [平方数之和](./Code/633.平方数之和.cpp) | Sum of Square Numbers | 39.5% | Medium |
