@@ -176,6 +176,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 476  | [数字的补数](./Code/476.数字的补数.cpp) | Number Complement | 71.2% | Easy |
 | 478  | [在圆内随机生成点](./Code/478.在圆内随机生成点.cpp) | Generate Random Point in a Circle | 44.7% | Medium |
 | 494  | [目标和](./Code/494.目标和.cpp) | Target Sum | 49.1% | Medium |
+| 503  | [下一个更大元素II](./Code/503.下一个更大元素II.cpp) | Next Greater Element II | 64.3% | Medium |
 | 504  | [七进制数](./Code/504.七进制数.cpp) | Base 7 | 50.3% | Easy |
 | 524  | [通过删除字母匹配到字典里最长单词](./Code/524.通过删除字母匹配到字典里最长单词.cpp) | Longest Word in Dictionary through Deleting | 49.7% | Medium |
 | 528  | [按权重随机选择](./Code/528.按权重随机选择.cpp) | Random Pick with Weight | 48.0% | Medium |
