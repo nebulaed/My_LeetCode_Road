@@ -36,6 +36,7 @@ public:
 };
 
 // 官方解法：田忌赛马，时间 136 ms 57.79%，空间 58.3 MB 90.23%
+// 对比于上面采用红黑树多重集合，避免了每次使用二分查找
 class Solution {
 public:
 	vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
@@ -52,11 +53,15 @@ public:
 		size_t id1 = n - 1, id2 = n - 1;
 		while (id1 != -1 && id2 != -1) {
 			int originalID2 = idx[id2];
+			//当nums1当前位置的值能击败nums2当前位置的值时
 			if (nums1[id1] > nums2[originalID2]) {
+				//将结果数组对应位置设置为能击败nums2的该值，并让id1自减1
 				ret[originalID2] = nums1[id1--];
 			}
+			//无论比不比得过id2都应自减1
 			--id2;
 		}
+		//若id1不为-1，说明结果数组还有一些位置未填充
 		if (id1 != -1) {
 			for (int& num : ret) {
 				if (num == -1) {
@@ -68,7 +73,8 @@ public:
 	}
 };
 
-// 官方解法改进：田忌赛马，时间 116 ms 85.55%，空间 60 MB 78.33%
+// 官方解法改进：田忌赛马，时间 116 ms 85.55%，空间 60 MB 78.33%(使用pool_alloc可减少为59.9 MB 78.62%)
+// 不采用索引数组根据原数组排序，而是直接构建vector<pair<int, size_t>>，根据first排序，效率更高，且避免后面while循环需要两次operator[]
 class Solution {
 public:
 	vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
