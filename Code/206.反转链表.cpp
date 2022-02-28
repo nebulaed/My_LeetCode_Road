@@ -80,3 +80,29 @@ public:
 		return newHead;
 	}
 };
+
+// LeetCode 101解法：时间 4 ms 94.31%，空间 8.1 MB 60.05%
+class Solution {
+public:
+	ListNode* reverseList(ListNode* head, ListNode* prev = nullptr) {
+		if (!head) return prev;
+		ListNode* next = head->next;
+		head->next = prev;
+		return reverseList(next, head);
+	}
+};
+
+// 我的第二次解法：时间 4 ms 94.36%，空间 8 MB 90.09%
+class Solution {
+public:
+	ListNode* reverseList(ListNode* head) {
+		ListNode* prev = nullptr, * curr = head, * next = nullptr;
+		while (curr) {
+			next = curr->next;
+			curr->next = prev;
+			prev = curr;
+			curr = next;
+		}
+		return prev;
+	}
+};
