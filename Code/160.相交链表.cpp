@@ -44,3 +44,16 @@ public:
 		return ptrA;
 	}
 };
+
+// 我的解法：双指针，时间 36 ms 89.83%，空间 14.3 MB 49.31%
+class Solution {
+public:
+	ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+		ListNode* ptrA = headA, * ptrB = headB;
+		while (ptrA != ptrB) {
+			ptrA = (ptrA == nullptr ? headB : ptrA->next);
+			ptrB = (ptrB == nullptr ? headA : ptrB->next);
+		}
+		return ptrA;
+	}
+};

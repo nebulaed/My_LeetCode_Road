@@ -77,6 +77,28 @@ public:
 	}
 };
 
+// LeetCode 101解法：时间 0 ms 100%，空间 7.5 MB 5.31%
+class Solution {
+public:
+	ListNode* swapPairs(ListNode* head) {
+		ListNode* p = head, * s = nullptr;
+		if (p && p->next) {
+			s = p->next;
+			p->next = s->next;
+			s->next = p;
+			head = s;
+			while (p->next && p->next->next) {
+				s = p->next->next;
+				p->next->next = s->next;
+				s->next = p->next;
+				p->next = s;
+				p = s->next;
+			}
+		}
+		return head;
+	}
+};
+
 int main() {
 
 
