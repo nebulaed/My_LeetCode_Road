@@ -1,7 +1,7 @@
 # My_LeetCode_Road
 This is my record of practicing programming skills on LeetCode since 2021.
 
-## Data Structures and Algorithms
+## 1. Data Structures and Algorithms
 | No.  | Chinese Title                                                | Englist Title                                            | Acceptance | Difficulty |
 | :--- | :----------------------------------------------------------- | :------------------------------------------------------ | :--------: | :--------: |
 | 1    | [两数之和](./Code/1.两数之和.cpp)                               | Two Sum                                                 |   52.2%    |    Easy    |
@@ -213,7 +213,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 1143  | [最长公共子序列](./Code/1143.最长公共子序列.cpp) | Longest Common Subsequence | 63.9% | Medium |
 
 
-## MySQL Database
+## 2. MySQL Database
 | No.  | Chinese Title                                                | Englist Title                                            | Acceptance | Difficulty |
 | :--- | :----------------------------------------------------------- | :------------------------------------------------------ | :--------: | :--------: |
 | 175  | [组合两个表](./Code/175.组合两个表.sql) | Combine Two Tables | 73.4% | Easy |
