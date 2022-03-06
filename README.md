@@ -1,6 +1,7 @@
 # My_LeetCode_Road
 This is my record of practicing programming skills on LeetCode since 2021.
 
+## Data Structures and Algorithms
 | No.  | Chinese Title                                                | Englist Title                                            | Acceptance | Difficulty |
 | :--- | :----------------------------------------------------------- | :------------------------------------------------------ | :--------: | :--------: |
 | 1    | [两数之和](./Code/1.两数之和.cpp)                               | Two Sum                                                 |   52.2%    |    Easy    |
@@ -121,6 +122,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 221  | [最大正方形](./Code/221.最大正方形.cpp) | Maximal Square | 47.9% | Medium |
 | 225  | [用队列实现栈](./Code/225.用队列实现栈.cpp) | Implement Stack using Queues | 67.6% | Easy |
 | 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
+| 227  | [基本计算器II](./Code/227.基本计算器II.cpp) | Basic Calculator II | 43.8% | Medium |
 | 232  | [用栈实现队列](./Code/232.用栈实现队列.cpp) | Implement Queue using Stacks | 69.0% | Easy |
 | 234  | [回文链表](./Code/234.回文链表.cpp) | Palindrome Linked List | 50.2% | Easy |
 | 236  | [二叉树的最近公共祖先](./Code/236.二叉树的最近公共祖先.cpp) | Lowest Common Ancestor of a Binary Tree | 68.3% | Medium |
@@ -128,6 +130,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 239  | [滑动窗口最大值](./Code/239.滑动窗口最大值.cpp) | Sliding Window Maximum | 49.7% | Hard |
 | 240  | [搜索二维矩阵II](./Code/240.搜索二维矩阵II.cpp) | Search a 2D Matrix II | 49.8% | Medium |
 | 241  | [为运算表达式设计优先级](./Code/241.为运算表达式设计优先级.cpp) | Different Ways to Add Parentheses | 73.6% | Medium |
+| 242  | [有效的字母异位词](./Code/242.有效的字母异位词.cpp) | Valid Anagram | 65.0% | Easy |
 | 253  | [会议室II](./Code/253.会议室II.cpp) | Meeting Rooms II | 50.5% | Medium |
 | 257  | [二叉树的所有路径](./Code/257.二叉树的所有路径.cpp) | Binary Tree Paths | 68.9% | Easy |
 | 260  | [只出现一次的数字III](./Code/260.只出现一次的数字III.cpp) | Single Number III | 74.0% | Medium |
@@ -160,6 +163,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 394  | [字符串解码](./Code/394.字符串解码.cpp) | Decode String | 55.5% | Medium |
 | 399  | [除法求值](./Code/399.除法求值.cpp) | Evaluate Division | 59.1% | Medium |
 | 406  | [根据身高重建队列](./Code/406.根据身高重建队列.cpp) | Queue Reconstruction by Height | 74.0% | Medium |
+| 409  | [最长回文串](./Code/409.最长回文串.cpp) | Longest Palindrome | 55.6% | Easy |
 | 413  | [等差数列划分](./Code/413.等差数列划分.cpp) | Arithmetic Slices | 69.1% | Medium |
 | 415  | [字符串相加](./Code/415.字符串相加.cpp) | Add Strings | 54.3% | Easy |
 | 416  | [分割等和子集](./Code/416.分割等和子集.cpp) | Partition Equal Subset Sum | 51.1% | Medium |
@@ -189,17 +193,35 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 605  | [种花问题](./Code/605.种花问题.cpp) | Can Place Flowers | 33.2% | Easy |
 | 633  | [平方数之和](./Code/633.平方数之和.cpp) | Sum of Square Numbers | 39.5% | Medium |
 | 646  | [最长数对链](./Code/646.最长数对链.cpp) | Maximum Length of Pair Chain | 58.0% | Medium |
+| 647  | [回文子串](./Code/647.回文子串.cpp) | Palindromic Substrings | 66.1% | Medium |
 | 650  | [只有两个键的键盘](./Code/650.只有两个键的键盘.cpp) | 2 Keys Keyboard | 56.8% | Medium |
 | 665  | [非递减数列](./Code/665.非递减数列.cpp) | Non-decreasing Array | 27.2% | Medium |
 | 680  | [验证回文字符串II](./Code/680.验证回文字符串II.cpp) | Valid Palindrome II | 40.0% | Easy |
 | 693  | [交替位二进制数](./Code/693.交替位二进制数.cpp) | Binary Number with Alternating Bits | 60.9% | Easy |
 | 695  | [岛屿的最大面积](./Code/695.岛屿的最大面积.cpp) | Max Area of Island | 66.9% | Medium |
+| 696  | [计数二进制子串](./Code/696.计数二进制子串.cpp) | Count Binary Substrings | 63.5% | Easy |
 | 714  | [买卖股票的最佳时机含手续费](./Code/714.买卖股票的最佳时机含手续费.cpp) | Best Time to Buy and Sell Stock with Transaction Fee | 73.0% | Medium |
 | 739  | [每日温度](./Code/739.每日温度.cpp) | Daily Temperatures | 68.5% | Medium |
 | 763  | [划分字母区间](./Code/763.划分字母区间.cpp) | Partition Labels | 76.3% | Medium |
 | 769  | [最多能完成排序的块](./Code/769.最多能完成排序的块.cpp) | Max Chunks To Make Sorted | 58.4% | Medium |
+| 772  | [基本计算器III](./Code/772.基本计算器III.cpp) | Basic Calculator III | 50.3% | Hard |
+| 870  | [优势洗牌](./Code/870.优势洗牌.cpp) | Advantage Shuffle | 44.7% | Medium |
 | 932  | [漂亮数组](./Code/932.漂亮数组.cpp) | Beautiful Array | 63.8% | Medium |
 | 934  | [最短的桥](./Code/934.最短的桥.cpp) | Shortest Bridge | 47.1% | Medium |
 | 990  | [等式方程的可满足性](./Code/990.等式方程的可满足性.cpp) | Satisfiability of Equality Equations | 50.8% | Medium |
 | 1009  | [十进制整数的反码](./Code/1009.十进制整数的反码.cpp) | Complement of Base 10 Integer | 59.0% | Easy |
 | 1143  | [最长公共子序列](./Code/1143.最长公共子序列.cpp) | Longest Common Subsequence | 63.9% | Medium |
+
+
+## MySQL Database
+| No.  | Chinese Title                                                | Englist Title                                            | Acceptance | Difficulty |
+| :--- | :----------------------------------------------------------- | :------------------------------------------------------ | :--------: | :--------: |
+| 175  | [组合两个表](./Code/175.组合两个表.sql) | Combine Two Tables | 73.4% | Easy |
+| 176  | [第二高的薪水](./Code/176.第二高的薪水.sql) | Second Highest Salary | 35.4% | Medium |
+| 177  | [第N高的薪水](./Code/177.第N高的薪水.sql) | Nth Highest Salary | 46.4% | Medium |
+| 178  | [分数排名](./Code/178.分数排名.sql) | Rank Scores | 60.4% | Medium |
+| 180  | [连续出现的数字](./Code/180.连续出现的数字.sql) | Consecutive Numbers | 48.4% | Medium |
+| 181  | [超过经理收入的员工](./Code/181.超过经理收入的员工.sql) | Employees Earning More Than Their Managers | 69.4% | Easy |
+| 185  | [部门工资前三高的所有员工](./Code/185.部门工资前三高的所有员工.sql) | Department Top Three Salaries | 50.6% | Hard |
+| 196  | [删除重复的电子邮箱](./Code/196.删除重复的电子邮箱.sql) | Delete Duplicate Emails | 66.4% | Easy |
+| 197  | [上升的温度](./Code/197.上升的温度.sql) | Rising Temperature | 53.3% | Easy |
