@@ -38,7 +38,8 @@ public:
 			// 若queMax的元素数量比queMin的元素数量大
 			if (queMin.size() < queMax.size()) {
 				// 将queMax的最小值挪到的queMin中
-				queMin.emplace(queMax.top());
+				queMin.emplace(q`````````````````````````````````````````````````````````````````
+					+---ueMax.top());
 				queMax.pop();
 			}
 		}

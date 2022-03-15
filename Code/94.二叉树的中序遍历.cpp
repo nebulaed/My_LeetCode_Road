@@ -14,21 +14,21 @@ struct TreeNode {
 };
 
 // 我的解法=官方解法一：递归，时间O(n) 4 ms，空间O(n) 8.2 MB
-// class Solution{
-// public:
-//     void inorder(TreeNode* T, vector<int>& ret){
-//         if (T == nullptr) return;
-//         inorder(T->left, ret);
-//         ret.emplace_back(T->val);
-//         inorder(T->right, ret);
-//     }
+class Solution{
+public:
+    void inorder(TreeNode* T, vector<int>& ret){
+        if (T == nullptr) return;
+        inorder(T->left, ret);
+        ret.emplace_back(T->val);
+        inorder(T->right, ret);
+    }
 
-//     vector<int> inorderTraversal(TreeNode* root){
-//         vector<int> ret;
-//         inorder(root, ret);
-//         return ret;
-//     }
-// };
+    vector<int> inorderTraversal(TreeNode* root){
+        vector<int> ret;
+        inorder(root, ret);
+        return ret;
+    }
+};
 
 // 官方解法二：迭代，递归隐式地维护了一个栈，迭代时将其实现出来，时间O(n) 0 ms，空间O(n) 7.9 MB
 class Solution{
