@@ -86,6 +86,27 @@ public:
 	}
 };
 
+// 我的第二次解法：快慢指针，时间 4 ms 77.33%，空间 10.5 MB 13.80%
+class Solution {
+public:
+	ListNode* removeNthFromEnd(ListNode* head, int n) {
+		if (!head->next) return nullptr;
+		ListNode* dummy = new ListNode(0, head);
+		ListNode* slow = dummy, * fast = head;
+		while (n--) {
+			fast = fast->next;
+		}
+		while (fast) {
+			slow = slow->next;
+			fast = fast->next;
+		}
+		ListNode* temp = slow->next;
+		slow->next = slow->next->next;
+		delete temp;
+		return dummy->next;
+	}
+};
+
 int main() {
 
 }
