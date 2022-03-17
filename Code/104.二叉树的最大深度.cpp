@@ -87,3 +87,11 @@ public:
 		return ans;
 	}
 };
+
+// 我的解法：时间 4 ms 91.59%，空间 18.4 MB 40.53%
+class Solution {
+public:
+	int maxDepth(TreeNode* root) {
+		return root ? (max(maxDepth(root->left), maxDepth(root->right)) + 1) : 0;
+	}
+};

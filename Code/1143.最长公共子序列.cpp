@@ -75,13 +75,14 @@ public:
 		}
 
 		// 记录各长度公共子序列的末尾下标（text2中的下标）
-		vector<int> tails;  
-		for (auto ch : text1)
+		vector<int> tails;
+		for (char ch : text1)
 		{
+			// 对text1中的每个字符ch，检查其出现在text2中的所有位置record[ch-'a']
 			auto& idxs = record[ch - 'a'];
 			if (idxs.empty())
 				continue;
-
+			// 若tails为空或text1中字符ch在text2中最后出现位置在tails.back()后面，将其放入tails
 			if (tails.empty() || idxs.back() > tails.back())
 			{
 				tails.emplace_back(idxs.back());
@@ -95,5 +96,71 @@ public:
 			}
 		}
 		return tails.size();
+	}
+};
+
+// 我的解法：动态规划，时间 O(mn) 16 ms 90.87%，空间 O(mn) 12.7 MB 68.08%
+class Solution {
+public:
+	int longestCommonSubsequence(string text1, string text2) {
+		size_t m = text1.size(), n = text2.size();
+		vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+		for (size_t i = 1; i <= m; ++i) {
+			for (size_t j = 1; j <= n; ++j) {
+				if (text1[i - 1] == text2[j - 1]) {
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+				}
+				else {
+					dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+				}
+			}
+		}
+		return dp[m][n];
+	}
+};
+
+// 我的解法2：动态规划+滚动数组，时间 O(mn) 16 ms 90.87%，空间 O(n) 6.3 MB 96.79%
+class Solution {
+public:
+	int longestCommonSubsequence(string text1, string text2) {
+		size_t m = text1.size(), n = text2.size();
+		vector<int> dp(n + 1, 0);
+		for (size_t i = 1; i <= m; ++i) {
+			int temp = dp[0];
+			for (size_t j = 1; j <= n; ++j) {
+				int prev = temp;
+				temp = dp[j];
+				if (text1[i - 1] == text2[j - 1]) {
+					dp[j] = prev + 1;
+				}
+				else {
+					dp[j] = max(dp[j], dp[j - 1]);
+				}
+			}
+		}
+		return dp[n];
+	}
+};
+
+
+class Solution {
+public:
+	int longestCommonSubsequence(string text1, string text2) {
+		size_t m = text1.size(), n = text2.size();
+		vector<int> dp(n + 1, 0);
+		for (size_t i = 1; i <= m; ++i) {
+			int temp = dp[0];
+			for (size_t j = 1; j <= n; ++j) {
+				int prev = temp;
+				temp = dp[j];
+				if (text1[i - 1] == text2[j - 1]) {
+					dp[j] = prev + 1;
+				}
+				else {
+					dp[j] = max(dp[j], dp[j - 1]);
+				}
+			}
+		}
+		return dp[n];
 	}
 };

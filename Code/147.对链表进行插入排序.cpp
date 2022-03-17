@@ -30,7 +30,7 @@ public:
     }
 };
 
-// 我的解法：官方解法改进，时间 20 ms 51.06%，空间 9.4 MB 23.27%
+// 我的解法：官方解法改进，从前往后找插入点，时间 20 ms 51.06%，空间 9.4 MB 23.27%
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
