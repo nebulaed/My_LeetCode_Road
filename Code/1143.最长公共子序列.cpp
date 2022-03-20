@@ -142,22 +142,27 @@ public:
 	}
 };
 
-
+// 我的解法：动态规划+滚动数组，时间 O(mn) 12 ms 94.26%，空间 O(min{m,n}) 6.3 MB 97.38%
 class Solution {
 public:
 	int longestCommonSubsequence(string text1, string text2) {
 		size_t m = text1.size(), n = text2.size();
+		bool swapped = false;
+		if (m < n) {
+			swap(m, n);
+			swapped = true;
+		}
 		vector<int> dp(n + 1, 0);
 		for (size_t i = 1; i <= m; ++i) {
 			int temp = dp[0];
 			for (size_t j = 1; j <= n; ++j) {
-				int prev = temp;
-				temp = dp[j];
-				if (text1[i - 1] == text2[j - 1]) {
-					dp[j] = prev + 1;
+				int prev = temp, & curr = dp[j];
+				temp = curr;
+				if (swapped ? text1[j - 1] == text2[i - 1] : text1[i - 1] == text2[j - 1]) {
+					curr = prev + 1;
 				}
 				else {
-					dp[j] = max(dp[j], dp[j - 1]);
+					curr = max(curr, dp[j - 1]);
 				}
 			}
 		}

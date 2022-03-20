@@ -31,18 +31,37 @@ public:
 	}
 };
 
+// 官方解法：时间 24 ms，69.3 MB 
 class Solution {
 public:
-	vector<int> twoSum(vector<int>& nums, int target) {
-		unordered_map<int, int> hashtable; // 哈希函数构建的map
-		for (int i = 0; i < nums.size(); i++) {
-			unordered_map<int, int>::iterator it = hashtable.find(target - nums[i]); // 查找 target - nums[i]，找到为所在的迭代器，找不到为末尾迭代器
-			if (it != hashtable.end()) {
-				return { it->second, i };
+	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+		ListNode* head = nullptr, * tail = nullptr;
+		int carry = 0; // 表示进位值
+		while (l1 || l2) {
+			// 若两个链表长度不同，则给长度短的链表后面加上补齐的0，例如789和56789相加，链表分别为9->8->7->0->0和9->8->7->6->5
+			int n1 = l1 ? l1->val : 0;
+			int n2 = l2 ? l2->val : 0;
+			int sum = n1 + n2 + carry;
+			if (!head) {
+				head = tail = new ListNode(sum % 10);
 			}
-			hashtable.insert(pair<int, int>(nums[i], i)); // 若未找到则插入当前nums[i]
+			else {
+				tail->next = new ListNode(sum % 10);
+				tail = tail->next;
+			}
+			carry = sum / 10;
+			if (l1) {
+				l1 = l1->next;
+			}
+			if (l2) {
+				l2 = l2->next;
+			}
 		}
-		return {}; // 未找到则返回空
+		// 若链表遍历结束后，剩下的carry>0，则还需在链表后面附加一个节点值为carry
+		if (carry > 0) {
+			tail->next = new ListNode(carry);
+		}
+		return head;
 	}
 };
 

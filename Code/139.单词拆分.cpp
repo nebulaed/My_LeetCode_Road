@@ -75,3 +75,22 @@ public:
 		return dp[n];
 	}
 };
+
+// 我的解法：动态规划，时间 4 ms 87.56%，空间 7.4 MB 85.02%
+class Solution {
+public:
+	bool wordBreak(string s, vector<string>& wordDict) {
+		size_t n = s.size();
+		vector<bool> dp(n + 1, false);
+		dp[0] = true;
+		for (size_t i = 1; i <= n; ++i) {
+			for (const auto& word : wordDict) {
+				size_t wordSize = word.size();
+				if (i >= wordSize && s.substr(i - wordSize, wordSize) == word) {
+					dp[i] = dp[i] | dp[i - wordSize];
+				}
+			}
+		}
+		return dp.back();
+	}
+};

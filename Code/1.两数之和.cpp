@@ -131,6 +131,25 @@ public:
 	}
 };
 
+// 我的第二次解法：哈希表，时间 4 ms 99.39%，空间 10.5 MB 43.70%
+class Solution {
+public:
+	vector<int> twoSum(vector<int>& nums, int target) {
+		unordered_map<int, int> record;
+		int n = nums.size();
+		for (int i = 0; i < n; ++i) {
+			auto it = record.find(target - nums[i]);
+			if (it != record.end()) {
+				return { it->second, i };
+			}
+			else {
+				record.emplace(nums[i], i);
+			}
+		}
+		return {};
+	}
+};
+
 int main()
 {
 	vector<int>nums = { 2,7,11,15 };

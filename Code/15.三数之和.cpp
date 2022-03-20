@@ -73,6 +73,37 @@ public:
 	}
 };
 
+// 我的第二次解法：时间 72 ms 73.60%，空间 19.4 MB 81.43%
+class Solution {
+public:
+	vector<vector<int>> threeSum(vector<int>& nums) {
+		int n = nums.size();
+		sort(nums.begin(), nums.end());
+		vector<vector<int>> ret;
+		for (int i = 0; i < n - 2; ++i) {
+			while (i > 0 && i < n - 2 && nums[i] == nums[i - 1]) {
+				++i;
+			}
+			int first = nums[i], secondptr = i + 1, thirdptr = n - 1;
+			while (secondptr < thirdptr) {
+				if (nums[secondptr] + nums[thirdptr] < -first) {
+					++secondptr;
+				}
+				else if (nums[secondptr] + nums[thirdptr] > -first) {
+					--thirdptr;
+				}
+				else {
+					ret.emplace_back(vector<int>{first, nums[secondptr++], nums[thirdptr]});
+					while (secondptr < thirdptr && nums[secondptr] == nums[secondptr - 1]) {
+						++secondptr;
+					}
+				}
+			}
+		}
+		return ret;
+	}
+};
+
 int main() {
 	vector<int> input = { -1,0,1,2,-1,-4 };
 
