@@ -65,3 +65,20 @@ public:
 		return maxprofit;
 	}
 };
+
+// 我的第二次解法：一次遍历，时间 76 ms 99.62%，空间 91.1 MB 79.46%
+class Solution {
+public:
+	int maxProfit(vector<int>& prices) {
+		int minPrice = 1e5, profit = 0;
+		for (int price : prices) {
+			if (price < minPrice) {
+				minPrice = price;
+			}
+			else if (price - minPrice > profit) {
+				profit = price - minPrice;
+			}
+		}
+		return profit;
+	}
+};

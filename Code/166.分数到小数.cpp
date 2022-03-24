@@ -11,13 +11,16 @@ public:
             return to_string(numeratorLong / denominatorLong);
         }
         string ret;
+        // 若分子和分母中一个小于0一个不小于0
         if (numeratorLong < 0 ^ denominatorLong < 0) {
             ret += '-';
         }
+        // 计算整数部分
         numeratorLong = abs(numeratorLong), denominatorLong = abs(denominatorLong);
         int intPart = numeratorLong / denominatorLong;
         ret += to_string(intPart) + '.';
 
+        // 计算小数部分
         string fractionPart;
         unordered_map<int, int> remainderMap;
         long long remainder = numeratorLong % denominatorLong, index = 0;

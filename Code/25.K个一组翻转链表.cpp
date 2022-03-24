@@ -10,7 +10,7 @@ struct ListNode {
 	ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// 我的解法：
+// 我的解法：时间 12 ms，空间 11.6 MB
 class Solution {
 public:
 	ListNode* reverseKGroup(ListNode* head, int k) {
@@ -43,7 +43,7 @@ public:
 	}
 };
 
-// 官方解法：模拟
+// 官方解法：模拟，时间 16 ms，空间 11.1 MB
 class Solution {
 public:
 	// 翻转一个子链表，并且返回新的头和尾

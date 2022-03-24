@@ -220,6 +220,42 @@ public:
 	}
 };
 
+// 我的第二次解法：时间 244 ms 68.60%，空间 7.9 MB 43.71%
+class Solution {
+private:
+	int directions[5] = { -1, 0, 1, 0, -1 };
+	bool dfs(const vector<vector<char>>& board, vector<vector<bool>>& used, const string& word, int pos, int x, int y) {
+		if (word[pos] != board[x][y]) return false;
+		if (pos == word.size() - 1) return true;
+		for (int i = 0; i < 4; ++i) {
+			int newx = x + directions[i], newy = y + directions[i + 1];
+			if (newx >= 0 && newx < board.size() && newy >= 0 && newy < board[0].size() && !used[newx][newy]) {
+				used[newx][newy] = true;
+				if (dfs(board, used, word, pos + 1, newx, newy)) return true;
+				used[newx][newy] = false;
+			}
+		}
+		return false;
+	}
+public:
+	bool exist(vector<vector<char>>& board, string word) {
+		int m = board.size(), n = board[0].size();
+		vector<vector<bool>> used(m, vector<bool>(n, false));
+		for (int i = 0; i < m; ++i) {
+			for (int j = 0; j < n; ++j) {
+				if (board[i][j] == word[0]) {
+					used[i][j] = true;
+					if (dfs(board, used, word, 0, i, j)) {
+						return true;
+					}
+					used[i][j] = false;
+				}
+			}
+		}
+		return false;
+	}
+};
+
 int main() {
 	vector<vector<char>> board = { {'A', 'B', 'C', 'E'},{'S', 'F', 'C', 'S'},{'A', 'D', 'E', 'E'} };
 	string word = "ABCCED";
