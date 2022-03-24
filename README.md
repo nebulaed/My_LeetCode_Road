@@ -61,6 +61,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 56   | [合并区间](./Code/56.合并区间.cpp) | Merge Intervals | 47.4% | Medium |
 | 62   | [不同路径](./Code/62.不同路径.cpp) | Unique Paths | 66.5% | Medium |
 | 64   | [最小路径和](./Code/64.最小路径和.cpp) | Minimum Path Sum | 68.9% | Medium |
+| 66   | [加一](./Code/66.加一.cpp) | Plus One | 46.0% | Easy |
 | 67   | [二进制求和](./Code/67.二进制求和.cpp) | Add Binary | 54.0% | Easy |
 | 69   | [Sqrt(x)](./Code/69.Sqrt(x).cpp) | Sqrt(x) | 39.1% | Easy |
 | 70   | [爬楼梯](./Code/70.爬楼梯.cpp) | Climbing Stairs | 53.2% | Easy |
@@ -71,17 +72,23 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 78   | [子集](./Code/78.子集.cpp) | Subsets | 80.2% | Medium |
 | 79   | [单词搜索](./Code/79.单词搜索.cpp) | Word Search | 45.9% | Medium | 
 | 81   | [搜索旋转排序数组II](./Code/81.搜索旋转排序数组II.cpp) | Search in Rotated Sorted Array II | 41.4% | Medium |
+| 82   | [删除排序链表中的重复元素II](./Code/82.删除排序链表中的重复元素II.cpp) | Remove Duplicates from Sorted List II | 53.3% | Medium |
+| 83   | [删除排序链表中的重复元素](./Code/83.删除排序链表中的重复元素.cpp) | Remove Duplicates from Sorted List | 53.7% | Easy |
 | 84   | [柱状图中最大的矩形](./Code/84.柱状图中最大的矩形.cpp) | Largest Rectangle in Histogram | 43.4% | Hard |
 | 85   | [最大矩形](./Code/85.最大矩形.cpp) | Maximal Rectangle | 51.7% | Hard |
 | 88   | [合并两个有序数组](./Code/88.合并两个有序数组.cpp) | Merge Sorted Array | 52.0% | Easy |
 | 91   | [解码方法](./Code/91.解码方法.cpp) | Decode Ways | 31.6% | Medium |
+| 92   | [反转链表II](./Code/92.反转链表II.cpp) | Reverse Linked List II | 55.2% | Medium |
+| 93   | [复原IP地址](./Code/93.复原IP地址.cpp) | Restore IP Addresses | 55.6% | Medium |
 | 94   | [二叉树的中序遍历](./Code/94.二叉树的中序遍历.cpp) | Binary Tree Inorder Traversal | 75.6% | Medium |
 | 96   | [不同的二叉搜索树](./Code/96.不同的二叉搜索树.cpp) | Unique Binary Search Trees | 69.9% | Medium |
 | 98   | [验证二叉搜索树](./Code/98.验证二叉搜索树.cpp) | Validate Binary Search Tree | 35.2% | Medium |
 | 101  | [对称二叉树](./Code/101.对称二叉树.cpp) | Symmetric Tree | 56.7% | Easy |
 | 102  | [二叉树的层次遍历](./Code/102.二叉树的层次遍历.cpp) | Binary Tree Level Order Traversal | 64.2% | Medium |
+| 103  | [二叉树的锯齿形层序遍历](./Code/103.二叉树的锯齿形层序遍历.cpp) | Binary Tree Zigzag Level Order Traversal | 57.2% | Medium |
 | 104  | [二叉树的最大深度](./Code/104.二叉树的最大深度.cpp) | Maximum Depth of Binary Tree | 76.7% | Easy |
 | 105  | [从前序与中序遍历序列构造二叉树](./Code/105.从前序与中序遍历序列构造二叉树.cpp) | Construct Binary Tree from Preorder and Inorder Traversal | 70.6% | Medium |
+| 110  | [平衡二叉树](./Code/110.平衡二叉树.cpp) | Balanced Binary Tree | 56.8% | Easy |
 | 114  | [二叉树展开为链表](./Code/114.二叉树展开为链表.cpp) | Flatten Binary Tree to Linked List | 72.7% | Medium |
 | 121  | [买卖股票的最佳时机](./Code/121.买卖股票的最佳时机.cpp) | Best Time to Buy and Sell Stock | 57.4% | Easy |
 | 122  | [买卖股票的最佳时机II](./Code/122.买卖股票的最佳时机II.cpp) | Best Time to Buy and Sell Stock II | 69.3% | Medium |
@@ -96,12 +103,16 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 141  | [环形链表](./Code/141.环形链表.cpp) | Linked List Cycle | 45.5% | Easy |
 | 142  | [环形链表 II](./Code/142.环形链表II.cpp) | Linked List Cycle II | 55.4% | Medium |
 | 146  | [LRU缓存机制](./Code/146.LRU缓存机制.cpp) | LRU Cache | 52.4% | Medium |
+| 147  | [对链表进行插入排序](./Code/147.对链表进行插入排序.cpp) | Insertion Sort List | 68.7% | Medium |
 | 148  | [排序链表](./Code/148.排序链表.cpp) | Sort List | 66.6% | Medium |
 | 149  | [直线上最多的点数](./Code/149.直线上最多的点数.cpp) | Max Points on a Line | 35.5% | Hard |
+| 151  | [颠倒字符串中的单词](./Code/151.颠倒字符串中的单词.cpp) | Reverse Words in a String | 49.8% | Medium |
 | 152  | [乘积最大子数组](./Code/152.乘积最大子数组.cpp) | Maximum Product Subarray | 42.2% | Medium |
+| 153  | [寻找旋转排序数组中的最小值](./Code/153.寻找旋转排序数组中的最小值.cpp) | Find Minimum in Rotated Sorted Array | 56.8% | Medium |
 | 154  | [寻找旋转排序数组中的最小值II](./Code/154.寻找旋转排序数组中的最小值II.cpp) | Find Minimum in Rotated Sorted Array II | 53.1% | Hard |
 | 155  | [最小栈](./Code/155.最小栈.cpp) | Min Stack | 57.5% | Easy |
 | 160  | [相交链表](./Code/160.相交链表.cpp) | Intersection of Two Linked Lists | 61.8% | Easy |
+| 166  | [分数到小数](./Code/166.分数到小数.cpp) | Fraction to Recurring Decimal | 33.2% | Medium |
 | 167  | [两数之和II-输入有序数组](./Code/167.两数之和II-输入有序数组.cpp) | Two Sum II - Input Array Is Sorted | 58.7% | Easy |
 | 168  | [Excel表列名称](./Code/168.Excel表列名称.cpp) | Excel Sheet Column Title | 43.4% | Easy |
 | 169  | [多数元素](./Code/169.多数元素.cpp) | Majority Element | 66.5% | Easy |
@@ -115,11 +126,13 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 206  | [反转链表](./Code/206.反转链表.cpp) | Reverse Linked List | 72.4% | Easy |
 | 207  | [课程表](./Code/207.课程表.cpp) | Course Schedule | 54.1% | Medium |
 | 208  | [实现Trie(前缀树)](./Code/208.实现Trie(前缀树).cpp) | Implement Trie (Prefix Tree) | 71.8% | Medium |
+| 209  | [长度最小的子数组](./Code/209.长度最小的子数组.cpp) | Minimum Size Subarray Sum | 48.3% | Medium |
 | 210  | [课程表II](./Code/210.课程表II.cpp) | Course Schedule II | 54.6% | Medium |
 | 213  | [打家劫舍II](./Code/213.打家劫舍II.cpp) | House Robber II | 43.5% | Medium |
 | 215  | [数组中的第K个最大元素](./Code/215.数组中的第K个最大元素.cpp) | Kth Largest Element in an Array | 64.7% | Medium |
 | 218  | [天际线问题](./Code/218.天际线问题.cpp) | The Skyline Problem | 54.3% | Hard |
 | 221  | [最大正方形](./Code/221.最大正方形.cpp) | Maximal Square | 47.9% | Medium |
+| 224  | [基本计算器](./Code/224.基本计算器.cpp) | Basic Calculator | 41.8% | Hard |
 | 225  | [用队列实现栈](./Code/225.用队列实现栈.cpp) | Implement Stack using Queues | 67.6% | Easy |
 | 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
 | 227  | [基本计算器II](./Code/227.基本计算器II.cpp) | Basic Calculator II | 43.8% | Medium |
@@ -150,6 +163,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 318  | [最长单词长度乘积](./Code/318.最长单词长度乘积.cpp) | Maximum Product of Word Lengths | 73.8% | Medium |
 | 322  | [零钱兑换](./Code/322.零钱兑换.cpp) | Coin Change | 44.8% | Medium |
 | 326  | [3的幂](./Code/326.3的幂.cpp) | Power of Three | 50.5% | Easy |
+| 328  | [奇偶链表](./Code/328.奇偶链表.cpp) | Odd Even Linked List | 65.4% | Medium |
 | 332  | [重新安排行程](./Code/332.重新安排行程.cpp) | Reconstruct Itinerary | 45.3% | Hard |
 | 337  | [打家劫舍 III](./Code/337.打家劫舍III.cpp) | House Robber III | 60.7% | Medium |
 | 338  | [比特位计数](./Code/338.比特位计数.cpp) | Counting Bits | 78.7% | Easy |
@@ -169,9 +183,11 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 416  | [分割等和子集](./Code/416.分割等和子集.cpp) | Partition Equal Subset Sum | 51.1% | Medium |
 | 417  | [太平洋大西洋水流问题](./Code/417.太平洋大西洋水流问题.cpp) | Pacific Atlantic Water Flow | 48.9% | Medium |
 | 435  | [无重叠区间](./Code/435.无重叠区间.cpp) | Non-overlapping Intervals | 50.7% | Medium |
+| 445  | [两数相加II](./Code/445.两数相加II.cpp) | Add Two Numbers II | 59.4% | Medium |
 | 448  | [找到所有数组中消失的数字](./Code/448.找到所有数组中消失的数字.cpp) | Find All Numbers Disappeared in an Array | 65.1% | Easy |
 | 451  | [根据字符出现频率排序](./Code/451.根据字符出现频率排序.cpp) | Sort Characters By Frequency | 71.3% | Medium |
 | 452  | [用最少数量的箭引爆气球](./Code/452.用最少数量的箭引爆气球.cpp) | Minimum Number of Arrows to Burst Balloons | 50.8% | Medium |
+| 454  | [四数相加II](./Code/454.四数相加II.cpp) | 4Sum II | 62.1% | Medium |
 | 455  | [分发饼干](./Code/455.分发饼干.cpp) | Assign Cookies | 57.5% | Easy |
 | 461  | [汉明距离](./Code/461.汉明距离.cpp) | Hamming Distance | 81.3% | Easy |
 | 462  | [最少移动次数使数组元素相等II](./Code/462.最少移动次数使数组元素相等II.cpp) | Minimum Moves to Equal Array Elements II | 61.1% | Medium |
@@ -186,6 +202,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 528  | [按权重随机选择](./Code/528.按权重随机选择.cpp) | Random Pick with Weight | 48.0% | Medium |
 | 540  | [有序数组中的单一元素](./Code/540.有序数组中的单一元素.cpp) | Single Element in a Sorted Array | 58.4% | Medium |
 | 542  | [01矩阵](./Code/542.01矩阵.cpp) | 01 Matrix | 45.8% | Medium |
+| 543  | [二叉树的直径](./Code/543.二叉树的直径.cpp) | Diameter of Binary Tree | 56.5% | Easy |
 | 547  | [省份数量](./Code/547.省份数量.cpp) | Number of Provinces | 61.9% | Medium |
 | 560  | [和为K的子数组](./Code/560.和为K的子数组.cpp) | Subarray Sum Equals K | 44.7% | Medium |
 | 566  | [重塑矩阵](./Code/566.重塑矩阵.cpp) | Reshape the Matrix | 67.5% | Easy |
@@ -195,21 +212,29 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 646  | [最长数对链](./Code/646.最长数对链.cpp) | Maximum Length of Pair Chain | 58.0% | Medium |
 | 647  | [回文子串](./Code/647.回文子串.cpp) | Palindromic Substrings | 66.1% | Medium |
 | 650  | [只有两个键的键盘](./Code/650.只有两个键的键盘.cpp) | 2 Keys Keyboard | 56.8% | Medium |
+| 662  | [二叉树最大宽度](./Code/662.二叉树最大宽度.cpp) | Maximum Width of Binary Tree | 40.9% | Medium |
 | 665  | [非递减数列](./Code/665.非递减数列.cpp) | Non-decreasing Array | 27.2% | Medium |
 | 680  | [验证回文字符串II](./Code/680.验证回文字符串II.cpp) | Valid Palindrome II | 40.0% | Easy |
 | 693  | [交替位二进制数](./Code/693.交替位二进制数.cpp) | Binary Number with Alternating Bits | 60.9% | Easy |
 | 695  | [岛屿的最大面积](./Code/695.岛屿的最大面积.cpp) | Max Area of Island | 66.9% | Medium |
 | 696  | [计数二进制子串](./Code/696.计数二进制子串.cpp) | Count Binary Substrings | 63.5% | Easy |
+| 704  | [二分查找](./Code/704.二分查找.cpp) | Binary Search | 54.3% | Easy |
 | 714  | [买卖股票的最佳时机含手续费](./Code/714.买卖股票的最佳时机含手续费.cpp) | Best Time to Buy and Sell Stock with Transaction Fee | 73.0% | Medium |
+| 718  | [最长重复子数组](./Code/718.最长重复子数组.cpp) | Maximum Length of Repeated Subarray | 56.6% | Medium |
 | 739  | [每日温度](./Code/739.每日温度.cpp) | Daily Temperatures | 68.5% | Medium |
 | 763  | [划分字母区间](./Code/763.划分字母区间.cpp) | Partition Labels | 76.3% | Medium |
 | 769  | [最多能完成排序的块](./Code/769.最多能完成排序的块.cpp) | Max Chunks To Make Sorted | 58.4% | Medium |
 | 772  | [基本计算器III](./Code/772.基本计算器III.cpp) | Basic Calculator III | 50.3% | Hard |
+| 792  | [匹配子序列的单词数](./Code/792.匹配子序列的单词数.cpp) | Number of Matching Subsequences | 46.8% | Medium |
 | 870  | [优势洗牌](./Code/870.优势洗牌.cpp) | Advantage Shuffle | 44.7% | Medium |
+| 877  | [石子游戏](./Code/877.石子游戏.cpp) | Stone Game | 76.0% | Medium |
+| 922  | [按奇偶排序数组II](./Code/922.按奇偶排序数组II.cpp) | Sort Array By Parity II | 71.3% | Easy |
 | 932  | [漂亮数组](./Code/932.漂亮数组.cpp) | Beautiful Array | 63.8% | Medium |
 | 934  | [最短的桥](./Code/934.最短的桥.cpp) | Shortest Bridge | 47.1% | Medium |
 | 990  | [等式方程的可满足性](./Code/990.等式方程的可满足性.cpp) | Satisfiability of Equality Equations | 50.8% | Medium |
 | 1009  | [十进制整数的反码](./Code/1009.十进制整数的反码.cpp) | Complement of Base 10 Integer | 59.0% | Easy |
+| 1031  | [两个非重叠子数组的最大和](./Code/1031.两个非重叠子数组的最大和.cpp) | Maximum Sum of Two Non-Overlapping Subarrays | 58.3% | Medium |
+| 1049  | [最后一块石头的重量II](./Code/1049.最后一块石头的重量II.cpp) | Last Stone Weight II | 66.2% | Medium |
 | 1143  | [最长公共子序列](./Code/1143.最长公共子序列.cpp) | Longest Common Subsequence | 63.9% | Medium |
 
 
