@@ -123,6 +123,64 @@ public:
     }
 };
 
+// 我的解法：将尾插头删改为头插尾删，时间 416 ms 84.71%，空间 175.5 MB 72.09%
+class LFUCache {
+private:
+    unordered_map<int, list<Node>> freqTable;
+    unordered_map<int, list<Node>::iterator> keyTable;
+    int capacity, minFreq;
+public:
+    LFUCache(int capacity) : capacity(capacity), minFreq(INT_MAX) {}
+
+    int get(int key) {
+        if (capacity == 0) return -1;
+        auto it = keyTable.find(key);
+        if (it != keyTable.end()) {
+            int findVal = it->second->value, findFreq = it->second->freq;
+            freqTable[findFreq].erase(it->second);
+            if (freqTable[findFreq].empty()) {
+                freqTable.erase(findFreq);
+                if (findFreq == minFreq) ++minFreq;
+            }
+            auto& insertedList = freqTable[++findFreq];
+            insertedList.emplace_front(key, findVal, findFreq);
+            it->second = insertedList.begin();
+            return findVal;
+        }
+        else return -1;
+    }
+
+    void put(int key, int value) {
+        if (capacity == 0) return;
+        auto it = keyTable.find(key);
+        if (it == keyTable.end()) {
+            if (keyTable.size() == capacity) {
+                int preDelKey = freqTable[minFreq].back().key;
+                freqTable[minFreq].pop_back();
+                if (minFreq != 1 && freqTable[minFreq].empty()) {
+                    freqTable.erase(minFreq);
+                }
+                keyTable.erase(preDelKey);
+            }
+            auto& insertedList = freqTable[1];
+            insertedList.emplace_front(key, value);
+            keyTable.emplace(key, insertedList.begin());
+            minFreq = 1;
+        }
+        else {
+            int findFreq = it->second->freq;
+            freqTable[findFreq].erase(it->second);
+            if (freqTable[findFreq].empty()) {
+                freqTable.erase(findFreq);
+                if (findFreq == minFreq) ++minFreq;
+            }
+            auto& insertedList = freqTable[++findFreq];
+            insertedList.emplace_front(key, value, findFreq);
+            it->second = insertedList.begin();
+        }
+    }
+};
+
 /**
  * Your LFUCache object will be instantiated and called as such:
  * LFUCache* obj = new LFUCache(capacity);
