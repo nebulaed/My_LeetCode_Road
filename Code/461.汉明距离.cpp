@@ -1,71 +1,71 @@
 #include<iostream>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÊ±¼äO(log C)£¬C×î´óÎª31£¬ÒòÎªint×î´óÎª2^31£¬¿Õ¼äO(1)
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´O(log C)ï¼ŒCæœ€å¤§ä¸º31ï¼Œå› ä¸ºintæœ€å¤§ä¸º2^31ï¼Œç©ºé—´O(1)
 class Solution {
 public:
-	int hammingDistance(int x, int y) {
-		int ret = 0;
-		while (x != 0 || y != 0) {
-			if ((x & 1) != (y & 1)) {
-				++ret;
-			}
-			x >>= 1;
-			y >>= 1;
-		}
-		return ret;
-	}
+    int hammingDistance(int x, int y) {
+        int ret = 0;
+        while (x != 0 || y != 0) {
+            if ((x & 1) != (y & 1)) {
+                ++ret;
+            }
+            x >>= 1;
+            y >>= 1;
+        }
+        return ret;
+    }
 };
 
-// ¹²Í¬Ë¼Â·£ºÁ½¸öÕûÊıÖ®¼äµÄººÃ÷¾àÀëÊÇ¶ÔÓ¦Î»ÖÃÉÏÊı×Ö²»Í¬µÄÎ»Êı¡£¸ù¾İ¶¨Òå£¬Ó¦Ê¹ÓÃÒì»òÔËËã£¬µ±ÇÒ½öµ±ÊäÈëÎ»²»Í¬Ê±Êä³öÎª1
+// å…±åŒæ€è·¯ï¼šä¸¤ä¸ªæ•´æ•°ä¹‹é—´çš„æ±‰æ˜è·ç¦»æ˜¯å¯¹åº”ä½ç½®ä¸Šæ•°å­—ä¸åŒçš„ä½æ•°ã€‚æ ¹æ®å®šä¹‰ï¼Œåº”ä½¿ç”¨å¼‚æˆ–è¿ç®—ï¼Œå½“ä¸”ä»…å½“è¾“å…¥ä½ä¸åŒæ—¶è¾“å‡ºä¸º1
 
-// ¹Ù·½½â·¨Ò»£ºÄÚÖÃÎ»¼ÆÊı¹¦ÄÜ£¬Ê±¼äO(1) 0 ms£¬¿Õ¼äO(1) 5.9 MB
-// ¹¤³ÌÉÏÓ¦¸ÃÖ±½ÓÊ¹ÓÃÄÚÖÃº¯Êı
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå†…ç½®ä½è®¡æ•°åŠŸèƒ½ï¼Œæ—¶é—´O(1) 0 msï¼Œç©ºé—´O(1) 5.9 MB
+// å·¥ç¨‹ä¸Šåº”è¯¥ç›´æ¥ä½¿ç”¨å†…ç½®å‡½æ•°
 class Solution {
 public:
-	int hammingDistance(int x, int y) {
-		return __builtin_popcount(x ^ y);
-	}
+    int hammingDistance(int x, int y) {
+        return __builtin_popcount(x ^ y);
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÒÆÎ»ÊµÏÖÎ»¼ÆÊı£¬Ê±¼äO(log C) 0 ms£¬¿Õ¼äO(1) 5.9 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šç§»ä½å®ç°ä½è®¡æ•°ï¼Œæ—¶é—´O(log C) 0 msï¼Œç©ºé—´O(1) 5.9 MB
 class Solution {
 public:
-	int hammingDistance(int x, int y) {
-		int s = x ^ y, ret = 0;
-		while (s) {
-			ret += s & 1;
-			s >>= 1;
-		}
-		return ret;
-	}
+    int hammingDistance(int x, int y) {
+        int s = x ^ y, ret = 0;
+        while (s) {
+            ret += s & 1;
+            s >>= 1;
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨Èı£ºBrian KernighanËã·¨£¬Ê±¼äO(log C) 0 ms£¬¿Õ¼äO(1) 5.9 MB
-// ÔÚ·½·¨¶şÖĞ£¬¶ÔÓÚs=(10001100)_2µÄÇé¿ö£¬ĞèÒªÑ­»·ÓÒÒÆ8´Î²ÅÄÜµÃµ½´ğ°¸£¬Êµ¼ÊÉÏ¿ÉÒÔÌø¹ıÁ½¸ö1Ö®¼äµÄ0£¬Ö±½Ó¶Ô1½øĞĞ¼ÆÊı
-// ÀûÓÃx & (x-1)É¾È¥×îÓÒ±ßµÄ1£¬ÖªµÀx == 0ÎªÖ¹£¬¾Í¿ÉÒÔ¼ÆËã³öÒì»òÖµµÄ¶ş½øÖÆ±íÊ¾ÖĞµÄ1ÊıÁ¿
-// Ğ§ÂÊ±È½â·¨¶ş¸ß
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šBrian Kernighanç®—æ³•ï¼Œæ—¶é—´O(log C) 0 msï¼Œç©ºé—´O(1) 5.9 MB
+// åœ¨æ–¹æ³•äºŒä¸­ï¼Œå¯¹äºs=(10001100)_2çš„æƒ…å†µï¼Œéœ€è¦å¾ªç¯å³ç§»8æ¬¡æ‰èƒ½å¾—åˆ°ç­”æ¡ˆï¼Œå®é™…ä¸Šå¯ä»¥è·³è¿‡ä¸¤ä¸ª1ä¹‹é—´çš„0ï¼Œç›´æ¥å¯¹1è¿›è¡Œè®¡æ•°
+// åˆ©ç”¨x & (x-1)åˆ å»æœ€å³è¾¹çš„1ï¼ŒçŸ¥é“x == 0ä¸ºæ­¢ï¼Œå°±å¯ä»¥è®¡ç®—å‡ºå¼‚æˆ–å€¼çš„äºŒè¿›åˆ¶è¡¨ç¤ºä¸­çš„1æ•°é‡
+// æ•ˆç‡æ¯”è§£æ³•äºŒé«˜
 class Solution {
 public:
-	int hammingDistance(int x, int y) {
-		int s = x ^ y, ret = 0;
-		while (s) {
-			s &= s - 1;
-			++ret;
-		}
-		return ret;
-	}
+    int hammingDistance(int x, int y) {
+        int s = x ^ y, ret = 0;
+        while (s) {
+            s &= s - 1;
+            ++ret;
+        }
+        return ret;
+    }
 };
 
-// LeetCode 101½â·¨£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.8 MB 84.22%
+// LeetCode 101è§£æ³•ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.8 MB 84.22%
 class Solution {
 public:
-	int hammingDistance(int x, int y) {
-		int num = x ^ y, count = 0;
-		while (num) {
-			++count;
-			num &= num - 1;
-		}
-		return count;
-	}
+    int hammingDistance(int x, int y) {
+        int num = x ^ y, count = 0;
+        while (num) {
+            ++count;
+            num &= num - 1;
+        }
+        return count;
+    }
 };

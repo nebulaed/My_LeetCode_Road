@@ -1,54 +1,54 @@
 #include<iostream>
+#include<cmath>
 #include<vector>
 
-using std::vector;
-using std::sqrt;
+using namespace std;
 
-// LeetCode 101½â·¨Ò»£º°£ÊÏÉ¸·¨£¬Ê±¼ä 220 ms 69.70%£¬¿Õ¼ä 10.1 MB 80.79%
-// Ë¼Â·£º½«Òò×Ó´Ó2µ½n±éÀú£¬¼ÙÉèµ±Ç°±éÀúµ½m£¬°ÑËùÓĞĞ¡ÓÚnµÄ£¬ÇÒÊÇm±¶ÊıµÄÕûÊı±êÎªºÍÊı£¬ºÍÊı±Ø²»ÎªÖÊÊı¡£
-// ±éÀú½áÊøºó£¬Ã»ÓĞ±»±êÎªºÍÊıµÄÊı×Ö¾ÍÊÇÖÊÊı¡£
+// LeetCode 101è§£æ³•ä¸€ï¼šåŸƒæ°ç­›æ³•ï¼Œæ—¶é—´ 220 ms 69.70%ï¼Œç©ºé—´ 10.1 MB 80.79%
+// æ€è·¯ï¼šå°†å› å­ä»2åˆ°néå†ï¼Œå‡è®¾å½“å‰éå†åˆ°mï¼ŒæŠŠæ‰€æœ‰å°äºnçš„ï¼Œä¸”æ˜¯må€æ•°çš„æ•´æ•°æ ‡ä¸ºå’Œæ•°ï¼Œå’Œæ•°å¿…ä¸ä¸ºè´¨æ•°ã€‚
+// éå†ç»“æŸåï¼Œæ²¡æœ‰è¢«æ ‡ä¸ºå’Œæ•°çš„æ•°å­—å°±æ˜¯è´¨æ•°ã€‚
 class Solution {
 public:
-	int countPrimes(int n) {
-		if (n <= 2) return 0;
-		vector<bool> prime(n, true);
-		// È¥µô²»ÊÇÖÊÊıµÄ0ºÍ1
-		int count = n - 2;
-		for (int i = 2; i < n; ++i) {
-			if (prime[i]) {
-				for (int j = 2 * i; j < n; j += i) {
-					if (prime[j]) {
-						prime[j] = false;
-						--count;
-					}
-				}
-			}
-		}
-		return count;
-	}
+    int countPrimes(int n) {
+        if (n <= 2) return 0;
+        vector<bool> prime(n, true);
+        // å»æ‰ä¸æ˜¯è´¨æ•°çš„0å’Œ1
+        int count = n - 2;
+        for (int i = 2; i < n; ++i) {
+            if (prime[i]) {
+                for (int j = 2 * i; j < n; j += i) {
+                    if (prime[j]) {
+                        prime[j] = false;
+                        --count;
+                    }
+                }
+            }
+        }
+        return count;
+    }
 };
 
-// LeetCode 101½â·¨¶ş£º°£ÊÏÉ¸·¨ÓÅ»¯£¬Ê±¼ä 84 ms 96.25%£¬¿Õ¼ä 10 MB 86.30%
+// LeetCode 101è§£æ³•äºŒï¼šåŸƒæ°ç­›æ³•ä¼˜åŒ–ï¼Œæ—¶é—´ 84 ms 96.25%ï¼Œç©ºé—´ 10 MB 86.30%
 class Solution {
 public:
-	int countPrimes(int n) {
-		if (n <= 2) return 0;
-		vector<bool> prime(n, true);
-		// ×îĞ¡ÖÊÒò×ÓÒ»¶¨Ğ¡ÓÚµÈÓÚ¿ª·½Êı
-		int i = 3, sqrtN = sqrt(n), count = n / 2;
-		while (i <= sqrtN){
-			// ±ÜÃâÅ¼ÊıºÍÖØ¸´±éÀú
-			for (int j = i* i; j < n; j += 2 * i) {
-				if (prime[j]) {
-					prime[j] = false;
-					--count;
-				}
-			}
-			do {
-				// ±ÜÃâÅ¼ÊıºÍÖØ¸´±éÀú
-				i += 2;
-			} while (i <= sqrtN && !prime[i]);
-		}
-		return count;
-	}
+    int countPrimes(int n) {
+        if (n <= 2) return 0;
+        vector<bool> prime(n, true);
+        // æœ€å°è´¨å› å­ä¸€å®šå°äºç­‰äºå¼€æ–¹æ•°
+        int i = 3, sqrtN = sqrt(n), count = n / 2;
+        while (i <= sqrtN){
+            // é¿å…å¶æ•°å’Œé‡å¤éå†
+            for (int j = i* i; j < n; j += 2 * i) {
+                if (prime[j]) {
+                    prime[j] = false;
+                    --count;
+                }
+            }
+            do {
+                // é¿å…å¶æ•°å’Œé‡å¤éå†
+                i += 2;
+            } while (i <= sqrtN && !prime[i]);
+        }
+        return count;
+    }
 };

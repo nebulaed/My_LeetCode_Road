@@ -3,47 +3,47 @@
 
 using std::stack;
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 0 ms 100%£¬¿Õ¼ä 6.8 MB 36.03%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.8 MB 36.03%
 class MyQueue {
 private:
-	stack<int> input, output;
+    stack<int> input, output;
 public:
-	MyQueue() {}
+    MyQueue() {}
 
-	void push(int x) {
-		input.emplace(x);
-	}
+    void push(int x) {
+        input.emplace(x);
+    }
 
-	int pop() {
-		while (!input.empty()) {
-			output.emplace(input.top());
-			input.pop();
-		}
-		int temp = output.top();
-		output.pop();
-		while (!output.empty()) {
-			input.emplace(output.top());
-			output.pop();
-		}
-		return temp;
-	}
+    int pop() {
+        while (!input.empty()) {
+            output.emplace(input.top());
+            input.pop();
+        }
+        int temp = output.top();
+        output.pop();
+        while (!output.empty()) {
+            input.emplace(output.top());
+            output.pop();
+        }
+        return temp;
+    }
 
-	int peek() {
-		while (!input.empty()) {
-			output.emplace(input.top());
-			input.pop();
-		}
-		int temp = output.top();
-		while (!output.empty()) {
-			input.emplace(output.top());
-			output.pop();
-		}
-		return temp;
-	}
+    int peek() {
+        while (!input.empty()) {
+            output.emplace(input.top());
+            input.pop();
+        }
+        int temp = output.top();
+        while (!output.empty()) {
+            input.emplace(output.top());
+            output.pop();
+        }
+        return temp;
+    }
 
-	bool empty() {
-		return input.empty();
-	}
+    bool empty() {
+        return input.empty();
+    }
 };
 
 /**
@@ -55,41 +55,41 @@ public:
  * bool param_4 = obj->empty();
  */
 
-// LeetCode 101½â·¨£ºÊ±¼ä 0 ms 100%£¬¿Õ¼ä 6.8 MB 39.03%
-// ĞèÒªÊ±½«inputµÄÄÚÈİ×ªÒÆµ½outputÖĞ£¬²»ĞèÒª×ªÒÆ»Øinput£¬Ğ§ÂÊ¸ü¸ß
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.8 MB 39.03%
+// éœ€è¦æ—¶å°†inputçš„å†…å®¹è½¬ç§»åˆ°outputä¸­ï¼Œä¸éœ€è¦è½¬ç§»å›inputï¼Œæ•ˆç‡æ›´é«˜
 class MyQueue {
 private:
-	stack<int> input, output;
+    stack<int> input, output;
 public:
-	MyQueue() {}
+    MyQueue() {}
 
-	void push(int x) {
-		input.emplace(x);
-	}
+    void push(int x) {
+        input.emplace(x);
+    }
 
-	int pop() {
-		if (output.empty()) {
-			while (!input.empty()) {
-				output.emplace(input.top());
-				input.pop();
-			}
-		}
-		int temp = output.top();
-		output.pop();
-		return temp;
-	}
+    int pop() {
+        if (output.empty()) {
+            while (!input.empty()) {
+                output.emplace(input.top());
+                input.pop();
+            }
+        }
+        int temp = output.top();
+        output.pop();
+        return temp;
+    }
 
-	int peek() {
-		if (output.empty()) {
-			while (!input.empty()) {
-				output.emplace(input.top());
-				input.pop();
-			}
-		}
-		return output.top();
-	}
+    int peek() {
+        if (output.empty()) {
+            while (!input.empty()) {
+                output.emplace(input.top());
+                input.pop();
+            }
+        }
+        return output.top();
+    }
 
-	bool empty() {
-		return input.empty() && output.empty();
-	}
+    bool empty() {
+        return input.empty() && output.empty();
+    }
 };

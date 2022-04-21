@@ -4,67 +4,67 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºË«Ö¸Õë+Ì°ĞÄËã·¨£¬Ê±¼äO(n) 4 ms 90.29%£¬¿Õ¼äO(1) 12.5 MB 96.49%
+// æˆ‘çš„è§£æ³•ï¼šåŒæŒ‡é’ˆ+è´ªå¿ƒç®—æ³•ï¼Œæ—¶é—´O(n) 4 ms 90.29%ï¼Œç©ºé—´O(1) 12.5 MB 96.49%
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		int maxBenefit = 0;
-		size_t length = prices.size();
-		size_t left = 0, right = 0;
-		while (right < length) {
-			// ÈôleftÖ¸Ïò×îºóÒ»¸öÔªËØ»òÕßÏÂÒ»¸öÔªËØĞ¡ÓÚµÈÓÚµ±Ç°ÔªËØ£¬left¡¢rightÏòÓÒÒÆ
-			if (left == length - 1 || prices[left] >= prices[left + 1]) {
-				++left;
-				++right;
-			}
-			// leftÖ¸ÏòÈ·¶¨£¬½ÓÏÂÀ´ÒÆ¶¯right
-			else {
-				// ÈôrightÖ¸ÏòµÄÔªËØ²»´óÓÚleftÖ¸ÏòÔªËØ£¬rightÏòÓÒÒÆ
-				if (prices[right] <= prices[left]) {
-					++right;
-				}
-				// Èôright²»Ö¸Ïò×îºóÒ»¸öÔªËØÇÒÏÂÒ»¸öÔªËØ±Èµ±Ç°ÔªËØ´ó£¬rightÏòÓÒÒÆ
-				else if (right < length - 1 && prices[right] < prices[right + 1]) {
-					++right;
-				}
-				// ÒÔÉÏ¶¼²»Âú×ã£¬ËµÃ÷rightÖ¸ÏòÈ·¶¨£¬¼ÆËãÀûÈó£¬²¢½«leftºÍright¶¼Ö¸ÏòrightµÄÏÂÒ»¸öÔªËØ
-				else {
-					maxBenefit += prices[right] - prices[left];
-					left = ++right;
-				}
-			}
-		}
-		return maxBenefit;
-	}
+    int maxProfit(vector<int>& prices) {
+        int maxBenefit = 0;
+        size_t length = prices.size();
+        size_t left = 0, right = 0;
+        while (right < length) {
+            // è‹¥leftæŒ‡å‘æœ€åä¸€ä¸ªå…ƒç´ æˆ–è€…ä¸‹ä¸€ä¸ªå…ƒç´ å°äºç­‰äºå½“å‰å…ƒç´ ï¼Œleftã€rightå‘å³ç§»
+            if (left == length - 1 || prices[left] >= prices[left + 1]) {
+                ++left;
+                ++right;
+            }
+                // leftæŒ‡å‘ç¡®å®šï¼Œæ¥ä¸‹æ¥ç§»åŠ¨right
+            else {
+                // è‹¥rightæŒ‡å‘çš„å…ƒç´ ä¸å¤§äºleftæŒ‡å‘å…ƒç´ ï¼Œrightå‘å³ç§»
+                if (prices[right] <= prices[left]) {
+                    ++right;
+                }
+                    // è‹¥rightä¸æŒ‡å‘æœ€åä¸€ä¸ªå…ƒç´ ä¸”ä¸‹ä¸€ä¸ªå…ƒç´ æ¯”å½“å‰å…ƒç´ å¤§ï¼Œrightå‘å³ç§»
+                else if (right < length - 1 && prices[right] < prices[right + 1]) {
+                    ++right;
+                }
+                    // ä»¥ä¸Šéƒ½ä¸æ»¡è¶³ï¼Œè¯´æ˜rightæŒ‡å‘ç¡®å®šï¼Œè®¡ç®—åˆ©æ¶¦ï¼Œå¹¶å°†leftå’Œrightéƒ½æŒ‡å‘rightçš„ä¸‹ä¸€ä¸ªå…ƒç´ 
+                else {
+                    maxBenefit += prices[right] - prices[left];
+                    left = ++right;
+                }
+            }
+        }
+        return maxBenefit;
+    }
 };
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®£¬Ê±¼äO(n) 4 ms 90.29%£¬¿Õ¼äO(n) 13 MB 15.92%
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n) 4 ms 90.29%ï¼Œç©ºé—´O(n) 13 MB 15.92%
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		size_t n = prices.size();
-		vector<array<int, 2>> dp(n, array<int, 2>());
-		dp[0][0] = -prices[0];
-		for (size_t i = 1; i < n; ++i) {
-			dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
-			dp[i][1] = max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
-		}
-		return dp[n - 1][1];
-	}
+    int maxProfit(vector<int>& prices) {
+        size_t n = prices.size();
+        vector<array<int, 2>> dp(n, array<int, 2>());
+        dp[0][0] = -prices[0];
+        for (size_t i = 1; i < n; ++i) {
+            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
+            dp[i][1] = max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
+        }
+        return dp[n - 1][1];
+    }
 };
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é£¬Ê±¼äO(n) 4 ms 90.29%£¬¿Õ¼äO(1) 12.7 MB 72.06%
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ï¼Œæ—¶é—´O(n) 4 ms 90.29%ï¼Œç©ºé—´O(1) 12.7 MB 72.06%
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		size_t n = prices.size();
-		// ×¢Òâ£ºÕâ¸ö³õÊ¼»¯·½·¨±íÊ¾½«intÊı×éµÄµÚÒ»Î»³õÊ¼»¯Îª-prices[0]£¬ÆäÓà³õÊ¼»¯Îª0
-		// C++11µÄĞÂ³õÊ¼»¯·½·¨£ºint array[2]{};Ïàµ±ÓÚint array[2] = {0};±íÊ¾Êı×éÄÚ¶¼³õÊ¼»¯Îª0
-		int dp[2] = { -prices[0] };
-		for (size_t i = 1; i < n; ++i) {
-			dp[0] = max(dp[0], dp[1] - prices[i]);
-			dp[1] = max(dp[0] + prices[i], dp[1]);
-		}
-		return dp[1];
-	}
+    int maxProfit(vector<int>& prices) {
+        size_t n = prices.size();
+        // æ³¨æ„ï¼šè¿™ä¸ªåˆå§‹åŒ–æ–¹æ³•è¡¨ç¤ºå°†intæ•°ç»„çš„ç¬¬ä¸€ä½åˆå§‹åŒ–ä¸º-prices[0]ï¼Œå…¶ä½™åˆå§‹åŒ–ä¸º0
+        // C++11çš„æ–°åˆå§‹åŒ–æ–¹æ³•ï¼šint array[2]{};ç›¸å½“äºint array[2] = {0};è¡¨ç¤ºæ•°ç»„å†…éƒ½åˆå§‹åŒ–ä¸º0
+        int dp[2] = { -prices[0] };
+        for (size_t i = 1; i < n; ++i) {
+            dp[0] = max(dp[0], dp[1] - prices[i]);
+            dp[1] = max(dp[0] + prices[i], dp[1]);
+        }
+        return dp[1];
+    }
 };

@@ -3,12 +3,12 @@
 using namespace std;
 
 struct TreeNode {
-	int val;
-	TreeNode* left, * right;
-	TreeNode(int val = 0, TreeNode* left = nullptr, TreeNode* right = nullptr) : val(val), left(left), right(right) {}
+    int val;
+    TreeNode* left, * right;
+    TreeNode(int val = 0, TreeNode* left = nullptr, TreeNode* right = nullptr) : val(val), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨£ººóĞò±éÀú£¬Ê±¼ä O(n) 16 ms 24.49%£¬¿Õ¼ä O(n) 20.4 MB 37.77%
+// æˆ‘çš„è§£æ³•ï¼šååºéå†ï¼Œæ—¶é—´ O(n) 16 ms 24.49%ï¼Œç©ºé—´ O(n) 20.4 MB 37.77%
 class Solution {
 private:
     int dfs(TreeNode* T) {
@@ -25,7 +25,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨+ÆÀÂÛÓÅ»¯£ººóĞò±éÀú£¬×ó×ÓÊ÷²»Æ½ºâÊ±²»ĞèÒª±éÀúÓÒ×ÓÊ÷£¬Ê±¼ä O(n) 24 ms 5.27%£¬¿Õ¼ä O(n) 20.1 MB 98.90%
+// æˆ‘çš„è§£æ³•+è¯„è®ºä¼˜åŒ–ï¼šååºéå†ï¼Œå·¦å­æ ‘ä¸å¹³è¡¡æ—¶ä¸éœ€è¦éå†å³å­æ ‘ï¼Œæ—¶é—´ O(n) 24 ms 5.27%ï¼Œç©ºé—´ O(n) 20.1 MB 98.90%
 class Solution {
 private:
     int dfs(TreeNode* T) {

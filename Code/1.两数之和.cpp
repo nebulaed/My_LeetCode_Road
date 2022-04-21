@@ -6,162 +6,162 @@ using namespace std;
 
 class Solution {
 public:
-	vector<int> twoSum(vector<int>& nums, int target) {
-		vector<int> result = {};
-		for (vector<int>::iterator it1 = nums.begin(); it1 != nums.end(); it1++) {
-			for (vector<int>::iterator it2 = it1 + 1; it2 != nums.end(); it2++) {
-				if (*it1 + *it2 == target) {
-					result = { int(it1 - nums.begin()),int(it2 - nums.begin()) };
-					return result;
-				}
-			}
-		}
-		return result;
-	}
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> result = {};
+        for (vector<int>::iterator it1 = nums.begin(); it1 != nums.end(); it1++) {
+            for (vector<int>::iterator it2 = it1 + 1; it2 != nums.end(); it2++) {
+                if (*it1 + *it2 == target) {
+                    result = { int(it1 - nums.begin()),int(it2 - nums.begin()) };
+                    return result;
+                }
+            }
+        }
+        return result;
+    }
 };
 
 void myprint(int val)
 {
-	cout << val << " ";
+    cout << val << " ";
 }
 
-// ÎÒµÄ½â·¨£º×Ô½¨¹þÏ£±í
+// æˆ‘çš„è§£æ³•ï¼šè‡ªå»ºå“ˆå¸Œè¡¨
 //-----------------------------------------------------------------
 typedef struct HashNode {
-	int key;
-	bool status;
+    int key;
+    bool status;
 }HashNode;
 
 class HashTable {
 public:
-	HashTable(int HASHSIZE)
-	{
-		m = HASHSIZE;
-		this->count = m;
-		this->elem = (HashNode*)malloc(m * sizeof(HashNode));
-		for (int i = 0; i < m; i++)
-		{
-			this->elem[i].key = 0;
-			this->elem[i].status = false;
-		}
-	}
-	int Hash(int key)
-	{
-		// ½â¾öÁËÖ±½ÓÓÃkey%m¿ÉÄÜ·µ»Ø¸ºÖµµÄÎÊÌâ
-		key += (abs(key) / m + 1) * m;
-		return key % m;
-	}
-	void InsertHash(int key)
-	{
-		int addr = Hash(key);
-		while (this->elem[addr].status)
-		{
-			addr = (addr + 1) % m;
-		}
-		this->elem[addr].key = key;
-		this->elem[addr].status = true;
-	}
-	bool SearchHash(int key)
-	{
-		int addr;
-		addr = Hash(key);
-		while (this->elem[addr].key != key)
-		{
-			addr = (addr + 1) % m;
-			if (!this->elem[addr].status || addr == Hash(key))
-			{
-				return false;
-			}
-		}
-		if (this->elem[addr].status) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	HashNode* elem;
-	int count;
-	int m;
+    HashTable(int HASHSIZE)
+    {
+        m = HASHSIZE;
+        this->count = m;
+        this->elem = (HashNode*)malloc(m * sizeof(HashNode));
+        for (int i = 0; i < m; i++)
+        {
+            this->elem[i].key = 0;
+            this->elem[i].status = false;
+        }
+    }
+    int Hash(int key)
+    {
+        // è§£å†³äº†ç›´æŽ¥ç”¨key%må¯èƒ½è¿”å›žè´Ÿå€¼çš„é—®é¢˜
+        key += (abs(key) / m + 1) * m;
+        return key % m;
+    }
+    void InsertHash(int key)
+    {
+        int addr = Hash(key);
+        while (this->elem[addr].status)
+        {
+            addr = (addr + 1) % m;
+        }
+        this->elem[addr].key = key;
+        this->elem[addr].status = true;
+    }
+    bool SearchHash(int key)
+    {
+        int addr;
+        addr = Hash(key);
+        while (this->elem[addr].key != key)
+        {
+            addr = (addr + 1) % m;
+            if (!this->elem[addr].status || addr == Hash(key))
+            {
+                return false;
+            }
+        }
+        if (this->elem[addr].status) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    HashNode* elem;
+    int count;
+    int m;
 };
 
 class Solution {
 public:
-	vector<int> twoSum(vector<int>& nums, int target) {
-		vector<int> result = {};
-		int ret1 = -1;
-		int ret2 = -1;
-		HashTable H(nums.size());
-		for (vector<int>::iterator it1 = nums.begin(); it1 != nums.end(); it1++) {
-			if (!H.SearchHash(target - *it1)) {
-				H.InsertHash(*it1);
-			}
-			else {
-				ret1 = target - *it1;
-				ret2 = int(it1 - nums.begin());
-				break;
-			}
-		}
-		for (vector<int>::iterator it2 = nums.begin(); it2 != nums.end(); it2++) {
-			if (*it2 == ret1)
-			{
-				ret1 = int(it2 - nums.begin());
-				break;
-			}
-		}
-		result = { ret1,ret2 };
-		return result;
-	}
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> result = {};
+        int ret1 = -1;
+        int ret2 = -1;
+        HashTable H(nums.size());
+        for (vector<int>::iterator it1 = nums.begin(); it1 != nums.end(); it1++) {
+            if (!H.SearchHash(target - *it1)) {
+                H.InsertHash(*it1);
+            }
+            else {
+                ret1 = target - *it1;
+                ret2 = int(it1 - nums.begin());
+                break;
+            }
+        }
+        for (vector<int>::iterator it2 = nums.begin(); it2 != nums.end(); it2++) {
+            if (*it2 == ret1)
+            {
+                ret1 = int(it2 - nums.begin());
+                break;
+            }
+        }
+        result = { ret1,ret2 };
+        return result;
+    }
 };
 //-----------------------------------------------------------------
 
 
 class Solution {
 public:
-	vector<int> twoSum(vector<int>& nums, int target) {
-		unordered_map<int, int> hashtable;
-		for (int i = 0; i < nums.size(); i++) {
-			unordered_map<int, int>::iterator it = hashtable.find(target - nums[i]);
-			if (it != hashtable.end()) {
-				return { it->second, i };
-			}
-			hashtable.insert(pair<int, int>(nums[i], i));
-		}
-		return {};
-	}
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> hashtable;
+        for (int i = 0; i < nums.size(); i++) {
+            unordered_map<int, int>::iterator it = hashtable.find(target - nums[i]);
+            if (it != hashtable.end()) {
+                return { it->second, i };
+            }
+            hashtable.insert(pair<int, int>(nums[i], i));
+        }
+        return {};
+    }
 };
 
-// ÎÒµÄµÚ¶þ´Î½â·¨£º¹þÏ£±í£¬Ê±¼ä 4 ms 99.39%£¬¿Õ¼ä 10.5 MB 43.70%
+// æˆ‘çš„ç¬¬äºŒæ¬¡è§£æ³•ï¼šå“ˆå¸Œè¡¨ï¼Œæ—¶é—´ 4 ms 99.39%ï¼Œç©ºé—´ 10.5 MB 43.70%
 class Solution {
 public:
-	vector<int> twoSum(vector<int>& nums, int target) {
-		unordered_map<int, int> record;
-		int n = nums.size();
-		for (int i = 0; i < n; ++i) {
-			auto it = record.find(target - nums[i]);
-			if (it != record.end()) {
-				return { it->second, i };
-			}
-			else {
-				record.emplace(nums[i], i);
-			}
-		}
-		return {};
-	}
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> record;
+        int n = nums.size();
+        for (int i = 0; i < n; ++i) {
+            auto it = record.find(target - nums[i]);
+            if (it != record.end()) {
+                return { it->second, i };
+            }
+            else {
+                record.emplace(nums[i], i);
+            }
+        }
+        return {};
+    }
 };
 
 int main()
 {
-	vector<int>nums = { 2,7,11,15 };
-	int target = 26;
+    vector<int>nums = { 2,7,11,15 };
+    int target = 26;
 
-	Solution s;
-	vector<int> result = s.twoSum(nums, target);
-	for_each(result.begin(), result.end(), myprint);
-	cout << endl;
-	
-	system("pause");
-	return 0;
+    Solution s;
+    vector<int> result = s.twoSum(nums, target);
+    for_each(result.begin(), result.end(), myprint);
+    cout << endl;
+
+    system("pause");
+    return 0;
 }
 
 //int main() {

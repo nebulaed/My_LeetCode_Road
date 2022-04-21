@@ -1,70 +1,70 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 
-using std::vector;
-using std::max;
+using namespace std;
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®£¬Ê±¼äO(nk) 4 ms 94.53%£¬¿Õ¼ä O(k) 10.4 MB 90.80%
-// Èç¹ûk´óÓÚ×ÜÌìÊıµÄÒ»°ë£¬Ò»µ©·¢ÏÖ¿ÉÒÔ×¬Ç®¾Í¿ÉÒÔÂòÂô£¬ÓÉÓÚÒ»´ÎÂòÂôĞèÒªÁ½ÌìËùÒÔÊÇÒ»°ë¡£
-// Èç¹ûkĞ¡ÓÚ×ÜÌìÊıµÄÒ»°ë£¬¿ÉÒÔ½¨Á¢Á½¸ö¶¯Ì¬¹æ»®Êı×ébuyºÍsell£¬¶ÔÓÚÃ¿ÌìµÄ¹ÉÆ±¼Û¸ñ£¬buy[i][j]±íÊ¾ÔÚµÚiÌì½øĞĞµÚj´ÎÂòÈëµÄ×î´óÊÕÒæ£¬sell[j]±íÊ¾ÔÚµÚiÌì½øĞĞµÚj´ÎÂô³öÊ±µÄ×î´óÊÕÒæ£¬È»ºóÓÃ¹ö¶¯Êı×éÓÅ»¯³Ébuy[j]ºÍsell[j]
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(nk) 4 ms 94.53%ï¼Œç©ºé—´ O(k) 10.4 MB 90.80%
+// å¦‚æœkå¤§äºæ€»å¤©æ•°çš„ä¸€åŠï¼Œä¸€æ—¦å‘ç°å¯ä»¥èµšé’±å°±å¯ä»¥ä¹°å–ï¼Œç”±äºä¸€æ¬¡ä¹°å–éœ€è¦ä¸¤å¤©æ‰€ä»¥æ˜¯ä¸€åŠã€‚
+// å¦‚æœkå°äºæ€»å¤©æ•°çš„ä¸€åŠï¼Œå¯ä»¥å»ºç«‹ä¸¤ä¸ªåŠ¨æ€è§„åˆ’æ•°ç»„buyå’Œsellï¼Œå¯¹äºæ¯å¤©çš„è‚¡ç¥¨ä»·æ ¼ï¼Œbuy[i][j]è¡¨ç¤ºåœ¨ç¬¬iå¤©è¿›è¡Œç¬¬jæ¬¡ä¹°å…¥çš„æœ€å¤§æ”¶ç›Šï¼Œsell[j]è¡¨ç¤ºåœ¨ç¬¬iå¤©è¿›è¡Œç¬¬jæ¬¡å–å‡ºæ—¶çš„æœ€å¤§æ”¶ç›Šï¼Œç„¶åç”¨æ»šåŠ¨æ•°ç»„ä¼˜åŒ–æˆbuy[j]å’Œsell[j]
 class Solution {
 private:
-	int maxProfitKLargerHalf(const vector<int>& prices) {
-		int maxProfit = 0;
-		for (size_t i = 1; i < prices.size(); ++i) {
-			int profit = prices[i] - prices[i - 1];
-			maxProfit += profit > 0 ? profit : 0;
-		}
-		return maxProfit;
-	}
+    int maxProfitKLargerHalf(const vector<int>& prices) {
+        int maxProfit = 0;
+        for (size_t i = 1; i < prices.size(); ++i) {
+            int profit = prices[i] - prices[i - 1];
+            maxProfit += profit > 0 ? profit : 0;
+        }
+        return maxProfit;
+    }
 public:
-	int maxProfit(int k, vector<int>& prices) {
-		size_t days = prices.size();
-		if (days < 2) return 0;
-		if (k * 2 >= days) {
-			return maxProfitKLargerHalf(prices);
-		}
-		vector<int> buy(k + 1, INT_MIN), sell(k + 1, 0);
-		for (int price : prices) {
-			for (size_t j = 1; j <= k; ++j) {
-				buy[j] = max(buy[j], sell[j - 1] - price);
-				sell[j] = max(sell[j], buy[j] + price);
-			}
-		}
-		return sell[k];
-	}
+    int maxProfit(int k, vector<int>& prices) {
+        size_t days = prices.size();
+        if (days < 2) return 0;
+        if (k * 2 >= days) {
+            return maxProfitKLargerHalf(prices);
+        }
+        vector<int> buy(k + 1, INT_MIN), sell(k + 1, 0);
+        for (int price : prices) {
+            for (size_t j = 1; j <= k; ++j) {
+                buy[j] = max(buy[j], sell[j - 1] - price);
+                sell[j] = max(sell[j], buy[j] + price);
+            }
+        }
+        return sell[k];
+    }
 };
 
-// ¶¯Ì¬¹æ»®·Ç¹ö¶¯Êı×é°æ±¾£ºÊ±¼äO(nk) 8 ms 65.56%£¬¿Õ¼äO(nk) 12.5 MB 22.01%
-// iºÍj¶¼´Ó1¼ÆÆğ
-// ¶ÔÓÚÃ¿ÌìµÄ¹ÉÆ±¼Û¸ñ£¬buy[i][j]±íÊ¾ÔÚµÚiÌì½øĞĞµÚj´ÎÂòÈëµÄ×î´óÊÕÒæ£¬sell[j]±íÊ¾ÔÚµÚiÌì½øĞĞµÚj´ÎÂô³öÊ±µÄ×î´óÊÕÒæ
+// åŠ¨æ€è§„åˆ’éæ»šåŠ¨æ•°ç»„ç‰ˆæœ¬ï¼šæ—¶é—´O(nk) 8 ms 65.56%ï¼Œç©ºé—´O(nk) 12.5 MB 22.01%
+// iå’Œjéƒ½ä»1è®¡èµ·
+// å¯¹äºæ¯å¤©çš„è‚¡ç¥¨ä»·æ ¼ï¼Œbuy[i][j]è¡¨ç¤ºåœ¨ç¬¬iå¤©è¿›è¡Œç¬¬jæ¬¡ä¹°å…¥çš„æœ€å¤§æ”¶ç›Šï¼Œsell[j]è¡¨ç¤ºåœ¨ç¬¬iå¤©è¿›è¡Œç¬¬jæ¬¡å–å‡ºæ—¶çš„æœ€å¤§æ”¶ç›Š
 class Solution {
 private:
-	int maxProfitKLargerHalf(const vector<int>& prices) {
-		int maxProfit = 0;
-		for (size_t i = 1; i < prices.size(); ++i) {
-			int profit = prices[i] - prices[i - 1];
-			maxProfit += profit > 0 ? profit : 0;
-		}
-		return maxProfit;
-	}
+    int maxProfitKLargerHalf(const vector<int>& prices) {
+        int maxProfit = 0;
+        for (size_t i = 1; i < prices.size(); ++i) {
+            int profit = prices[i] - prices[i - 1];
+            maxProfit += profit > 0 ? profit : 0;
+        }
+        return maxProfit;
+    }
 public:
-	int maxProfit(int k, vector<int>& prices) {
-		size_t days = prices.size();
-		if (days < 2) return 0;
-		if (k * 2 >= days) {
-			return maxProfitKLargerHalf(prices);
-		}
-		vector<vector<int>> buy(days + 1, vector<int>(k + 1, INT_MIN)), sell(days + 1, vector<int>(k + 1, 0));
-		for (size_t i = 1; i <= days; ++i) {
-			for (size_t j = 1; j <= k; ++j) {
-				// µÚiÌì¼°Ö®Ç°µÄµÚj´ÎÂòÈë×î´óÊÕÒæÓĞÁ½ÖÖ£¬Ò»ÊÇÔÚi-1Ìì¼°Ö®Ç°½øĞĞµÚj´ÎÂòÈë£¬¶şÊÇÔÚµÚiÌìÂòÈëÁË£¬i-1Ìì½øĞĞÁËj-1´Î½»Ò×µÄÊÕÒæ¼õÈ¥ÔÚµÚiÌì(´Ó1¼ÆÆğ)µÄ¼Û¸ñprices[i-1]£¬Á½ÕßÈ¡×î´ó
-				buy[i][j] = max(buy[i - 1][j], sell[i - 1][j - 1] - prices[i - 1]);
-				// µÚiÌì¼°Ö®Ç°µÄµÚj´ÎÊÛ³ö×î´óÊÕÒæÓĞÁ½ÖÖ£¬Ò»ÊÇÔÚi-1Ìì¼°Ö®Ç°½øĞĞÁËµÚj´ÎÊÛ³ö£¬¶şÊÇµÚiÌì¼°Ö®Ç°½øĞĞµÚj´ÎÂòÈëºóµÄÊÕÒæ¼ÓÉÏµÚiÌìµÄ¼Û¸ñprices[i-1]£¬Á½ÕßÈ¡×î´ó
-				sell[i][j] = max(sell[i - 1][j], buy[i][j] + prices[i - 1]);
-			}
-		}
-		return sell[days][k];
-	}
+    int maxProfit(int k, vector<int>& prices) {
+        size_t days = prices.size();
+        if (days < 2) return 0;
+        if (k * 2 >= days) {
+            return maxProfitKLargerHalf(prices);
+        }
+        vector<vector<int>> buy(days + 1, vector<int>(k + 1, INT_MIN)), sell(days + 1, vector<int>(k + 1, 0));
+        for (size_t i = 1; i <= days; ++i) {
+            for (size_t j = 1; j <= k; ++j) {
+                // ç¬¬iå¤©åŠä¹‹å‰çš„ç¬¬jæ¬¡ä¹°å…¥æœ€å¤§æ”¶ç›Šæœ‰ä¸¤ç§ï¼Œä¸€æ˜¯åœ¨i-1å¤©åŠä¹‹å‰è¿›è¡Œç¬¬jæ¬¡ä¹°å…¥ï¼ŒäºŒæ˜¯åœ¨ç¬¬iå¤©ä¹°å…¥äº†ï¼Œi-1å¤©è¿›è¡Œäº†j-1æ¬¡äº¤æ˜“çš„æ”¶ç›Šå‡å»åœ¨ç¬¬iå¤©(ä»1è®¡èµ·)çš„ä»·æ ¼prices[i-1]ï¼Œä¸¤è€…å–æœ€å¤§
+                buy[i][j] = max(buy[i - 1][j], sell[i - 1][j - 1] - prices[i - 1]);
+                // ç¬¬iå¤©åŠä¹‹å‰çš„ç¬¬jæ¬¡å”®å‡ºæœ€å¤§æ”¶ç›Šæœ‰ä¸¤ç§ï¼Œä¸€æ˜¯åœ¨i-1å¤©åŠä¹‹å‰è¿›è¡Œäº†ç¬¬jæ¬¡å”®å‡ºï¼ŒäºŒæ˜¯ç¬¬iå¤©åŠä¹‹å‰è¿›è¡Œç¬¬jæ¬¡ä¹°å…¥åçš„æ”¶ç›ŠåŠ ä¸Šç¬¬iå¤©çš„ä»·æ ¼prices[i-1]ï¼Œä¸¤è€…å–æœ€å¤§
+                sell[i][j] = max(sell[i - 1][j], buy[i][j] + prices[i - 1]);
+            }
+        }
+        return sell[days][k];
+    }
 };

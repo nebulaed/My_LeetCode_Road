@@ -2,82 +2,80 @@
 #include<vector>
 #include<algorithm>
 
-using std::vector;
-using std::sort;
-using std::max;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º¶¯Ì¬¹æ»®£¬Ê±¼ä 176 ms 53.51%£¬¿Õ¼ä 22.2 MB 57.84%
+// æˆ‘çš„è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 176 ms 53.51%ï¼Œç©ºé—´ 22.2 MB 57.84%
 class Solution {
 public:
-	int findLongestChain(vector<vector<int>>& pairs) {
-		sort(pairs.begin(), pairs.end(), [](const vector<int> & lhs, const vector<int> & rhs) {
-			return lhs[1] < rhs[1];
-			});
-		size_t n = pairs.size();
-		vector<int> dp(n, 1);
-		int maxLength = 0;
-		for (size_t i = 1; i <= n; ++i) {
-			int& cur = dp[i - 1];
-			for (size_t j = i - 1; j > 0; --j) {
-				if (pairs[i - 1][0] > pairs[j - 1][1]) {
-					cur = max(dp[j - 1] + 1, cur);
-				}
-			}
-			maxLength = max(maxLength, cur);
-		}
-		return maxLength;
-	}
+    int findLongestChain(vector<vector<int>>& pairs) {
+        sort(pairs.begin(), pairs.end(), [](const vector<int> & lhs, const vector<int> & rhs) {
+            return lhs[1] < rhs[1];
+        });
+        size_t n = pairs.size();
+        vector<int> dp(n, 1);
+        int maxLength = 0;
+        for (size_t i = 1; i <= n; ++i) {
+            int& cur = dp[i - 1];
+            for (size_t j = i - 1; j > 0; --j) {
+                if (pairs[i - 1][0] > pairs[j - 1][1]) {
+                    cur = max(dp[j - 1] + 1, cur);
+                }
+            }
+            maxLength = max(maxLength, cur);
+        }
+        return maxLength;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£º¶¯Ì¬¹æ»®£¬Ê±¼ä 168 ms 54.73%£¬¿Õ¼ä 22.2 MB 64.73%
+// æˆ‘çš„è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 168 ms 54.73%ï¼Œç©ºé—´ 22.2 MB 64.73%
 class Solution {
 public:
-	int findLongestChain(vector<vector<int>>& pairs) {
-		sort(pairs.begin(), pairs.end(), [](const vector<int> & lhs, const vector<int> & rhs) {
-			return lhs[0] < rhs[0];
-			});
-		size_t n = pairs.size();
-		vector<int> dp(n, 1);
-		int maxLength = 0;
-		for (size_t i = 1; i <= n; ++i) {
-			int& cur = dp[i - 1];
-			for (size_t j = i - 1; j > 0; --j) {
-				if (pairs[i - 1][0] > pairs[j - 1][1]) {
-					cur = max(dp[j - 1] + 1, cur);
-				}
-			}
-			maxLength = max(maxLength, cur);
-		}
-		return maxLength;
-	}
+    int findLongestChain(vector<vector<int>>& pairs) {
+        sort(pairs.begin(), pairs.end(), [](const vector<int> & lhs, const vector<int> & rhs) {
+            return lhs[0] < rhs[0];
+        });
+        size_t n = pairs.size();
+        vector<int> dp(n, 1);
+        int maxLength = 0;
+        for (size_t i = 1; i <= n; ++i) {
+            int& cur = dp[i - 1];
+            for (size_t j = i - 1; j > 0; --j) {
+                if (pairs[i - 1][0] > pairs[j - 1][1]) {
+                    cur = max(dp[j - 1] + 1, cur);
+                }
+            }
+            maxLength = max(maxLength, cur);
+        }
+        return maxLength;
+    }
 };
 
-// ÎÒµÄ½â·¨Èı£ºÌ°ĞÄ+¶ş·Ö²éÕÒ£¬Ê±¼ä 44 ms 99%£¬¿Õ¼ä 22 MB 74%
-// Ë¼Â·£ºÀàËÆ300Ìâ×î³¤µİÔö×ÓĞòÁĞ£¬ÏÈ½«pairs°´ÕÕÓÒ¶ËµãÅÅĞò£¬½«Çø¼äµÄÓÒ¶Ëµã·Åµ½endArrÖĞ£¬ÈôÔÚpairsÖĞÕÒµ½µÄÏÂÒ»¸öpair£¬Èç¹ûpairµÄ×ó¶ËµãĞ¡ÓÚendArrµÄ×îºóÒ»¸öÔªËØ£¬ÄÇÃ´½«¸ÃpairµÄÓÒ¶ËµãÒ²·Åµ½endArr×îºó£¬Èç¹û²»Ğ¡ÓÚendArrµÄ×îºóÒ»¸öÔªËØ£¬ÄÇ¾ÍÔÚendArrÖĞÕÒµ½²»Ğ¡ÓÚpairÓÒ¶ËµãµÄµÚÒ»¸öÔªËØ£¬ÈôÕÒµÃµ½¾Í½«¸ÃÔªËØÌæ»»Îª¸ÃpairÓÒ¶Ëµã¡£
-// ×îºó·µ»ØendArrµÄ³¤¶È
+// æˆ‘çš„è§£æ³•ä¸‰ï¼šè´ªå¿ƒ+äºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ 44 ms 99%ï¼Œç©ºé—´ 22 MB 74%
+// æ€è·¯ï¼šç±»ä¼¼300é¢˜æœ€é•¿é€’å¢å­åºåˆ—ï¼Œå…ˆå°†pairsæŒ‰ç…§å³ç«¯ç‚¹æ’åºï¼Œå°†åŒºé—´çš„å³ç«¯ç‚¹æ”¾åˆ°endArrä¸­ï¼Œè‹¥åœ¨pairsä¸­æ‰¾åˆ°çš„ä¸‹ä¸€ä¸ªpairï¼Œå¦‚æœpairçš„å·¦ç«¯ç‚¹å°äºendArrçš„æœ€åä¸€ä¸ªå…ƒç´ ï¼Œé‚£ä¹ˆå°†è¯¥pairçš„å³ç«¯ç‚¹ä¹Ÿæ”¾åˆ°endArræœ€åï¼Œå¦‚æœä¸å°äºendArrçš„æœ€åä¸€ä¸ªå…ƒç´ ï¼Œé‚£å°±åœ¨endArrä¸­æ‰¾åˆ°ä¸å°äºpairå³ç«¯ç‚¹çš„ç¬¬ä¸€ä¸ªå…ƒç´ ï¼Œè‹¥æ‰¾å¾—åˆ°å°±å°†è¯¥å…ƒç´ æ›¿æ¢ä¸ºè¯¥pairå³ç«¯ç‚¹ã€‚
+// æœ€åè¿”å›endArrçš„é•¿åº¦
 class Solution {
 private:
-	static bool cmp(const vector<int>& lhs, const vector<int>& rhs) {
-		return lhs[1] < rhs[1];
-	}
+    static bool cmp(const vector<int>& lhs, const vector<int>& rhs) {
+        return lhs[1] < rhs[1];
+    }
 public:
-	int findLongestChain(vector<vector<int>>& pairs) {
-		sort(pairs.begin(), pairs.end(), cmp);
-		size_t n = pairs.size();
-		vector<int> endArr{ pairs.front()[1] };
-		for (size_t i = 1; i < n; ++i) {
-			const auto& pair = pairs[i];
-			int lEnd = pair[0], rEnd = pair[1];
-			if (endArr.back() < lEnd) {
-				endArr.emplace_back(rEnd);
-			}
-			else {
-				auto it = lower_bound(endArr.begin(), endArr.end(), rEnd);
-				if (it != endArr.end()) {
-					*it = rEnd;
-				}
-			}
-		}
-		return endArr.size();
-	}
+    int findLongestChain(vector<vector<int>>& pairs) {
+        sort(pairs.begin(), pairs.end(), cmp);
+        size_t n = pairs.size();
+        vector<int> endArr{ pairs.front()[1] };
+        for (size_t i = 1; i < n; ++i) {
+            const auto& pair = pairs[i];
+            int lEnd = pair[0], rEnd = pair[1];
+            if (endArr.back() < lEnd) {
+                endArr.emplace_back(rEnd);
+            }
+            else {
+                auto it = lower_bound(endArr.begin(), endArr.end(), rEnd);
+                if (it != endArr.end()) {
+                    *it = rEnd;
+                }
+            }
+        }
+        return endArr.size();
+    }
 };

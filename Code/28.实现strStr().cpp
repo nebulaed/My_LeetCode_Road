@@ -1,15 +1,16 @@
 #include<iostream>
+#include<vector>
 #include<string>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºKMPËã·¨(²Î¿¼´ó»°Êı¾İ½á¹¹)£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 7.4 MB 16.98%
+// æˆ‘çš„è§£æ³•ï¼šKMPç®—æ³•(å‚è€ƒå¤§è¯æ•°æ®ç»“æ„)ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 7.4 MB 16.98%
 class Solution {
 public:
     int strStr(string haystack, string needle) {
         int i = 0, j = 0, n1 = haystack.size(), n2 = needle.size();
         if (!n2) return 0;
-        // next[i]±íÊ¾¶ÔÓÚÆ¥Åä´®needle£¬needle[0]~needle[i]ÕâÒ»¸ö×Ó´®£¬Ç°k+1¸ö×Ö·ûÓëºók+1¸ö×Ö·ûÏàµÈµÄ×î´óµÄk£¬k!=i
-        // ÀıÈçabcabd£¬¶ÔÓÚnext[4], ×Ó´®Îªabcab£¬Ç°2¸ö×Ö·ûÓëºóÁ½¸ö×Ö·ûÏàµÈ£¬Òò´Ëk=1
+        // next[i]è¡¨ç¤ºå¯¹äºåŒ¹é…ä¸²needleï¼Œneedle[0]~needle[i]è¿™ä¸€ä¸ªå­ä¸²ï¼Œå‰k+1ä¸ªå­—ç¬¦ä¸åk+1ä¸ªå­—ç¬¦ç›¸ç­‰çš„æœ€å¤§çš„kï¼Œk!=i
+        // ä¾‹å¦‚abcabdï¼Œå¯¹äºnext[4], å­ä¸²ä¸ºabcabï¼Œå‰2ä¸ªå­—ç¬¦ä¸åä¸¤ä¸ªå­—ç¬¦ç›¸ç­‰ï¼Œå› æ­¤k=1
         vector<int> next(n2);
         get_nextval(needle, next);
         while (i < n1 && j < n2) {
@@ -17,7 +18,7 @@ public:
                 ++i;
                 ++j;
             }
-            // ÓĞ²¿·ÖÆ¥Åä£¬ÍùÇ°»ØËİ
+                // æœ‰éƒ¨åˆ†åŒ¹é…ï¼Œå¾€å‰å›æº¯
             else {
                 j = next[j];
             }
@@ -25,7 +26,7 @@ public:
         return j > n2 - 1 ? (i - n2) : -1;
     }
 
-    // ¸¨º¯Êı£¬¼ÆËãnextÊı×é
+    // è¾…å‡½æ•°ï¼Œè®¡ç®—nextæ•°ç»„
     void get_nextval(const string& needle, vector<int>& next) {
         int i = 0, k = -1;
         next[0] = -1;
@@ -34,10 +35,10 @@ public:
                 ++i;
                 ++k;
                 if (needle[i] != needle[k]) next[i] = k;
-                // Èô¸ÃÎ»ÏàÍ¬£¬¸üĞÂÏàÍ¬µÄ×î´óÇ°×º
+                    // è‹¥è¯¥ä½ç›¸åŒï¼Œæ›´æ–°ç›¸åŒçš„æœ€å¤§å‰ç¼€
                 else next[i] = next[k];
             }
-            // Èô¸ÃÎ»²»Í¬£¬ÍùÇ°»ØËİ
+                // è‹¥è¯¥ä½ä¸åŒï¼Œå¾€å‰å›æº¯
             else {
                 k = next[k];
             }

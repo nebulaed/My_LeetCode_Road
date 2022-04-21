@@ -4,105 +4,100 @@
 #include<set>
 #include<functional>
 
-using std::vector;
-using std::priority_queue;
-using std::less;
-using std::greater;
-using std::multiset;
+using namespace std;
 
-// ÎÒµÄ½â·¨£ºÓÅÏÈ¶ÓÁĞ£¬Ê±¼ä 272 ms 81.67%£¬¿Õ¼ä 114.1 MB 89.28%
+// æˆ‘çš„è§£æ³•ï¼šä¼˜å…ˆé˜Ÿåˆ—ï¼Œæ—¶é—´ 272 ms 81.67%ï¼Œç©ºé—´ 114.1 MB 89.28%
 class MedianFinder {
 private:
-	// ´ó¶¥¶Ñ£¬×î´óÊıÔÚ¶Ñ¶¥
-	priority_queue<int, vector<int>, less<int>> queMin;
-	// Ğ¡¶¥¶Ñ£¬×îĞ¡ÊıÔÚ¶Ñ¶¥
-	priority_queue<int, vector<int>, greater<int>> queMax;
+    // å¤§é¡¶å †ï¼Œæœ€å¤§æ•°åœ¨å †é¡¶
+    priority_queue<int, vector<int>, less<int>> queMin;
+    // å°é¡¶å †ï¼Œæœ€å°æ•°åœ¨å †é¡¶
+    priority_queue<int, vector<int>, greater<int>> queMax;
 
 public:
-	MedianFinder() {}
+    MedianFinder() {}
 
-	void addNum(int num) {
-		// queMinÎª¿Õ»òÕßnumĞ¡ÓÚqueMinÖĞµÄ×î´óÖµ
-		if (queMin.empty() || num < queMin.top()) {
-			queMin.emplace(num);
-			// ÈôqueMinµÄÔªËØÊıÁ¿±ÈqueMaxµÄÔªËØÊıÁ¿´ó2»òÒÔÉÏ
-			if (queMax.size() + 1 < queMin.size()) {
-				// ½«queMinµÄ×î´óÖµÅ²µ½queMaxÖĞ
-				queMax.emplace(queMin.top());
-				queMin.pop();
-			}
-		}
-		// queMin²»Îª¿ÕÇÒnum´óÓÚµÈÓÚqueMinµÄ×î´óÖµ
-		else {
-			queMax.emplace(num);
-			// ÈôqueMaxµÄÔªËØÊıÁ¿±ÈqueMinµÄÔªËØÊıÁ¿´ó
-			if (queMin.size() < queMax.size()) {
-				// ½«queMaxµÄ×îĞ¡ÖµÅ²µ½µÄqueMinÖĞ
-				queMin.emplace(q`````````````````````````````````````````````````````````````````
-					+---ueMax.top());
-				queMax.pop();
-			}
-		}
-	}
+    void addNum(int num) {
+        // queMinä¸ºç©ºæˆ–è€…numå°äºqueMinä¸­çš„æœ€å¤§å€¼
+        if (queMin.empty() || num < queMin.top()) {
+            queMin.emplace(num);
+            // è‹¥queMinçš„å…ƒç´ æ•°é‡æ¯”queMaxçš„å…ƒç´ æ•°é‡å¤§2æˆ–ä»¥ä¸Š
+            if (queMax.size() + 1 < queMin.size()) {
+                // å°†queMinçš„æœ€å¤§å€¼æŒªåˆ°queMaxä¸­
+                queMax.emplace(queMin.top());
+                queMin.pop();
+            }
+        }
+            // queMinä¸ä¸ºç©ºä¸”numå¤§äºç­‰äºqueMinçš„æœ€å¤§å€¼
+        else {
+            queMax.emplace(num);
+            // è‹¥queMaxçš„å…ƒç´ æ•°é‡æ¯”queMinçš„å…ƒç´ æ•°é‡å¤§
+            if (queMin.size() < queMax.size()) {
+                // å°†queMaxçš„æœ€å°å€¼æŒªåˆ°çš„queMinä¸­
+                queMin.emplace(queMax.top());
+                queMax.pop();
+            }
+        }
+    }
 
-	double findMedian() {
-		// ÈôqueMinÔªËØÊıÁ¿±ÈqueMax´ó£¬ËµÃ÷Ä¿Ç°ÔªËØÊıÁ¿ÎªÆæÊı£¬ÖĞÎ»ÊıÎªqueMin×î´óÖµ
-		if (queMin.size() > queMax.size()) {
-			return queMin.top();
-		}
-		// ·ñÔòÖĞÎ»ÊıÎªqueMin×î´óÖµºÍqueMax×îĞ¡ÖµµÄÆ½¾ùÖµ
-		else {
-			return static_cast<double>(queMin.top() + queMax.top()) / 2.0;
-		}
-	}
+    double findMedian() {
+        // è‹¥queMinå…ƒç´ æ•°é‡æ¯”queMaxå¤§ï¼Œè¯´æ˜ç›®å‰å…ƒç´ æ•°é‡ä¸ºå¥‡æ•°ï¼Œä¸­ä½æ•°ä¸ºqueMinæœ€å¤§å€¼
+        if (queMin.size() > queMax.size()) {
+            return queMin.top();
+        }
+            // å¦åˆ™ä¸­ä½æ•°ä¸ºqueMinæœ€å¤§å€¼å’ŒqueMaxæœ€å°å€¼çš„å¹³å‡å€¼
+        else {
+            return static_cast<double>(queMin.top() + queMax.top()) / 2.0;
+        }
+    }
 };
 
-// ¹Ù·½Ìâ½â¶ş£ºÓĞĞò¼¯ºÏ+Ë«Ö¸Õë
-// ¿ÉÒÔÊ¹ÓÃÓĞĞò¼¯ºÏÎ¬»¤ÕâĞ©Êı¡£Ê¹ÓÃË«Ö¸ÕëÖ¸ÏòÓĞĞò¼¯ºÏÖĞµÄÖĞÎ»ÊıÔªËØ¼´¿É¡£µ±ÀÛ¼ÆÌí¼ÓµÄÊıµÄÊıÁ¿ÎªÆæÊıÊ±£¬Ë«Ö¸ÕëÖ¸ÏòÍ¬Ò»¸öÔªËØ¡£µ±ÀÛ¼ÆÌí¼ÓµÄÊıµÄÊıÁ¿ÎªÅ¼ÊıÊ±£¬Ë«Ö¸Õë·Ö±ğÖ¸Ïò¹¹³ÉÖĞÎ»ÊıµÄÁ½¸öÊı¡£
-// ³¢ÊÔÌí¼ÓÒ»¸öÊınumµ½ÓĞĞò¼¯ºÏÖĞÊ±£¬ÓĞÈıÖÖÇé¿ö£º
-// 1. ³õÊ¼ÓĞĞò¼¯ºÏÎª¿ÕÊ±£¬ÎÒÃÇÖ±½ÓÈÃ×óÓÒÖ¸ÕëÖ¸ÏònumËùÔÚµÄÎ»ÖÃ¡£
-// 2. ÓĞĞò¼¯ºÏÎªÖĞÔªËØÎªÆæÊıÊ±£¬left ºÍ right Í¬Ê±Ö¸ÏòÖĞÎ»Êı¡£Èç¹û num ´óÓÚµÈÓÚÖĞÎ»Êı£¬ÄÇÃ´Ö»ÒªÈÃ right ÓÒÒÆ£¬·ñÔòÈÃ left ×óÒÆ¼´¿É¡£
-// 3. ÓĞĞò¼¯ºÏÎªÖĞÔªËØÎªÅ¼ÊıÊ±£¬left ºÍ right ·Ö±ğÖ¸Ïò¹¹³ÉÖĞÎ»ÊıµÄÁ½¸öÊı:
-// 3.1 µ± num ³ÉÎªĞÂµÄÎ¨Ò»µÄÖĞÎ»Êı(´óÓÚµÈÓÚleft£¬Ğ¡ÓÚright)£¬ÄÇÃ´ÎÒÃÇÈÃ left ÓÒÒÆ£¬right ×óÒÆ£¬ÕâÑùËüÃÇ¼´¿ÉÖ¸Ïò num ËùÔÚµÄÎ»ÖÃ.
-// 3.2 µ± num ´óÓÚµÈÓÚright£¬ÁîleftÓÒÒÆ¡£
-// 3.3 µ±num Ğ¡ÓÚ left ÇÒĞ¡ÓÚ right£¬ÄÇÃ´Áîright×óÒÆ¡£
+// å®˜æ–¹é¢˜è§£äºŒï¼šæœ‰åºé›†åˆ+åŒæŒ‡é’ˆ
+// å¯ä»¥ä½¿ç”¨æœ‰åºé›†åˆç»´æŠ¤è¿™äº›æ•°ã€‚ä½¿ç”¨åŒæŒ‡é’ˆæŒ‡å‘æœ‰åºé›†åˆä¸­çš„ä¸­ä½æ•°å…ƒç´ å³å¯ã€‚å½“ç´¯è®¡æ·»åŠ çš„æ•°çš„æ•°é‡ä¸ºå¥‡æ•°æ—¶ï¼ŒåŒæŒ‡é’ˆæŒ‡å‘åŒä¸€ä¸ªå…ƒç´ ã€‚å½“ç´¯è®¡æ·»åŠ çš„æ•°çš„æ•°é‡ä¸ºå¶æ•°æ—¶ï¼ŒåŒæŒ‡é’ˆåˆ†åˆ«æŒ‡å‘æ„æˆä¸­ä½æ•°çš„ä¸¤ä¸ªæ•°ã€‚
+// å°è¯•æ·»åŠ ä¸€ä¸ªæ•°numåˆ°æœ‰åºé›†åˆä¸­æ—¶ï¼Œæœ‰ä¸‰ç§æƒ…å†µï¼š
+// 1. åˆå§‹æœ‰åºé›†åˆä¸ºç©ºæ—¶ï¼Œæˆ‘ä»¬ç›´æ¥è®©å·¦å³æŒ‡é’ˆæŒ‡å‘numæ‰€åœ¨çš„ä½ç½®ã€‚
+// 2. æœ‰åºé›†åˆä¸ºä¸­å…ƒç´ ä¸ºå¥‡æ•°æ—¶ï¼Œleft å’Œ right åŒæ—¶æŒ‡å‘ä¸­ä½æ•°ã€‚å¦‚æœ num å¤§äºç­‰äºä¸­ä½æ•°ï¼Œé‚£ä¹ˆåªè¦è®© right å³ç§»ï¼Œå¦åˆ™è®© left å·¦ç§»å³å¯ã€‚
+// 3. æœ‰åºé›†åˆä¸ºä¸­å…ƒç´ ä¸ºå¶æ•°æ—¶ï¼Œleft å’Œ right åˆ†åˆ«æŒ‡å‘æ„æˆä¸­ä½æ•°çš„ä¸¤ä¸ªæ•°:
+// 3.1 å½“ num æˆä¸ºæ–°çš„å”¯ä¸€çš„ä¸­ä½æ•°(å¤§äºç­‰äºleftï¼Œå°äºright)ï¼Œé‚£ä¹ˆæˆ‘ä»¬è®© left å³ç§»ï¼Œright å·¦ç§»ï¼Œè¿™æ ·å®ƒä»¬å³å¯æŒ‡å‘ num æ‰€åœ¨çš„ä½ç½®.
+// 3.2 å½“ num å¤§äºç­‰äºrightï¼Œä»¤leftå³ç§»ã€‚
+// 3.3 å½“num å°äº left ä¸”å°äº rightï¼Œé‚£ä¹ˆä»¤rightå·¦ç§»ã€‚
 class MedianFinder {
 private:
-	multiset<int> nums;
-	multiset<int>::iterator left, right;
+    multiset<int> nums;
+    multiset<int>::iterator left, right;
 
 public:
-	MedianFinder() : left(nums.end()), right(nums.end()) {}
+    MedianFinder() : left(nums.end()), right(nums.end()) {}
 
-	void addNum(int num) {
-		const size_t n = nums.size();
-		nums.emplace(num);
-		if (n == 0) {
-			left = right = nums.begin();
-		}
-		else if (n & 1) {
-			if (num >= *left) {
-				++right;
-			}
-			else {
-				--left;
-			}
-		}
-		else {
-			if (num >= *left && num < *right) {
-				++left;
-				--right;
-			}
-			else if (num >= *right) {
-				++left;
-			}
-			else {
-				--right;
-			}
-		}
-	}
+    void addNum(int num) {
+        const size_t n = nums.size();
+        nums.emplace(num);
+        if (n == 0) {
+            left = right = nums.begin();
+        }
+        else if (n & 1) {
+            if (num >= *left) {
+                ++right;
+            }
+            else {
+                --left;
+            }
+        }
+        else {
+            if (num >= *left && num < *right) {
+                ++left;
+                --right;
+            }
+            else if (num >= *right) {
+                ++left;
+            }
+            else {
+                --right;
+            }
+        }
+    }
 
-	double findMedian() {
-		return static_cast<double>(*left + *right) / 2.0;
-	}
+    double findMedian() {
+        return static_cast<double>(*left + *right) / 2.0;
+    }
 };

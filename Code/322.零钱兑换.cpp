@@ -1,95 +1,115 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºÅÅĞò+¶¯Ì¬¹æ»®£¬Ê±¼ä 68 ms£¬¿Õ¼ä 13.9 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæ’åº+åŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 68 msï¼Œç©ºé—´ 13.9 MB
 class Solution {
 public:
-	int coinChange(vector<int>& coins, int amount) {
-		sort(coins.begin(), coins.end());
-		vector<int> dp(amount + 1, 0);
-		for (int i = 1; i <= amount; ++i) {
-			int minStep = INT_MAX;
-			for (int j = 0; j < coins.size() && i - coins[j] >= 0; ++j) {
-				int temp = dp[i - coins[j]];
-				if (temp != -1) {
-					minStep = min(minStep, temp);
-				}
-			}
-			dp[i] = minStep == INT_MAX ? -1 : minStep + 1;
-		}
-		return amount == 0 ? 0 : dp[amount];
-	}
+    int coinChange(vector<int>& coins, int amount) {
+        sort(coins.begin(), coins.end());
+        vector<int> dp(amount + 1, 0);
+        for (int i = 1; i <= amount; ++i) {
+            int minStep = INT_MAX;
+            for (int j = 0; j < coins.size() && i - coins[j] >= 0; ++j) {
+                int temp = dp[i - coins[j]];
+                if (temp != -1) {
+                    minStep = min(minStep, temp);
+                }
+            }
+            dp[i] = minStep == INT_MAX ? -1 : minStep + 1;
+        }
+        return amount == 0 ? 0 : dp[amount];
+    }
 };
 
-// ÎÒµÄ½â·¨Ò»±äÊ½£º¶¯Ì¬¹æ»®£¬Ê±¼ä 68 ms£¬¿Õ¼ä 14 MB
+// æˆ‘çš„è§£æ³•ä¸€å˜å¼ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 68 msï¼Œç©ºé—´ 14 MB
 class Solution {
 public:
-	int coinChange(vector<int>& coins, int amount) {
-		vector<int> dp(amount + 1, 0);
-		for (int i = 1; i <= amount; ++i) {
-			int minStep = INT_MAX;
-			for (int j = 0; j < coins.size(); ++j) {
-				if (i - coins[j] < 0) continue;
-				int temp = dp[i - coins[j]];
-				if (temp != -1) {
-					minStep = min(minStep, temp);
-				}
-			}
-			dp[i] = minStep == INT_MAX ? -1 : minStep + 1;
-		}
-		return amount == 0 ? 0 : dp[amount];
-	}
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> dp(amount + 1, 0);
+        for (int i = 1; i <= amount; ++i) {
+            int minStep = INT_MAX;
+            for (int j = 0; j < coins.size(); ++j) {
+                if (i - coins[j] < 0) continue;
+                int temp = dp[i - coins[j]];
+                if (temp != -1) {
+                    minStep = min(minStep, temp);
+                }
+            }
+            dp[i] = minStep == INT_MAX ? -1 : minStep + 1;
+        }
+        return amount == 0 ? 0 : dp[amount];
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¼ÇÒä»¯ËÑË÷£¬Ê±¼äO(Sn) 80 ms£¬¿Õ¼äO(S) 15.6 MB
-// ¶¨ÒåF(S)Îª×é³É½ğ¶îSËùĞèµÄ×îÉÙÓ²±ÒÊıÁ¿£¬[c0 ... cn-1]Îª¿ÉÑ¡µÄnÃ¶Ó²±ÒÃæ¶îÖµ
-// ¼Ù¶¨×îºóÒ»Ã¶Ó²±ÒÃæÖµÊÇC£¬Ôò×ªÒÆ·½³ÌÎªF(S) = F(S-C) + 1
-// µ«ÎÒÃÇ²»ÖªµÀ×îºóÒ»Ã¶Ó²±ÒCÊÇ¶àÉÙ£¬ĞèÒªÃ¶¾ÙÃ¿¸öÓ²±ÒÃæ¶îÖµc0,c1,...,cn-1²¢Ñ¡ÔñÆäÖĞF(S-C)×îĞ¡µÄÃæ¶îÖµ¡£
+// å®˜æ–¹è§£æ³•ä¸€ï¼šè®°å¿†åŒ–æœç´¢ï¼Œæ—¶é—´O(Sn) 80 msï¼Œç©ºé—´O(S) 15.6 MB
+// å®šä¹‰F(S)ä¸ºç»„æˆé‡‘é¢Sæ‰€éœ€çš„æœ€å°‘ç¡¬å¸æ•°é‡ï¼Œ[c0 ... cn-1]ä¸ºå¯é€‰çš„næšç¡¬å¸é¢é¢å€¼
+// å‡å®šæœ€åä¸€æšç¡¬å¸é¢å€¼æ˜¯Cï¼Œåˆ™è½¬ç§»æ–¹ç¨‹ä¸ºF(S) = F(S-C) + 1
+// ä½†æˆ‘ä»¬ä¸çŸ¥é“æœ€åä¸€æšç¡¬å¸Cæ˜¯å¤šå°‘ï¼Œéœ€è¦æšä¸¾æ¯ä¸ªç¡¬å¸é¢é¢å€¼c0,c1,...,cn-1å¹¶é€‰æ‹©å…¶ä¸­F(S-C)æœ€å°çš„é¢é¢å€¼ã€‚
 class Solution {
 private:
-	vector<int> count;
+    vector<int> count;
 
-	int dp(const vector<int>& coins, int rem) {
-		if (rem < 0) return -1;
-		else if (rem == 0) return 0;
-		// Èô¸ÃÖµÒÑ±»¼ÆËã¹ı£¬Ö»ĞèÖ±½Óµ÷ÓÃcountÊı×éÀï´æ·ÅµÄ¶ÔÓ¦¸ÃÖµµÄÓ²±ÒÊı
-		if (count[rem - 1] != 0) return count[rem - 1];
-		int minNum = INT_MAX;
-		for (int coin : coins) {
-			int ret = dp(coins, rem - coin);
-			if (ret >= 0 && ret < minNum) {
-				minNum = ret + 1;
-			}
-		}
-		count[rem - 1] = minNum == INT_MAX ? -1 : minNum;
-		return count[rem - 1];
-	}
+    int dp(const vector<int>& coins, int rem) {
+        if (rem < 0) return -1;
+        else if (rem == 0) return 0;
+        // è‹¥è¯¥å€¼å·²è¢«è®¡ç®—è¿‡ï¼Œåªéœ€ç›´æ¥è°ƒç”¨countæ•°ç»„é‡Œå­˜æ”¾çš„å¯¹åº”è¯¥å€¼çš„ç¡¬å¸æ•°
+        if (count[rem - 1] != 0) return count[rem - 1];
+        int minNum = INT_MAX;
+        for (int coin : coins) {
+            int ret = dp(coins, rem - coin);
+            if (ret >= 0 && ret < minNum) {
+                minNum = ret + 1;
+            }
+        }
+        count[rem - 1] = minNum == INT_MAX ? -1 : minNum;
+        return count[rem - 1];
+    }
 public:
-	int coinChange(vector<int>& coins, int amount) {
-		if (amount < 1) return 0;
-		count.resize(amount);
-		return dp(coins, amount);
-	}
+    int coinChange(vector<int>& coins, int amount) {
+        if (amount < 1) return 0;
+        count.resize(amount);
+        return dp(coins, amount);
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º¶¯Ì¬¹æ»®£¬Ê±¼äO(Sn) 80 ms£¬¿Õ¼äO(S) 14 MB
-// ²ÉÓÃ×ÔÏÂ¶øÉÏµÄ·½Ê½Ë¼¿¼¡£F(i)¶¨ÒåÓëÉÏÏàÍ¬£¬F(i)µÄ×ªÒÆ·½³ÌÎª
+// å®˜æ–¹è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(Sn) 80 msï¼Œç©ºé—´O(S) 14 MB
+// é‡‡ç”¨è‡ªä¸‹è€Œä¸Šçš„æ–¹å¼æ€è€ƒã€‚F(i)å®šä¹‰ä¸ä¸Šç›¸åŒï¼ŒF(i)çš„è½¬ç§»æ–¹ç¨‹ä¸º
 // F(i) = min_(j = 0,...,n-1) (F(i-c_j)) + 1
 class Solution {
 public:
-	int coinChange(vector<int>& coins, int amount) {
-		int overVal = amount + 1;
-		vector<int> dp(overVal, overVal);
-		dp[0] = 0;
-		for (int i = 1; i <= amount; ++i) {
-			for (int j = 0; j < coins.size(); ++j) {
-				if (coins[j] <= i) {
-					dp[i] = min(dp[i], dp[i - coins[j]] + 1);
-				}
-			}
-		}
-		return dp[amount] > amount ? -1 : dp[amount];
-	}
+    int coinChange(vector<int>& coins, int amount) {
+        int overVal = amount + 1;
+        vector<int> dp(overVal, overVal);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; ++i) {
+            for (int j = 0; j < coins.size(); ++j) {
+                if (coins[j] <= i) {
+                    dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+};
+
+// åŠ¨æ€è§„åˆ’ä¼˜åŒ–ï¼šæ—¶é—´O(Sn) 40 ms 96.86%ï¼Œç©ºé—´O(S) 14.1 MB 27.53%
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int overVal = amount + 1;
+        vector<int> dp(overVal, overVal);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; ++i) {
+            int& curr = dp[i];
+            for (int coin : coins) {
+                if (coin <= i) {
+                    curr = min(curr, dp[i - coin] + 1);
+                }
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
 };

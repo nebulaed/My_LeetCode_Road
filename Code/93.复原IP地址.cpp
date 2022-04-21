@@ -2,7 +2,7 @@
 #include<string>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 0 ms 100%£¬¿Õ¼ä 6.5 MB 52.47%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.5 MB 52.47%
 class Solution {
 private:
     const static int SEG_COUNT = 4;

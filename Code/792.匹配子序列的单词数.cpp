@@ -4,7 +4,7 @@
 #include<queue>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¹şÏ£±í¼ÇÂ¼Î»ÖÃºÍ³öÏÖ´ÎÊı£¬Ê±¼ä 132 ms 64.97%£¬¿Õ¼ä 46.9 MB 46.60%
+// æˆ‘çš„è§£æ³•ï¼šå“ˆå¸Œè¡¨è®°å½•ä½ç½®å’Œå‡ºç°æ¬¡æ•°ï¼Œæ—¶é—´ 132 ms 64.97%ï¼Œç©ºé—´ 46.9 MB 46.60%
 class Solution {
 public:
     int numMatchingSubseq(string s, vector<string>& words) {
@@ -19,7 +19,7 @@ public:
             array<int, 26> charFreq{};
             bool flag = false;
             for (char ch : word) {
-                // ´Ë´¦±ÜÃâÖØ¸´µ÷ÓÃoperator[]£¬Ô­Ê±¼ä180 ms 42.18%£¬¿Õ¼ä46.9 MB 42.52%
+                // æ­¤å¤„é¿å…é‡å¤è°ƒç”¨operator[]ï¼ŒåŸæ—¶é—´180 ms 42.18%ï¼Œç©ºé—´46.9 MB 42.52%
                 int ind = ch - 'a', currFreq = hashMap[ind].size(), & wordchFreq = charFreq[ind];
                 if (wordchFreq >= currFreq) {
                     flag = true;
@@ -42,11 +42,11 @@ public:
     }
 };
 
-// ¹Ù·½½â·¨£ºÖ¸ÏòÏÂÒ»¸ö×ÖÄ¸µÄÖ¸Õë£¬Ê±¼ä 112 ms 81.29%£¬¿Õ¼ä 40 MB 54.77%
+// å®˜æ–¹è§£æ³•ï¼šæŒ‡å‘ä¸‹ä¸€ä¸ªå­—æ¯çš„æŒ‡é’ˆï¼Œæ—¶é—´ 112 ms 81.29%ï¼Œç©ºé—´ 40 MB 54.77%
 class Solution {
 public:
     int numMatchingSubseq(string s, vector<string>& words) {
-        // bucketsÖĞ±£´æµ¥´ÊÔÚwordsÖĞµÄË÷ÒıºÍ¸Ãµ¥´ÊÏÂÒ»¸öÒª´¦ÀíµÄ×ÖÄ¸ÔÚ¸Ãµ¥´ÊÖĞµÄÎ»ÖÃ
+        // bucketsä¸­ä¿å­˜å•è¯åœ¨wordsä¸­çš„ç´¢å¼•å’Œè¯¥å•è¯ä¸‹ä¸€ä¸ªè¦å¤„ç†çš„å­—æ¯åœ¨è¯¥å•è¯ä¸­çš„ä½ç½®
         array<queue<pair<int, int>>, 26> buckets;
         for (int i = 0; i < words.size(); ++i) {
             buckets[words[i][0] - 'a'].emplace(i, 0);
@@ -58,11 +58,11 @@ public:
             while (currSize--) {
                 auto [wordInd, wordPosInd] = q.front();
                 q.pop();
-                // ±¾ÖÊÉÏ¶ÓÁĞ´æ·ÅµÄÊÇwordsÖĞËùÓĞµ¥´ÊµÄÖ¸Õë£¬µ±Ö¸Õë×ßµ½wordµÄ¾¡Í·£¬ËµÃ÷Õâ¸öwordÈ·ÊµÊÇsµÄ×ÓĞòÁĞ
+                // æœ¬è´¨ä¸Šé˜Ÿåˆ—å­˜æ”¾çš„æ˜¯wordsä¸­æ‰€æœ‰å•è¯çš„æŒ‡é’ˆï¼Œå½“æŒ‡é’ˆèµ°åˆ°wordçš„å°½å¤´ï¼Œè¯´æ˜è¿™ä¸ªwordç¡®å®æ˜¯sçš„å­åºåˆ—
                 if (++wordPosInd == words[wordInd].size()) {
                     ++count;
                 }
-                // ÈôÎ´µ½word½áÎ²£¬Ôò½«ÏÂÒ»¸ö·ÅÈë
+                    // è‹¥æœªåˆ°wordç»“å°¾ï¼Œåˆ™å°†ä¸‹ä¸€ä¸ªæ”¾å…¥
                 else {
                     buckets[words[wordInd][wordPosInd] - 'a'].emplace(wordInd, wordPosInd);
                 }

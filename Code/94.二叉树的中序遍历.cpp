@@ -3,7 +3,7 @@
 #include<stack>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -13,7 +13,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨=¹Ù·½½â·¨Ò»£ºµİ¹é£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(n) 8.2 MB
+// æˆ‘çš„è§£æ³•=å®˜æ–¹è§£æ³•ä¸€ï¼šé€’å½’ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(n) 8.2 MB
 class Solution{
 public:
     void inorder(TreeNode* T, vector<int>& ret){
@@ -30,7 +30,7 @@ public:
     }
 };
 
-// ¹Ù·½½â·¨¶ş£ºµü´ú£¬µİ¹éÒşÊ½µØÎ¬»¤ÁËÒ»¸öÕ»£¬µü´úÊ±½«ÆäÊµÏÖ³öÀ´£¬Ê±¼äO(n) 0 ms£¬¿Õ¼äO(n) 7.9 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šè¿­ä»£ï¼Œé€’å½’éšå¼åœ°ç»´æŠ¤äº†ä¸€ä¸ªæ ˆï¼Œè¿­ä»£æ—¶å°†å…¶å®ç°å‡ºæ¥ï¼Œæ—¶é—´O(n) 0 msï¼Œç©ºé—´O(n) 7.9 MB
 class Solution{
 public:
     vector<int> inorderTraversal(TreeNode* root){
@@ -50,7 +50,7 @@ public:
     }
 };
 
-// ¹Ù·½½â·¨Èı£ºMorrisÖĞĞò±éÀú£¬¼ÓÈëÀàËÆ¶ş²æÊ÷µÄÏßË÷»¯£¬Ê±¼äO(2n)=O(n) 0 ms£¬¿Õ¼äO(1) 8.1 MB
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šMorrisä¸­åºéå†ï¼ŒåŠ å…¥ç±»ä¼¼äºŒå‰æ ‘çš„çº¿ç´¢åŒ–ï¼Œæ—¶é—´O(2n)=O(n) 0 msï¼Œç©ºé—´O(1) 8.1 MB
 class Solution{
 public:
     vector<int> inorderTraversal(TreeNode* root){
@@ -59,25 +59,25 @@ public:
 
         while (root != nullptr){
             if (root->left != nullptr){
-                // pre ½Úµã¾ÍÊÇµ±Ç°root½ÚµãÏò×ó×ßÒ»²½£¬È»ºóÒ»Ö±ÏòÓÒ×ßµ½ÎŞ·¨×ßÎªÖ¹
+                // pre èŠ‚ç‚¹å°±æ˜¯å½“å‰rootèŠ‚ç‚¹å‘å·¦èµ°ä¸€æ­¥ï¼Œç„¶åä¸€ç›´å‘å³èµ°åˆ°æ— æ³•èµ°ä¸ºæ­¢
                 pre = root->left;
                 while (pre->right != nullptr && pre->right != root){
                     pre = pre->right;
                 }
 
-                // ÈÃpreµÄÓÒÖ¸ÕëÖ¸Ïòroot£¬¼ÌĞø±éÀú×ó×ÓÊ÷
+                // è®©preçš„å³æŒ‡é’ˆæŒ‡å‘rootï¼Œç»§ç»­éå†å·¦å­æ ‘
                 if (pre->right == nullptr){
                     pre->right = root;
                     root = root->left;
                 }
-                // ËµÃ÷×ó×ÓÊ÷ÒÑ¾­·ÃÎÊÍêÁË£¬ÎÒÃÇĞèÒª¶Ï¿ªÁ´½Ó
+                    // è¯´æ˜å·¦å­æ ‘å·²ç»è®¿é—®å®Œäº†ï¼Œæˆ‘ä»¬éœ€è¦æ–­å¼€é“¾æ¥
                 else{
                     ret.emplace_back(root->val);
                     pre->right = nullptr;
                     root = root->right;
                 }
             }
-            // Èç¹ûÃ»ÓĞ×óº¢×Ó£¬ÄÇÃ´Ö±½Ó·ÃÎÊÓÒº¢×Ó
+                // å¦‚æœæ²¡æœ‰å·¦å­©å­ï¼Œé‚£ä¹ˆç›´æ¥è®¿é—®å³å­©å­
             else{
                 ret.emplace_back(root->val);
                 root = root->right;

@@ -1,8 +1,9 @@
 #include<vector>
 #include<queue>
+#include<algorithm>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
     int val;
     TreeNode* left;
@@ -12,7 +13,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 4 ms 59.00%£¬¿Õ¼ä 11.7 MB 81.56%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 4 ms 59.00%ï¼Œç©ºé—´ 11.7 MB 81.56%
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
@@ -38,7 +39,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨²Î¿¼¹Ù·½½â·¨£º²ÉÓÃË«¶Ë¶ÓÁĞ£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 11.8 MB 53.51%
+// æˆ‘çš„è§£æ³•å‚è€ƒå®˜æ–¹è§£æ³•ï¼šé‡‡ç”¨åŒç«¯é˜Ÿåˆ—ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 11.8 MB 53.51%
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
@@ -52,14 +53,14 @@ public:
             ret.emplace_back(vector<int>());
             while (currLevelSize--) {
                 TreeNode* node = nullptr;
-                // ÆæÊı²ã´ÓÇ°Ïòºó±éÀú£¬µ«¸Ã²ã½ÚµãÔÚdequeÖĞÒÑÊÇÄæĞò£¬Òò´Ë·Å½øretµÄË³ĞòÊÇÄæĞò
+                // å¥‡æ•°å±‚ä»å‰å‘åéå†ï¼Œä½†è¯¥å±‚èŠ‚ç‚¹åœ¨dequeä¸­å·²æ˜¯é€†åºï¼Œå› æ­¤æ”¾è¿›retçš„é¡ºåºæ˜¯é€†åº
                 if (level & 1) {
                     node = q.front();
                     q.pop_front();
                     if (node->right) q.emplace_back(node->right);
                     if (node->left) q.emplace_back(node->left);
                 }
-                // Å¼Êı²ã´ÓºóÏòÇ°±éÀú£¬µ«¸Ã²ã½ÚµãÔÚdequeÖĞÒÑÊÇÄæĞò£¬Òò´Ë·Å½øretµÄË³ĞòÊÇÕıĞò
+                    // å¶æ•°å±‚ä»åå‘å‰éå†ï¼Œä½†è¯¥å±‚èŠ‚ç‚¹åœ¨dequeä¸­å·²æ˜¯é€†åºï¼Œå› æ­¤æ”¾è¿›retçš„é¡ºåºæ˜¯æ­£åº
                 else {
                     node = q.back();
                     q.pop_back();

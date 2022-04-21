@@ -3,7 +3,7 @@
 #include<string>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¹þÏ£±í£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 6.3 MB 96.42%
+// æˆ‘çš„è§£æ³•ï¼šå“ˆå¸Œè¡¨ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.3 MB 96.42%
 class Solution {
 public:
     int longestPalindrome(string s) {

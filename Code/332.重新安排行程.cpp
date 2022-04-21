@@ -4,114 +4,109 @@
 #include<set>
 #include<unordered_map>
 #include<stack>
+#include<algorithm>
+using namespace std;
 
-using std::vector;
-using std::string;
-using std::set;
-using std::multiset;
-using std::unordered_map;
-using std::stack;
-
-// LeetCode 101½â·¨£ºÊ±¼ä 20 ms 56.12%£¬¿Õ¼ä 13.9 MB 49.17%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 20 ms 56.12%ï¼Œç©ºé—´ 13.9 MB 49.17%
 class Solution {
 public:
-	vector<string> findItinerary(vector<vector<string>>& tickets) {
-		unordered_map<string, multiset<string>> hashMap;
-		for (const auto& ticket : tickets) {
-			hashMap[ticket[0]].emplace(ticket[1]);
-		}
-		stack<string> stk;
-		stk.emplace("JFK");
-		vector<string> ret;
-		while (!stk.empty()) {
-			string next = stk.top();
-			if (hashMap[next].empty()) {
-				ret.emplace_back(next);
-				stk.pop();
-			}
-			else {
-				stk.emplace(*hashMap[next].begin());
-				hashMap[next].erase(hashMap[next].begin());
-			}
-		}
-		reverse(ret.begin(), ret.end());
-		return ret;
-	}
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        unordered_map<string, multiset<string>> hashMap;
+        for (const auto& ticket : tickets) {
+            hashMap[ticket[0]].emplace(ticket[1]);
+        }
+        stack<string> stk;
+        stk.emplace("JFK");
+        vector<string> ret;
+        while (!stk.empty()) {
+            string next = stk.top();
+            if (hashMap[next].empty()) {
+                ret.emplace_back(next);
+                stk.pop();
+            }
+            else {
+                stk.emplace(*hashMap[next].begin());
+                hashMap[next].erase(hashMap[next].begin());
+            }
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
 };
 
-// LeetCode 101½â·¨Ğ¡ÓÅ»¯£ºÊ±¼ä O(m log m) 20 ms 56.12%£¬¿Õ¼ä O(m) 13.7 MB 63.96%
-// mÎªÍ¼ÖĞ±ßµÄÊıÁ¿
-// ÓÃ¹şÏ£±í¼ÇÂ¼ÆğÖ¹»ú³¡£¬ÆäÖĞ¼üÊÇÆğÊ¼»ú³¡£¬ÖµÊÇÒ»¸ö¶àÖØ¼¯ºÏ£¬±íÊ¾¶ÔÓ¦µÄÖÕÖ¹»ú³¡¡£ÒòÎªÒ»¸öÈË¿ÉÄÜ×ø¹ıÖØ¸´µÄÏßÂ·£¬ËùÒÔÎÒÃÇĞèÒªÊ¹ÓÃ¶àÖØ¼¯ºÏ´¢´æÖØ¸´Öµ¡£
-// ´¢´æÍê³ÉÖ®ºó£¬ÎÒÃÇ¿ÉÒÔÀûÓÃÕ»À´»Ö¸´´ÓÖÕµãµ½Æğµã·ÉĞĞµÄË³Ğò£¬ÔÙ½«½á¹ûÄæĞòµÃµ½´ÓÆğµãµ½ÖÕµãµÄË³Ğò¡£
-// ±¾ÌâµÄ¹Ø¼üµãÔÚÓÚÒªµ¹¹ıÀ´Ë¼¿¼£¬ÄÇ¸öÈë¶ÈÓë³ö¶È²îÎª1µÄ½Úµã»áµ¼ÖÂËÀºúÍ¬£¬ËùÒÔ±ØĞëÊÇ×îºóÒ»¸ö±éÀúµÄ½Úµã
+// LeetCode 101è§£æ³•å°ä¼˜åŒ–ï¼šæ—¶é—´ O(m log m) 20 ms 56.12%ï¼Œç©ºé—´ O(m) 13.7 MB 63.96%
+// mä¸ºå›¾ä¸­è¾¹çš„æ•°é‡
+// ç”¨å“ˆå¸Œè¡¨è®°å½•èµ·æ­¢æœºåœºï¼Œå…¶ä¸­é”®æ˜¯èµ·å§‹æœºåœºï¼Œå€¼æ˜¯ä¸€ä¸ªå¤šé‡é›†åˆï¼Œè¡¨ç¤ºå¯¹åº”çš„ç»ˆæ­¢æœºåœºã€‚å› ä¸ºä¸€ä¸ªäººå¯èƒ½åè¿‡é‡å¤çš„çº¿è·¯ï¼Œæ‰€ä»¥æˆ‘ä»¬éœ€è¦ä½¿ç”¨å¤šé‡é›†åˆå‚¨å­˜é‡å¤å€¼ã€‚
+// å‚¨å­˜å®Œæˆä¹‹åï¼Œæˆ‘ä»¬å¯ä»¥åˆ©ç”¨æ ˆæ¥æ¢å¤ä»ç»ˆç‚¹åˆ°èµ·ç‚¹é£è¡Œçš„é¡ºåºï¼Œå†å°†ç»“æœé€†åºå¾—åˆ°ä»èµ·ç‚¹åˆ°ç»ˆç‚¹çš„é¡ºåºã€‚
+// æœ¬é¢˜çš„å…³é”®ç‚¹åœ¨äºè¦å€’è¿‡æ¥æ€è€ƒï¼Œé‚£ä¸ªå…¥åº¦ä¸å‡ºåº¦å·®ä¸º1çš„èŠ‚ç‚¹ä¼šå¯¼è‡´æ­»èƒ¡åŒï¼Œæ‰€ä»¥å¿…é¡»æ˜¯æœ€åä¸€ä¸ªéå†çš„èŠ‚ç‚¹
 class Solution {
 public:
-	vector<string> findItinerary(vector<vector<string>>& tickets) {
-		// Ê¹ÓÃmultiset¶ø·ÇvectorµÄÄ¿µÄÊÇ¶ÔÈÎÒ»Æğµã¶ÔÓ¦µÄÖÕµã°´ÕÕ×ÖµäÅÅĞò
-		unordered_map<string, multiset<string>> hashMap;
-		for (const auto& ticket : tickets) {
-			hashMap[ticket[0]].emplace(ticket[1]);
-		}
-		// Õ»-ÏÈ½øºó³ö£¬ÆğµãÏÈ½ø£¬ËùÒÔ»áºó·ÅÈë½á¹ûÊı×é£¬×îºóĞèÒª·´×ª
-		stack<string> stk;
-		stk.emplace("JFK");
-		vector<string> ret;
-		while (!stk.empty()) {
-			const string& next = stk.top();
-			// ÕÒµ½¸ÃÆğµãµÄÖÕµã¼¯ºÏ
-			auto& nextSet = hashMap[next];
-			// ÈôÎª¿Õ£¬ËµÃ÷¸Ã½ÚµãÒÑÎŞÏÂÒ»½Úµã£¬¿ªÊ¼»ØËİ£¬½«Õ»ÖĞ´æ´¢µÄ½Úµã²»¶ÏÈ¡³ö·Åµ½½á¹ûÊı×é½áÎ²
-			if (nextSet.empty()) {
-				ret.emplace_back(next);
-				stk.pop();
-			}
-			// »ØËİ¹ı³Ì»òÕıÏò±éÀú¹ı³ÌÖĞÈôÓöµ½¸Ã½ÚµãÓĞÏÂÒ»½Úµã£¬½«¸Ã½ÚµãµÄÏÂÒ»½Úµã°´×ÖµäĞòµÄµÚÒ»¸öÈ¡³ö·ÅÈëÕ»ÖĞ²¢²Á³ı
-			else {
-				stk.emplace(*nextSet.begin());
-				nextSet.erase(nextSet.begin());
-			}
-		}
-		// ·­×ª½á¹ûÊı×é
-		reverse(ret.begin(), ret.end());
-		return ret;
-	}
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        // ä½¿ç”¨multisetè€Œévectorçš„ç›®çš„æ˜¯å¯¹ä»»ä¸€èµ·ç‚¹å¯¹åº”çš„ç»ˆç‚¹æŒ‰ç…§å­—å…¸æ’åº
+        unordered_map<string, multiset<string>> hashMap;
+        for (const auto& ticket : tickets) {
+            hashMap[ticket[0]].emplace(ticket[1]);
+        }
+        // æ ˆ-å…ˆè¿›åå‡ºï¼Œèµ·ç‚¹å…ˆè¿›ï¼Œæ‰€ä»¥ä¼šåæ”¾å…¥ç»“æœæ•°ç»„ï¼Œæœ€åéœ€è¦åè½¬
+        stack<string> stk;
+        stk.emplace("JFK");
+        vector<string> ret;
+        while (!stk.empty()) {
+            const string& next = stk.top();
+            // æ‰¾åˆ°è¯¥èµ·ç‚¹çš„ç»ˆç‚¹é›†åˆ
+            auto& nextSet = hashMap[next];
+            // è‹¥ä¸ºç©ºï¼Œè¯´æ˜è¯¥èŠ‚ç‚¹å·²æ— ä¸‹ä¸€èŠ‚ç‚¹ï¼Œå¼€å§‹å›æº¯ï¼Œå°†æ ˆä¸­å­˜å‚¨çš„èŠ‚ç‚¹ä¸æ–­å–å‡ºæ”¾åˆ°ç»“æœæ•°ç»„ç»“å°¾
+            if (nextSet.empty()) {
+                ret.emplace_back(next);
+                stk.pop();
+            }
+                // å›æº¯è¿‡ç¨‹æˆ–æ­£å‘éå†è¿‡ç¨‹ä¸­è‹¥é‡åˆ°è¯¥èŠ‚ç‚¹æœ‰ä¸‹ä¸€èŠ‚ç‚¹ï¼Œå°†è¯¥èŠ‚ç‚¹çš„ä¸‹ä¸€èŠ‚ç‚¹æŒ‰å­—å…¸åºçš„ç¬¬ä¸€ä¸ªå–å‡ºæ”¾å…¥æ ˆä¸­å¹¶æ“¦é™¤
+            else {
+                stk.emplace(*nextSet.begin());
+                nextSet.erase(nextSet.begin());
+            }
+        }
+        // ç¿»è½¬ç»“æœæ•°ç»„
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 28 ms 15.14%£¬¿Õ¼ä 15.4 MB 6.24%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 28 ms 15.14%ï¼Œç©ºé—´ 15.4 MB 6.24%
 class Solution {
 public:
-	vector<string> findItinerary(vector<vector<string>>& tickets) {
-		set<string> locSet;
-		for (const auto& pair : tickets) {
-			locSet.emplace(pair[0]);
-			locSet.emplace(pair[1]);
-		}
-		unordered_map<string, int> locMap;
-		unordered_map<int, string> locMap2;
-		int ind = 0;
-		for (const auto& str : locSet) {
-			locMap[str] = ind;
-			locMap2[ind++] = str;
-		}
-		unordered_map<int, multiset<int>> hashMap;
-		for (const auto& ticket : tickets) {
-			hashMap[locMap[ticket[0]]].emplace(locMap[ticket[1]]);
-		}
-		stack<int> stk;
-		stk.emplace(locMap["JFK"]);
-		vector<string> ret;
-		while (!stk.empty()) {
-			int next = stk.top();
-			if (hashMap[next].empty()) {
-				ret.emplace_back(locMap2[next]);
-				stk.pop();
-			}
-			else {
-				stk.emplace(*hashMap[next].begin());
-				hashMap[next].erase(hashMap[next].begin());
-			}
-		}
-		reverse(ret.begin(), ret.end());
-		return ret;
-	}
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        set<string> locSet;
+        for (const auto& pair : tickets) {
+            locSet.emplace(pair[0]);
+            locSet.emplace(pair[1]);
+        }
+        unordered_map<string, int> locMap;
+        unordered_map<int, string> locMap2;
+        int ind = 0;
+        for (const auto& str : locSet) {
+            locMap[str] = ind;
+            locMap2[ind++] = str;
+        }
+        unordered_map<int, multiset<int>> hashMap;
+        for (const auto& ticket : tickets) {
+            hashMap[locMap[ticket[0]]].emplace(locMap[ticket[1]]);
+        }
+        stack<int> stk;
+        stk.emplace(locMap["JFK"]);
+        vector<string> ret;
+        while (!stk.empty()) {
+            int next = stk.top();
+            if (hashMap[next].empty()) {
+                ret.emplace_back(locMap2[next]);
+                stk.pop();
+            }
+            else {
+                stk.emplace(*hashMap[next].begin());
+                hashMap[next].erase(hashMap[next].begin());
+            }
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
 };

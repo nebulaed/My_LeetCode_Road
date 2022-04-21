@@ -7,7 +7,7 @@ struct TreeNode {
     TreeNode(int val = 0, TreeNode* left = nullptr, TreeNode* right = nullptr) : val(val), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨£ººóĞò±éÀú£¬Ê±¼ä O(n) 0 ms 100%£¬¿Õ¼ä O(h), hÎª¶ş²æÊ÷¸ß¶È£¬19.8 MB 37.71%
+// æˆ‘çš„è§£æ³•ï¼šååºéå†ï¼Œæ—¶é—´ O(n) 0 ms 100%ï¼Œç©ºé—´ O(h), hä¸ºäºŒå‰æ ‘é«˜åº¦ï¼Œ19.8 MB 37.71%
 class Solution {
 private:
     int dfs(TreeNode* T, int& diameter) {

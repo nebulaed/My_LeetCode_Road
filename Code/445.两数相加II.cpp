@@ -10,7 +10,7 @@ struct ListNode {
     ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£ºÁ½´Î·´×ªÁ´±í+Á´±íÏà¼Ó£¬Ê±¼ä O(2m + 2n) 28 ms 66.75%£¬¿Õ¼ä O(1) 69.3 MB 80.92%
+// æˆ‘çš„è§£æ³•ï¼šä¸¤æ¬¡åè½¬é“¾è¡¨+é“¾è¡¨ç›¸åŠ ï¼Œæ—¶é—´ O(2m + 2n) 28 ms 66.75%ï¼Œç©ºé—´ O(1) 69.3 MB 80.92%
 class Solution {
 private:
     ListNode* reverseList(ListNode* root) {
@@ -39,7 +39,7 @@ public:
     }
 };
 
-// ¹Ù·½½â·¨£ºÕ»(²»·´×ªÁ´±í)£¬Ê±¼ä O(max{m,n}) 36 ms 30.02%£¬¿Õ¼ä O(m+n) 70.1 MB 62.27%
+// å®˜æ–¹è§£æ³•ï¼šæ ˆ(ä¸åè½¬é“¾è¡¨)ï¼Œæ—¶é—´ O(max{m,n}) 36 ms 30.02%ï¼Œç©ºé—´ O(m+n) 70.1 MB 62.27%
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {

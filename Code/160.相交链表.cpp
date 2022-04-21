@@ -3,57 +3,57 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode(int x) : val(x), next(nullptr) {}
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(nullptr) {}
 };
 
-// ÎÒµÄ½â·¨=¹Ù·½½â·¨1£¬¹şÏ£¼¯ºÏ£¬48 ms£¬16.8 MB
+// æˆ‘çš„è§£æ³•=å®˜æ–¹è§£æ³•1ï¼Œå“ˆå¸Œé›†åˆï¼Œ48 msï¼Œ16.8 MB
 class Solution {
 public:
-	ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
-		ListNode* ptr1 = headA, * ptr2 = headB;
-		unordered_set<ListNode*> ptrSet;
-		while (ptr1 != nullptr) {
-			ptrSet.emplace(ptr1);
-			ptr1 = ptr1->next;
-		}
-		while (ptr2 != nullptr) {
-			if (ptrSet.count(ptr2)) return ptr2;
-			ptr2 = ptr2->next;
-		}
-		return ptr2;
-	}
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+        ListNode* ptr1 = headA, * ptr2 = headB;
+        unordered_set<ListNode*> ptrSet;
+        while (ptr1 != nullptr) {
+            ptrSet.emplace(ptr1);
+            ptr1 = ptr1->next;
+        }
+        while (ptr2 != nullptr) {
+            if (ptrSet.count(ptr2)) return ptr2;
+            ptr2 = ptr2->next;
+        }
+        return ptr2;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºË«Ö¸Õë£¬Ê±¼äO(m+n) 44 ms£¬¿Õ¼äO(1) 14.3 MB
-// µ±Á´±íheadAºÍheadB ¶¼²»Îª¿ÕÊ±£¬´´½¨Á½¸öÖ¸ÕëpA ºÍpB£¬³õÊ¼Ê±·Ö±ğÖ¸ÏòÁ½¸öÁ´±íµÄÍ·½ÚµãheadA ºÍheadB£¬È»ºó½«Á½¸öÖ¸ÕëÒÀ´Î±éÀúÁ½¸öÁ´±íµÄÃ¿¸ö½Úµã¡£
-// Ã¿²½²Ù×÷ĞèÒªÍ¬Ê±¸üĞÂÖ¸ÕëpA ºÍpB¡£
-// Èç¹ûÖ¸ÕëpA ²»Îª¿Õ£¬Ôò½«Ö¸ÕëpA ÒÆµ½ÏÂÒ»¸ö½Úµã£»Èç¹ûÖ¸ÕëpB ²»Îª¿Õ£¬Ôò½«Ö¸ÕëpB ÒÆµ½ÏÂÒ»¸ö½Úµã¡£
-// Èç¹ûÖ¸ÕëpA Îª¿Õ£¬Ôò½«Ö¸ÕëpA ÒÆµ½Á´±íheadB µÄÍ·½Úµã£»Èç¹ûÖ¸ÕëpB Îª¿Õ£¬Ôò½«Ö¸ÕëpB ÒÆµ½Á´±í headA µÄÍ·½Úµã¡£
-// µ±Ö¸ÕëpA ºÍpB Ö¸ÏòÍ¬Ò»¸ö½Úµã»òÕß¶¼Îª¿ÕÊ±£¬·µ»ØËüÃÇÖ¸ÏòµÄ½Úµã»ònull
+// å®˜æ–¹è§£æ³•äºŒï¼šåŒæŒ‡é’ˆï¼Œæ—¶é—´O(m+n) 44 msï¼Œç©ºé—´O(1) 14.3 MB
+// å½“é“¾è¡¨headAå’ŒheadB éƒ½ä¸ä¸ºç©ºæ—¶ï¼Œåˆ›å»ºä¸¤ä¸ªæŒ‡é’ˆpA å’ŒpBï¼Œåˆå§‹æ—¶åˆ†åˆ«æŒ‡å‘ä¸¤ä¸ªé“¾è¡¨çš„å¤´èŠ‚ç‚¹headA å’ŒheadBï¼Œç„¶åå°†ä¸¤ä¸ªæŒ‡é’ˆä¾æ¬¡éå†ä¸¤ä¸ªé“¾è¡¨çš„æ¯ä¸ªèŠ‚ç‚¹ã€‚
+// æ¯æ­¥æ“ä½œéœ€è¦åŒæ—¶æ›´æ–°æŒ‡é’ˆpA å’ŒpBã€‚
+// å¦‚æœæŒ‡é’ˆpA ä¸ä¸ºç©ºï¼Œåˆ™å°†æŒ‡é’ˆpA ç§»åˆ°ä¸‹ä¸€ä¸ªèŠ‚ç‚¹ï¼›å¦‚æœæŒ‡é’ˆpB ä¸ä¸ºç©ºï¼Œåˆ™å°†æŒ‡é’ˆpB ç§»åˆ°ä¸‹ä¸€ä¸ªèŠ‚ç‚¹ã€‚
+// å¦‚æœæŒ‡é’ˆpA ä¸ºç©ºï¼Œåˆ™å°†æŒ‡é’ˆpA ç§»åˆ°é“¾è¡¨headB çš„å¤´èŠ‚ç‚¹ï¼›å¦‚æœæŒ‡é’ˆpB ä¸ºç©ºï¼Œåˆ™å°†æŒ‡é’ˆpB ç§»åˆ°é“¾è¡¨ headA çš„å¤´èŠ‚ç‚¹ã€‚
+// å½“æŒ‡é’ˆpA å’ŒpB æŒ‡å‘åŒä¸€ä¸ªèŠ‚ç‚¹æˆ–è€…éƒ½ä¸ºç©ºæ—¶ï¼Œè¿”å›å®ƒä»¬æŒ‡å‘çš„èŠ‚ç‚¹æˆ–null
 class Solution {
 public:
-	ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
-		if (headA == nullptr || headB == nullptr) return nullptr;
-		ListNode* ptrA = headA, * ptrB = headB;
-		while (ptrA != ptrB) {
-			ptrA = ptrA == nullptr ? headB : ptrA->next;
-			ptrB = ptrB == nullptr ? headA : ptrB->next;
-		}
-		return ptrA;
-	}
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+        if (headA == nullptr || headB == nullptr) return nullptr;
+        ListNode* ptrA = headA, * ptrB = headB;
+        while (ptrA != ptrB) {
+            ptrA = ptrA == nullptr ? headB : ptrA->next;
+            ptrB = ptrB == nullptr ? headA : ptrB->next;
+        }
+        return ptrA;
+    }
 };
 
-// ÎÒµÄ½â·¨£ºË«Ö¸Õë£¬Ê±¼ä 36 ms 89.83%£¬¿Õ¼ä 14.3 MB 49.31%
+// æˆ‘çš„è§£æ³•ï¼šåŒæŒ‡é’ˆï¼Œæ—¶é—´ 36 ms 89.83%ï¼Œç©ºé—´ 14.3 MB 49.31%
 class Solution {
 public:
-	ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
-		ListNode* ptrA = headA, * ptrB = headB;
-		while (ptrA != ptrB) {
-			ptrA = (ptrA == nullptr ? headB : ptrA->next);
-			ptrB = (ptrB == nullptr ? headA : ptrB->next);
-		}
-		return ptrA;
-	}
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+        ListNode* ptrA = headA, * ptrB = headB;
+        while (ptrA != ptrB) {
+            ptrA = (ptrA == nullptr ? headB : ptrA->next);
+            ptrB = (ptrB == nullptr ? headA : ptrB->next);
+        }
+        return ptrA;
+    }
 };

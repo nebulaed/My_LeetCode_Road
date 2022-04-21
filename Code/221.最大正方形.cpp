@@ -4,167 +4,167 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºÊ¹ÓÃÖù×´Í¼µÄÓÅ»¯±©Á¦·½·¨£¬24 ms£¬11.6 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šä½¿ç”¨æŸ±çŠ¶å›¾çš„ä¼˜åŒ–æš´åŠ›æ–¹æ³•ï¼Œ24 msï¼Œ11.6 MB
 class Solution {
 public:
-	int maximalSquare(vector<vector<char>>& matrix) {
-		int m = matrix.size();
-		if (m == 0) return 0;
-		int n = matrix[0].size();
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int m = matrix.size();
+        if (m == 0) return 0;
+        int n = matrix[0].size();
 
-		vector<vector<int>> left(m, vector<int>(n, 0));
+        vector<vector<int>> left(m, vector<int>(n, 0));
 
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				if (matrix[i][j] == '1') {
-					left[i][j] = (j == 0 ? 0 : left[i][j - 1]) + 1;
-				}
-			}
-		}
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == '1') {
+                    left[i][j] = (j == 0 ? 0 : left[i][j - 1]) + 1;
+                }
+            }
+        }
 
-		int ret = 0;
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				if (matrix[i][j] == '0') {
-					continue;
-				}
-				int width = left[i][j];
-				int area = 1;
-				for (int k = i - 1; k >= 0; --k) {
-					width = min(width, left[k][j]);
-					int height = i - k + 1;
-					if (width >= height) {
-						area = max(area, height * height);
-					}
-					else break;
-				}
-				ret = max(ret, area);
-			}
-		}
-		return ret;
-	}
+        int ret = 0;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == '0') {
+                    continue;
+                }
+                int width = left[i][j];
+                int area = 1;
+                for (int k = i - 1; k >= 0; --k) {
+                    width = min(width, left[k][j]);
+                    int height = i - k + 1;
+                    if (width >= height) {
+                        area = max(area, height * height);
+                    }
+                    else break;
+                }
+                ret = max(ret, area);
+            }
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºµ¥µ÷Õ»
+// æˆ‘çš„è§£æ³•äºŒï¼šå•è°ƒæ ˆ
 class Solution {
 public:
-	int maximalSquare(vector<vector<char>>& matrix) {
-		int m = matrix.size();
-		if (m == 0) return 0;
-		int n = matrix[0].size();
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int m = matrix.size();
+        if (m == 0) return 0;
+        int n = matrix[0].size();
 
-		vector<vector<int>> left(m, vector<int>(n, 0));
+        vector<vector<int>> left(m, vector<int>(n, 0));
 
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				if (matrix[i][j] == '1') {
-					left[i][j] = (j == 0 ? 0 : left[i][j - 1]) + 1;
-				}
-			}
-		}
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == '1') {
+                    left[i][j] = (j == 0 ? 0 : left[i][j - 1]) + 1;
+                }
+            }
+        }
 
-		int ret = 0;
-		for (int j = 0; j < n; ++j) {
-			vector<int> up(m, 0), down(m, 0);
-			stack<int> stk;
-			for (int i = 0; i < m; ++i) {
-				while (!stk.empty() && left[stk.top()][j] >= left[i][j]) {
-					stk.pop();
-				}
-				up[i] = stk.empty() ? -1 : stk.top();
-				stk.emplace(i);
-			}
-			stk = stack<int>();
-			for (int i = m - 1; i >= 0; --i) {
-				while (!stk.empty() && left[stk.top()][j] >= left[i][j]) {
-					stk.pop();
-				}
-				down[i] = stk.empty() ? m : stk.top();
-				stk.emplace(i);
-			}
-			for (int i = 0; i < m; ++i) {
-				int sideLength = min(down[i] - up[i] - 1, left[i][j]);
-				int area = sideLength * sideLength;
-				ret = max(ret, area);
-			}
-		}
-		return ret;
-	}
+        int ret = 0;
+        for (int j = 0; j < n; ++j) {
+            vector<int> up(m, 0), down(m, 0);
+            stack<int> stk;
+            for (int i = 0; i < m; ++i) {
+                while (!stk.empty() && left[stk.top()][j] >= left[i][j]) {
+                    stk.pop();
+                }
+                up[i] = stk.empty() ? -1 : stk.top();
+                stk.emplace(i);
+            }
+            stk = stack<int>();
+            for (int i = m - 1; i >= 0; --i) {
+                while (!stk.empty() && left[stk.top()][j] >= left[i][j]) {
+                    stk.pop();
+                }
+                down[i] = stk.empty() ? m : stk.top();
+                stk.emplace(i);
+            }
+            for (int i = 0; i < m; ++i) {
+                int sideLength = min(down[i] - up[i] - 1, left[i][j]);
+                int area = sideLength * sideLength;
+                ret = max(ret, area);
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½Ìâ½âÒ»£º±©Á¦·¨£¬Ê±¼ä O(mn min(m,n)^2) 52 ms£¬¿Õ¼ä O(1) 10.8 MB
-// 1.±éÀú¾ØÕóÖĞµÄÃ¿¸öÔªËØ£¬Ã¿´ÎÓöµ½1£¬Ôò½«¸ÃÔªËØ×÷ÎªÕı·½ĞÎµÄ×óÉÏ½Ç
-// 2.È·¶¨Õı·½ĞÎµÄ×óÉÏ½Çºó£¬¸ù¾İ×óÉÏ½ÇËùÔÚµÄĞĞºÍÁĞ¼ÆËã¿ÉÄÜµÄ×î´óÕı·½ĞÎµÄ±ß³¤(Õı·½ĞÎµÄ·¶Î§²»ÄÜ³¬¹ı¾ØÕóµÄĞĞÊıºÍÁĞÊı)£¬ÔÚ¸Ã±ß³¤·¶Î§ÄÚÑ°ÕÒÖ»°üº¬1µÄ×î´óÕı·½ĞÎ
-// 3.Ã¿´ÎÔÚÏÂ·½ĞÂÔöÒ»ĞĞÔÚÓÒ·½ĞÂÔöÒ»ÁĞ£¬ÅĞ¶ÏĞÂÔöµÄĞĞºÍÁĞÊÇ·ñÂú×ãËùÓĞÔªËØ¶¼ÊÇ1
+// å®˜æ–¹é¢˜è§£ä¸€ï¼šæš´åŠ›æ³•ï¼Œæ—¶é—´ O(mn min(m,n)^2) 52 msï¼Œç©ºé—´ O(1) 10.8 MB
+// 1.éå†çŸ©é˜µä¸­çš„æ¯ä¸ªå…ƒç´ ï¼Œæ¯æ¬¡é‡åˆ°1ï¼Œåˆ™å°†è¯¥å…ƒç´ ä½œä¸ºæ­£æ–¹å½¢çš„å·¦ä¸Šè§’
+// 2.ç¡®å®šæ­£æ–¹å½¢çš„å·¦ä¸Šè§’åï¼Œæ ¹æ®å·¦ä¸Šè§’æ‰€åœ¨çš„è¡Œå’Œåˆ—è®¡ç®—å¯èƒ½çš„æœ€å¤§æ­£æ–¹å½¢çš„è¾¹é•¿(æ­£æ–¹å½¢çš„èŒƒå›´ä¸èƒ½è¶…è¿‡çŸ©é˜µçš„è¡Œæ•°å’Œåˆ—æ•°)ï¼Œåœ¨è¯¥è¾¹é•¿èŒƒå›´å†…å¯»æ‰¾åªåŒ…å«1çš„æœ€å¤§æ­£æ–¹å½¢
+// 3.æ¯æ¬¡åœ¨ä¸‹æ–¹æ–°å¢ä¸€è¡Œåœ¨å³æ–¹æ–°å¢ä¸€åˆ—ï¼Œåˆ¤æ–­æ–°å¢çš„è¡Œå’Œåˆ—æ˜¯å¦æ»¡è¶³æ‰€æœ‰å…ƒç´ éƒ½æ˜¯1
 class Solution {
 public:
-	int maximalSquare(vector<vector<char>>& matrix) {
-		int rows = matrix.size(), columns = matrix[0].size();
-		if (rows == 0 || columns == 0) return 0;
-		int maxSide = 0;
-		for (int i = 0; i < rows; ++i) {
-			for (int j = 0; j < columns; ++j) {
-				if (matrix[i][j] == '0') {
-					continue;
-				}
-				// Óöµ½Ò»¸ö'1'×÷ÎªÕı·½ĞÎµÄ×óÉÏ½Ç
-				maxSide = max(maxSide, 1);
-				// ¼ÆËã¿ÉÄÜµÄ×î´óÕı·½ĞÎ±ß³¤
-				int currentMaxSide = min(rows - i, columns - j);
-				for (int k = 1; k < currentMaxSide; ++k) {
-					// ÅĞ¶ÏĞÂÔöµÄÒ»ĞĞÒ»ÁĞÊÇ·ñ¾ùÎª1
-					bool flag = true;
-					if (matrix[i + k][j + k] == '0') {
-						break;
-					}
-					for (int m = 0; m < k; ++m) {
-						if (matrix[i + k][j + m] == '0' || matrix[i + m][j + k] == '0') {
-							flag = false;
-							break;
-						}
-					}
-					if (flag) {
-						maxSide = max(maxSide, k + 1);
-					}
-					else {
-						break;
-					}
-				}
-			}
-		}
-		int maxSquare = maxSide * maxSide;
-		return maxSquare;
-	}
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int rows = matrix.size(), columns = matrix[0].size();
+        if (rows == 0 || columns == 0) return 0;
+        int maxSide = 0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                if (matrix[i][j] == '0') {
+                    continue;
+                }
+                // é‡åˆ°ä¸€ä¸ª'1'ä½œä¸ºæ­£æ–¹å½¢çš„å·¦ä¸Šè§’
+                maxSide = max(maxSide, 1);
+                // è®¡ç®—å¯èƒ½çš„æœ€å¤§æ­£æ–¹å½¢è¾¹é•¿
+                int currentMaxSide = min(rows - i, columns - j);
+                for (int k = 1; k < currentMaxSide; ++k) {
+                    // åˆ¤æ–­æ–°å¢çš„ä¸€è¡Œä¸€åˆ—æ˜¯å¦å‡ä¸º1
+                    bool flag = true;
+                    if (matrix[i + k][j + k] == '0') {
+                        break;
+                    }
+                    for (int m = 0; m < k; ++m) {
+                        if (matrix[i + k][j + m] == '0' || matrix[i + m][j + k] == '0') {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        maxSide = max(maxSide, k + 1);
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+        }
+        int maxSquare = maxSide * maxSide;
+        return maxSquare;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º¶¯Ì¬¹æ»®£¬Ê±¼äO(mn) 24 ms£¬¿Õ¼äO(mn) 11.6 MB
-// ÒÔdp(i,j)±íÊ¾ÒÔ(i,j)ÎªÓÒÏÂ½Ç£¬ÇÒÖ»°üº¬1µÄÕı·½ĞÎµÄ±ß³¤×î´óÖµ¡£ÈôÄÜ¼ÆËã³öËùÓĞdp(i,j)µÄÖµ£¬ÄÇÃ´ÆäÖĞ×î´óÖµµÄÆ½·½¼´Îª½á¹û¡£
-// ¶ÔÃ¿¸ö(i,j)£¬¼ì²éÔÚ¾ØÕóÖĞ¸ÃÎªÖ¹µÄÖµ£º
-// 1.Èô¸ÃÎ»ÖÃÊÇ0£¬Ôòdp(i,j)=0
-// 2.Èô¸ÃÎ»ÖÃÊÇ1£¬Ôòdp(i,j)µÄÖµÓÉÆäÉÏ·½¡¢×ó·½ºÍ×óÉÏ·½µÄÈı¸öÏàÁÚÎ»ÖÃµÄdpÖµ¾ö¶¨¡£¾ßÌå¶øÑÔ£¬µ±Ç°ÎªÖ¹µÄÔªËØÖµµÈÓÚÈı¸öÏàÁÚÎªÖ¹µÄÔªËØÖĞµÄ×îĞ¡Öµ+1
-// ¼´ dp(i,j) = min(dp(i-1,j),dp(i-1,j-1),dp(i,j-1)) + 1
-// ¾ßÌå×´Ì¬×ªÒÆ·½³ÌÔ­Òò¼û1277Ìâ¹Ù·½Ìâ½â¡£
-// ×îºó»¹Òª¿¼ÂÇ±ß½çÌõ¼ş¡£Èç¹ûiºÍjÖĞÖÁÉÙÒ»¸öÎª0£¬ÔòÒÔ(i,j)ÎªÓÒÏÂ½ÇµÄ×î´óÕı·½ĞÎµÄ±ß³¤Ö»ÄÜÊÇ1¡£
+// å®˜æ–¹è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(mn) 24 msï¼Œç©ºé—´O(mn) 11.6 MB
+// ä»¥dp(i,j)è¡¨ç¤ºä»¥(i,j)ä¸ºå³ä¸‹è§’ï¼Œä¸”åªåŒ…å«1çš„æ­£æ–¹å½¢çš„è¾¹é•¿æœ€å¤§å€¼ã€‚è‹¥èƒ½è®¡ç®—å‡ºæ‰€æœ‰dp(i,j)çš„å€¼ï¼Œé‚£ä¹ˆå…¶ä¸­æœ€å¤§å€¼çš„å¹³æ–¹å³ä¸ºç»“æœã€‚
+// å¯¹æ¯ä¸ª(i,j)ï¼Œæ£€æŸ¥åœ¨çŸ©é˜µä¸­è¯¥ä¸ºæ­¢çš„å€¼ï¼š
+// 1.è‹¥è¯¥ä½ç½®æ˜¯0ï¼Œåˆ™dp(i,j)=0
+// 2.è‹¥è¯¥ä½ç½®æ˜¯1ï¼Œåˆ™dp(i,j)çš„å€¼ç”±å…¶ä¸Šæ–¹ã€å·¦æ–¹å’Œå·¦ä¸Šæ–¹çš„ä¸‰ä¸ªç›¸é‚»ä½ç½®çš„dpå€¼å†³å®šã€‚å…·ä½“è€Œè¨€ï¼Œå½“å‰ä¸ºæ­¢çš„å…ƒç´ å€¼ç­‰äºä¸‰ä¸ªç›¸é‚»ä¸ºæ­¢çš„å…ƒç´ ä¸­çš„æœ€å°å€¼+1
+// å³ dp(i,j) = min(dp(i-1,j),dp(i-1,j-1),dp(i,j-1)) + 1
+// å…·ä½“çŠ¶æ€è½¬ç§»æ–¹ç¨‹åŸå› è§1277é¢˜å®˜æ–¹é¢˜è§£ã€‚
+// æœ€åè¿˜è¦è€ƒè™‘è¾¹ç•Œæ¡ä»¶ã€‚å¦‚æœiå’Œjä¸­è‡³å°‘ä¸€ä¸ªä¸º0ï¼Œåˆ™ä»¥(i,j)ä¸ºå³ä¸‹è§’çš„æœ€å¤§æ­£æ–¹å½¢çš„è¾¹é•¿åªèƒ½æ˜¯1ã€‚
 class Solution {
 public:
-	int maximalSquare(vector<vector<char>>& matrix) {
-		int m = matrix.size(), n = matrix[0].size();
-		vector<vector<int>> dp(m, vector<int>(n, 0));
-		int maxSide = 0;
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				if (matrix[i][j] == '0') {
-					continue;
-				}
-				if (i == 0 || j == 0) {
-					dp[i][j] = 1;
-				}
-				else {
-					dp[i][j] = min({ dp[i - 1][j], dp[i - 1][j - 1], dp[i][j - 1] }) + 1;
-				}
-				maxSide = max(maxSide, dp[i][j]);
-			}
-		}
-		return maxSide * maxSide;
-	}
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        vector<vector<int>> dp(m, vector<int>(n, 0));
+        int maxSide = 0;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == '0') {
+                    continue;
+                }
+                if (i == 0 || j == 0) {
+                    dp[i][j] = 1;
+                }
+                else {
+                    dp[i][j] = min({ dp[i - 1][j], dp[i - 1][j - 1], dp[i][j - 1] }) + 1;
+                }
+                maxSide = max(maxSide, dp[i][j]);
+            }
+        }
+        return maxSide * maxSide;
+    }
 };

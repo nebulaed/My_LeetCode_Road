@@ -3,145 +3,144 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode* next) : val(x), next(next) {}
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ·½·¨£ºÁ¬³É»·×´Á´±í£¬¿ìÖ¸Õë×ßk-1²½£¬ÂıÖ¸Õë×ß1²½£¬¼ì²é¿ìÂıÖ¸ÕëÊÇ·ñÏàµÈ£¬³¬Ê±
+// æˆ‘çš„æ–¹æ³•ï¼šè¿æˆç¯çŠ¶é“¾è¡¨ï¼Œå¿«æŒ‡é’ˆèµ°k-1æ­¥ï¼Œæ…¢æŒ‡é’ˆèµ°1æ­¥ï¼Œæ£€æŸ¥å¿«æ…¢æŒ‡é’ˆæ˜¯å¦ç›¸ç­‰ï¼Œè¶…æ—¶
 class Solution {
 public:
-	bool isPalindrome(ListNode* head) {
-		int length = 1;
-		ListNode* right = head, * left = head;
-		while (right->next != nullptr) {
-			++length;
-			right = right->next;
-		}
-		ListNode* tail = right;
-		tail->next = head;
-		while (left != right && right != left->next) {
-			if (left->val != right->val) break;
-			left = left->next;
-			for (int i = 0; i < length - 1; ++i) {
-				right = right->next;
-			}
-		}
-		tail->next = nullptr;
-		return left->val == right->val;
-	}
+    bool isPalindrome(ListNode* head) {
+        int length = 1;
+        ListNode* right = head, * left = head;
+        while (right->next != nullptr) {
+            ++length;
+            right = right->next;
+        }
+        ListNode* tail = right;
+        tail->next = head;
+        while (left != right && right != left->next) {
+            if (left->val != right->val) break;
+            left = left->next;
+            for (int i = 0; i < length - 1; ++i) {
+                right = right->next;
+            }
+        }
+        tail->next = nullptr;
+        return left->val == right->val;
+    }
 };
 
-// ÎÒµÄ½â·¨£º½«Á´±í´æ·Åµ½vectorÖĞ£¬¼ì²éÊÇ·ñÊÇ»ØÎÄÊı×é£¬Ê±¼äO(n) 196 ms£¬¿Õ¼äO(n) 125.1 MB
+// æˆ‘çš„è§£æ³•ï¼šå°†é“¾è¡¨å­˜æ”¾åˆ°vectorä¸­ï¼Œæ£€æŸ¥æ˜¯å¦æ˜¯å›æ–‡æ•°ç»„ï¼Œæ—¶é—´O(n) 196 msï¼Œç©ºé—´O(n) 125.1 MB
 class Solution {
 public:
-	bool isPalindrome(ListNode* head) {
-		ListNode* ptr = head;
-		vector<int> nodeList;
-		while (ptr != nullptr) {
-			nodeList.emplace_back(ptr->val);
-			ptr = ptr->next;
-		}
-		for (size_t i = 0, j = nodeList.size() - 1; i < j; ++i, --j) {
-			if (nodeList[i] != nodeList[j]) return false;
-		}
-		return true;
-	}
+    bool isPalindrome(ListNode* head) {
+        ListNode* ptr = head;
+        vector<int> nodeList;
+        while (ptr != nullptr) {
+            nodeList.emplace_back(ptr->val);
+            ptr = ptr->next;
+        }
+        for (size_t i = 0, j = nodeList.size() - 1; i < j; ++i, --j) {
+            if (nodeList[i] != nodeList[j]) return false;
+        }
+        return true;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºµİ¹é£¬Ê±¼äO(n) 196 ms£¬¿Õ¼äO(n) 119.7 MB
-// Ò»¸öÈ«¾ÖÇ°ÏòÖ¸ÕëkeepÔÚ×îÇ°Ãæ£¬Ö±µ½µİ¹éµ½´ï×îºóÒ»¸ö½Úµã£¬ÔÚµİ¹éÓÉÉîÍù»Ø×ßÊ±£¬µİ¹éÖ¸ÕëÍù»Ø×ß£¬Ç°ÏòÖ¸ÕëÍ¬Ê±ÏòÇ°×ß£¬¼ì²éÊÇ·ñÏàµÈ
-class Solution {
-private:
-	ListNode* frontPointer;
-	bool recCheck(ListNode* curr) {
-		if (curr != nullptr) {
-			if (!recCheck(curr->next)) {
-				return false;
-			}
-			if (curr->val != frontPointer->val) {
-				return false;
-			}
-			frontPointer = frontPointer->next;
-		}
-		return true;
-	}
-public:
-	bool isPalindrome(ListNode* head){
-		frontPointer = head;
-		return recCheck(head);
-	}
-};
-
-// ¹Ù·½½â·¨Èı£º¿ìÂıÖ¸Õë£¬Ê±¼äO(n) 172 ms£¬¿Õ¼äO(1) 112.3 MB
-// ½«Á´±íµÄºó°ë²¿·Ö·´×ª£¬È»ºó½«Ç°°ë²¿·ÖºÍºó°ë²¿·Ö±È½Ï£¬±È½ÏÍê³Éºó½«Á´±í»Ö¸´Ô­Ñù¡£
-// ÔÚ²¢·¢»·¾³ÏÂ£¬º¯ÊıÔËĞĞÊ±ĞèÒªËø¶¨ÆäËûÏß³Ì»ò½ø³Ì¶ÔÁ´±íµÄ·ÃÎÊ£¬ÒòÎªº¯ÊıÖ´ĞĞ¹ı³ÌÖĞÁ´±í»á±»ĞŞ¸Ä¡£
-// Á÷³Ì£º
-// 1.ÕÒµ½Ç°°ë²¿·ÖÁ´±íµÄÎ²½Úµã
-// 2.·´×ªºó°ë²¿·ÖÁ´±í
-// 3.ÅĞ¶ÏÊÇ·ñ»ØÎÄ
-// 4.»Ö¸´Á´±í
-// 5.·µ»Ø½á¹û
+// å®˜æ–¹è§£æ³•äºŒï¼šé€’å½’ï¼Œæ—¶é—´O(n) 196 msï¼Œç©ºé—´O(n) 119.7 MB
+// ä¸€ä¸ªå…¨å±€å‰å‘æŒ‡é’ˆkeepåœ¨æœ€å‰é¢ï¼Œç›´åˆ°é€’å½’åˆ°è¾¾æœ€åä¸€ä¸ªèŠ‚ç‚¹ï¼Œåœ¨é€’å½’ç”±æ·±å¾€å›èµ°æ—¶ï¼Œé€’å½’æŒ‡é’ˆå¾€å›èµ°ï¼Œå‰å‘æŒ‡é’ˆåŒæ—¶å‘å‰èµ°ï¼Œæ£€æŸ¥æ˜¯å¦ç›¸ç­‰
 class Solution {
 private:
-	ListNode* endOfFirstHalf(ListNode* head) {
-		ListNode* fast = head;
-		ListNode* slow = head;
-		while (fast->next != nullptr && fast->next->next != nullptr) {
-			fast = fast->next->next;
-			slow = slow->next;
-		}
-		return slow;
-	}
-
-	// 206Ìâ·´×ªÁ´±í½â·¨
-	ListNode* reverseList(ListNode* head) {
-		ListNode* prev = nullptr, * curr = head;
-		while (curr) {
-			ListNode* next = curr->next;
-			curr->next = prev;
-			prev = curr;
-			curr = next;
-		}
-		return prev;
-	}
+    ListNode* frontPointer;
+    bool recCheck(ListNode* curr) {
+        if (curr != nullptr) {
+            if (!recCheck(curr->next)) {
+                return false;
+            }
+            if (curr->val != frontPointer->val) {
+                return false;
+            }
+            frontPointer = frontPointer->next;
+        }
+        return true;
+    }
 public:
-	bool isPalindrome(ListNode* head) {
-		if (head == nullptr) return true;
-		// ÕÒµ½Ç°°ë²¿·ÖÁ´±íµÄÎ²½Úµã²¢·´×ªºó°ë²¿·ÖÁ´±í
-		ListNode* firstHalfEnd = endOfFirstHalf(head);
-		ListNode* secondHalfStart = reverseList(firstHalfEnd->next);
+    bool isPalindrome(ListNode* head){
+        frontPointer = head;
+        return recCheck(head);
+    }
+};
 
-		// ÅĞ¶ÏÊÇ·ñ»ØÎÄ
-		ListNode* ptr1 = head;
-		ListNode* ptr2 = secondHalfStart;
-		bool ret = true;
-		while (ret && ptr2 != nullptr) {
-			if (ptr1->val != ptr2->val) return false;
-			ptr1 = ptr1->next;
-			ptr2 = ptr2->next;
-		}
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šå¿«æ…¢æŒ‡é’ˆï¼Œæ—¶é—´O(n) 172 msï¼Œç©ºé—´O(1) 112.3 MB
+// å°†é“¾è¡¨çš„ååŠéƒ¨åˆ†åè½¬ï¼Œç„¶åå°†å‰åŠéƒ¨åˆ†å’ŒååŠéƒ¨åˆ†æ¯”è¾ƒï¼Œæ¯”è¾ƒå®Œæˆåå°†é“¾è¡¨æ¢å¤åŸæ ·ã€‚
+// åœ¨å¹¶å‘ç¯å¢ƒä¸‹ï¼Œå‡½æ•°è¿è¡Œæ—¶éœ€è¦é”å®šå…¶ä»–çº¿ç¨‹æˆ–è¿›ç¨‹å¯¹é“¾è¡¨çš„è®¿é—®ï¼Œå› ä¸ºå‡½æ•°æ‰§è¡Œè¿‡ç¨‹ä¸­é“¾è¡¨ä¼šè¢«ä¿®æ”¹ã€‚
+// æµç¨‹ï¼š
+// 1.æ‰¾åˆ°å‰åŠéƒ¨åˆ†é“¾è¡¨çš„å°¾èŠ‚ç‚¹
+// 2.åè½¬ååŠéƒ¨åˆ†é“¾è¡¨
+// 3.åˆ¤æ–­æ˜¯å¦å›æ–‡
+// 4.æ¢å¤é“¾è¡¨
+// 5.è¿”å›ç»“æœ
+class Solution {
+private:
+    ListNode* endOfFirstHalf(ListNode* head) {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while (fast->next != nullptr && fast->next->next != nullptr) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return slow;
+    }
 
-		// »¹Ô­Á´±í²¢·µ»Ø½á¹û
-		firstHalfEnd->next = reverseList(secondHalfStart);
-		return ret;
-	}
+    // 206é¢˜åè½¬é“¾è¡¨è§£æ³•
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = nullptr, * curr = head;
+        while (curr) {
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+public:
+    bool isPalindrome(ListNode* head) {
+        if (head == nullptr) return true;
+        // æ‰¾åˆ°å‰åŠéƒ¨åˆ†é“¾è¡¨çš„å°¾èŠ‚ç‚¹å¹¶åè½¬ååŠéƒ¨åˆ†é“¾è¡¨
+        ListNode* firstHalfEnd = endOfFirstHalf(head);
+        ListNode* secondHalfStart = reverseList(firstHalfEnd->next);
+
+        // åˆ¤æ–­æ˜¯å¦å›æ–‡
+        ListNode* ptr1 = head;
+        ListNode* ptr2 = secondHalfStart;
+        bool ret = true;
+        while (ret && ptr2 != nullptr) {
+            if (ptr1->val != ptr2->val) return false;
+            ptr1 = ptr1->next;
+            ptr2 = ptr2->next;
+        }
+
+        // è¿˜åŸé“¾è¡¨å¹¶è¿”å›ç»“æœ
+        firstHalfEnd->next = reverseList(secondHalfStart);
+        return ret;
+    }
 };
 
 int main() {
 
-	ListNode* node3 = new ListNode(1);
-	ListNode* node2 = new ListNode(2, node3);
-	ListNode* node1 = new ListNode(2, node2);
-	ListNode* node0 = new ListNode(1, node1);
+    ListNode* node3 = new ListNode(1);
+    ListNode* node2 = new ListNode(2, node3);
+    ListNode* node1 = new ListNode(2, node2);
+    ListNode* node0 = new ListNode(1, node1);
 
-	Solution s;
-	bool ret = s.isPalindrome(node0);
+    Solution s;
+    bool ret = s.isPalindrome(node0);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

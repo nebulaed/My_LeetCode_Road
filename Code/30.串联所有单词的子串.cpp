@@ -6,71 +6,70 @@ using namespace std;
 
 class Solution {
 public:
-	vector<int> findSubstring(string s, vector<string>& words) {
-		vector<int> ret;
-		// ÅĞ¶ÏwordsÎª¿Õ£¬ÒòÎªÏÂÃæÓÃµ½ÁËwords[0]
-		if (words.empty()) {
-			return ret;
-		}
+    vector<int> findSubstring(string s, vector<string>& words) {
+        vector<int> ret;
+        // åˆ¤æ–­wordsä¸ºç©ºï¼Œå› ä¸ºä¸‹é¢ç”¨åˆ°äº†words[0]
+        if (words.empty()) {
+            return ret;
+        }
 
-		int word_size = words[0].size();
-		int word_num = words.size();
+        int word_size = words[0].size();
+        int word_num = words.size();
 
-		unordered_map<string, int> m1; // ¹¹Ôìhashmap
-		for (int i = 0; i < word_num; ++i) {
-			++m1[words[i]];
-		}
+        unordered_map<string, int> m1; // æ„é€ hashmap
+        for (int i = 0; i < word_num; ++i) {
+            ++m1[words[i]];
+        }
 
-		unordered_map<string, int> m2;
-		// ½ØÈ¡µÄs·ûºÏÌâÒâ
-		for (int i = 0, j = i; (i + word_size * word_num) <= s.size();) {
-			// ·Ö¶ÎÅĞ¶Ï
-			while (j < (i + word_size * word_num)) {
-				string temp_str = s.substr(j, word_size);
-				j += word_size;
-				// Èôm1ÖĞÃ»ÓĞ½ØÈ¡µÄ´®£¬ËµÃ÷²»Æ¥Åä
-				if (m1[temp_str] == 0) {
-					i = j;
-					m2.clear();
-					break;
-				}
-				else {
-					++m2[temp_str];
-					// ÖØ¸´´ÎÊı³¬¹ım1ÖĞ³öÏÖ´ÎÊı£¬Ìø³ö
-					if (m1[temp_str] < m2[temp_str]) {
-						while (m1[temp_str] < m2[temp_str]) {
-							--m2[s.substr(i, word_size)];
-							i += word_size;
-						}
-						break;
-					}
-				}
-			}
+        unordered_map<string, int> m2;
+        // æˆªå–çš„sç¬¦åˆé¢˜æ„
+        for (int i = 0, j = i; (i + word_size * word_num) <= s.size();) {
+            // åˆ†æ®µåˆ¤æ–­
+            while (j < (i + word_size * word_num)) {
+                string temp_str = s.substr(j, word_size);
+                j += word_size;
+                // è‹¥m1ä¸­æ²¡æœ‰æˆªå–çš„ä¸²ï¼Œè¯´æ˜ä¸åŒ¹é…
+                if (m1[temp_str] == 0) {
+                    i = j;
+                    m2.clear();
+                    break;
+                }
+                else {
+                    ++m2[temp_str];
+                    // é‡å¤æ¬¡æ•°è¶…è¿‡m1ä¸­å‡ºç°æ¬¡æ•°ï¼Œè·³å‡º
+                    if (m1[temp_str] < m2[temp_str]) {
+                        while (m1[temp_str] < m2[temp_str]) {
+                            --m2[s.substr(i, word_size)];
+                            i += word_size;
+                        }
+                        break;
+                    }
+                }
+            }
 
-			// Ã¿Ò»¶Î¶¼·ûºÏ£¬Ôò¼ÓÈë´ğ°¸
-			if (j == (i + word_size * word_num)) {
-				ret.push_back(i);
-				--m2[s.substr(i, word_size)];
-				i += word_size;
-			}
-		}
-		return ret;
-	}
+            // æ¯ä¸€æ®µéƒ½ç¬¦åˆï¼Œåˆ™åŠ å…¥ç­”æ¡ˆ
+            if (j == (i + word_size * word_num)) {
+                ret.push_back(i);
+                --m2[s.substr(i, word_size)];
+                i += word_size;
+            }
+        }
+        return ret;
+    }
 };
 
 int main() {
-	string s = "barfoothefoobarman";
-	vector<string> words = { "foo","bar" };
+    string s = "barfoothefoobarman";
+    vector<string> words = { "foo","bar" };
 
-	Solution sol;
-	vector<int> ret = sol.findSubstring(s,words);
+    Solution sol;
+    vector<int> ret = sol.findSubstring(s,words);
 
-	cout << "[";
-	for (int i = 0; i < ret.size(); ++i) {
-		cout << ret[i] << ",";
-	}
-	cout << "]";
+    cout << "[";
+    for (int i = 0; i < ret.size(); ++i) {
+        cout << ret[i] << ",";
+    }
+    cout << "]";
 
-	system("pause");
-	return 0;
+    return 0;
 }

@@ -1,68 +1,66 @@
 #include<iostream>
 #include<queue>
 #include<vector>
-#include<xmemory>
+#include<memory>
 
-using std::vector;
-using std::queue;
-using std::pair;
+using namespace std;
 
-// LeetCode 101½â·¨£ºÊ±¼ä 24 ms 99.42%£¬¿Õ¼ä 18.1 MB 86.90%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 24 ms 99.42%ï¼Œç©ºé—´ 18.1 MB 86.90%
 class Solution {
 private:
-	int directions[5] = { -1, 0, 1, 0, -1 };
+    int directions[5] = { -1, 0, 1, 0, -1 };
 
-	void dfs(queue<pair<int, int>>& points, vector<vector<int>>& grid, int m, int n, int i, int j) {
-		if (grid[i][j] == 0) {
-			points.emplace(i, j);
-			return;
-		}
-		grid[i][j] = 2;
-		for (int k = 0; k < 4; ++k) {
-			int newi = i + directions[k], newj = j + directions[k + 1];
-			if (newi >= 0 && newi < m && newj >= 0 && newj < n) {
-				if (grid[newi][newj] != 2) {
-					dfs(points, grid, m, n, newi, newj);
-				}
-			}
-		}
-	}
+    void dfs(queue<pair<int, int>>& points, vector<vector<int>>& grid, int m, int n, int i, int j) {
+        if (grid[i][j] == 0) {
+            points.emplace(i, j);
+            return;
+        }
+        grid[i][j] = 2;
+        for (int k = 0; k < 4; ++k) {
+            int newi = i + directions[k], newj = j + directions[k + 1];
+            if (newi >= 0 && newi < m && newj >= 0 && newj < n) {
+                if (grid[newi][newj] != 2) {
+                    dfs(points, grid, m, n, newi, newj);
+                }
+            }
+        }
+    }
 public:
-	int shortestBridge(vector<vector<int>>& grid) {
-		int m = grid.size(), n = grid[0].size();
-		queue<pair<int, int>> points;
-		// dfsÑ°ÕÒ´ÓÄ³Ò»¸öµºÓì³ö·¢µÄËùÓĞµÚÒ»¸öµã£¬²¢°Ñ³ö·¢ËùÔÚµºÓìµÄ1È«²¿¸³ÖµÎª2
-		bool flipped = false;
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				if (grid[i][j] == 1) {
-					dfs(points, grid, m, n, i, j);
-					flipped = true;
-					break;
-				}
-			}
-			if (flipped) break;
-		}
-		// BFSÑ°ÕÒµÚ¶ş¸öµºÓì£¬²¢°Ñ¹ı³ÌÖĞ¾­¹ıµÄ0¸³ÖµÎª2
-		for (int level = 1; !points.empty(); ++level) {
-			// µ±Ç°¶ÓÁĞ³¤¶È£¬Ïàµ±ÓÚ´ÓµÚÒ»×ùµºÓì³ö·¢ºóµÄÄ³Ò»²ã0£¬´ÓÕâĞ©0³ö·¢ÕÒÁíÒ»×ùµºÓìµÄ1£¬×ßÍêÕâÒ»²ã»¹Ã»·¢ÏÖÖÜÎ§ÓĞ1£¬ÄÇÃ´level×Ô¼Ó1¼ÌĞø²éÕÒ
-			int n_points = points.size();
-			while (n_points--) {
-				auto [x, y] = points.front();
-				points.pop();
-				for (int i = 0; i < 4; ++i) {
-					int newx = x + directions[i], newy = y + directions[i + 1];
-					if (newx >= 0 && newx < m && newy >= 0 && newy < n) {
-						if (grid[newx][newy] == 2) continue;
-						if (grid[newx][newy] == 1) {
-							return level;
-						}
-						points.emplace(newx, newy);
-						grid[newx][newy] = 2;
-					}
-				}
-			}
-		}
-		return 0;
-	}
+    int shortestBridge(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        queue<pair<int, int>> points;
+        // dfså¯»æ‰¾ä»æŸä¸€ä¸ªå²›å±¿å‡ºå‘çš„æ‰€æœ‰ç¬¬ä¸€ä¸ªç‚¹ï¼Œå¹¶æŠŠå‡ºå‘æ‰€åœ¨å²›å±¿çš„1å…¨éƒ¨èµ‹å€¼ä¸º2
+        bool flipped = false;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (grid[i][j] == 1) {
+                    dfs(points, grid, m, n, i, j);
+                    flipped = true;
+                    break;
+                }
+            }
+            if (flipped) break;
+        }
+        // BFSå¯»æ‰¾ç¬¬äºŒä¸ªå²›å±¿ï¼Œå¹¶æŠŠè¿‡ç¨‹ä¸­ç»è¿‡çš„0èµ‹å€¼ä¸º2
+        for (int level = 1; !points.empty(); ++level) {
+            // å½“å‰é˜Ÿåˆ—é•¿åº¦ï¼Œç›¸å½“äºä»ç¬¬ä¸€åº§å²›å±¿å‡ºå‘åçš„æŸä¸€å±‚0ï¼Œä»è¿™äº›0å‡ºå‘æ‰¾å¦ä¸€åº§å²›å±¿çš„1ï¼Œèµ°å®Œè¿™ä¸€å±‚è¿˜æ²¡å‘ç°å‘¨å›´æœ‰1ï¼Œé‚£ä¹ˆlevelè‡ªåŠ 1ç»§ç»­æŸ¥æ‰¾
+            int n_points = points.size();
+            while (n_points--) {
+                auto [x, y] = points.front();
+                points.pop();
+                for (int i = 0; i < 4; ++i) {
+                    int newx = x + directions[i], newy = y + directions[i + 1];
+                    if (newx >= 0 && newx < m && newy >= 0 && newy < n) {
+                        if (grid[newx][newy] == 2) continue;
+                        if (grid[newx][newy] == 1) {
+                            return level;
+                        }
+                        points.emplace(newx, newy);
+                        grid[newx][newy] = 2;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
 };

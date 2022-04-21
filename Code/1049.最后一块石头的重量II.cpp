@@ -3,7 +3,7 @@
 #include<vector>
 using namespace std;
 
-// ¹Ù·½½â·¨Ò»£º¶¯Ì¬¹æ»®£¬Ê±¼ä 8 ms 23%£¬¿Õ¼ä 8.1 MB 82%
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 8 ms 23%ï¼Œç©ºé—´ 8.1 MB 82%
 class Solution {
 public:
     int lastStoneWeightII(vector<int>& stones) {
@@ -31,7 +31,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 7.8 MB 96.25%
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 7.8 MB 96.25%
 class Solution {
 public:
     int lastStoneWeightII(vector<int>& stones) {

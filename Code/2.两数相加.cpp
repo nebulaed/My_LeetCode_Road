@@ -4,91 +4,90 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode *next) : val(x), next(next) {}
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-class Solution {
-public:
-	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-		bool flag = false;
-		ListNode* result = new ListNode;
-		ListNode* temp = new ListNode;
-		for (ListNode* it = result; l1 != temp || l2 != temp || flag; l1 = l1->next == nullptr ? temp : l1->next, l2 = l2->next == nullptr ? temp : l2->next, it->next = (l1 != temp || l2 != temp || flag) ? new ListNode : nullptr, it = it->next) {
-			it->val = flag ? l1->val + l2->val + 1 : l1->val + l2->val;
-			if (it->val > 9) {
-				it->val -= 10;
-				flag = true;
-			}
-			else {
-				flag = false;
-			}
-		}
-		return result;
-	}
-};
+//class Solution {
+//public:
+//    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+//        bool flag = false;
+//        ListNode* result = new ListNode;
+//        ListNode* temp = new ListNode;
+//        for (ListNode* it = result; l1 != temp || l2 != temp || flag; l1 = l1->next == nullptr ? temp : l1->next, l2 = l2->next == nullptr ? temp : l2->next, it->next = (l1 != temp || l2 != temp || flag) ? new ListNode : nullptr, it = it->next) {
+//            it->val = flag ? l1->val + l2->val + 1 : l1->val + l2->val;
+//            if (it->val > 9) {
+//                it->val -= 10;
+//                flag = true;
+//            }
+//            else {
+//                flag = false;
+//            }
+//        }
+//        return result;
+//    }
+//};
 
-// ¹Ù·½½â·¨£ºÊ±¼ä 24 ms£¬69.3 MB 
+// å®˜æ–¹è§£æ³•ï¼šæ—¶é—´ 24 msï¼Œ69.3 MB 
 class Solution {
 public:
-	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-		ListNode* head = nullptr, * tail = nullptr;
-		int carry = 0; // ±íÊ¾½øÎ»Öµ
-		while (l1 || l2) {
-			// ÈôÁ½¸öÁ´±í³¤¶È²»Í¬£¬Ôò¸ø³¤¶È¶ÌµÄÁ´±íºóÃæ¼ÓÉÏ²¹ÆëµÄ0£¬ÀýÈç789ºÍ56789Ïà¼Ó£¬Á´±í·Ö±ðÎª9->8->7->0->0ºÍ9->8->7->6->5
-			int n1 = l1 ? l1->val : 0;
-			int n2 = l2 ? l2->val : 0;
-			int sum = n1 + n2 + carry;
-			if (!head) {
-				head = tail = new ListNode(sum % 10);
-			}
-			else {
-				tail->next = new ListNode(sum % 10);
-				tail = tail->next;
-			}
-			carry = sum / 10;
-			if (l1) {
-				l1 = l1->next;
-			}
-			if (l2) {
-				l2 = l2->next;
-			}
-		}
-		// ÈôÁ´±í±éÀú½áÊøºó£¬Ê£ÏÂµÄcarry>0£¬Ôò»¹ÐèÔÚÁ´±íºóÃæ¸½¼ÓÒ»¸ö½ÚµãÖµÎªcarry
-		if (carry > 0) {
-			tail->next = new ListNode(carry);
-		}
-		return head;
-	}
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* head = nullptr, * tail = nullptr;
+        int carry = 0; // è¡¨ç¤ºè¿›ä½å€¼
+        while (l1 || l2) {
+            // è‹¥ä¸¤ä¸ªé“¾è¡¨é•¿åº¦ä¸åŒï¼Œåˆ™ç»™é•¿åº¦çŸ­çš„é“¾è¡¨åŽé¢åŠ ä¸Šè¡¥é½çš„0ï¼Œä¾‹å¦‚789å’Œ56789ç›¸åŠ ï¼Œé“¾è¡¨åˆ†åˆ«ä¸º9->8->7->0->0å’Œ9->8->7->6->5
+            int n1 = l1 ? l1->val : 0;
+            int n2 = l2 ? l2->val : 0;
+            int sum = n1 + n2 + carry;
+            if (!head) {
+                head = tail = new ListNode(sum % 10);
+            }
+            else {
+                tail->next = new ListNode(sum % 10);
+                tail = tail->next;
+            }
+            carry = sum / 10;
+            if (l1) {
+                l1 = l1->next;
+            }
+            if (l2) {
+                l2 = l2->next;
+            }
+        }
+        // è‹¥é“¾è¡¨éåŽ†ç»“æŸåŽï¼Œå‰©ä¸‹çš„carry>0ï¼Œåˆ™è¿˜éœ€åœ¨é“¾è¡¨åŽé¢é™„åŠ ä¸€ä¸ªèŠ‚ç‚¹å€¼ä¸ºcarry
+        if (carry > 0) {
+            tail->next = new ListNode(carry);
+        }
+        return head;
+    }
 };
 
 int main()
 {
-	ListNode l1(2);
-	ListNode l1_2(4);
-	ListNode l1_3(3);
-	l1.next = &l1_2;
-	l1_2.next = &l1_3;
-	ListNode l2(5);
-	ListNode l2_2(6);
-	ListNode l2_3(4);
-	l2.next = &l2_2;
-	l2_2.next = &l2_3;
+    ListNode l1(2);
+    ListNode l1_2(4);
+    ListNode l1_3(3);
+    l1.next = &l1_2;
+    l1_2.next = &l1_3;
+    ListNode l2(5);
+    ListNode l2_2(6);
+    ListNode l2_3(4);
+    l2.next = &l2_2;
+    l2_2.next = &l2_3;
 
-	Solution s;
-	ListNode* result = s.addTwoNumbers(&l1, &l2);
-	while (result != nullptr)
-	{
-		cout << result->val << " ";
-		result = result->next;
-	}
-	cout << endl;
+    Solution s;
+    ListNode* result = s.addTwoNumbers(&l1, &l2);
+    while (result != nullptr)
+    {
+        cout << result->val << " ";
+        result = result->next;
+    }
+    cout << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }
 
 //int main() {
@@ -104,6 +103,5 @@ int main()
 //	}
 //	printf("\n");
 //
-//	system("pause");
 //	return 0;
 //}

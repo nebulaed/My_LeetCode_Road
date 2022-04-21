@@ -1,7 +1,7 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¶þ·Ö²éÕÒ£¬Ê±¼ä O(log n) 4 ms 60.14%£¬¿Õ¼ä O(1) 9.8 MB 79.46%
+// æˆ‘çš„è§£æ³•ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ O(log n) 4 ms 60.14%ï¼Œç©ºé—´ O(1) 9.8 MB 79.46%
 class Solution {
 public:
     int findMin(vector<int>& nums) {

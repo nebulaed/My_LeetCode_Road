@@ -5,128 +5,128 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¶àÖ¸Õë£¬Á½´Î±éÀú£¬Ê±¼äO(d(m+n)) 64 ms£¬¿Õ¼äO(d) 14.6 MB
+// æˆ‘çš„è§£æ³•ï¼šå¤šæŒ‡é’ˆï¼Œä¸¤æ¬¡éå†ï¼Œæ—¶é—´O(d(m+n)) 64 msï¼Œç©ºé—´O(d) 14.6 MB
 class Solution {
 public:
-	string findLongestWord(string s, vector<string>& dictionary) {
-		size_t length = dictionary.size();
-		vector<size_t> ptrDir(length, 0);
-		for (char ch : s) {
-			for (size_t i = 0; i < length; ++i) {
-				size_t temp = ptrDir[i];
-				const string& tempStr = dictionary[i];
-				if (temp < tempStr.size() && tempStr[temp] == ch) {
-					++ptrDir[i];
-				}
-			}
-		}
-		string ret;
-		for (size_t i = 0; i < length; ++i) {
-			const string& currWord = dictionary[i];
-			size_t currPtr = ptrDir[i];
-			size_t retLength = ret.size();
-			if (currPtr == currWord.size()) {
-				if (currPtr > retLength || (currPtr == retLength && currWord < ret)) {
-					ret = currWord;
-				}
-			}
-		}
-		return ret;
-	}
+    string findLongestWord(string s, vector<string>& dictionary) {
+        size_t length = dictionary.size();
+        vector<size_t> ptrDir(length, 0);
+        for (char ch : s) {
+            for (size_t i = 0; i < length; ++i) {
+                size_t temp = ptrDir[i];
+                const string& tempStr = dictionary[i];
+                if (temp < tempStr.size() && tempStr[temp] == ch) {
+                    ++ptrDir[i];
+                }
+            }
+        }
+        string ret;
+        for (size_t i = 0; i < length; ++i) {
+            const string& currWord = dictionary[i];
+            size_t currPtr = ptrDir[i];
+            size_t retLength = ret.size();
+            if (currPtr == currWord.size()) {
+                if (currPtr > retLength || (currPtr == retLength && currWord < ret)) {
+                    ret = currWord;
+                }
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºË«Ö¸Õë£¬Ò»´Î±éÀú£¬Ê±¼äO(d¡Á(m+n)) 52 ms£¬¿Õ¼äO(1) 14.7 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŒæŒ‡é’ˆï¼Œä¸€æ¬¡éå†ï¼Œæ—¶é—´O(dÃ—(m+n)) 52 msï¼Œç©ºé—´O(1) 14.7 MB
 class Solution {
 public:
-	string findLongestWord(string s, vector<string>& dictionary) {
-		string ret;
-		for (const auto& word : dictionary) {
-			size_t ptrS = 0, ptrW = 0, wordSize = word.size();
-			while (ptrS < s.size() && ptrW < wordSize) {
-				if (word[ptrW] == s[ptrS]) {
-					++ptrW;
-				}
-				++ptrS;
-			}
-			if (ptrW == wordSize) {
-				if (wordSize > ret.size() || (wordSize == ret.size() && word < ret)) {
-					ret = word;
-				}
-			}
-		}
-		return ret;
-	}
+    string findLongestWord(string s, vector<string>& dictionary) {
+        string ret;
+        for (const auto& word : dictionary) {
+            size_t ptrS = 0, ptrW = 0, wordSize = word.size();
+            while (ptrS < s.size() && ptrW < wordSize) {
+                if (word[ptrW] == s[ptrS]) {
+                    ++ptrW;
+                }
+                ++ptrS;
+            }
+            if (ptrW == wordSize) {
+                if (wordSize > ret.size() || (wordSize == ret.size() && word < ret)) {
+                    ret = word;
+                }
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÅÅĞò£¬Ê±¼äO(d*m*log d + d*(m+n)) 48 ms£¬¿Õ¼äO(d*m) 14.6 MB
-// ÏÈ¶Ôdictionary×öÔ¤´¦Àí£¬ÒÀ¾İ×Ö·û´®³¤¶ÈµÄ½µĞòºÍ×ÖµäĞòµÄÉıĞò½øĞĞÅÅĞò£¬È»ºó´ÓÇ°ÏòºóÕÒµ½µÚÒ»¸ö·ûºÏÌõ¼şµÄ×Ö·û´®Ö±½Ó·µ»Ø¼´¿É¡£
+// å®˜æ–¹è§£æ³•äºŒï¼šæ’åºï¼Œæ—¶é—´O(d*m*log d + d*(m+n)) 48 msï¼Œç©ºé—´O(d*m) 14.6 MB
+// å…ˆå¯¹dictionaryåšé¢„å¤„ç†ï¼Œä¾æ®å­—ç¬¦ä¸²é•¿åº¦çš„é™åºå’Œå­—å…¸åºçš„å‡åºè¿›è¡Œæ’åºï¼Œç„¶åä»å‰å‘åæ‰¾åˆ°ç¬¬ä¸€ä¸ªç¬¦åˆæ¡ä»¶çš„å­—ç¬¦ä¸²ç›´æ¥è¿”å›å³å¯ã€‚
 class Solution {
 public:
-	string findLongestWord(string s, vector<string>& dictionary) {
-		sort(dictionary.begin(), dictionary.end(), [](const string& lhs, const string& rhs) {
-			return lhs.size() > rhs.size() || (lhs.size() == rhs.size() && lhs < rhs);
-			});
-		for (const string& word : dictionary) {
-			size_t ptrW = 0, ptrS = 0, wordSize = word.size();
-			while (ptrW < wordSize && ptrS < s.size()) {
-				if (word[ptrW] == s[ptrS]) {
-					++ptrW;
-				}
-				++ptrS;
-			}
-			if (ptrW == wordSize) {
-				return word;
-			}
-		}
-		return "";
-	}
+    string findLongestWord(string s, vector<string>& dictionary) {
+        sort(dictionary.begin(), dictionary.end(), [](const string& lhs, const string& rhs) {
+            return lhs.size() > rhs.size() || (lhs.size() == rhs.size() && lhs < rhs);
+        });
+        for (const string& word : dictionary) {
+            size_t ptrW = 0, ptrS = 0, wordSize = word.size();
+            while (ptrW < wordSize && ptrS < s.size()) {
+                if (word[ptrW] == s[ptrS]) {
+                    ++ptrW;
+                }
+                ++ptrS;
+            }
+            if (ptrW == wordSize) {
+                return word;
+            }
+        }
+        return "";
+    }
 };
 
-// ¹Ù·½½â·¨Èı£º¶¯Ì¬¹æ»®£¬Ê±¼äO(m*|¦²|+d*n) 44 ms£¬¿Õ¼äO(m*|¦²|) 15.4 MB
-// ÎÒÃÇ¿ÉÒÔÍ¨¹ıÔ¤´¦Àí£¬µÃµ½¶ÔÓÚsµÄÃ¿Ò»¸öÎ»ÖÃ£¬´Ó¸ÃÎ»ÖÃ¿ªÊ¼ÍùºóÃ¿Ò»¸ö×Ö·ûµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
-// ¿ÉÒÔÊ¹ÓÃ¶¯Ì¬¹æ»®µÄ·½·¨ÊµÏÖÔ¤´¦Àí£¬Áîf[i][j]±íÊ¾×Ö·û´®sÖĞ´ÓÎ»ÖÃi¿ªÊ¼Íùºó×Ö·ûj
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(m*|Î£|+d*n) 44 msï¼Œç©ºé—´O(m*|Î£|) 15.4 MB
+// æˆ‘ä»¬å¯ä»¥é€šè¿‡é¢„å¤„ç†ï¼Œå¾—åˆ°å¯¹äºsçš„æ¯ä¸€ä¸ªä½ç½®ï¼Œä»è¯¥ä½ç½®å¼€å§‹å¾€åæ¯ä¸€ä¸ªå­—ç¬¦ç¬¬ä¸€æ¬¡å‡ºç°çš„ä½ç½®
+// å¯ä»¥ä½¿ç”¨åŠ¨æ€è§„åˆ’çš„æ–¹æ³•å®ç°é¢„å¤„ç†ï¼Œä»¤f[i][j]è¡¨ç¤ºå­—ç¬¦ä¸²sä¸­ä»ä½ç½®iå¼€å§‹å¾€åå­—ç¬¦j
 class Solution {
 public:
-	string findLongestWord(string s, vector<string>& dictionary) {
-		size_t m = s.size();
-		vector<array<int, 26>> dp(m + 1, array<int, 26>{});
-		// Îª×îºóÒ»ĞĞÈ«²¿Ìî³äÉÏm£¬ÒÔ±ã·Ö±æÊÇ²»ÊÇsÖĞÊÇ²»ÊÇÃ»ÓĞÄ³Ò»×Ö·û
-		fill(dp[m].begin(), dp[m].end(), m);
+    string findLongestWord(string s, vector<string>& dictionary) {
+        size_t m = s.size();
+        vector<array<int, 26>> dp(m + 1, array<int, 26>{});
+        // ä¸ºæœ€åä¸€è¡Œå…¨éƒ¨å¡«å……ä¸Šmï¼Œä»¥ä¾¿åˆ†è¾¨æ˜¯ä¸æ˜¯sä¸­æ˜¯ä¸æ˜¯æ²¡æœ‰æŸä¸€å­—ç¬¦
+        fill(dp[m].begin(), dp[m].end(), m);
 
-		// ´ÓsµÄ×îºóÒ»¸ö×Ö·û¿ªÊ¼µ¹×ÅÍ³¼Æ
-		for (int i = m - 1; i >= 0; --i) {
-			for (int j = 0; j < 26; ++j) {
-				// Èôs[i]ÊÇµÚjÎ»´ú±íµÄ×Ö·û£¬Ôò¼ÇÂ¼ÏÂµÚjÎ»×Ö·û³öÏÖµÄµ±Ç°Î»ÖÃi
-				if (s[i] == 'a' + j) {
-					dp[i][j] = i;
-				}
-				// ·ñÔòµÚjÎ»³öÏÖµÄÎ»ÖÃºÍsµÄºóÒ»Î»ÖÃÏàÍ¬
-				else {
-					dp[i][j] = dp[i + 1][j];
-				}
-			}
-		}
-		string ret;
-		for (const string& word : dictionary) {
-			bool match = true;
-			int j = 0;
-			for (int i = 0; i < word.size(); ++i) {
-				// ²éÕÒword[i]³öÏÖÔÚsÖĞµÄÎ»ÖÃ
-				int pos = dp[j][word[i] - 'a'];
-				// ÈôµÈÓÚmËµÃ÷sÖĞÃ»ÓĞword[i]
-				if (pos == m) {
-					match = false;
-					break;
-				}
-				// ·ñÔò´Ós[j]¿ªÊ¼²éÕÒwordµÄÏÂÒ»Î»×Ö·û
-				j = pos + 1;
-			}
-			if (match) {
-				if (word.size() > ret.size() || (word.size() == ret.size() && word < ret)) {
-					ret = word;
-				}
-			}
-		}
-		return ret;
-	}
+        // ä»sçš„æœ€åä¸€ä¸ªå­—ç¬¦å¼€å§‹å€’ç€ç»Ÿè®¡
+        for (int i = m - 1; i >= 0; --i) {
+            for (int j = 0; j < 26; ++j) {
+                // è‹¥s[i]æ˜¯ç¬¬jä½ä»£è¡¨çš„å­—ç¬¦ï¼Œåˆ™è®°å½•ä¸‹ç¬¬jä½å­—ç¬¦å‡ºç°çš„å½“å‰ä½ç½®i
+                if (s[i] == 'a' + j) {
+                    dp[i][j] = i;
+                }
+                    // å¦åˆ™ç¬¬jä½å‡ºç°çš„ä½ç½®å’Œsçš„åä¸€ä½ç½®ç›¸åŒ
+                else {
+                    dp[i][j] = dp[i + 1][j];
+                }
+            }
+        }
+        string ret;
+        for (const string& word : dictionary) {
+            bool match = true;
+            int j = 0;
+            for (int i = 0; i < word.size(); ++i) {
+                // æŸ¥æ‰¾word[i]å‡ºç°åœ¨sä¸­çš„ä½ç½®
+                int pos = dp[j][word[i] - 'a'];
+                // è‹¥ç­‰äºmè¯´æ˜sä¸­æ²¡æœ‰word[i]
+                if (pos == m) {
+                    match = false;
+                    break;
+                }
+                // å¦åˆ™ä»s[j]å¼€å§‹æŸ¥æ‰¾wordçš„ä¸‹ä¸€ä½å­—ç¬¦
+                j = pos + 1;
+            }
+            if (match) {
+                if (word.size() > ret.size() || (word.size() == ret.size() && word < ret)) {
+                    ret = word;
+                }
+            }
+        }
+        return ret;
+    }
 };

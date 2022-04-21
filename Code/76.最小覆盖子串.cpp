@@ -1,107 +1,108 @@
 #include<iostream>
+#include<climits>
 #include<string>
 #include<unordered_map>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º
+// æˆ‘çš„è§£æ³•ï¼š
 class Solution {
 public:
-	string minWindow(string s, string t) {
-		int freq[52] = { 0 };
-		for (int i = 0; i < t.size(); ++i) {
-			modifyfreq(freq, t[i], true);
-		}
-		int freq2[52] = { 0 };
-		string minWindow;
-		int l = 0, r = 0, minLength = INT_MAX;
-		for (int r = 0; r < s.size(); ++r) {
-			modifyfreq(freq2, s[r], true);
-			if (matchfreq(freq, freq2)) {
-				while (l <= r) {
-					modifyfreq(freq2, s[l], false);
-					++l;
-					if (!matchfreq(freq, freq2)) {
-						if (r - l + 2 < minLength) {
-							minWindow = s.substr(l - 1, r - l + 2);
-							minLength = r - l + 2;
-						}
-						break;
-					}
-				}
-			}
-		}
-		return minWindow;
-	}
+    string minWindow(string s, string t) {
+        int freq[52] = { 0 };
+        for (int i = 0; i < t.size(); ++i) {
+            modifyfreq(freq, t[i], true);
+        }
+        int freq2[52] = { 0 };
+        string minWindow;
+        int l = 0, r = 0, minLength = INT_MAX;
+        for (int r = 0; r < s.size(); ++r) {
+            modifyfreq(freq2, s[r], true);
+            if (matchfreq(freq, freq2)) {
+                while (l <= r) {
+                    modifyfreq(freq2, s[l], false);
+                    ++l;
+                    if (!matchfreq(freq, freq2)) {
+                        if (r - l + 2 < minLength) {
+                            minWindow = s.substr(l - 1, r - l + 2);
+                            minLength = r - l + 2;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return minWindow;
+    }
 
-	bool matchfreq(int freq[], int freq2[]) {
-		for (int i = 0; i < 52; ++i) {
-			if (freq2[i] < freq[i]) {
-				return false;
-			}
-		}
-		return true;
-	}
+    bool matchfreq(int freq[], int freq2[]) {
+        for (int i = 0; i < 52; ++i) {
+            if (freq2[i] < freq[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	void modifyfreq(int freq[], char c, bool sgn) {
-		if (sgn) {
-			if (c - 'A' >= 0 && c - 'A' < 26) {
-				++freq[c - 'A'];
-			}
-			else {
-				++freq[c - 'a' + 26];
-			}
-		}
-		else {
-			if (c - 'A' >= 0 && c - 'A' < 26) {
-				--freq[c - 'A'];
-			}
-			else {
-				--freq[c - 'a' + 26];
-			}
-		}
-	}
+    void modifyfreq(int freq[], char c, bool sgn) {
+        if (sgn) {
+            if (c - 'A' >= 0 && c - 'A' < 26) {
+                ++freq[c - 'A'];
+            }
+            else {
+                ++freq[c - 'a' + 26];
+            }
+        }
+        else {
+            if (c - 'A' >= 0 && c - 'A' < 26) {
+                --freq[c - 'A'];
+            }
+            else {
+                --freq[c - 'a' + 26];
+            }
+        }
+    }
 };
 
 
-// LeetCode 101½â·¨£ºÊ±¼ä 4 ms£¬¿Õ¼ä 7.5 MB
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 4 msï¼Œç©ºé—´ 7.5 MB
 class Solution {
 private:
-	int ch2ind(char ch) {
-		return ch >= 'a' ? ch - 'a' + 26 : ch - 'A';
-	}
+    int ch2ind(char ch) {
+        return ch >= 'a' ? ch - 'a' + 26 : ch - 'A';
+    }
 public:
-	string minWindow(string s, string t) {
-		int chars[52]{};
-		bool flag[52]{ false };
-		// ÏÈÍ³¼ÆTÖĞµÄ×Ö·ûÇé¿ö
-		for (char ch : t) {
-			int ind = ch2ind(ch);
-			flag[ind] = true;
-			++chars[ind];
-		}
-		// ÒÆ¶¯»¬¶¯´°¿Ú£¬²»¶ÏµØ¸üĞÂÍ³¼ÆÊı¾İ
-		int cnt = 0, left = 0, minLeft = 0, minSize = s.size() + 1;
-		for (int right = 0; right < s.size(); ++right) {
-			int indRight = ch2ind(s[right]);
-			if (flag[indRight]) {
-				if (--chars[indRight] >= 0) {
-					++cnt;
-				}
-				// ÈôÄ¿Ç°»¬¶¯´°¿ÚÒÑ¾­°üº¬TÖĞÈ«²¿×Ö·û£¬
-				// Ôò³¢ÊÔ½«leftÓÒÒÆ£¬ÔÚ²»Ó°Ïì½á¹ûµÄÇé¿öÏÂ»ñµÃ×î¶Ì×Ó×Ö·û´®
-				while (cnt == t.size()) {
-					if (right - left + 1 < minSize) {
-						minLeft = left;
-						minSize = right - left + 1;
-					}
-					int indLeft = ch2ind(s[left]);
-					if (flag[indLeft] && ++chars[indLeft] > 0) {
-						--cnt;
-					}
-					++left;
-				}
-			}
-		}
-		return minSize > s.size() ? "" : s.substr(minLeft, minSize);
-	}
+    string minWindow(string s, string t) {
+        int chars[52]{};
+        bool flag[52]{ false };
+        // å…ˆç»Ÿè®¡Tä¸­çš„å­—ç¬¦æƒ…å†µ
+        for (char ch : t) {
+            int ind = ch2ind(ch);
+            flag[ind] = true;
+            ++chars[ind];
+        }
+        // ç§»åŠ¨æ»‘åŠ¨çª—å£ï¼Œä¸æ–­åœ°æ›´æ–°ç»Ÿè®¡æ•°æ®
+        int cnt = 0, left = 0, minLeft = 0, minSize = s.size() + 1;
+        for (int right = 0; right < s.size(); ++right) {
+            int indRight = ch2ind(s[right]);
+            if (flag[indRight]) {
+                if (--chars[indRight] >= 0) {
+                    ++cnt;
+                }
+                // è‹¥ç›®å‰æ»‘åŠ¨çª—å£å·²ç»åŒ…å«Tä¸­å…¨éƒ¨å­—ç¬¦ï¼Œ
+                // åˆ™å°è¯•å°†leftå³ç§»ï¼Œåœ¨ä¸å½±å“ç»“æœçš„æƒ…å†µä¸‹è·å¾—æœ€çŸ­å­å­—ç¬¦ä¸²
+                while (cnt == t.size()) {
+                    if (right - left + 1 < minSize) {
+                        minLeft = left;
+                        minSize = right - left + 1;
+                    }
+                    int indLeft = ch2ind(s[left]);
+                    if (flag[indLeft] && ++chars[indLeft] > 0) {
+                        --cnt;
+                    }
+                    ++left;
+                }
+            }
+        }
+        return minSize > s.size() ? "" : s.substr(minLeft, minSize);
+    }
 };

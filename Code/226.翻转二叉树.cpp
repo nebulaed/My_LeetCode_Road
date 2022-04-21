@@ -2,65 +2,65 @@
 #include<queue>
 using namespace std;
 
-// ¶þ²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æž„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨£ºÇ°Ðò±éÀú£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(n) 9.6 MB
+// æˆ‘çš„è§£æ³•ï¼šå‰åºéåŽ†ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(n) 9.6 MB
 class Solution {
 private:
-	void traverseTree(TreeNode* ptr) {
-		if (!ptr) return;
-		swap(ptr->left, ptr->right);
-		traverseTree(ptr->left);
-		traverseTree(ptr->right);
-	}
+    void traverseTree(TreeNode* ptr) {
+        if (!ptr) return;
+        swap(ptr->left, ptr->right);
+        traverseTree(ptr->left);
+        traverseTree(ptr->right);
+    }
 public:
-	TreeNode* invertTree(TreeNode* root) {
-		TreeNode* ptr = root;
-		traverseTree(ptr);
-		return root;
-	}
+    TreeNode* invertTree(TreeNode* root) {
+        TreeNode* ptr = root;
+        traverseTree(ptr);
+        return root;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ººóÐò±éÀú£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(n) 9.5 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŽåºéåŽ†ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(n) 9.5 MB
 class Solution {
 public:
-	TreeNode* invertTree(TreeNode* root) {
-		if (root == nullptr) return root;
-		TreeNode* left = invertTree(root->left);
-		TreeNode* right = invertTree(root->right);
-		root->left = right;
-		root->right = left;
-		return root;
-	}
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == nullptr) return root;
+        TreeNode* left = invertTree(root->left);
+        TreeNode* right = invertTree(root->right);
+        root->left = right;
+        root->right = left;
+        return root;
+    }
 };
 
-// ÆÀÂÛ½â·¨£ºBFS£¬µü´ú·½·¨£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(n) 9.6 MB
+// è¯„è®ºè§£æ³•ï¼šBFSï¼Œè¿­ä»£æ–¹æ³•ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(n) 9.6 MB
 class Solution {
 public:
-	TreeNode* invertTree(TreeNode* root) {
-		if (root == nullptr) return root;
-		queue<TreeNode*> q;
-		q.emplace(root);
-		while (!q.empty()) {
-			size_t size = q.size();
-			for (size_t i = 0; i < size; ++i) {
-				TreeNode* temp = q.front();
-				q.pop();
-				if (temp->left) q.emplace(temp->left);
-				if (temp->right) q.emplace(temp->right);
-				TreeNode* tempNode = temp->left;
-				temp->left = temp->right;
-				temp->right = tempNode;
-			}
-		}
-		return root;
-	}
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == nullptr) return root;
+        queue<TreeNode*> q;
+        q.emplace(root);
+        while (!q.empty()) {
+            size_t size = q.size();
+            for (size_t i = 0; i < size; ++i) {
+                TreeNode* temp = q.front();
+                q.pop();
+                if (temp->left) q.emplace(temp->left);
+                if (temp->right) q.emplace(temp->right);
+                TreeNode* tempNode = temp->left;
+                temp->left = temp->right;
+                temp->right = tempNode;
+            }
+        }
+        return root;
+    }
 };

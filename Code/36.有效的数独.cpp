@@ -1,9 +1,10 @@
 #include<iostream>
+#include<cstring>
 #include<vector>
 #include<unordered_map>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÀûÓÃ¹şÏ£±íµÄ±©Á¦±éÀúÈı´Î
+// æˆ‘çš„è§£æ³•ï¼šåˆ©ç”¨å“ˆå¸Œè¡¨çš„æš´åŠ›éå†ä¸‰æ¬¡
 //class Solution {
 //private:
 //	unordered_map<char, int> hashmap;
@@ -52,43 +53,42 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨£ºÒòĞòºÅ½ÏÉÙ£¬¿ÉÒÔÖ»ÓÃÊı×é²»ÓÃ¹şÏ£±í£¬Ò»´Î±éÀúÍê³É
+// å®˜æ–¹è§£æ³•ï¼šå› åºå·è¾ƒå°‘ï¼Œå¯ä»¥åªç”¨æ•°ç»„ä¸ç”¨å“ˆå¸Œè¡¨ï¼Œä¸€æ¬¡éå†å®Œæˆ
 class Solution {
 public:
-	bool isValidSudoku(vector<vector<char>>& board) {
-		int rows[9][9];
-		int columns[9][9];
-		int subboxes[3][3][9];
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int rows[9][9];
+        int columns[9][9];
+        int subboxes[3][3][9];
 
-		// Ò»ÖÖ³õÊ¼»¯·½·¨£¬½«rowsÌîÂú0
-		memset(rows, 0, sizeof(rows));
-		memset(columns, 0, sizeof(columns));
-		memset(subboxes, 0, sizeof(subboxes));
-		for (int i = 0; i < 9; ++i) {
-			for (int j = 0; j < 9; ++j) {
-				char c = board[i][j];
-				if (c != '.') {
-					int index = c - '0' - 1;
-					++rows[i][index];
-					++columns[j][index];
-					++subboxes[i / 3][j / 3][index];
-					if (rows[i][index] > 1 || columns[j][index] > 1 || subboxes[i / 3][j / 3][index] > 1) {
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
+        // ä¸€ç§åˆå§‹åŒ–æ–¹æ³•ï¼Œå°†rowså¡«æ»¡0
+        memset(rows, 0, sizeof(rows));
+        memset(columns, 0, sizeof(columns));
+        memset(subboxes, 0, sizeof(subboxes));
+        for (int i = 0; i < 9; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                char c = board[i][j];
+                if (c != '.') {
+                    int index = c - '0' - 1;
+                    ++rows[i][index];
+                    ++columns[j][index];
+                    ++subboxes[i / 3][j / 3][index];
+                    if (rows[i][index] > 1 || columns[j][index] > 1 || subboxes[i / 3][j / 3][index] > 1) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 };
 
 int main() {
-	vector<vector<char>> board;
+    vector<vector<char>> board;
 
-	Solution s;
-	bool ret = s.isValidSudoku(board);
-	cout << ret << endl;
+    Solution s;
+    bool ret = s.isValidSudoku(board);
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

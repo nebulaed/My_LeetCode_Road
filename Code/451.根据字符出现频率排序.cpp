@@ -4,86 +4,83 @@
 #include<unordered_map>
 #include<algorithm>
 
-using std::vector;
-using std::string;
-using std::max;
-using std::unordered_map;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºÍ°ÅÅĞò£¬Ê±¼ä 12 ms£¬¿Õ¼ä 10.7 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæ¡¶æ’åºï¼Œæ—¶é—´ 12 msï¼Œç©ºé—´ 10.7 MB
 class Solution {
 private:
-	size_t ch2sizet(char ch) {
-		size_t ind;
-		if (ch >= 'a' && ch <= 'z') {
-			ind = ch - 'a';
-		}
-		else if (ch >= 'A' && ch <= 'Z') {
-			ind = ch - 'A' + 26;
-		}
-		else {
-			ind = ch - '0' + 52;
-		}
-		return ind;
-	}
+    size_t ch2sizet(char ch) {
+        size_t ind;
+        if (ch >= 'a' && ch <= 'z') {
+            ind = ch - 'a';
+        }
+        else if (ch >= 'A' && ch <= 'Z') {
+            ind = ch - 'A' + 26;
+        }
+        else {
+            ind = ch - '0' + 52;
+        }
+        return ind;
+    }
 
-	char int2ch(int ind) {
-		char ch;
-		if (ind >= 0 && ind < 26) {
-			ch = 'a' + ind;
-		}
-		else if (ind >= 26 && ind < 52) {
-			ch = 'A' + ind - 26;
-		}
-		else {
-			ch = '0' + ind - 52;
-		}
-		return ch;
-	}
+    char int2ch(int ind) {
+        char ch;
+        if (ind >= 0 && ind < 26) {
+            ch = 'a' + ind;
+        }
+        else if (ind >= 26 && ind < 52) {
+            ch = 'A' + ind - 26;
+        }
+        else {
+            ch = '0' + ind - 52;
+        }
+        return ch;
+    }
 
 public:
-	string frequencySort(string s) {
-		int charFreq[62]{};
-		int maxCount = 0;
-		for (char ch : s) {
-			maxCount = max(maxCount, ++charFreq[ch2sizet(ch)]);
-		}
+    string frequencySort(string s) {
+        int charFreq[62]{};
+        int maxCount = 0;
+        for (char ch : s) {
+            maxCount = max(maxCount, ++charFreq[ch2sizet(ch)]);
+        }
 
-		vector<vector<int>> buckets(maxCount + 1);
-		for (int i = 0; i < sizeof(charFreq) / sizeof(int); ++i) {
-			buckets[charFreq[i]].emplace_back(i);
-		}
+        vector<vector<int>> buckets(maxCount + 1);
+        for (int i = 0; i < sizeof(charFreq) / sizeof(int); ++i) {
+            buckets[charFreq[i]].emplace_back(i);
+        }
 
-		string ret;
-		for (int i = maxCount; i >= 0; --i) {
-			for (int num : buckets[i]) {
-				ret += string(i, int2ch(num));
-			}
-		}
-		return ret;
-	}
+        string ret;
+        for (int i = maxCount; i >= 0; --i) {
+            for (int num : buckets[i]) {
+                ret += string(i, int2ch(num));
+            }
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£º¹şÏ£±í+Í°ÅÅĞò£¬Ê±¼ä 8 ms£¬¿Õ¼ä 10.6 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šå“ˆå¸Œè¡¨+æ¡¶æ’åºï¼Œæ—¶é—´ 8 msï¼Œç©ºé—´ 10.6 MB
 class Solution {
 public:
-	string frequencySort(string s) {
-		unordered_map<char, int> charFreq;
-		int maxCount = 0;
-		for (char ch : s) {
-			maxCount = max(maxCount, ++charFreq[ch]);
-		}
+    string frequencySort(string s) {
+        unordered_map<char, int> charFreq;
+        int maxCount = 0;
+        for (char ch : s) {
+            maxCount = max(maxCount, ++charFreq[ch]);
+        }
 
-		vector<vector<char>> buckets(maxCount + 1);
-		for (auto it = charFreq.begin(); it != charFreq.end(); ++it) {
-			buckets[it->second].emplace_back(it->first);
-		}
+        vector<vector<char>> buckets(maxCount + 1);
+        for (auto it = charFreq.begin(); it != charFreq.end(); ++it) {
+            buckets[it->second].emplace_back(it->first);
+        }
 
-		string ret;
-		for (auto rit = buckets.rbegin(); rit != buckets.rend(); ++rit) {
-			for (char ch : *rit) {
-				ret += string(charFreq[ch], ch);
-			}
-		}
-		return ret;
-	}
+        string ret;
+        for (auto rit = buckets.rbegin(); rit != buckets.rend(); ++rit) {
+            for (char ch : *rit) {
+                ret += string(charFreq[ch], ch);
+            }
+        }
+        return ret;
+    }
 };

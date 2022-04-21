@@ -3,12 +3,12 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode(int x) : val(x), next(NULL) {}
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
 };
 
-// ÎÒµÄ½â·¨Ò»£º¹þÏ£±í£¬Ê±¼äO(n) 16 ms£¬¿Õ¼äO(n) 9.4 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šå“ˆå¸Œè¡¨ï¼Œæ—¶é—´O(n) 16 msï¼Œç©ºé—´O(n) 9.4 MB
 //class Solution {
 //public:
 //	ListNode* detectCycle(ListNode* head) {
@@ -23,27 +23,27 @@ struct ListNode {
 //};
 
 
-// ¹Ù·½½â·¨¶þ(¸ù¾Ý¹Ù·½Ë¼Â·×ÔÐ´)£º¿ìÂýÖ¸Õë£¬Ê±¼äO(n) 8 ms£¬¿Õ¼äO(1) 7.4 MB
+// å®˜æ–¹è§£æ³•äºŒ(æ ¹æ®å®˜æ–¹æ€è·¯è‡ªå†™)ï¼šå¿«æ…¢æŒ‡é’ˆï¼Œæ—¶é—´O(n) 8 msï¼Œç©ºé—´O(1) 7.4 MB
 class Solution {
 public:
-	ListNode* detectCycle(ListNode* head) {
-		if (head == nullptr || head->next == nullptr) return nullptr;
-		ListNode* slow = head, * fast = head;
-		do {
-			if (fast == nullptr) return nullptr;
-			slow = slow->next;
-			fast = fast->next == nullptr ? nullptr : fast->next->next;
-		} while (slow != fast);
-		ListNode* ptr = head;
-		while (slow != ptr) {
-			slow = slow->next;
-			ptr = ptr->next;
-		}
-		return ptr;
-	}
+    ListNode* detectCycle(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) return nullptr;
+        ListNode* slow = head, * fast = head;
+        do {
+            if (fast == nullptr) return nullptr;
+            slow = slow->next;
+            fast = fast->next == nullptr ? nullptr : fast->next->next;
+        } while (slow != fast);
+        ListNode* ptr = head;
+        while (slow != ptr) {
+            slow = slow->next;
+            ptr = ptr->next;
+        }
+        return ptr;
+    }
 };
 
-// ¹Ù·½½â·¨¶þ(¹Ù·½°æ±¾)£º¿ìÂýÖ¸Õë£¬Ê±¼äO(n) 8 ms£¬¿Õ¼äO(1) 7.6 MB
+// å®˜æ–¹è§£æ³•äºŒ(å®˜æ–¹ç‰ˆæœ¬)ï¼šå¿«æ…¢æŒ‡é’ˆï¼Œæ—¶é—´O(n) 8 msï¼Œç©ºé—´O(1) 7.6 MB
 //class Solution {
 //public:
 //	ListNode* detectCycle(ListNode* head) {
@@ -67,42 +67,41 @@ public:
 //	}
 //};
 
-// LeetCode 101½â·¨£º¿ìÂýÖ¸Õë£¬Ê±¼ä 8 ms£¬¿Õ¼ä 7.5 MB
+// LeetCode 101è§£æ³•ï¼šå¿«æ…¢æŒ‡é’ˆï¼Œæ—¶é—´ 8 msï¼Œç©ºé—´ 7.5 MB
 class Solution {
 public:
-	ListNode* detectCycle(ListNode* head) {
-		ListNode* slow = head, * fast = head;
-		// ÅÐ¶ÏÊÇ·ñ´æÔÚ»·Â·
-		do {
-			if (!fast || !fast->next) return nullptr;
-			fast = fast->next->next;
-			slow = slow->next;
-		} while (fast != slow);
-		// Èô´æÔÚ£¬²éÕÒ»·Â·½Úµã
-		slow = head;
-		while (slow != fast) {
-			slow = slow->next;
-			fast = fast->next;
-		}
-		return slow;
-	}
+    ListNode* detectCycle(ListNode* head) {
+        ListNode* slow = head, * fast = head;
+        // åˆ¤æ–­æ˜¯å¦å­˜åœ¨çŽ¯è·¯
+        do {
+            if (!fast || !fast->next) return nullptr;
+            fast = fast->next->next;
+            slow = slow->next;
+        } while (fast != slow);
+        // è‹¥å­˜åœ¨ï¼ŒæŸ¥æ‰¾çŽ¯è·¯èŠ‚ç‚¹
+        slow = head;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return slow;
+    }
 };
 
 int main() {
 
-	ListNode* node0 = new ListNode(3);
-	ListNode* node1 = new ListNode(2);
-	ListNode* node2 = new ListNode(0);
-	ListNode* node3 = new ListNode(-4);
-	node0->next = node1;
-	node1->next = node2;
-	node2->next = node3;
-	node3->next = node1;
+    ListNode* node0 = new ListNode(3);
+    ListNode* node1 = new ListNode(2);
+    ListNode* node2 = new ListNode(0);
+    ListNode* node3 = new ListNode(-4);
+    node0->next = node1;
+    node1->next = node2;
+    node2->next = node3;
+    node3->next = node1;
 
-	Solution s;
-	ListNode* ret = s.detectCycle(node0);
-	cout << ret->val << "\n";
+    Solution s;
+    ListNode* ret = s.detectCycle(node0);
+    cout << ret->val << "\n";
 
-	system("pause");
-	return 0;
+    return 0;
 }

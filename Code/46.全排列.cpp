@@ -2,81 +2,80 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºdfs+»ØËÝ£¬Ê±¼ä 0 ms£¬ ¿Õ¼ä 7.5 MB
+// æˆ‘çš„è§£æ³•ï¼šdfs+å›žæº¯ï¼Œæ—¶é—´ 0 msï¼Œ ç©ºé—´ 7.5 MB
 class Solution {
 private:
-	vector<int> select;
-	vector<vector<int>> ret;
-	vector<int> cur;
+    vector<int> select;
+    vector<vector<int>> ret;
+    vector<int> cur;
 public:
-	void dfs(const vector<int>& nums) {
-		if (select.empty()) {
-			ret.emplace_back(cur);
-			return;
-		}
+    void dfs(const vector<int>& nums) {
+        if (select.empty()) {
+            ret.emplace_back(cur);
+            return;
+        }
 
-		for (int i = 0; i < select.size(); ++i) {
-			int temp = select[i];
-			cur.emplace_back(nums[temp]);
-			select.erase(select.begin() + i);
-			dfs(nums);
-			select.insert(select.begin() + i, temp);
-			cur.pop_back();
-		}
-	}
-	vector<vector<int>> permute(vector<int>& nums) {
-		for (int i = 0; i < nums.size(); ++i) {
-			select.emplace_back(i);
-		}
-		dfs(nums);
-		return ret;
-	}
+        for (int i = 0; i < select.size(); ++i) {
+            int temp = select[i];
+            cur.emplace_back(nums[temp]);
+            select.erase(select.begin() + i);
+            dfs(nums);
+            select.insert(select.begin() + i, temp);
+            cur.pop_back();
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        for (int i = 0; i < nums.size(); ++i) {
+            select.emplace_back(i);
+        }
+        dfs(nums);
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨£º»ØËÝ
+// å®˜æ–¹è§£æ³•ï¼šå›žæº¯
 class Solution {
 public:
-	void backtrack(vector<vector<int>>& res, vector<int>& output, int first, int len) {
-		// ËùÓÐÊý¶¼ÌîÍêÁË
-		if (first == len) {
-			res.emplace_back(output);
-			return;
-		}
-		for (int i = first; i < len; ++i) {
-			// ¶¯Ì¬Î¬»¤Êý×é
-			swap(output[i], output[first]);
-			// ¼ÌÐøµÝ¹éÌîÏÂÒ»¸öÊý
-			backtrack(res, output, first + 1, len);
-			// ³·Ïú²Ù×÷
-			swap(output[i], output[first]);
-		}
-	}
-	vector<vector<int>> permute(vector<int>& nums) {
-		vector<vector<int> > res;
-		backtrack(res, nums, 0, (int)nums.size());
-		return res;
-	}
+    void backtrack(vector<vector<int>>& res, vector<int>& output, int first, int len) {
+        // æ‰€æœ‰æ•°éƒ½å¡«å®Œäº†
+        if (first == len) {
+            res.emplace_back(output);
+            return;
+        }
+        for (int i = first; i < len; ++i) {
+            // åŠ¨æ€ç»´æŠ¤æ•°ç»„
+            swap(output[i], output[first]);
+            // ç»§ç»­é€’å½’å¡«ä¸‹ä¸€ä¸ªæ•°
+            backtrack(res, output, first + 1, len);
+            // æ’¤é”€æ“ä½œ
+            swap(output[i], output[first]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int> > res;
+        backtrack(res, nums, 0, (int)nums.size());
+        return res;
+    }
 };
 
 int main() {
 
-	vector<int> nums = { 1,2,3 };
+    vector<int> nums = { 1,2,3 };
 
-	Solution s;
-	vector<vector<int>> ret = s.permute(nums);
+    Solution s;
+    vector<vector<int>> ret = s.permute(nums);
 
-	cout << "[";
-	for (int i = 0; i < ret.size(); ++i) {
-		cout << "[";
-		for (int j = 0; j < ret[i].size(); ++j) {
-			cout << ret[i][j];
-			if (j != ret[i].size() - 1) cout << ",";
-		}
-		cout << "]";
-		if (i != ret.size() - 1) cout << ",";
-	}
-	cout << "]" << endl;
+    cout << "[";
+    for (int i = 0; i < ret.size(); ++i) {
+        cout << "[";
+        for (int j = 0; j < ret[i].size(); ++j) {
+            cout << ret[i][j];
+            if (j != ret[i].size() - 1) cout << ",";
+        }
+        cout << "]";
+        if (i != ret.size() - 1) cout << ",";
+    }
+    cout << "]" << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

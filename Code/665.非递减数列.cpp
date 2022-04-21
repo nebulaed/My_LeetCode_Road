@@ -3,89 +3,109 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÌ°ĞÄËã·¨+Ë«Ö¸Õë£¬Ê±¼äO(n) 20 ms 83%£¬¿Õ¼äO(1) 26.4 MB 68%
+// æˆ‘çš„è§£æ³•ï¼šè´ªå¿ƒç®—æ³•+åŒæŒ‡é’ˆï¼Œæ—¶é—´O(n) 20 ms 83%ï¼Œç©ºé—´O(1) 26.4 MB 68%
 class Solution {
 public:
-	bool checkPossibility(vector<int>& nums) {
-		int count = 0;
-		size_t left = 0, right = 1, n = nums.size();
-		while (right < n) {
-			// ÈôleftÖ¸ÏòÔªËØ´óÓÚrightÖ¸ÏòÔªËØ
-			if (nums[left] > nums[right]) {
-				// ĞèÒª¸Ä±äµÄÔªËØ+1
-				++count;
-				// Èô¸Ä±äÔªËØ´óÓÚ2£¬·µ»Øfalse
-				if (count > 1) return false;
-				// ÈôrightµÈÓÚn-1»òleftÖ¸ÏòÔªËØĞ¡ÓÚµÈÓÚright+1Ö¸ÏòÔªËØ(ÄÜ±£Ö¤·Çµİ¼õ)
-				if (right == n - 1 || nums[left] <= nums[right + 1]) {
-					// ½«leftÖ¸ÏòÔªËØ¸³¸ørightÖ¸ÏòÎ»ÖÃ
-					nums[right] = nums[left];
-				}
-				// ÈôleftµÈÓÚ0»òrightÖ¸ÏòÔªËØ´óÓÚµÈÓÚleft-1Ö¸ÏòÔªËØ(ÄÜ±£Ö¤·Çµİ¼õ)
-				else if (left == 0 || nums[right] >= nums[left - 1]) {
-					// ½«rightÖ¸ÏòÔªËØ¸³¸øleftÖ¸ÏòÎ»ÖÃ
-					nums[left] = nums[right];
-				}
-				// Á½¸ö¶¼²»Âú×ã£¬·µ»Øfalse
-				else return false;
-			}
-			++left;
-			++right;
-		}
-		return true;
-	}
+    bool checkPossibility(vector<int>& nums) {
+        int count = 0;
+        size_t left = 0, right = 1, n = nums.size();
+        while (right < n) {
+            // è‹¥leftæŒ‡å‘å…ƒç´ å¤§äºrightæŒ‡å‘å…ƒç´ 
+            if (nums[left] > nums[right]) {
+                // éœ€è¦æ”¹å˜çš„å…ƒç´ +1
+                ++count;
+                // è‹¥æ”¹å˜å…ƒç´ å¤§äº2ï¼Œè¿”å›false
+                if (count > 1) return false;
+                // è‹¥rightç­‰äºn-1æˆ–leftæŒ‡å‘å…ƒç´ å°äºç­‰äºright+1æŒ‡å‘å…ƒç´ (èƒ½ä¿è¯éé€’å‡)
+                if (right == n - 1 || nums[left] <= nums[right + 1]) {
+                    // å°†leftæŒ‡å‘å…ƒç´ èµ‹ç»™rightæŒ‡å‘ä½ç½®
+                    nums[right] = nums[left];
+                }
+                    // è‹¥leftç­‰äº0æˆ–rightæŒ‡å‘å…ƒç´ å¤§äºç­‰äºleft-1æŒ‡å‘å…ƒç´ (èƒ½ä¿è¯éé€’å‡)
+                else if (left == 0 || nums[right] >= nums[left - 1]) {
+                    // å°†rightæŒ‡å‘å…ƒç´ èµ‹ç»™leftæŒ‡å‘ä½ç½®
+                    nums[left] = nums[right];
+                }
+                    // ä¸¤ä¸ªéƒ½ä¸æ»¡è¶³ï¼Œè¿”å›false
+                else return false;
+            }
+            ++left;
+            ++right;
+        }
+        return true;
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÉÏÃæ·½·¨Ğ¡ÓÅ»¯, Ì°ĞÄËã·¨£¬Ê±¼ä 16 ms 95.53%£¬¿Õ¼ä 26.2 MB 97.94%
+// æˆ‘çš„è§£æ³•ï¼šä¸Šé¢æ–¹æ³•å°ä¼˜åŒ–, è´ªå¿ƒç®—æ³•ï¼Œæ—¶é—´ 16 ms 95.53%ï¼Œç©ºé—´ 26.2 MB 97.94%
 class Solution {
 public:
-	bool checkPossibility(vector<int>& nums) {
-		int count = 0;
-		size_t n = nums.size();
-		for (size_t i = 0; i < n - 1; ++i) {
-			int curr = nums[i], next = nums[i + 1];
-			if (curr > next) {
-				++count;
-				if (count > 1) return false;
-				if (i + 1 == n - 1 || curr <= nums[i + 2]) {
-					nums[i + 1] = curr;
-				}
-				else if (i == 0 || next >= nums[i - 1]) {
-					nums[i] = next;
-				}
-				else return false;
-			}
-		}
-		return true;
-	}
+    bool checkPossibility(vector<int>& nums) {
+        int count = 0;
+        size_t n = nums.size();
+        for (size_t i = 0; i < n - 1; ++i) {
+            int curr = nums[i], next = nums[i + 1];
+            if (curr > next) {
+                ++count;
+                if (count > 1) return false;
+                if (i + 1 == n - 1 || curr <= nums[i + 2]) {
+                    nums[i + 1] = curr;
+                }
+                else if (i == 0 || next >= nums[i - 1]) {
+                    nums[i] = next;
+                }
+                else return false;
+            }
+        }
+        return true;
+    }
 };
 
 
-// ¹Ù·½½â·¨£ºÊı×é£¬Ê±¼ä 16 ms 95.53%£¬¿Õ¼ä 26.4 MB 43.92%
-// Ë¼¿¼ÈçÏÂÎÊÌâ£ºÒªÊ¹nums±ä³ÉÒ»¸ö·Çµİ¼õÊıÁĞ£¬Êı×éÖĞÖÁ¶àÓĞ¶àÉÙ¸öiÂú×ãnums[i]>nums[i+1]£¿
-// ÉÔ¼ÓË¼¿¼¿ÉÖªÖÁ¶àÒ»¸ö
-// µ«½ö½öÕâ¸öÌõ¼şÎŞ·¨±£Ö¤ĞŞ¸ÄºóÄÜ½«Æä±äÎª·Çµİ¼õÊıÁĞ£¬Èç[3,4,1,2]£¬ËäÈ»Ö»ÓĞ4Âú×ãnums[i]>nums[i+1]£¬µ«ÎŞÂÛ4ÔõÃ´ĞŞ¸Ä¶¼²»ÄÜ±ä³É·Çµİ¼õÊıÁĞ
-// Òò´Ë£¬ÈôÕÒµ½Âú×ãnums[i]>nums[i+1]µÄi£¬»¹Ğè¼ì²éĞŞ¸Änums[i]»ònums[i+1]ºó£¬numsÊÇ·ñ±ä³É·Çµİ¼õÊıÁĞ
-// ĞŞ¸ÄÊ±£¬½«nums[i]ĞŞ¸Ä³Énums[i+1]ÊÇ×îºÃµÄ£¬¶Ônums[i+1]£¬½«ÆäĞŞ¸Ä³Énums[i]ÊÇ×îºÃµÄ
+// å®˜æ–¹è§£æ³•ï¼šæ•°ç»„ï¼Œæ—¶é—´ 16 ms 95.53%ï¼Œç©ºé—´ 26.4 MB 43.92%
+// æ€è€ƒå¦‚ä¸‹é—®é¢˜ï¼šè¦ä½¿numså˜æˆä¸€ä¸ªéé€’å‡æ•°åˆ—ï¼Œæ•°ç»„ä¸­è‡³å¤šæœ‰å¤šå°‘ä¸ªiæ»¡è¶³nums[i]>nums[i+1]ï¼Ÿ
+// ç¨åŠ æ€è€ƒå¯çŸ¥è‡³å¤šä¸€ä¸ª
+// ä½†ä»…ä»…è¿™ä¸ªæ¡ä»¶æ— æ³•ä¿è¯ä¿®æ”¹åèƒ½å°†å…¶å˜ä¸ºéé€’å‡æ•°åˆ—ï¼Œå¦‚[3,4,1,2]ï¼Œè™½ç„¶åªæœ‰4æ»¡è¶³nums[i]>nums[i+1]ï¼Œä½†æ— è®º4æ€ä¹ˆä¿®æ”¹éƒ½ä¸èƒ½å˜æˆéé€’å‡æ•°åˆ—
+// å› æ­¤ï¼Œè‹¥æ‰¾åˆ°æ»¡è¶³nums[i]>nums[i+1]çš„iï¼Œè¿˜éœ€æ£€æŸ¥ä¿®æ”¹nums[i]æˆ–nums[i+1]åï¼Œnumsæ˜¯å¦å˜æˆéé€’å‡æ•°åˆ—
+// ä¿®æ”¹æ—¶ï¼Œå°†nums[i]ä¿®æ”¹æˆnums[i+1]æ˜¯æœ€å¥½çš„ï¼Œå¯¹nums[i+1]ï¼Œå°†å…¶ä¿®æ”¹æˆnums[i]æ˜¯æœ€å¥½çš„
 class Solution {
 public:
-	bool checkPossibility(vector<int>& nums) {
-		size_t n = nums.size();
-		for (size_t i = 0; i < n - 1; ++i) {
-			int x = nums[i], y = nums[i + 1];
-			if (x > y) {
-				nums[i] = y;
-				// ³¢ÊÔĞŞ¸Änums[i]Îªnums[i+1]¿´ÊÇ·ñÒÑ³É·Çµİ¼õÊıÁĞ£¬ÊÇÔò·µ»Øtrue
-				if (is_sorted(nums.begin(), nums.end())) {
-					return true;
-				}
-				nums[i] = x;	// ¸´Ô­
-				nums[i + 1] = x;
-				// ĞŞ¸Änums[i]Îªnums[i+1]²»¿ÉĞĞ£¬³¢ÊÔĞŞ¸Änums[i+1]Îªnums[i]£¬ÈôÒÑ³É·Çµİ¼õÊıÁĞ£¬·µ»Øtrue£¬·ñÔò·µ»Øfalse
-				return is_sorted(nums.begin(), nums.end());
-			}
-		}
-		// numsÒÑÊÇ·Çµİ¼õÊıÁĞ
-		return true;
-	}
+    bool checkPossibility(vector<int>& nums) {
+        size_t n = nums.size();
+        for (size_t i = 0; i < n - 1; ++i) {
+            int x = nums[i], y = nums[i + 1];
+            if (x > y) {
+                nums[i] = y;
+                // å°è¯•ä¿®æ”¹nums[i]ä¸ºnums[i+1]çœ‹æ˜¯å¦å·²æˆéé€’å‡æ•°åˆ—ï¼Œæ˜¯åˆ™è¿”å›true
+                if (is_sorted(nums.begin(), nums.end())) {
+                    return true;
+                }
+                nums[i] = x;	// å¤åŸ
+                nums[i + 1] = x;
+                // ä¿®æ”¹nums[i]ä¸ºnums[i+1]ä¸å¯è¡Œï¼Œå°è¯•ä¿®æ”¹nums[i+1]ä¸ºnums[i]ï¼Œè‹¥å·²æˆéé€’å‡æ•°åˆ—ï¼Œè¿”å›trueï¼Œå¦åˆ™è¿”å›false
+                return is_sorted(nums.begin(), nums.end());
+            }
+        }
+        // numså·²æ˜¯éé€’å‡æ•°åˆ—
+        return true;
+    }
+};
+
+// å®˜æ–¹è§£æ³•å†ä¼˜åŒ–ï¼šå•æ¬¡éå†ï¼Œæ—¶é—´ 20 ms 82.61%ï¼Œç©ºé—´ 26.4 MB 14.50%
+class Solution {
+public:
+    bool checkPossibility(vector<int>& nums) {
+        size_t n = nums.size();
+        int cnt = 0;
+        for (size_t i = 0; i < n - 1; ++i) {
+            int x = nums[i], y = nums[i + 1];
+            if (x > y) {
+                ++cnt;
+                if (cnt > 1) return false;
+                if (i > 0 && y < nums[i - 1]) {
+                    nums[i + 1] = x;
+                }
+            }
+        }
+        return true;
+    }
 };

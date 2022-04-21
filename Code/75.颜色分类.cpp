@@ -3,92 +3,92 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºË«Ö¸ÕëÁ½´Î±éÀú
+// æˆ‘çš„è§£æ³•ï¼šåŒæŒ‡é’ˆä¸¤æ¬¡éå†
 class Solution {
 public:
-	void sortColors(vector<int>& nums) {
-		int fast = 0, slow = 0;
-		while (fast != nums.size()) {
-			if (nums[fast] == 0) {
-				swap(nums[slow], nums[fast]);
-				++slow;
-			}
-			++fast;
-		}
-		fast = slow = nums.size() - 1;
-		while (fast >= 0) {
-			if (nums[fast] == 2) {
-				swap(nums[slow], nums[fast]);
-				--slow;
-			}
-			--fast;
-		}
-	}
+    void sortColors(vector<int>& nums) {
+        int fast = 0, slow = 0;
+        while (fast != nums.size()) {
+            if (nums[fast] == 0) {
+                swap(nums[slow], nums[fast]);
+                ++slow;
+            }
+            ++fast;
+        }
+        fast = slow = nums.size() - 1;
+        while (fast >= 0) {
+            if (nums[fast] == 2) {
+                swap(nums[slow], nums[fast]);
+                --slow;
+            }
+            --fast;
+        }
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÒ»´Î±éÀú£¬ĞèÒª½«0ÒÆµ½¿ªÍ·£¬2ÒÆµ½½áÎ²
+// æˆ‘çš„è§£æ³•ï¼šä¸€æ¬¡éå†ï¼Œéœ€è¦å°†0ç§»åˆ°å¼€å¤´ï¼Œ2ç§»åˆ°ç»“å°¾
 class Solution {
 public:
-	void sortColors(vector<int>& nums) {
-		int end = 0;
-		for (auto it = nums.begin(); it != nums.end() - end;) {
-			if (*it == 0) {
-				it = nums.erase(it);
-				nums.insert(nums.begin(), 0);
-				++it;
-			}
-			else if (*it == 2) {
-				it = nums.erase(it);
-				nums.push_back(2);
-				++end;
-			}
-			else {
-				++it;
-			}
-		}
-	}
+    void sortColors(vector<int>& nums) {
+        int end = 0;
+        for (auto it = nums.begin(); it != nums.end() - end;) {
+            if (*it == 0) {
+                it = nums.erase(it);
+                nums.insert(nums.begin(), 0);
+                ++it;
+            }
+            else if (*it == 2) {
+                it = nums.erase(it);
+                nums.push_back(2);
+                ++end;
+            }
+            else {
+                ++it;
+            }
+        }
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºµ¥Ö¸Õë
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå•æŒ‡é’ˆ
 class Solution {
 public:
-	void sortColors(vector<int>& nums) {
-		int n = nums.size();
-		int ptr = 0;
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] == 0) {
-				swap(nums[i], nums[ptr]);
-				++ptr;
-			}
-		}
-		for (int i = ptr; i < n; ++i) {
-			if (nums[i] == 1) {
-				swap(nums[i], nums[ptr]);
-				++ptr;
-			}
-		}
-	}
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        int ptr = 0;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 0) {
+                swap(nums[i], nums[ptr]);
+                ++ptr;
+            }
+        }
+        for (int i = ptr; i < n; ++i) {
+            if (nums[i] == 1) {
+                swap(nums[i], nums[ptr]);
+                ++ptr;
+            }
+        }
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºË«Ö¸Õë
+// å®˜æ–¹è§£æ³•äºŒï¼šåŒæŒ‡é’ˆ
 class Solution {
 public:
-	void sortColors(vector<int>& nums) {
-		int n = nums.size();
-		int p0 = 0, p1 = 0;
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] == 1) {
-				swap(nums[i], nums[p1]);
-				++p1;
-			}
-			else if (nums[i] == 0) {
-				swap(nums[i], nums[p0]);
-				if (p0 < p1) {
-					swap(nums[i], nums[p1]);
-				}
-				++p0;
-				++p1;
-			}
-		}
-	}
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        int p0 = 0, p1 = 0;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 1) {
+                swap(nums[i], nums[p1]);
+                ++p1;
+            }
+            else if (nums[i] == 0) {
+                swap(nums[i], nums[p0]);
+                if (p0 < p1) {
+                    swap(nums[i], nums[p1]);
+                }
+                ++p0;
+                ++p1;
+            }
+        }
+    }
 };

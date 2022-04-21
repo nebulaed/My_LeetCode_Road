@@ -3,7 +3,7 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨=¹Ù·½½â·¨1£º×ö¼Ó·¨ 12 ms£¬9.4 MB
+// æˆ‘çš„è§£æ³•=å®˜æ–¹è§£æ³•1ï¼šåšåŠ æ³• 12 msï¼Œ9.4 MB
 //class Solution {
 //public:
 //	string multiply(string num1, string num2) {
@@ -47,45 +47,44 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨2£º×ö³Ë·¨ 4 ms£¬6.6 MB
+// å®˜æ–¹è§£æ³•2ï¼šåšä¹˜æ³• 4 msï¼Œ6.6 MB
 class Solution {
 public:
-	string multiply(string num1, string num2) {
-		if (num1 == "0" || num2 == "0") return "0";
-		int n1 = num1.size(), n2 = num2.size();
-		vector<int> ansArr(n1 + n2);
-		for (int i = n1 - 1; i >= 0; --i) {
-			int x = num1[i] - '0';
-			for (int j = n2 - 1; j >= 0; --j) {
-				int y = num2[j] - '0';
-				ansArr[i + j + 1] += x * y;
-			}
-		}
-		for (int i = n1 + n2 - 1; i > 0; --i) {
-			ansArr[i - 1] += ansArr[i] / 10;
-			ansArr[i] %= 10;
-		}
-		int index = ansArr[0] == 0 ? 1 : 0;
-		string ans;
-		while (index < n1 + n2) {
-			ans += ansArr[index] + '0';
-			++index;
-		}
-		return ans;
-	}
+    string multiply(string num1, string num2) {
+        if (num1 == "0" || num2 == "0") return "0";
+        int n1 = num1.size(), n2 = num2.size();
+        vector<int> ansArr(n1 + n2);
+        for (int i = n1 - 1; i >= 0; --i) {
+            int x = num1[i] - '0';
+            for (int j = n2 - 1; j >= 0; --j) {
+                int y = num2[j] - '0';
+                ansArr[i + j + 1] += x * y;
+            }
+        }
+        for (int i = n1 + n2 - 1; i > 0; --i) {
+            ansArr[i - 1] += ansArr[i] / 10;
+            ansArr[i] %= 10;
+        }
+        int index = ansArr[0] == 0 ? 1 : 0;
+        string ans;
+        while (index < n1 + n2) {
+            ans += ansArr[index] + '0';
+            ++index;
+        }
+        return ans;
+    }
 };
 
 
 int main() {
 
-	string num1 = "256";
-	string num2 = "999";
-	
-	Solution s;
-	string ret = s.multiply(num1, num2);
+    string num1 = "256";
+    string num2 = "999";
 
-	cout << ret << endl;
+    Solution s;
+    string ret = s.multiply(num1, num2);
 
-	system("pause");
-	return 0;
+    cout << ret << endl;
+
+    return 0;
 }

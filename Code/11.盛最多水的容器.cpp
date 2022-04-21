@@ -9,9 +9,9 @@ using namespace std;
 //	}
 //public:
 //	int maxArea(vector<int>& height) {
-//		// ´íÎóË¼Â·£ºÒ»´Î×óÖ¸ÕëÏòÓÒÒÆ¶¯£¬Ò»´ÎÓÒÖ¸ÕëÏò×óÒÆ¶¯
+//		// é”™è¯¯æ€è·¯ï¼šä¸€æ¬¡å·¦æŒ‡é’ˆå‘å³ç§»åŠ¨ï¼Œä¸€æ¬¡å³æŒ‡é’ˆå‘å·¦ç§»åŠ¨
 //		//bool flag = true;
-//		// ÕıÈ·Ë¼Â·£º×óÖ¸ÕëºÍÓÒÖ¸ÕëÖĞ½ÏĞ¡µÄÄÇÒ»¸öÏòÁíÒ»¸öÒÆ¶¯
+//		// æ­£ç¡®æ€è·¯ï¼šå·¦æŒ‡é’ˆå’Œå³æŒ‡é’ˆä¸­è¾ƒå°çš„é‚£ä¸€ä¸ªå‘å¦ä¸€ä¸ªç§»åŠ¨
 //		int i = 0;
 //		int j = height.size()-1;
 //		int maxCapacity = 0;
@@ -27,40 +27,39 @@ using namespace std;
 //	}
 //};
 
-// ³¢ÊÔÓÅ»¯Ê±¼äºÍ¿Õ¼ä
+// å°è¯•ä¼˜åŒ–æ—¶é—´å’Œç©ºé—´
 class Solution {
 public:
-	int maxArea(vector<int>& height) {
-		// ´íÎóË¼Â·£ºÒ»´Î×óÖ¸ÕëÏòÓÒÒÆ¶¯£¬Ò»´ÎÓÒÖ¸ÕëÏò×óÒÆ¶¯
-		//bool flag = true;
-		// ÕıÈ·Ë¼Â·£º×óÖ¸ÕëºÍÓÒÖ¸ÕëÖĞ½ÏĞ¡µÄÄÇÒ»¸öÏòÁíÒ»¸öÒÆ¶¯
-		int i = 0;
-		int j = height.size() - 1;
-		int maxCapacity = 0;
-		int curCapacity = 0;
-		while (i != j) {
-			curCapacity = capacity(height[i], height[j], i, j);
-			maxCapacity = max(curCapacity, maxCapacity);
-			if (height[i] < height[j]) ++i;
-			else --j;
-			//flag = !flag;
-		}
-		return maxCapacity;
-	}
+    int maxArea(vector<int>& height) {
+        // é”™è¯¯æ€è·¯ï¼šä¸€æ¬¡å·¦æŒ‡é’ˆå‘å³ç§»åŠ¨ï¼Œä¸€æ¬¡å³æŒ‡é’ˆå‘å·¦ç§»åŠ¨
+        //bool flag = true;
+        // æ­£ç¡®æ€è·¯ï¼šå·¦æŒ‡é’ˆå’Œå³æŒ‡é’ˆä¸­è¾ƒå°çš„é‚£ä¸€ä¸ªå‘å¦ä¸€ä¸ªç§»åŠ¨
+        int i = 0;
+        int j = height.size() - 1;
+        int maxCapacity = 0;
+        int curCapacity = 0;
+        while (i != j) {
+            curCapacity = capacity(height[i], height[j], i, j);
+            maxCapacity = max(curCapacity, maxCapacity);
+            if (height[i] < height[j]) ++i;
+            else --j;
+            //flag = !flag;
+        }
+        return maxCapacity;
+    }
 
-	int capacity(const int& d1, const int& d2, const int& x1, const int& x2) {
-		return min(d1, d2) * abs(x1 - x2);
-	}
+    int capacity(int d1, int d2, int x1, int x2) {
+        return min(d1, d2) * abs(x1 - x2);
+    }
 };
 
 int main() {
-	vector<int> input = { 2,3,10,5,7,8,9 };
+    vector<int> input = { 2,3,10,5,7,8,9 };
 
-	Solution s;
-	int ret = s.maxArea(input);
+    Solution s;
+    int ret = s.maxArea(input);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

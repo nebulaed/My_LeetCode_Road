@@ -5,46 +5,48 @@
 using namespace std;
 
 
-// 官方题解一：并查集，时间O(n + C logC)，空间O(C)
+
+// 瀹樻柟棰樿В涓�锛氬苟鏌ラ泦锛屾椂闂碠(n + C logC)锛岀┖闂碠(C)
 class UnionFind {
 private:
-	vector<int> parent;
+    vector<int> parent;
 public:
-	UnionFind() {
-		parent.resize(26);
-		iota(parent.begin(), parent.end(), 0);
-	}
-	int find(int index) {
-		if (index == parent[index]) return index;
-		parent[index] = find(parent[index]);
-		return parent[index];
+    UnionFind() {
+        parent.resize(26);
+        iota(parent.begin(), parent.end(), 0);
+    }
 
-	}
+    int find(int index) {
+        if (index == parent[index]) return index;
+        parent[index] = find(parent[index]);
+        return parent[index];
 
-	void unite(int index1, int index2) {
-		parent[find(index1)] = find(index2);
-	}
+    }
+
+    void unite(int index1, int index2) {
+        parent[find(index1)] = find(index2);
+    }
 };
 class Solution {
 public:
-	bool equationsPossible(vector<string>& equations) {
-		UnionFind uf;
-		for (const string& str : equations) {
-			if (str[1] == '=') {
-				int index1 = str[0] - 'a';
-				int index2 = str[3] - 'a';
-				uf.unite(index1, index2);
-			}
-		}
-		for (const string& str : equations) {
-			if (str[1] == '!') {
-				int index1 = str[0] - 'a';
-				int index2 = str[3] - 'a';
-				if (uf.find(index1) == uf.find(index2)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+    bool equationsPossible(vector<string>& equations) {
+        UnionFind uf;
+        for (const string& str : equations) {
+            if (str[1] == '=') {
+                int index1 = str[0] - 'a';
+                int index2 = str[3] - 'a';
+                uf.unite(index1, index2);
+            }
+        }
+        for (const string& str : equations) {
+            if (str[1] == '!') {
+                int index1 = str[0] - 'a';
+                int index2 = str[3] - 'a';
+                if (uf.find(index1) == uf.find(index2)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 };

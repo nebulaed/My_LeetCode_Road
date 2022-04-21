@@ -2,112 +2,111 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ´À½â·¨£¬Ê±¼ä¸´ÔÓ¶ÈO(n)
+// æˆ‘çš„è ¢è§£æ³•ï¼Œæ—¶é—´å¤æ‚åº¦O(n)
 class Solution {
 public:
-	vector<int> searchRange(vector<int>& nums, int target) {
-		if (nums.empty()) return { -1,-1 };
-		int start = -1;
-		int end = -1;
-		for (int i = 0; i < nums.size(); ++i) {
-			if (nums[i] == target) {
-				start = i;
-				break;
-			}
-		}
-		for (int i = nums.size() - 1; i >= 0; --i) {
-			if (nums[i] == target) {
-				end = i;
-				break;
-			}
-		}
-		return { start,end };
-	}
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if (nums.empty()) return { -1,-1 };
+        int start = -1;
+        int end = -1;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] == target) {
+                start = i;
+                break;
+            }
+        }
+        for (int i = nums.size() - 1; i >= 0; --i) {
+            if (nums[i] == target) {
+                end = i;
+                break;
+            }
+        }
+        return { start,end };
+    }
 };
 
-// ¹Ù·½½â·¨£¬¶ş·Ö²éÕÒO(log n)
+// å®˜æ–¹è§£æ³•ï¼ŒäºŒåˆ†æŸ¥æ‰¾O(log n)
 class Solution {
 public:
-	int binarySearch(const vector<int>& nums, const int& target, const bool& lower) {
-		int left = 0, right = nums.size() - 1, ans = nums.size();
-		while (left <= right) {
-			int mid = (left + right) / 2;
-			if (nums[mid] > target || (lower && nums[mid] >= target)) {
-				right = mid - 1;
-				ans = mid;
-			}
-			else {
-				left = mid + 1;
-			}
-		}
-		return ans;
-	}
-	vector<int> searchRange(vector<int>& nums, int target) {
-		int leftidx = binarySearch(nums, target, true);
-		int rightidx = binarySearch(nums, target, false) - 1;
-		if (leftidx <= rightidx && rightidx < nums.size() && nums[leftidx] == target && nums[rightidx] == target) {
-			return { leftidx,rightidx };
-		}
-		return { -1,-1 };
-	}
+    int binarySearch(const vector<int>& nums, const int& target, const bool& lower) {
+        int left = 0, right = nums.size() - 1, ans = nums.size();
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] > target || (lower && nums[mid] >= target)) {
+                right = mid - 1;
+                ans = mid;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int leftidx = binarySearch(nums, target, true);
+        int rightidx = binarySearch(nums, target, false) - 1;
+        if (leftidx <= rightidx && rightidx < nums.size() && nums[leftidx] == target && nums[rightidx] == target) {
+            return { leftidx,rightidx };
+        }
+        return { -1,-1 };
+    }
 };
 
-// LeetCode 101½â·¨£º¶ş·Ö²éÕÒ£¬×Ô¼ºÊµÏÖlower_bountºÍupper_bound£¬²ÉÓÃ×ó±ÕÓÒ±ÕµÄĞ´·¨£¬Ê±¼ä 4 ms£¬¿Õ¼ä 13.3 MB
+// LeetCode 101è§£æ³•ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œè‡ªå·±å®ç°lower_bountå’Œupper_boundï¼Œé‡‡ç”¨å·¦é—­å³é—­çš„å†™æ³•ï¼Œæ—¶é—´ 4 msï¼Œç©ºé—´ 13.3 MB
 class Solution {
 private:
-	int lower_bound(const vector<int>& nums, int target) {
-		int left = 0, right = nums.size() - 1;
-		while (left <= right) {
-			int mid = (left + right) >> 1;
-			if (nums[mid] >= target) {
-				right = mid - 1;
-			}
-			else {
-				left = mid + 1;
-			}
-		}
-		return left;
-	}
+    int lower_bound(const vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] >= target) {
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
 
-	int upper_bound(const vector<int>& nums, int target) {
-		int left = 0, right = nums.size() - 1;
-		while (left <= right) {
-			int mid = (left + right) >> 1;
-			if (nums[mid] > target) {
-				right = mid - 1;
-			}
-			else {
-				left = mid + 1;
-			}
-		}
-		return left;
-	}
+    int upper_bound(const vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] > target) {
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
 public:
-	vector<int> searchRange(vector<int>& nums, int target) {
-		if (nums.empty()) return { -1, -1 };
-		int lower = lower_bound(nums, target);
-		int upper = upper_bound(nums, target) - 1;
-		if (lower == nums.size() || nums[lower] != target) {
-			return { -1, -1 };
-		}
-		return { lower, upper };
-	}
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if (nums.empty()) return { -1, -1 };
+        int lower = lower_bound(nums, target);
+        int upper = upper_bound(nums, target) - 1;
+        if (lower == nums.size() || nums[lower] != target) {
+            return { -1, -1 };
+        }
+        return { lower, upper };
+    }
 };
 
 int main() {
-	vector<int> nums = { 5,7,7,8,8,10 };
-	int target = 6;
-	
-	Solution s;
-	vector<int> ret = s.searchRange(nums, target);
+    vector<int> nums = { 5,7,7,8,8,10 };
+    int target = 6;
 
-	cout << "[";
-	for (int i = 0; i < ret.size(); ++i) {
-		cout << ret[i] << ",";
-	}
-	cout << "]" << endl;
+    Solution s;
+    vector<int> ret = s.searchRange(nums, target);
 
-	system("pause");
-	return 0;
+    cout << "[";
+    for (int i = 0; i < ret.size(); ++i) {
+        cout << ret[i] << ",";
+    }
+    cout << "]" << endl;
+
+    return 0;
 }
 

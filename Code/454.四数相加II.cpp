@@ -2,7 +2,7 @@
 #include<unordered_map>
 using namespace std;
 
-// ¹Ù·½½â·¨£º·Ö×é+¹þÏ£±í£¬Ê±¼ä 144 ms 98.32%£¬¿Õ¼ä 23.6 MB 80.96%
+// å®˜æ–¹è§£æ³•ï¼šåˆ†ç»„+å“ˆå¸Œè¡¨ï¼Œæ—¶é—´ 144 ms 98.32%ï¼Œç©ºé—´ 23.6 MB 80.96%
 class Solution {
 public:
     int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {

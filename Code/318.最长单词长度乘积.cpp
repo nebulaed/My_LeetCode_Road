@@ -4,49 +4,43 @@
 #include<unordered_map>
 #include<algorithm>
 
-using std::vector;
-using std::string;
-using std::unordered_map;
-using std::max;
-using std::cout;
-using std::endl;
+using namespace std;
 
-// LeetCode 101½â·¨£ºÊ±¼ä 28 ms 96.95%£¬¿Õ¼ä 15.9 MB 52.19%
-// Ë¼Â·£ºÓÃÒ»¸ö³¤¶ÈÎª26µÄ¶ş½øÖÆÊı×Ö´ú±í×Ö·û´®ÖĞ´æÔÚµÄ×ÖÄ¸£¬Ã¿¸öÎ»ÖÃÎª1±íÊ¾´æÔÚ¸Ã×ÖÄ¸£¬Îª0±íÊ¾²»´æÔÚ£¬Èç¹ûÁ½×Ö·û´®ÓĞÏàÍ¬×ÖÄ¸£¬ÔòËüÃÇµÄ¶ş½øÖÆÊı×Ö°´Î»Óë²»Îª0.
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 28 ms 96.95%ï¼Œç©ºé—´ 15.9 MB 52.19%
+// æ€è·¯ï¼šç”¨ä¸€ä¸ªé•¿åº¦ä¸º26çš„äºŒè¿›åˆ¶æ•°å­—ä»£è¡¨å­—ç¬¦ä¸²ä¸­å­˜åœ¨çš„å­—æ¯ï¼Œæ¯ä¸ªä½ç½®ä¸º1è¡¨ç¤ºå­˜åœ¨è¯¥å­—æ¯ï¼Œä¸º0è¡¨ç¤ºä¸å­˜åœ¨ï¼Œå¦‚æœä¸¤å­—ç¬¦ä¸²æœ‰ç›¸åŒå­—æ¯ï¼Œåˆ™å®ƒä»¬çš„äºŒè¿›åˆ¶æ•°å­—æŒ‰ä½ä¸ä¸ä¸º0.
 class Solution {
 public:
-	int maxProduct(vector<string>& words) {
-		// ¹şÏ£±í±íÊ¾´Ó¶ş½øÖÆ±íÊ¾Êı×Öµ½×î³¤µ¥´Ê³¤¶ÈµÄÓ³Éä
-		unordered_map<int, int> hashMap;
-		int ret = 0;
-		for (const auto& word : words) {
-			int mask = 0, length = word.size();
-			// ÈômaskÖĞÓĞ¸Ã×ÖÄ¸£¬Ôò½«¸Ã×ÖÄ¸¶ÔÓ¦Î»ÖÃÖÃÎª1
-			for (char ch : word) {
-				mask |= 1 << (ch - 'a');
-			}
-			// ½«¶ş½øÖÆ±íÊ¾Êı×Ö¶ÔÓ¦µÄµ¥´Ê³¤¶ÈÈ¡×î´óÖµ
-			hashMap[mask] = max(hashMap[mask], length);
-			// ¶ÔÓÚ¹şÏ£±íÖĞËùÓĞµÄµ¥´ÊµÄ´ú±í¶ş½øÖÆÊı×Ö£¬¼ì²éµ±Ç°µ¥´ÊÓëËüÃÇÊÇ·ñÓĞÖØ¸´×ÖÄ¸£¬ÎŞÔò¸üĞÂ×î´óÎŞÏàÍ¬×ÖÄ¸×Ö·û´®³¤¶È³Ë»ı
-			for (const auto& [wordMask, wordLen] : hashMap) {
-				if (!(mask & wordMask)) {
-					ret = max(ret, length * wordLen);
-				}
-			}
-		}
-		return ret;
-	}
+    int maxProduct(vector<string>& words) {
+        // å“ˆå¸Œè¡¨è¡¨ç¤ºä»äºŒè¿›åˆ¶è¡¨ç¤ºæ•°å­—åˆ°æœ€é•¿å•è¯é•¿åº¦çš„æ˜ å°„
+        unordered_map<int, int> hashMap;
+        int ret = 0;
+        for (const auto& word : words) {
+            int mask = 0, length = word.size();
+            // è‹¥maskä¸­æœ‰è¯¥å­—æ¯ï¼Œåˆ™å°†è¯¥å­—æ¯å¯¹åº”ä½ç½®ç½®ä¸º1
+            for (char ch : word) {
+                mask |= 1 << (ch - 'a');
+            }
+            // å°†äºŒè¿›åˆ¶è¡¨ç¤ºæ•°å­—å¯¹åº”çš„å•è¯é•¿åº¦å–æœ€å¤§å€¼
+            hashMap[mask] = max(hashMap[mask], length);
+            // å¯¹äºå“ˆå¸Œè¡¨ä¸­æ‰€æœ‰çš„å•è¯çš„ä»£è¡¨äºŒè¿›åˆ¶æ•°å­—ï¼Œæ£€æŸ¥å½“å‰å•è¯ä¸å®ƒä»¬æ˜¯å¦æœ‰é‡å¤å­—æ¯ï¼Œæ— åˆ™æ›´æ–°æœ€å¤§æ— ç›¸åŒå­—æ¯å­—ç¬¦ä¸²é•¿åº¦ä¹˜ç§¯
+            for (const auto& [wordMask, wordLen] : hashMap) {
+                if (!(mask & wordMask)) {
+                    ret = max(ret, length * wordLen);
+                }
+            }
+        }
+        return ret;
+    }
 };
 
 int main() {
 
-	vector<string> input = { "abcw","baz","foo","bar","xtfn","abcdef" };
+    vector<string> input = { "abcw","baz","foo","bar","xtfn","abcdef" };
 
-	Solution s;
-	int ret = s.maxProduct(input);
+    Solution s;
+    int ret = s.maxProduct(input);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

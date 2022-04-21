@@ -2,20 +2,20 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÌ°ÐÄËã·¨£¬Ê±¼ä 12 ms£¬¿Õ¼ä 19.8 MB
+// æˆ‘çš„è§£æ³•ï¼šè´ªå¿ƒç®—æ³•ï¼Œæ—¶é—´ 12 msï¼Œç©ºé—´ 19.8 MB
 class Solution {
 public:
-	bool canPlaceFlowers(vector<int>& flowerbed, int n) {
-		size_t length = flowerbed.size();
-		int count = 0;
-		for (size_t i = 0; i < length; ++i) {
-			// Èôµ±Ç°Î»ÖÃÎª0ÇÒÇ°ÃæÎ»ÖÃÎª0ÇÒºóÃæÎ»ÖÃÎª0£¬ÔòÖÖ»¨
-			if ((i == 0 || !flowerbed[i - 1]) && (i == length - 1 || !flowerbed[i + 1]) && !flowerbed[i]) {
-				++count;
-				++flowerbed[i];
-			}
-			if (count >= n) return true;
-		}
-		return false;
-	}
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+        size_t length = flowerbed.size();
+        int count = 0;
+        for (size_t i = 0; i < length; ++i) {
+            // è‹¥å½“å‰ä½ç½®ä¸º0ä¸”å‰é¢ä½ç½®ä¸º0ä¸”åŽé¢ä½ç½®ä¸º0ï¼Œåˆ™ç§èŠ±
+            if ((i == 0 || !flowerbed[i - 1]) && (i == length - 1 || !flowerbed[i + 1]) && !flowerbed[i]) {
+                ++count;
+                ++flowerbed[i];
+            }
+            if (count >= n) return true;
+        }
+        return false;
+    }
 };

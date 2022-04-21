@@ -1,190 +1,191 @@
 #include<iostream>
+#include<climits>
 #include<stack>
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨²Î¿¼ÆÀÂÛ£ºÊ±¼ä 20 ms£¬¿Õ¼ä15.9 MB
+// æˆ‘çš„è§£æ³•å‚è€ƒè¯„è®ºï¼šæ—¶é—´ 20 msï¼Œç©ºé—´15.9 MB
 class MinStack {
 private:
-	int minVal;
-	stack<pair<int, int>> stk;
+    int minVal;
+    stack<pair<int, int>> stk;
 public:
-	MinStack() {
-		this->minVal = INT_MAX;
-	}
+    MinStack() {
+        this->minVal = INT_MAX;
+    }
 
-	void push(int val) {
-		this->minVal = val < this->minVal ? val : this->minVal;
-		stk.emplace(val, this->minVal);
-	}
+    void push(int val) {
+        this->minVal = val < this->minVal ? val : this->minVal;
+        stk.emplace(val, this->minVal);
+    }
 
-	void pop() {
-		stk.pop();
-		minVal = stk.empty() ? INT_MAX : stk.top().second;
-	}
+    void pop() {
+        stk.pop();
+        minVal = stk.empty() ? INT_MAX : stk.top().second;
+    }
 
-	int top() {
-		return stk.top().first;
-	}
+    int top() {
+        return stk.top().first;
+    }
 
-	int getMin() {
-		return stk.top().second;
-	}
+    int getMin() {
+        return stk.top().second;
+    }
 };
 
-// ¹Ù·½½â·¨£º¸¨ÖúÕ»£¬Ê±¼äO(1) 24 ms,¿Õ¼äO(n) 15.8 MB
+// å®˜æ–¹è§£æ³•ï¼šè¾…åŠ©æ ˆï¼Œæ—¶é—´O(1) 24 ms,ç©ºé—´O(n) 15.8 MB
 class MinStack {
 private:
-	stack<int> x_stack;
-	stack<int> min_stack;
+    stack<int> x_stack;
+    stack<int> min_stack;
 public:
-	MinStack() {
-		min_stack.emplace(INT_MAX);
-	}
+    MinStack() {
+        min_stack.emplace(INT_MAX);
+    }
 
-	void push(int val) {
-		x_stack.emplace(val);
-		min_stack.emplace(min(min_stack.top(), val));
-	}
+    void push(int val) {
+        x_stack.emplace(val);
+        min_stack.emplace(min(min_stack.top(), val));
+    }
 
-	void pop() {
-		x_stack.pop();
-		min_stack.pop();
-	}
+    void pop() {
+        x_stack.pop();
+        min_stack.pop();
+    }
 
-	int top() {
-		return x_stack.top();
-	}
+    int top() {
+        return x_stack.top();
+    }
 
-	int getMin() {
-		return min_stack.top();
-	}
+    int getMin() {
+        return min_stack.top();
+    }
 };
 
 
-// ¹Ù·½½â·¨£º¸¨ÖúÕ»µÄvectorÊµÏÖ£¬Ê±¼ä 24 ms 40.77%£¬¿Õ¼ä 15.9 MB 58.35%
+// å®˜æ–¹è§£æ³•ï¼šè¾…åŠ©æ ˆçš„vectorå®ç°ï¼Œæ—¶é—´ 24 ms 40.77%ï¼Œç©ºé—´ 15.9 MB 58.35%
 class MinStack {
 private:
-	vector<int> x_stack;
-	vector<int> min_stack;
+    vector<int> x_stack;
+    vector<int> min_stack;
 public:
-	MinStack() : min_stack{ INT_MAX } {}
+    MinStack() : min_stack{ INT_MAX } {}
 
-	void push(int val) {
-		x_stack.emplace_back(val);
-		min_stack.emplace_back(min(min_stack.back(), val));
-	}
+    void push(int val) {
+        x_stack.emplace_back(val);
+        min_stack.emplace_back(min(min_stack.back(), val));
+    }
 
-	void pop() {
-		x_stack.pop_back();
-		min_stack.pop_back();
-	}
+    void pop() {
+        x_stack.pop_back();
+        min_stack.pop_back();
+    }
 
-	int top() {
-		return x_stack.back();
-	}
+    int top() {
+        return x_stack.back();
+    }
 
-	int getMin() {
-		return min_stack.back();
-	}
+    int getMin() {
+        return min_stack.back();
+    }
 };
 
-// ÆÀÂÛ½â·¨£ºÕ»+²îÖµ£¬Ê±¼äO(1)£¬¿Õ¼äO(1)
+// è¯„è®ºè§£æ³•ï¼šæ ˆ+å·®å€¼ï¼Œæ—¶é—´O(1)ï¼Œç©ºé—´O(1)
 class MinStack {
 private:
-	stack<long long> stk;
-	long long minVal;
+    stack<long long> stk;
+    long long minVal;
 public:
-	MinStack() {
-		minVal = -1;
-	}
+    MinStack() {
+        minVal = -1;
+    }
 
-	void push(int val) {
-		if (stk.empty()) {
-			stk.emplace(0);
-			minVal = val;
-		}
-		else { // Õâ´Î·ÅÈëµÄÖµ¼õÈ¥ÒÑÓĞ×îĞ¡Öµ
-			long long diff = val - minVal;
-			stk.emplace(diff);
-			minVal = diff < 0 ? val : minVal;
-		}
-	}
+    void push(int val) {
+        if (stk.empty()) {
+            stk.emplace(0);
+            minVal = val;
+        }
+        else { // è¿™æ¬¡æ”¾å…¥çš„å€¼å‡å»å·²æœ‰æœ€å°å€¼
+            long long diff = val - minVal;
+            stk.emplace(diff);
+            minVal = diff < 0 ? val : minVal;
+        }
+    }
 
-	void pop() {
-		long long diff = stk.top();
-		stk.pop();
-		minVal -= diff < 0 ? diff : 0;
-	}
+    void pop() {
+        long long diff = stk.top();
+        stk.pop();
+        minVal -= diff < 0 ? diff : 0;
+    }
 
-	int top() {
-		long long diff = stk.top();
-		return diff < 0 ? minVal : minVal + diff;
-	}
+    int top() {
+        long long diff = stk.top();
+        return diff < 0 ? minVal : minVal + diff;
+    }
 
-	int getMin() {
-		return minVal;
-	}
+    int getMin() {
+        return minVal;
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÓÃvectorÊµÏÖ×îĞ¡Õ»£¬Ê±¼ä 24 ms 40.77%£¬¿Õ¼ä 15.9 MB 65.62%
+// æˆ‘çš„è§£æ³•ï¼šç”¨vectorå®ç°æœ€å°æ ˆï¼Œæ—¶é—´ 24 ms 40.77%ï¼Œç©ºé—´ 15.9 MB 65.62%
 class MinStack {
 private:
-	vector<int> stk;
-	vector<int> minVal;
+    vector<int> stk;
+    vector<int> minVal;
 public:
-	MinStack() {}
+    MinStack() {}
 
-	void push(int val) {
-		stk.emplace_back(val);
-		if (minVal.empty() || minVal.back() >= val) {
-			minVal.emplace_back(val);
-		}
-	}
+    void push(int val) {
+        stk.emplace_back(val);
+        if (minVal.empty() || minVal.back() >= val) {
+            minVal.emplace_back(val);
+        }
+    }
 
-	void pop() {
-		if (stk.back() == minVal.back()) {
-			minVal.pop_back();
-		}
-		stk.pop_back();
-	}
+    void pop() {
+        if (stk.back() == minVal.back()) {
+            minVal.pop_back();
+        }
+        stk.pop_back();
+    }
 
-	int top() {
-		return stk.back();
-	}
+    int top() {
+        return stk.back();
+    }
 
-	int getMin() {
-		return minVal.back();
-	}
+    int getMin() {
+        return minVal.back();
+    }
 };
 
-// LeetCode 101½â·¨£ºÊ±¼ä 20 ms 74.54%£¬¿Õ¼ä 16 MB 41.69%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 20 ms 74.54%ï¼Œç©ºé—´ 16 MB 41.69%
 class MinStack {
 private:
-	stack<int> stk;
-	stack<int> minVal;
+    stack<int> stk;
+    stack<int> minVal;
 public:
-	MinStack() {}
+    MinStack() {}
 
-	void push(int val) {
-		stk.emplace(val);
-		if (minVal.empty() || minVal.top() >= val) {
-			minVal.emplace(val);
-		}
-	}
+    void push(int val) {
+        stk.emplace(val);
+        if (minVal.empty() || minVal.top() >= val) {
+            minVal.emplace(val);
+        }
+    }
 
-	void pop() {
-		if (stk.top() == minVal.top()) {
-			minVal.pop();
-		}
-		stk.pop();
-	}
+    void pop() {
+        if (stk.top() == minVal.top()) {
+            minVal.pop();
+        }
+        stk.pop();
+    }
 
-	int top() {
-		return stk.top();
-	}
+    int top() {
+        return stk.top();
+    }
 
-	int getMin() {
-		return minVal.top();
-	}
+    int getMin() {
+        return minVal.top();
+    }
 };

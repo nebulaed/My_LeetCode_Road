@@ -1,78 +1,78 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 #include<numeric>
 using namespace std;
 
-// ¹Ù·½½â·¨1£º¶¯Ì¬¹æ»®
+// å®˜æ–¹è§£æ³•1ï¼šåŠ¨æ€è§„åˆ’
 class Solution {
 public:
-	int maxSubArray(vector<int>& nums) {
-		int pre = 0, maxSum = nums[0];
-		for (const auto& num : nums) {
-			pre = max(pre + num, num);
-			maxSum = max(maxSum, pre);
-		}
-		return maxSum;
-	}
+    int maxSubArray(vector<int>& nums) {
+        int pre = 0, maxSum = nums[0];
+        for (const auto& num : nums) {
+            pre = max(pre + num, num);
+            maxSum = max(maxSum, pre);
+        }
+        return maxSum;
+    }
 };
 
-// ¹Ù·½½â·¨2£ºÌ°ĞÄËã·¨
+// å®˜æ–¹è§£æ³•2ï¼šè´ªå¿ƒç®—æ³•
 class Solution {
 public:
-	int maxSubArray(vector<int>& nums) {
-		int ret = INT_MIN, sum = 0;
-		for (int i = 0; i < nums.size(); ++i) {
-			sum += nums[i];
-			ret = max(ret, sum);
-			if (sum < 0) {
-				sum = 0;
-			}
-		}
-		return ret;
-	}
+    int maxSubArray(vector<int>& nums) {
+        int ret = INT_MIN, sum = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            sum += nums[i];
+            ret = max(ret, sum);
+            if (sum < 0) {
+                sum = 0;
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨3£º·ÖÖÎ£¬ÓÅµãÊÇ¿ÉÒÔ½â¾öÈÎÒâ×ÓÇø¼ä[l,r]µÄÎÊÌâ¡£ÔÚO(log n)µÄÊ±¼äÄÚÇóµÃÈÎÒâÇø¼äÄÚµÄ´ğ°¸¡£
+// å®˜æ–¹è§£æ³•3ï¼šåˆ†æ²»ï¼Œä¼˜ç‚¹æ˜¯å¯ä»¥è§£å†³ä»»æ„å­åŒºé—´[l,r]çš„é—®é¢˜ã€‚åœ¨O(log n)çš„æ—¶é—´å†…æ±‚å¾—ä»»æ„åŒºé—´å†…çš„ç­”æ¡ˆã€‚
 class Solution {
 public:
-	struct Status {
-		int lSum, rSum, mSum, iSum;
-	};
+    struct Status {
+        int lSum, rSum, mSum, iSum;
+    };
 
-	Status pushUp(Status l, Status r) {
-		int iSum = l.iSum + r.iSum;
-		int lSum = max(l.lSum, l.iSum + r.lSum);
-		int rSum = max(r.rSum, r.iSum + l.rSum);
-		int mSum = max(max(l.mSum, r.mSum), l.rSum + r.lSum);
-		return (Status) { lSum, rSum, mSum, iSum };
-	}
-	
-	Status get(vector<int>& a, int l, int r) {
-		if (l == r) {
-			return (Status) { a[l], a[l], a[l], a[l] };
-		}
-		int m = (l + r) >> 1;
-		Status lSub = get(a, l, m);
-		Status rSub = get(a, m + 1, r);
-		return pushUp(lSub, rSub);
-	}
+    Status pushUp(Status l, Status r) {
+        int iSum = l.iSum + r.iSum;
+        int lSum = max(l.lSum, l.iSum + r.lSum);
+        int rSum = max(r.rSum, r.iSum + l.rSum);
+        int mSum = max(max(l.mSum, r.mSum), l.rSum + r.lSum);
+        return (Status) { lSum, rSum, mSum, iSum };
+    }
 
-	int maxSubArray(vector<int>& nums) {
-		return get(nums, 0, nums.size() - 1).mSum;
-	}
+    Status get(vector<int>& a, int l, int r) {
+        if (l == r) {
+            return (Status) { a[l], a[l], a[l], a[l] };
+        }
+        int m = (l + r) >> 1;
+        Status lSub = get(a, l, m);
+        Status rSub = get(a, m + 1, r);
+        return pushUp(lSub, rSub);
+    }
+
+    int maxSubArray(vector<int>& nums) {
+        return get(nums, 0, nums.size() - 1).mSum;
+    }
 };
 
 
 int main() {
 
-	vector<int> nums = { 1 };
+    vector<int> nums = { 1 };
 
-	Solution s;
-	int ret = s.maxSubArray(nums);
+    Solution s;
+    int ret = s.maxSubArray(nums);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

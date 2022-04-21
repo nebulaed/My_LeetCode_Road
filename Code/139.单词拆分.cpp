@@ -1,96 +1,97 @@
 #include<iostream>
+#include<vector>
 #include<unordered_map>
 #include<unordered_set>
 using namespace std;
 
-// Œ“µƒΩ‚∑®£∫≥¨ ±
+// ÊàëÁöÑËß£Ê≥ïÔºöË∂ÖÊó∂
 class Solution {
 public:
-	bool dfs(const unordered_multimap<int, int>& wordMap, int cur, int end) {
-		if (cur == end) return true;
-		int nums = wordMap.count(cur);
-		if (!nums) return false;
-		auto it_range = wordMap.equal_range(cur);
-		for (auto it = it_range.first; it != it_range.second; ++it) {
-			bool ret = dfs(wordMap, it->second, end);
-			if (ret) return ret;
-		}
-		return false;
-	}
+    bool dfs(const unordered_multimap<int, int>& wordMap, int cur, int end) {
+        if (cur == end) return true;
+        int nums = wordMap.count(cur);
+        if (!nums) return false;
+        auto it_range = wordMap.equal_range(cur);
+        for (auto it = it_range.first; it != it_range.second; ++it) {
+            bool ret = dfs(wordMap, it->second, end);
+            if (ret) return ret;
+        }
+        return false;
+    }
 
-	bool wordBreak(string s, vector<string>& wordDict) {
-		unordered_multimap<int, int> wordMap;
-		bool ret = false;
-		for (const auto& word : wordDict) {
-			size_t begin = 0;
-			while ((begin = s.find(word, begin)) != string::npos) {
-				wordMap.emplace(begin, begin + word.size());
-				if (!ret && begin + word.size() == s.size()) ret = true;
-				++begin;
-			}
-		}
-		if (!ret) return false;
-		ret = dfs(wordMap, 0, s.size());
-		return ret;
-	}
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_multimap<int, int> wordMap;
+        bool ret = false;
+        for (const auto& word : wordDict) {
+            size_t begin = 0;
+            while ((begin = s.find(word, begin)) != string::npos) {
+                wordMap.emplace(begin, begin + word.size());
+                if (!ret && begin + word.size() == s.size()) ret = true;
+                ++begin;
+            }
+        }
+        if (!ret) return false;
+        ret = dfs(wordMap, 0, s.size());
+        return ret;
+    }
 };
 
-// πŸ∑ΩΩ‚∑®“ª£∫∂ØÃ¨πÊªÆ£¨ ±º‰O(n^2) 12 ms£¨ø’º‰O(n) 13 MB
+// ÂÆòÊñπËß£Ê≥ï‰∏ÄÔºöÂä®ÊÄÅËßÑÂàíÔºåÊó∂Èó¥O(n^2) 12 msÔºåÁ©∫Èó¥O(n) 13 MB
 class Solution {
 public:
-	bool wordBreak(string s, vector<string>& wordDict) {
-		unordered_set<string> wordSet(wordDict.begin(), wordDict.end());
-		int length = s.size();
-		bool* dp = new bool[length + 1]();
-		dp[0] = true;
-		for (int i = 1; i <= length; ++i) {
-			for (int j = 0; j < i; ++j) {
-				if (dp[j] && wordSet.count(s.substr(j, i - j))) {
-					dp[i] = true;
-					break;
-				}
-			}
-		}
-		return dp[length];
-	}
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> wordSet(wordDict.begin(), wordDict.end());
+        int length = s.size();
+        bool* dp = new bool[length + 1]();
+        dp[0] = true;
+        for (int i = 1; i <= length; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (dp[j] && wordSet.count(s.substr(j, i - j))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[length];
+    }
 };
 
-// ∆¿¬€Ω‚∑®=LeetCode 101Ω‚∑®£∫∂ØÃ¨πÊªÆ+¥ µ‰≤È’“£¨ ±º‰O(n*m) 0 ms 100%£¨ø’º‰ O(n) 7.4 MB 89.07%
+// ËØÑËÆ∫Ëß£Ê≥ï=LeetCode 101Ëß£Ê≥ïÔºöÂä®ÊÄÅËßÑÂàí+ËØçÂÖ∏Êü•ÊâæÔºåÊó∂Èó¥O(n*m) 0 ms 100%ÔºåÁ©∫Èó¥ O(n) 7.4 MB 89.07%
 class Solution {
 public:
-	bool wordBreak(string s, vector<string>& wordDict) {
-		size_t n = s.size();
-		vector<bool> dp(n + 1);
-		dp[0] = true;
-		for (size_t i = 1; i <= n; ++i) {
-			for (const auto& word : wordDict) {
-				size_t wordSize = word.size();
-				if (i >= wordSize) {
-					if (s.substr(i - wordSize, wordSize) == word) {
-						dp[i] = dp[i] | dp[i - wordSize];
-					}
-				}
-			}
-		}
-		return dp[n];
-	}
+    bool wordBreak(string s, vector<string>& wordDict) {
+        size_t n = s.size();
+        vector<bool> dp(n + 1);
+        dp[0] = true;
+        for (size_t i = 1; i <= n; ++i) {
+            for (const auto& word : wordDict) {
+                size_t wordSize = word.size();
+                if (i >= wordSize) {
+                    if (s.substr(i - wordSize, wordSize) == word) {
+                        dp[i] = dp[i] | dp[i - wordSize];
+                    }
+                }
+            }
+        }
+        return dp[n];
+    }
 };
 
-// Œ“µƒΩ‚∑®£∫∂ØÃ¨πÊªÆ£¨ ±º‰ 4 ms 87.56%£¨ø’º‰ 7.4 MB 85.02%
+// ÊàëÁöÑËß£Ê≥ïÔºöÂä®ÊÄÅËßÑÂàíÔºåÊó∂Èó¥ 4 ms 87.56%ÔºåÁ©∫Èó¥ 7.4 MB 85.02%
 class Solution {
 public:
-	bool wordBreak(string s, vector<string>& wordDict) {
-		size_t n = s.size();
-		vector<bool> dp(n + 1, false);
-		dp[0] = true;
-		for (size_t i = 1; i <= n; ++i) {
-			for (const auto& word : wordDict) {
-				size_t wordSize = word.size();
-				if (i >= wordSize && s.substr(i - wordSize, wordSize) == word) {
-					dp[i] = dp[i] | dp[i - wordSize];
-				}
-			}
-		}
-		return dp.back();
-	}
+    bool wordBreak(string s, vector<string>& wordDict) {
+        size_t n = s.size();
+        vector<bool> dp(n + 1, false);
+        dp[0] = true;
+        for (size_t i = 1; i <= n; ++i) {
+            for (const auto& word : wordDict) {
+                size_t wordSize = word.size();
+                if (i >= wordSize && s.substr(i - wordSize, wordSize) == word) {
+                    dp[i] = dp[i] | dp[i - wordSize];
+                }
+            }
+        }
+        return dp.back();
+    }
 };

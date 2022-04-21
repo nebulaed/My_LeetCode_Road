@@ -2,110 +2,110 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÀûÓÃµİ¹é£¬ÓÒ³Ë»ıÍ¨¹ıµİ¹éÖğ²½µ¹»ØÈ¥£¬×ó³Ë»ı×÷ÎªÈ«¾Ö±äÁ¿²»¶ÏÏòÓÒ³Ë¹ıÈ¥£¬Ê±¼äO(n) 28 ms£¬¿Õ¼äO(n) 28.1 MB
+// æˆ‘çš„è§£æ³•ï¼šåˆ©ç”¨é€’å½’ï¼Œå³ä¹˜ç§¯é€šè¿‡é€’å½’é€æ­¥å€’å›å»ï¼Œå·¦ä¹˜ç§¯ä½œä¸ºå…¨å±€å˜é‡ä¸æ–­å‘å³ä¹˜è¿‡å»ï¼Œæ—¶é—´O(n) 28 msï¼Œç©ºé—´O(n) 28.1 MB
 class Solution {
 private:
-	int leftProduct = 1;
-	vector<int> output;
-	void dfs(const vector<int>& nums, size_t pos, int rightProduct) {
-		if (pos == 0) return;
-		if (pos < nums.size()) {
-			rightProduct *= nums[pos];
-		}
-		dfs(nums, pos - 1, rightProduct);
-		if (pos >= 2) {
-			leftProduct *= nums[pos - 2];
-		}
-		output[pos - 1] = rightProduct * leftProduct;
-	}
+    int leftProduct = 1;
+    vector<int> output;
+    void dfs(const vector<int>& nums, size_t pos, int rightProduct) {
+        if (pos == 0) return;
+        if (pos < nums.size()) {
+            rightProduct *= nums[pos];
+        }
+        dfs(nums, pos - 1, rightProduct);
+        if (pos >= 2) {
+            leftProduct *= nums[pos - 2];
+        }
+        output[pos - 1] = rightProduct * leftProduct;
+    }
 public:
-	vector<int> productExceptSelf(vector<int>& nums) {
-		size_t length = nums.size();
-		output.resize(length);
-		dfs(nums, length, 1);
-		return output;
-	}
+    vector<int> productExceptSelf(vector<int>& nums) {
+        size_t length = nums.size();
+        output.resize(length);
+        dfs(nums, length, 1);
+        return output;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º×óÓÒ³Ë»ıÁĞ±í£¬Ê±¼äO(n) 24 ms£¬¿Õ¼äO(n) 24.5 MB
-// ³õÊ¼»¯Á½¸ö¿ÕÊı×éLºÍR£¬¶Ô¸ø¶¨Ë÷Òıi£¬L[i]´ú±íi×ó²àËùÓĞÊı×Ö³Ë»ı£¬R[i]´ú±íiÓÒ²àËùÓĞÊı×Ö³Ë»ı
-// ĞèÒªÓÃÁ½¸öÑ­»·À´Ìî³äLºÍRÊı×éµÄÖµ¡£¶ÔÓÚÊı×éL£¬L[0]Ó¦¸ÃÊÇ1¡£¶ÔÆäËûÔªËØ£ºL[i]=L[i-1]*nums[i-1]
-// ¶ÔÊı×éR£¬R[length-1]Ó¦Îª1£¬R[i] = R[i+1]*nums[i+1]
-// µ±RºÍLÊı×éÌî³äÍê³É£¬Ö»ĞèÔÚÊäÈëÊı×éÉÏµü´ú£¬ÇÒË÷Òıi´¦µÄÖµÎªL[i]*R[i]¡£
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå·¦å³ä¹˜ç§¯åˆ—è¡¨ï¼Œæ—¶é—´O(n) 24 msï¼Œç©ºé—´O(n) 24.5 MB
+// åˆå§‹åŒ–ä¸¤ä¸ªç©ºæ•°ç»„Lå’ŒRï¼Œå¯¹ç»™å®šç´¢å¼•iï¼ŒL[i]ä»£è¡¨iå·¦ä¾§æ‰€æœ‰æ•°å­—ä¹˜ç§¯ï¼ŒR[i]ä»£è¡¨iå³ä¾§æ‰€æœ‰æ•°å­—ä¹˜ç§¯
+// éœ€è¦ç”¨ä¸¤ä¸ªå¾ªç¯æ¥å¡«å……Lå’ŒRæ•°ç»„çš„å€¼ã€‚å¯¹äºæ•°ç»„Lï¼ŒL[0]åº”è¯¥æ˜¯1ã€‚å¯¹å…¶ä»–å…ƒç´ ï¼šL[i]=L[i-1]*nums[i-1]
+// å¯¹æ•°ç»„Rï¼ŒR[length-1]åº”ä¸º1ï¼ŒR[i] = R[i+1]*nums[i+1]
+// å½“Rå’ŒLæ•°ç»„å¡«å……å®Œæˆï¼Œåªéœ€åœ¨è¾“å…¥æ•°ç»„ä¸Šè¿­ä»£ï¼Œä¸”ç´¢å¼•iå¤„çš„å€¼ä¸ºL[i]*R[i]ã€‚
 class Solution {
 public:
-	vector<int> productExceptSelf(vector<int>& nums) {
-		size_t length = nums.size();
-		vector<int> L(length), R(length);
-		vector<int> answer(length);
+    vector<int> productExceptSelf(vector<int>& nums) {
+        size_t length = nums.size();
+        vector<int> L(length), R(length);
+        vector<int> answer(length);
 
-		// L[i] ÎªË÷Òı i ×ó²àËùÓĞÔªËØµÄ³Ë»ı
-		// ¶ÔÓÚË÷ÒıÎª '0' µÄÔªËØ£¬ÒòÎª×ó²àÃ»ÓĞÔªËØ£¬ËùÒÔ L[0] = 1
-		L[0] = 1;
-		for (size_t i = 1; i < length; ++i) {
-			L[i] = nums[i - 1] * L[i - 1];
-		}
+        // L[i] ä¸ºç´¢å¼• i å·¦ä¾§æ‰€æœ‰å…ƒç´ çš„ä¹˜ç§¯
+        // å¯¹äºç´¢å¼•ä¸º '0' çš„å…ƒç´ ï¼Œå› ä¸ºå·¦ä¾§æ²¡æœ‰å…ƒç´ ï¼Œæ‰€ä»¥ L[0] = 1
+        L[0] = 1;
+        for (size_t i = 1; i < length; ++i) {
+            L[i] = nums[i - 1] * L[i - 1];
+        }
 
-		// R[i] ÎªË÷Òı i ÓÒ²àËùÓĞÔªËØµÄ³Ë»ı
-		// ¶ÔÓÚË÷ÒıÎª 'length-1' µÄÔªËØ£¬ÒòÎªÓÒ²àÃ»ÓĞÔªËØ£¬ËùÒÔ R[length-1] = 1
-		R[length - 1] = 1;
-		for (size_t i = length - 1; i > 0; --i) {
-			R[i - 1] = nums[i] * R[i];
-		}
+        // R[i] ä¸ºç´¢å¼• i å³ä¾§æ‰€æœ‰å…ƒç´ çš„ä¹˜ç§¯
+        // å¯¹äºç´¢å¼•ä¸º 'length-1' çš„å…ƒç´ ï¼Œå› ä¸ºå³ä¾§æ²¡æœ‰å…ƒç´ ï¼Œæ‰€ä»¥ R[length-1] = 1
+        R[length - 1] = 1;
+        for (size_t i = length - 1; i > 0; --i) {
+            R[i - 1] = nums[i] * R[i];
+        }
 
-		// ¶ÔÓÚË÷Òı i£¬³ı nums[i] Ö®ÍâÆäÓà¸÷ÔªËØµÄ³Ë»ı¾ÍÊÇ×ó²àËùÓĞÔªËØµÄ³Ë»ı³ËÒÔÓÒ²àËùÓĞÔªËØµÄ³Ë»ı
-		for (size_t i = 0; i < length; ++i) {
-			answer[i] = L[i] * R[i];
-		}
-		return answer;
-	}
+        // å¯¹äºç´¢å¼• iï¼Œé™¤ nums[i] ä¹‹å¤–å…¶ä½™å„å…ƒç´ çš„ä¹˜ç§¯å°±æ˜¯å·¦ä¾§æ‰€æœ‰å…ƒç´ çš„ä¹˜ç§¯ä¹˜ä»¥å³ä¾§æ‰€æœ‰å…ƒç´ çš„ä¹˜ç§¯
+        for (size_t i = 0; i < length; ++i) {
+            answer[i] = L[i] * R[i];
+        }
+        return answer;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÊ±¼äO(n) 24 ms£¬¿Õ¼äO(1) 23.5 MB
-// 1.³õÊ¼»¯answerÊı×é£¬¶ÔÓÚ¸ø¶¨Ë÷Òıi£¬answer[i]´ú±íi×ó²àËùÓĞÊı×ÖµÄ³Ë»ı
-// 2.¹¹Ôì·½Ê½ÓëÖ®Ç°µÄLÏàÍ¬
-// 3.ÓÃÒ»¸ö±éÀú¸ú×ÙÓÒ±ßÔªËØµÄ³Ë»ı£¬²¢¸üĞÂÊı×éanswer[i] = answer[i] * R£¬È»ºóR¸üĞÂÎªR = R * nums[i]£¬ÆäÖĞ±äÁ¿R±íÊ¾Ë÷ÒıÓÒ²àÊı×ÖµÄ³Ë»ı¡£
+// å®˜æ–¹è§£æ³•äºŒï¼šæ—¶é—´O(n) 24 msï¼Œç©ºé—´O(1) 23.5 MB
+// 1.åˆå§‹åŒ–answeræ•°ç»„ï¼Œå¯¹äºç»™å®šç´¢å¼•iï¼Œanswer[i]ä»£è¡¨iå·¦ä¾§æ‰€æœ‰æ•°å­—çš„ä¹˜ç§¯
+// 2.æ„é€ æ–¹å¼ä¸ä¹‹å‰çš„Lç›¸åŒ
+// 3.ç”¨ä¸€ä¸ªéå†è·Ÿè¸ªå³è¾¹å…ƒç´ çš„ä¹˜ç§¯ï¼Œå¹¶æ›´æ–°æ•°ç»„answer[i] = answer[i] * Rï¼Œç„¶åRæ›´æ–°ä¸ºR = R * nums[i]ï¼Œå…¶ä¸­å˜é‡Rè¡¨ç¤ºç´¢å¼•å³ä¾§æ•°å­—çš„ä¹˜ç§¯ã€‚
 class Solution {
 public:
-	vector<int> productExceptSelf(vector<int>& nums) {
-		size_t length = nums.size();
-		vector<int> answer(length);
+    vector<int> productExceptSelf(vector<int>& nums) {
+        size_t length = nums.size();
+        vector<int> answer(length);
 
-		// answer[i] ±íÊ¾Ë÷Òı i ×ó²àËùÓĞÔªËØµÄ³Ë»ı
-		// ÒòÎªË÷ÒıÎª '0' µÄÔªËØ×ó²àÃ»ÓĞÔªËØ£¬ ËùÒÔ answer[0] = 1
-		answer[0] = 1;
-		for (size_t i = 1; i < length; ++i) {
-			answer[i] = nums[i - 1] * answer[i - 1];
-		}
+        // answer[i] è¡¨ç¤ºç´¢å¼• i å·¦ä¾§æ‰€æœ‰å…ƒç´ çš„ä¹˜ç§¯
+        // å› ä¸ºç´¢å¼•ä¸º '0' çš„å…ƒç´ å·¦ä¾§æ²¡æœ‰å…ƒç´ ï¼Œ æ‰€ä»¥ answer[0] = 1
+        answer[0] = 1;
+        for (size_t i = 1; i < length; ++i) {
+            answer[i] = nums[i - 1] * answer[i - 1];
+        }
 
-		// R ÎªÓÒ²àËùÓĞÔªËØµÄ³Ë»ı
-		// ¸Õ¿ªÊ¼ÓÒ±ßÃ»ÓĞÔªËØ£¬ËùÒÔ R = 1
-		int R = 1;
-		for (size_t i = length; i > 0; --i) {
-			// ¶ÔÓÚË÷Òı i£¬×ó±ßµÄ³Ë»ıÎª answer[i]£¬ÓÒ±ßµÄ³Ë»ıÎª R
-			answer[i - 1] = answer[i - 1] * R;
-			// R ĞèÒª°üº¬ÓÒ±ßËùÓĞµÄ³Ë»ı£¬ËùÒÔ¼ÆËãÏÂÒ»¸ö½á¹ûÊ±ĞèÒª½«µ±Ç°Öµ³Ëµ½ R ÉÏ
-			R *= nums[i - 1];
-		}
-		return answer;
-	}
+        // R ä¸ºå³ä¾§æ‰€æœ‰å…ƒç´ çš„ä¹˜ç§¯
+        // åˆšå¼€å§‹å³è¾¹æ²¡æœ‰å…ƒç´ ï¼Œæ‰€ä»¥ R = 1
+        int R = 1;
+        for (size_t i = length; i > 0; --i) {
+            // å¯¹äºç´¢å¼• iï¼Œå·¦è¾¹çš„ä¹˜ç§¯ä¸º answer[i]ï¼Œå³è¾¹çš„ä¹˜ç§¯ä¸º R
+            answer[i - 1] = answer[i - 1] * R;
+            // R éœ€è¦åŒ…å«å³è¾¹æ‰€æœ‰çš„ä¹˜ç§¯ï¼Œæ‰€ä»¥è®¡ç®—ä¸‹ä¸€ä¸ªç»“æœæ—¶éœ€è¦å°†å½“å‰å€¼ä¹˜åˆ° R ä¸Š
+            R *= nums[i - 1];
+        }
+        return answer;
+    }
 };
 
 
-// ÆÀÂÛÇø¸üÓÅ½â·¨£ºÒ»´Î±éÀú×óÓÒÀÛ³Ë£¬Ê±¼äO(n) 16 ms£¬¿Õ¼äO(1) 23.5 MB
+// è¯„è®ºåŒºæ›´ä¼˜è§£æ³•ï¼šä¸€æ¬¡éå†å·¦å³ç´¯ä¹˜ï¼Œæ—¶é—´O(n) 16 msï¼Œç©ºé—´O(1) 23.5 MB
 class Solution {
 public:
-	vector<int> productExceptSelf(vector<int>& nums) {
-		size_t length = nums.size();
-		int leftProduct = 1, rightProduct = 1;
-		vector<int> ret(length, 1);
-		for (size_t i = 0; i < length; ++i) {
-			ret[i] *= leftProduct;
-			leftProduct *= nums[i];
+    vector<int> productExceptSelf(vector<int>& nums) {
+        size_t length = nums.size();
+        int leftProduct = 1, rightProduct = 1;
+        vector<int> ret(length, 1);
+        for (size_t i = 0; i < length; ++i) {
+            ret[i] *= leftProduct;
+            leftProduct *= nums[i];
 
-			ret[length - 1 - i] *= rightProduct;
-			rightProduct *= nums[length - 1 - i];
-		}
-		return ret;
-	}
+            ret[length - 1 - i] *= rightProduct;
+            rightProduct *= nums[length - 1 - i];
+        }
+        return ret;
+    }
 };

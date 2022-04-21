@@ -1,84 +1,85 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºvector+¶¯Ì¬¹æ»®£¬Ê±¼äO(n) 108 ms£¬¿Õ¼äO(n) 94.9 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼švector+åŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n) 108 msï¼Œç©ºé—´O(n) 94.9 MB
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		int n = prices.size();
-		vector<int> benefit(n);
-		benefit[n - 1] = 0;
-		for (int i = n - 2; i >= 0; --i) {
-			benefit[i] = max(benefit[i + 1] + prices[i + 1] - prices[i], 0);
-		}
-		return *max_element(benefit.begin(), benefit.end());
-	}
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<int> benefit(n);
+        benefit[n - 1] = 0;
+        for (int i = n - 2; i >= 0; --i) {
+            benefit[i] = max(benefit[i + 1] + prices[i + 1] - prices[i], 0);
+        }
+        return *max_element(benefit.begin(), benefit.end());
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£º¶¯Ì¬Êı×é+¶¯Ì¬¹æ»®£¬Ê±¼äO(n) 92 ms£¬¿Õ¼äO(n) 94.9 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šåŠ¨æ€æ•°ç»„+åŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n) 92 msï¼Œç©ºé—´O(n) 94.9 MB
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		int n = prices.size();
-		int* benefit = new int[n]();
-		for (int i = n - 2; i >= 0; --i) {
-			benefit[i] = max(benefit[i + 1] + prices[i + 1] - prices[i], 0);
-		}
-		int maxBenefit = 0;
-		for (int i = 0; i < n; ++i) {
-			int cur = benefit[i];
-			maxBenefit = cur > maxBenefit ? cur : maxBenefit;
-		}
-		return maxBenefit;
-	}
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        int* benefit = new int[n]();
+        for (int i = n - 2; i >= 0; --i) {
+            benefit[i] = max(benefit[i + 1] + prices[i + 1] - prices[i], 0);
+        }
+        int maxBenefit = 0;
+        for (int i = 0; i < n; ++i) {
+            int cur = benefit[i];
+            maxBenefit = cur > maxBenefit ? cur : maxBenefit;
+        }
+        return maxBenefit;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºÒ»´Î±éÀú(ÎÒ¸Ä¶¯ºóµÄ°æ±¾)£¬Ê±¼äO(n) 96 ms,¿Õ¼äO(1) 91.1 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šä¸€æ¬¡éå†(æˆ‘æ”¹åŠ¨åçš„ç‰ˆæœ¬)ï¼Œæ—¶é—´O(n) 96 ms,ç©ºé—´O(1) 91.1 MB
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		int minPrice = INT_MAX;
-		int maxProfit = 0;
-		for (const auto& price : prices) {
-			if (price < minPrice) {
-				minPrice = price;
-			}
-			else if (price - minPrice > maxProfit) {
-				maxProfit = price - minPrice;
-			}
-		}
-		return maxProfit;
-	}
+    int maxProfit(vector<int>& prices) {
+        int minPrice = INT_MAX;
+        int maxProfit = 0;
+        for (const auto& price : prices) {
+            if (price < minPrice) {
+                minPrice = price;
+            }
+            else if (price - minPrice > maxProfit) {
+                maxProfit = price - minPrice;
+            }
+        }
+        return maxProfit;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºÒ»´Î±éÀú(Ô­°æ)£¬Ê±¼äO(n) 116 ms,¿Õ¼äO(1) 91 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šä¸€æ¬¡éå†(åŸç‰ˆ)ï¼Œæ—¶é—´O(n) 116 ms,ç©ºé—´O(1) 91 MB
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		int minprice = INT_MAX, maxprofit = 0;
-		for (int price : prices) {
-			maxprofit = max(maxprofit, price - minprice);
-			minprice = min(price, minprice);
-		}
-		return maxprofit;
-	}
+    int maxProfit(vector<int>& prices) {
+        int minprice = INT_MAX, maxprofit = 0;
+        for (int price : prices) {
+            maxprofit = max(maxprofit, price - minprice);
+            minprice = min(price, minprice);
+        }
+        return maxprofit;
+    }
 };
 
-// ÎÒµÄµÚ¶ş´Î½â·¨£ºÒ»´Î±éÀú£¬Ê±¼ä 76 ms 99.62%£¬¿Õ¼ä 91.1 MB 79.46%
+// æˆ‘çš„ç¬¬äºŒæ¬¡è§£æ³•ï¼šä¸€æ¬¡éå†ï¼Œæ—¶é—´ 76 ms 99.62%ï¼Œç©ºé—´ 91.1 MB 79.46%
 class Solution {
 public:
-	int maxProfit(vector<int>& prices) {
-		int minPrice = 1e5, profit = 0;
-		for (int price : prices) {
-			if (price < minPrice) {
-				minPrice = price;
-			}
-			else if (price - minPrice > profit) {
-				profit = price - minPrice;
-			}
-		}
-		return profit;
-	}
+    int maxProfit(vector<int>& prices) {
+        int minPrice = 1e5, profit = 0;
+        for (int price : prices) {
+            if (price < minPrice) {
+                minPrice = price;
+            }
+            else if (price - minPrice > profit) {
+                profit = price - minPrice;
+            }
+        }
+        return profit;
+    }
 };

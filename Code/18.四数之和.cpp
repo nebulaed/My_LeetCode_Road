@@ -1,42 +1,41 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨
+// æˆ‘çš„è§£æ³•
 //class Solution {
 //public:
 //	vector<vector<int>> fourSum(vector<int>& nums, int target) {
 //		int n = nums.size();
 //		sort(nums.begin(), nums.end());
 //		vector<vector<int>> ans;
-//		// Ã¶¾Ù(a,b,c,d)ÖĞµÄa
+//		// æšä¸¾(a,b,c,d)ä¸­çš„a
 //		for (int first = 0; first < n; ++first) {
-//			// Ã¶¾ÙµÄa±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄaÊıÖµ²»µÈ
+//			// æšä¸¾çš„aå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„aæ•°å€¼ä¸ç­‰
 //			if (first > 0 && nums[first] == nums[first - 1]) {
 //				continue;
 //			}
 //			for (int second = first + 1; second < n; ++second) {
-//				// Ã¶¾ÙµÄb±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄbÊıÖµ²»µÈ
+//				// æšä¸¾çš„bå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„bæ•°å€¼ä¸ç­‰
 //				if (second > first + 1 && nums[second] == nums[second - 1]) {
 //					continue;
 //				}
-//				// c¶ÔÓ¦µÄÖ¸Õë³õÊ¼Ö¸ÏòÊı×éµÄ×îÓÒ¶Ë
+//				// cå¯¹åº”çš„æŒ‡é’ˆåˆå§‹æŒ‡å‘æ•°ç»„çš„æœ€å³ç«¯
 //				int fourth = n - 1;
 //				int cur_target = target-nums[first]-nums[second];
-//				// Ã¶¾Ùb
+//				// æšä¸¾b
 //				for (int third = second + 1; third < n; ++third) {
-//					// Í¬ÑùÒª±£Ö¤Ã¶¾ÙµÄc±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄcÊıÖµ²»µÈ
+//					// åŒæ ·è¦ä¿è¯æšä¸¾çš„cå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„cæ•°å€¼ä¸ç­‰
 //					if (third > second + 1 && nums[third] == nums[third - 1]) {
 //						continue;
 //					}
-//					// ĞèÒª±£Ö¤bµÄÖ¸ÕëÔÚcµÄÖ¸Õë×ó²à
+//					// éœ€è¦ä¿è¯bçš„æŒ‡é’ˆåœ¨cçš„æŒ‡é’ˆå·¦ä¾§
 //					while (third<fourth && nums[third] + nums[fourth]>cur_target) {
 //						--fourth;
 //					}
-//					// ÈôÖ¸ÕëÖØºÏ£¬Ëæ×ÅcºóĞøµÄÔö¼Ó
-//					// ¾Í²»»áÓĞÂú×ãa+b+c+d = 0²¢ÇÒc<dµÄdÁË£¬¿ÉÒÔÍË³öÑ­»·
+//					// è‹¥æŒ‡é’ˆé‡åˆï¼Œéšç€cåç»­çš„å¢åŠ 
+//					// å°±ä¸ä¼šæœ‰æ»¡è¶³a+b+c+d = 0å¹¶ä¸”c<dçš„däº†ï¼Œå¯ä»¥é€€å‡ºå¾ªç¯
 //					if (third == fourth) {
 //						break;
 //					}
@@ -50,73 +49,72 @@ using namespace std;
 //	}
 //};
 
-// ÎÒµÄ½â·¨+Ğ¡ÓÅ»¯
+// æˆ‘çš„è§£æ³•+å°ä¼˜åŒ–
 class Solution {
 public:
-	vector<vector<int>> fourSum(vector<int>& nums, int target) {
-		int n = nums.size();
-		if (n < 4) return {};
-		sort(nums.begin(), nums.end());
-		vector<vector<int>> ans;
-		// Ã¶¾Ù(a,b,c,d)ÖĞµÄa
-		for (int first = 0; first < n - 3; ++first) {
-			// Ã¶¾ÙµÄa±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄaÊıÖµ²»µÈ
-			if (first > 0 && nums[first] == nums[first - 1]) continue;
-			if (nums[first] + nums[first + 1]> target - nums[first + 2] - nums[first + 3]) break;
-			if (nums[first] + nums[n - 3]< target - nums[n - 2] - nums[n - 1]) continue;
-			for (int second = first + 1; second < n - 2; ++second) {
-				// Ã¶¾ÙµÄb±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄbÊıÖµ²»µÈ
-				if (second > first + 1 && nums[second] == nums[second - 1]) continue;
-				if (nums[first] + nums[second] > target - nums[second + 1] - nums[second + 2]) break;
-				if (nums[first] + nums[second] < target - nums[n - 2] - nums[n - 1]) continue;
-				// c¶ÔÓ¦µÄÖ¸Õë³õÊ¼Ö¸ÏòÊı×éµÄ×îÓÒ¶Ë
-				int fourth = n - 1;
-				int cur_target = target - nums[first] - nums[second];
-				// Ã¶¾Ùb
-				for (int third = second + 1; third < n - 1; ++third) {
-					// Í¬ÑùÒª±£Ö¤Ã¶¾ÙµÄc±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄcÊıÖµ²»µÈ
-					if (third > second + 1 && nums[third] == nums[third - 1]) {
-						continue;
-					}
-					// ĞèÒª±£Ö¤bµÄÖ¸ÕëÔÚcµÄÖ¸Õë×ó²à
-					while (third<fourth && nums[third] + nums[fourth]>cur_target) {
-						--fourth;
-					}
-					// ÈôÖ¸ÕëÖØºÏ£¬Ëæ×ÅcºóĞøµÄÔö¼Ó
-					// ¾Í²»»áÓĞÂú×ãa+b+c+d = 0²¢ÇÒc<dµÄdÁË£¬¿ÉÒÔÍË³öÑ­»·
-					if (third == fourth) {
-						break;
-					}
-					if (nums[third] + nums[fourth] == cur_target) {
-						ans.push_back({ nums[first],nums[second],nums[third],nums[fourth] });
-					}
-				}
-			}
-		}
-		return ans;
-	}
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        if (n < 4) return {};
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        // æšä¸¾(a,b,c,d)ä¸­çš„a
+        for (int first = 0; first < n - 3; ++first) {
+            // æšä¸¾çš„aå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„aæ•°å€¼ä¸ç­‰
+            if (first > 0 && nums[first] == nums[first - 1]) continue;
+            if (nums[first] + nums[first + 1]> target - nums[first + 2] - nums[first + 3]) break;
+            if (nums[first] + nums[n - 3]< target - nums[n - 2] - nums[n - 1]) continue;
+            for (int second = first + 1; second < n - 2; ++second) {
+                // æšä¸¾çš„bå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„bæ•°å€¼ä¸ç­‰
+                if (second > first + 1 && nums[second] == nums[second - 1]) continue;
+                if (nums[first] + nums[second] > target - nums[second + 1] - nums[second + 2]) break;
+                if (nums[first] + nums[second] < target - nums[n - 2] - nums[n - 1]) continue;
+                // cå¯¹åº”çš„æŒ‡é’ˆåˆå§‹æŒ‡å‘æ•°ç»„çš„æœ€å³ç«¯
+                int fourth = n - 1;
+                int cur_target = target - nums[first] - nums[second];
+                // æšä¸¾b
+                for (int third = second + 1; third < n - 1; ++third) {
+                    // åŒæ ·è¦ä¿è¯æšä¸¾çš„cå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„cæ•°å€¼ä¸ç­‰
+                    if (third > second + 1 && nums[third] == nums[third - 1]) {
+                        continue;
+                    }
+                    // éœ€è¦ä¿è¯bçš„æŒ‡é’ˆåœ¨cçš„æŒ‡é’ˆå·¦ä¾§
+                    while (third<fourth && nums[third] + nums[fourth]>cur_target) {
+                        --fourth;
+                    }
+                    // è‹¥æŒ‡é’ˆé‡åˆï¼Œéšç€cåç»­çš„å¢åŠ 
+                    // å°±ä¸ä¼šæœ‰æ»¡è¶³a+b+c+d = 0å¹¶ä¸”c<dçš„däº†ï¼Œå¯ä»¥é€€å‡ºå¾ªç¯
+                    if (third == fourth) {
+                        break;
+                    }
+                    if (nums[third] + nums[fourth] == cur_target) {
+                        ans.push_back({ nums[first],nums[second],nums[third],nums[fourth] });
+                    }
+                }
+            }
+        }
+        return ans;
+    }
 };
 
-// ¹Ù·½½â·¨£ºÔÚÎÒµÄ»ù´¡ÉÏ¼ÓĞ¡ÓÅ»¯
+// å®˜æ–¹è§£æ³•ï¼šåœ¨æˆ‘çš„åŸºç¡€ä¸ŠåŠ å°ä¼˜åŒ–
 
 
 int main() {
-	vector<int> input = { 2,2,2,2,2 };
-	int target = 8;
+    vector<int> input = { 2,2,2,2,2 };
+    int target = 8;
 
-	Solution s;
-	vector<vector<int>> ret = s.fourSum(input, target);
+    Solution s;
+    vector<vector<int>> ret = s.fourSum(input, target);
 
-	cout << '[';
-	for (int i = 0; i < ret.size(); ++i) {
-		cout << "[ ";
-		for (int j = 0; j < ret[i].size(); ++j) {
-			cout << ret[i][j] << " ";
-		}
-		cout << ']';
-	}
-	cout << ']' << endl;
+    cout << '[';
+    for (int i = 0; i < ret.size(); ++i) {
+        cout << "[ ";
+        for (int j = 0; j < ret[i].size(); ++j) {
+            cout << ret[i][j] << " ";
+        }
+        cout << ']';
+    }
+    cout << ']' << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

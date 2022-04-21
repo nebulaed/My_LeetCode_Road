@@ -1,67 +1,68 @@
 #include<iostream>
+#include<cmath>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºË«Ö¸Õë£¬Ê±¼ä O(sqrt(c)) 0 ms£¬¿Õ¼ä O(1) 5.7 MB 
+// æˆ‘çš„è§£æ³•ï¼šåŒæŒ‡é’ˆï¼Œæ—¶é—´ O(sqrt(c)) 0 msï¼Œç©ºé—´ O(1) 5.7 MB 
 class Solution {
 public:
-	bool judgeSquareSum(int c) {
-		int left = 0, right = sqrt(c);
-		while (left <= right) {
-			int aSquare = left * left;
-			int bSquare = right * right;
-			// ×¢Òâ£ºÕâÀïÒªĞ¡ĞÄaSquare + bSquare > INT_MAX£¬ËùÒÔÒª°ÑbSquareÒÆÏîµ½ÓÒ±ß
-			if (aSquare > c - bSquare) {
-				--right;
-			}
-			else if (aSquare < c - bSquare) {
-				++left;
-			}
-			else return true;
-		}
-		return false;
-	}
+    bool judgeSquareSum(int c) {
+        int left = 0, right = sqrt(c);
+        while (left <= right) {
+            int aSquare = left * left;
+            int bSquare = right * right;
+            // æ³¨æ„ï¼šè¿™é‡Œè¦å°å¿ƒaSquare + bSquare > INT_MAXï¼Œæ‰€ä»¥è¦æŠŠbSquareç§»é¡¹åˆ°å³è¾¹
+            if (aSquare > c - bSquare) {
+                --right;
+            }
+            else if (aSquare < c - bSquare) {
+                ++left;
+            }
+            else return true;
+        }
+        return false;
+    }
 };
 
-// ¹Ù·½½â·¨1£ºÖ±½ÓÀûÓÃsqrtº¯Êı£¬Ê±¼ä O(sqrt(c)) 4 ms£¬¿Õ¼ä O(1) 5.8 MB
+// å®˜æ–¹è§£æ³•1ï¼šç›´æ¥åˆ©ç”¨sqrtå‡½æ•°ï¼Œæ—¶é—´ O(sqrt(c)) 4 msï¼Œç©ºé—´ O(1) 5.8 MB
 class Solution {
 public:
-	bool judgeSquareSum(int c) {
-		for (long a = 0; a * a <= c; ++a) {
-			double b = sqrt(c - a * a);
-			if (b == static_cast<int>(b)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    bool judgeSquareSum(int c) {
+        for (long a = 0; a * a <= c; ++a) {
+            double b = sqrt(c - a * a);
+            if (b == static_cast<int>(b)) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
-// ¹Ù·½½â·¨2£ºÊıÑ§£¬Ê±¼ä O(sqrt(c)) 0 ms£¬¿Õ¼ä O(1) 5.8 MB
-// ·ÑÂí¶¨Àí¸æËßÎÒÃÇ£ºÒ»¸ö·Ç¸ºÕûÊıcÈç¹ûÄÜ¹»±íÊ¾ÎªÁ½¸öÕûÊıµÄÆ½·½ºÍ£¬µ±ÇÒ½öµ±cµÄËùÓĞĞÎÈç4k+3µÄÖÊÒò×ÓµÄÃİ¾ùÎªÅ¼Êı¡£
+// å®˜æ–¹è§£æ³•2ï¼šæ•°å­¦ï¼Œæ—¶é—´ O(sqrt(c)) 0 msï¼Œç©ºé—´ O(1) 5.8 MB
+// è´¹é©¬å®šç†å‘Šè¯‰æˆ‘ä»¬ï¼šä¸€ä¸ªéè´Ÿæ•´æ•°cå¦‚æœèƒ½å¤Ÿè¡¨ç¤ºä¸ºä¸¤ä¸ªæ•´æ•°çš„å¹³æ–¹å’Œï¼Œå½“ä¸”ä»…å½“cçš„æ‰€æœ‰å½¢å¦‚4k+3çš„è´¨å› å­çš„å¹‚å‡ä¸ºå¶æ•°ã€‚
 class Solution {
 public:
-	bool judgeSquareSum(int c) {
-		for (int base = 2; base * base <= c; base++) {
-			// Èç¹û²»ÊÇÒò×Ó£¬Ã¶¾ÙÏÂÒ»¸ö
-			if (c % base != 0) {
-				continue;
-			}
+    bool judgeSquareSum(int c) {
+        for (int base = 2; base * base <= c; base++) {
+            // å¦‚æœä¸æ˜¯å› å­ï¼Œæšä¸¾ä¸‹ä¸€ä¸ª
+            if (c % base != 0) {
+                continue;
+            }
 
-			// ¼ÆËã base µÄÃİ
-			int exp = 0;
-			while (c % base == 0) {
-				c /= base;
-				exp++;
-			}
+            // è®¡ç®— base çš„å¹‚
+            int exp = 0;
+            while (c % base == 0) {
+                c /= base;
+                exp++;
+            }
 
-			// ¸ù¾İ Sum of two squares theorem ÑéÖ¤
-			if (base % 4 == 3 && exp % 2 != 0) {
-				return false;
-			}
-		}
+            // æ ¹æ® Sum of two squares theorem éªŒè¯
+            if (base % 4 == 3 && exp % 2 != 0) {
+                return false;
+            }
+        }
 
-		// ÀıÈç 11 ÕâÑùµÄÓÃÀı£¬ÓÉÓÚÉÏÃæµÄ for Ñ­»·Àï base * base <= c £¬base == 11 µÄÊ±ºò²»»á½øÈëÑ­»·Ìå
-		// Òò´ËÔÚÍË³öÑ­»·ÒÔºóĞèÒªÔÙ×öÒ»´ÎÅĞ¶Ï
-		return c % 4 != 3;
-	}
+        // ä¾‹å¦‚ 11 è¿™æ ·çš„ç”¨ä¾‹ï¼Œç”±äºä¸Šé¢çš„ for å¾ªç¯é‡Œ base * base <= c ï¼Œbase == 11 çš„æ—¶å€™ä¸ä¼šè¿›å…¥å¾ªç¯ä½“
+        // å› æ­¤åœ¨é€€å‡ºå¾ªç¯ä»¥åéœ€è¦å†åšä¸€æ¬¡åˆ¤æ–­
+        return c % 4 != 3;
+    }
 };

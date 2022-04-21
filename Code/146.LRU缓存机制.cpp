@@ -3,218 +3,218 @@
 #include<unordered_map>
 using namespace std;
 
-// ÎÒµÄ×ö·¨²Î¿¼¹Ù·½Ìâ½âË¼Â·£ºÊ±¼ä 424 ms£¬¿Õ¼ä 161.2 MB
+// æˆ‘çš„åšæ³•å‚è€ƒå®˜æ–¹é¢˜è§£æ€è·¯ï¼šæ—¶é—´ 424 msï¼Œç©ºé—´ 161.2 MB
 class LRUCache {
 private:
-	unordered_map<int, list<pair<int, int>>::iterator> cache;
-	list<pair<int, int>> history;
-	int capacity;
+    unordered_map<int, list<pair<int, int>>::iterator> cache;
+    list<pair<int, int>> history;
+    int capacity;
 public:
-	LRUCache(int capacity) {
-		this->capacity = capacity;
-	}
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+    }
 
-	int get(int key) {
-		auto it = cache.find(key);
-		if (it != cache.end()) {
-			int ret = it->second->second;
-			history.erase(it->second);
-			history.emplace_back(key, ret);
-			cache[key] = --history.end();
-			return ret;
-		}
-		else {
-			return -1;
-		}
-	}
+    int get(int key) {
+        auto it = cache.find(key);
+        if (it != cache.end()) {
+            int ret = it->second->second;
+            history.erase(it->second);
+            history.emplace_back(key, ret);
+            cache[key] = --history.end();
+            return ret;
+        }
+        else {
+            return -1;
+        }
+    }
 
-	void put(int key, int value) {
-		if (!cache.count(key) && cache.size() < capacity) {
-			history.emplace_back(key, value);
-			cache.emplace(key, --history.end());
-		}
-		else if (cache.count(key)) {
-			history.erase(cache[key]);
-			history.emplace_back(key, value);
-			cache[key] = --history.end();
-		}
-		else {
-			int temp = history.front().first;
-			history.pop_front();
-			cache.erase(temp);
-			history.emplace_back(key, value);
-			cache.emplace(key, --history.end());
-		}
-	}
+    void put(int key, int value) {
+        if (!cache.count(key) && cache.size() < capacity) {
+            history.emplace_back(key, value);
+            cache.emplace(key, --history.end());
+        }
+        else if (cache.count(key)) {
+            history.erase(cache[key]);
+            history.emplace_back(key, value);
+            cache[key] = --history.end();
+        }
+        else {
+            int temp = history.front().first;
+            history.pop_front();
+            cache.erase(temp);
+            history.emplace_back(key, value);
+            cache.emplace(key, --history.end());
+        }
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¹şÏ£±í+Ë«ÏòÁ´±í
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå“ˆå¸Œè¡¨+åŒå‘é“¾è¡¨
 struct DLinkedNode {
-	int key, value;
-	DLinkedNode* prev;
-	DLinkedNode* next;
-	DLinkedNode() : key(0), value(0), prev(nullptr), next(nullptr) {}
-	DLinkedNode(int _key, int _value) : key(_key), value(_value), prev(nullptr), next(nullptr) {}
+    int key, value;
+    DLinkedNode* prev;
+    DLinkedNode* next;
+    DLinkedNode() : key(0), value(0), prev(nullptr), next(nullptr) {}
+    DLinkedNode(int _key, int _value) : key(_key), value(_value), prev(nullptr), next(nullptr) {}
 };
 
 class LRUCache {
 private:
-	unordered_map<int, DLinkedNode*> cache;
-	DLinkedNode* head;
-	DLinkedNode* tail;
-	int size;
-	int capacity;
+    unordered_map<int, DLinkedNode*> cache;
+    DLinkedNode* head;
+    DLinkedNode* tail;
+    int size;
+    int capacity;
 
 public:
-	LRUCache(int _capacity) : capacity(_capacity), size(0) {
-		// Ê¹ÓÃÎ±Í·²¿ºÍÎ±Î²²¿½Úµã
-		head = new DLinkedNode();
-		tail = new DLinkedNode();
-		head->next = tail;
-		tail->prev = head;
-	}
+    LRUCache(int _capacity) : capacity(_capacity), size(0) {
+        // ä½¿ç”¨ä¼ªå¤´éƒ¨å’Œä¼ªå°¾éƒ¨èŠ‚ç‚¹
+        head = new DLinkedNode();
+        tail = new DLinkedNode();
+        head->next = tail;
+        tail->prev = head;
+    }
 
-	int get(int key) {
-		if (!cache.count(key)) {
-			return -1;
-		}
-		// Èç¹û key ´æÔÚ£¬ÏÈÍ¨¹ı¹şÏ£±í¶¨Î»£¬ÔÙÒÆµ½Í·²¿
-		DLinkedNode* node = cache[key];
-		moveToHead(node);
-		return node->value;
-	}
+    int get(int key) {
+        if (!cache.count(key)) {
+            return -1;
+        }
+        // å¦‚æœ key å­˜åœ¨ï¼Œå…ˆé€šè¿‡å“ˆå¸Œè¡¨å®šä½ï¼Œå†ç§»åˆ°å¤´éƒ¨
+        DLinkedNode* node = cache[key];
+        moveToHead(node);
+        return node->value;
+    }
 
-	void put(int key, int value) {
-		if (!cache.count(key)) {
-			// Èç¹û key ²»´æÔÚ£¬´´½¨Ò»¸öĞÂµÄ½Úµã
-			DLinkedNode* node = new DLinkedNode(key, value);
-			// Ìí¼Ó½ø¹şÏ£±í
-			cache[key] = node;
-			// Ìí¼ÓÖÁË«ÏòÁ´±íµÄÍ·²¿
-			addToHead(node);
-			++size;
-			if (size > capacity) {
-				// Èç¹û³¬³öÈİÁ¿£¬É¾³ıË«ÏòÁ´±íµÄÎ²²¿½Úµã
-				DLinkedNode* removed = removeTail();
-				// É¾³ı¹şÏ£±íÖĞ¶ÔÓ¦µÄÏî
-				cache.erase(removed->key);
-				// ·ÀÖ¹ÄÚ´æĞ¹Â©
-				delete removed;
-				--size;
-			}
-		}
-		else {
-			// Èç¹û key ´æÔÚ£¬ÏÈÍ¨¹ı¹şÏ£±í¶¨Î»£¬ÔÙĞŞ¸Ä value£¬²¢ÒÆµ½Í·²¿
-			DLinkedNode* node = cache[key];
-			node->value = value;
-			moveToHead(node);
-		}
-	}
+    void put(int key, int value) {
+        if (!cache.count(key)) {
+            // å¦‚æœ key ä¸å­˜åœ¨ï¼Œåˆ›å»ºä¸€ä¸ªæ–°çš„èŠ‚ç‚¹
+            DLinkedNode* node = new DLinkedNode(key, value);
+            // æ·»åŠ è¿›å“ˆå¸Œè¡¨
+            cache[key] = node;
+            // æ·»åŠ è‡³åŒå‘é“¾è¡¨çš„å¤´éƒ¨
+            addToHead(node);
+            ++size;
+            if (size > capacity) {
+                // å¦‚æœè¶…å‡ºå®¹é‡ï¼Œåˆ é™¤åŒå‘é“¾è¡¨çš„å°¾éƒ¨èŠ‚ç‚¹
+                DLinkedNode* removed = removeTail();
+                // åˆ é™¤å“ˆå¸Œè¡¨ä¸­å¯¹åº”çš„é¡¹
+                cache.erase(removed->key);
+                // é˜²æ­¢å†…å­˜æ³„æ¼
+                delete removed;
+                --size;
+            }
+        }
+        else {
+            // å¦‚æœ key å­˜åœ¨ï¼Œå…ˆé€šè¿‡å“ˆå¸Œè¡¨å®šä½ï¼Œå†ä¿®æ”¹ valueï¼Œå¹¶ç§»åˆ°å¤´éƒ¨
+            DLinkedNode* node = cache[key];
+            node->value = value;
+            moveToHead(node);
+        }
+    }
 
-	void addToHead(DLinkedNode* node) {
-		node->prev = head;
-		node->next = head->next;
-		head->next->prev = node;
-		head->next = node;
-	}
+    void addToHead(DLinkedNode* node) {
+        node->prev = head;
+        node->next = head->next;
+        head->next->prev = node;
+        head->next = node;
+    }
 
-	void removeNode(DLinkedNode* node) {
-		node->prev->next = node->next;
-		node->next->prev = node->prev;
-	}
+    void removeNode(DLinkedNode* node) {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
 
-	void moveToHead(DLinkedNode* node) {
-		removeNode(node);
-		addToHead(node);
-	}
+    void moveToHead(DLinkedNode* node) {
+        removeNode(node);
+        addToHead(node);
+    }
 
-	DLinkedNode* removeTail() {
-		DLinkedNode* node = tail->prev;
-		removeNode(node);
-		return node;
-	}
+    DLinkedNode* removeTail() {
+        DLinkedNode* node = tail->prev;
+        removeNode(node);
+        return node;
+    }
 };
 
 
-// ÎÒ²Î¿¼¹Ù·½Ë¼Â·×Ô¼ºĞ´µÄ°æ±¾£¬Ê±¼ä 364 ms£¬¿Õ¼ä 161.2 MB
+// æˆ‘å‚è€ƒå®˜æ–¹æ€è·¯è‡ªå·±å†™çš„ç‰ˆæœ¬ï¼Œæ—¶é—´ 364 msï¼Œç©ºé—´ 161.2 MB
 struct DListNode {
-	int key, val;
-	DListNode* prev, * next;
-	DListNode() {
-		key = 0;
-		val = 0;
-		prev = nullptr;
-		next = nullptr;
-	}
-	DListNode(int _key, int _val) {
-		key = _key;
-		val = _val;
-		prev = nullptr;
-		next = nullptr;
-	}
+    int key, val;
+    DListNode* prev, * next;
+    DListNode() {
+        key = 0;
+        val = 0;
+        prev = nullptr;
+        next = nullptr;
+    }
+    DListNode(int _key, int _val) {
+        key = _key;
+        val = _val;
+        prev = nullptr;
+        next = nullptr;
+    }
 };
 
 class LRUCache {
 private:
-	unordered_map<int, DListNode*> cache;
-	int capacity;
-	DListNode* head, * tail;
+    unordered_map<int, DListNode*> cache;
+    int capacity;
+    DListNode* head, * tail;
 public:
-	LRUCache(int capacity) {
-		this->capacity = capacity;
-		this->head = new DListNode();
-		this->tail = new DListNode();
-		this->head->next = this->tail;
-		this->tail->prev = this->head;
-	}
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+        this->head = new DListNode();
+        this->tail = new DListNode();
+        this->head->next = this->tail;
+        this->tail->prev = this->head;
+    }
 
-	int get(int key) {
-		auto it = cache.find(key);
-		if (it != cache.end()) {
-			DListNode* temp = it->second;
-			int ret = temp->val;
-			removeNode(temp);
-			pushBackNode(temp);
-			return ret;
-		}
-		else {
-			return -1;
-		}
-	}
+    int get(int key) {
+        auto it = cache.find(key);
+        if (it != cache.end()) {
+            DListNode* temp = it->second;
+            int ret = temp->val;
+            removeNode(temp);
+            pushBackNode(temp);
+            return ret;
+        }
+        else {
+            return -1;
+        }
+    }
 
-	void put(int key, int value) {
-		if (!cache.count(key)) {
-			if (cache.size() >= capacity) {
-				cache.erase(this->head->next->key);
-				popBackFront();
-			}
-			DListNode* node = new DListNode(key, value);
-			pushBackNode(node);
-			cache.emplace(key, node);
-		}
-		else {
-			cache[key]->val = value;
-			removeNode(cache[key]);
-			pushBackNode(cache[key]);
-		}
-	}
+    void put(int key, int value) {
+        if (!cache.count(key)) {
+            if (cache.size() >= capacity) {
+                cache.erase(this->head->next->key);
+                popBackFront();
+            }
+            DListNode* node = new DListNode(key, value);
+            pushBackNode(node);
+            cache.emplace(key, node);
+        }
+        else {
+            cache[key]->val = value;
+            removeNode(cache[key]);
+            pushBackNode(cache[key]);
+        }
+    }
 
-	void removeNode(DListNode* node) {
-		node->prev->next = node->next;
-		node->next->prev = node->prev;
-	}
+    void removeNode(DListNode* node) {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
 
-	void pushBackNode(DListNode* node) {
-		node->next = this->tail;
-		node->prev = this->tail->prev;
-		this->tail->prev->next = node;
-		this->tail->prev = node;
-	}
+    void pushBackNode(DListNode* node) {
+        node->next = this->tail;
+        node->prev = this->tail->prev;
+        this->tail->prev->next = node;
+        this->tail->prev = node;
+    }
 
-	void popBackFront() {
-		DListNode* node = this->head->next;
-		node->next->prev = this->head;
-		this->head->next = node->next;
-		delete node;
-	}
+    void popBackFront() {
+        DListNode* node = this->head->next;
+        node->next->prev = this->head;
+        this->head->next = node->next;
+        delete node;
+    }
 };

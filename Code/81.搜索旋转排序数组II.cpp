@@ -1,53 +1,53 @@
 #include<iostream>
 #include<vector>
-using std::vector;
+using namespace std;
 
-// ÎÒµÄ½â·¨£º¶ş·Ö²éÕÒ£¬Ê±¼äO(log n) 4 ms 87.24%£¬¿Õ¼äO(1) 13.5 MB 88.74%
+// æˆ‘çš„è§£æ³•ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´O(log n) 4 ms 87.24%ï¼Œç©ºé—´O(1) 13.5 MB 88.74%
 class Solution {
 public:
-	bool search(vector<int>& nums, int target) {
-		int left = 0, right = nums.size() - 1;
-		while (left <= right) {
-			int mid = (left + right) >> 1;
-			if (nums[mid] == target) return true;
-			// ÖĞµãºÍ×ó¶ËµãÊı×ÖÏàÍ¬£¬ÎŞ·¨È·¶¨ÊÇ×óÇø¼äÈ«²¿ÏàÍ¬»¹ÊÇÓÒÇø¼äÈ«²¿ÏàÍ¬¡£0 1 2 0 0 0 0Ò²¿ÉÄÜÊÇ3 3 3 3 0 1 2
-			// Òò´ËÎŞ·¨ÅĞ¶ÏÄÄ¸öÇø¼äÊÇÔöĞòµÄ
-			// Òò´Ë£¬¿ÉÒÔ¼òµ¥µØ°Ñ×ó¶ËµãÓÒÒÆÒ»Î»£¬È»ºó¼ÌĞø¶ş·Ö²éÕÒ
-			else if (nums[left] == nums[mid]) {
-				++left;
-			}
-			// ÓÒÇø¼äÎªÔöĞò
-			else if (nums[mid] <= nums[right]) {
-				if (target > nums[mid] && target <= nums[right]) {
-					left = mid + 1;
-				}
-				else {
-					right = mid - 1;
-				}
-			}
-			// ×óÇø¼äÎªÔöĞò
-			else {
-				if (target >= nums[left] && target < nums[mid]) {
-					right = mid - 1;
-				}
-				else {
-					left = mid + 1;
-				}
-			}
-		}
-		return false;
-	}
+    bool search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] == target) return true;
+                // ä¸­ç‚¹å’Œå·¦ç«¯ç‚¹æ•°å­—ç›¸åŒï¼Œæ— æ³•ç¡®å®šæ˜¯å·¦åŒºé—´å…¨éƒ¨ç›¸åŒè¿˜æ˜¯å³åŒºé—´å…¨éƒ¨ç›¸åŒã€‚0 1 2 0 0 0 0ä¹Ÿå¯èƒ½æ˜¯3 3 3 3 0 1 2
+                // å› æ­¤æ— æ³•åˆ¤æ–­å“ªä¸ªåŒºé—´æ˜¯å¢åºçš„
+                // å› æ­¤ï¼Œå¯ä»¥ç®€å•åœ°æŠŠå·¦ç«¯ç‚¹å³ç§»ä¸€ä½ï¼Œç„¶åç»§ç»­äºŒåˆ†æŸ¥æ‰¾
+            else if (nums[left] == nums[mid]) {
+                ++left;
+            }
+                // å³åŒºé—´ä¸ºå¢åº
+            else if (nums[mid] <= nums[right]) {
+                if (target > nums[mid] && target <= nums[right]) {
+                    left = mid + 1;
+                }
+                else {
+                    right = mid - 1;
+                }
+            }
+                // å·¦åŒºé—´ä¸ºå¢åº
+            else {
+                if (target >= nums[left] && target < nums[mid]) {
+                    right = mid - 1;
+                }
+                else {
+                    left = mid + 1;
+                }
+            }
+        }
+        return false;
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 4 ms£¬¿Õ¼ä 13.7 MB
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 4 msï¼Œç©ºé—´ 13.7 MB
 class Solution {
 public:
-	bool search(vector<int>& nums, int target) {
-		for (int num : nums) {
-			if (num == target) {
-				return true;
-			}
-		}
-		return false;
-	}
+    bool search(vector<int>& nums, int target) {
+        for (int num : nums) {
+            if (num == target) {
+                return true;
+            }
+        }
+        return false;
+    }
 };

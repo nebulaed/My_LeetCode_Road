@@ -4,192 +4,186 @@
 #include<algorithm>
 #include<functional>
 
-using std::vector;
-using std::sort;
-using std::priority_queue;
-using std::less;
-using std::greater;
-using std::nth_element;
-using std::swap;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºÅÅĞòÇóÖĞÎ»Êı£¬Ê±¼äO(n logn) 12 ms 56.34%£¬¿Õ¼ä O(1) 10.6 MB 65.75%
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæ’åºæ±‚ä¸­ä½æ•°ï¼Œæ—¶é—´O(n logn) 12 ms 56.34%ï¼Œç©ºé—´ O(1) 10.6 MB 65.75%
 class Solution {
 public:
-	int minMoves2(vector<int>& nums) {
-		sort(nums.begin(), nums.end());
-		int n = nums.size(), mid = n >> 1;
-		int median = n & 1 ? nums[mid] : ((nums[mid] + nums[mid - 1]) >> 1);
-		int ret = 0;
-		for (int num : nums) {
-			ret += abs(num - median);
-		}
-		return ret;
-	}
+    int minMoves2(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size(), mid = n >> 1;
+        int median = n & 1 ? nums[mid] : ((nums[mid] + nums[mid - 1]) >> 1);
+        int ret = 0;
+        for (int num : nums) {
+            ret += abs(num - median);
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºÓÅÏÈ¶ÓÁĞÇóÖĞÎ»Êı£¬Ê±¼äO(n) 12 ms 56.34%£¬¿Õ¼ä O(n) 11.2 MB 5.14%
+// æˆ‘çš„è§£æ³•äºŒï¼šä¼˜å…ˆé˜Ÿåˆ—æ±‚ä¸­ä½æ•°ï¼Œæ—¶é—´O(n) 12 ms 56.34%ï¼Œç©ºé—´ O(n) 11.2 MB 5.14%
 class Solution {
 public:
-	int minMoves2(vector<int>& nums) {
-		// ´ó¶¥¶Ñ
-		priority_queue<int, vector<int>, less<int>> queMin;
-		// Ğ¡¶¥¶Ñ
-		priority_queue<int, vector<int>, greater<int>> queMax;
+    int minMoves2(vector<int>& nums) {
+        // å¤§é¡¶å †
+        priority_queue<int, vector<int>, less<int>> queMin;
+        // å°é¡¶å †
+        priority_queue<int, vector<int>, greater<int>> queMax;
 
-		for (int num : nums) {
-			// queMin.top() == max{queMin}
-			if (queMin.empty() || num <= queMin.top()) {
-				queMin.emplace(num);
-				if (queMax.size() + 1 < queMin.size()) {
-					queMax.emplace(queMin.top());
-					queMin.pop();
-				}
-			}
-			else {
-				queMax.emplace(num);
-				if (queMax.size() > queMin.size()) {
-					queMin.emplace(queMax.top());
-					queMax.pop();
-				}
-			}
-		}
-		int n = nums.size();
-		int median = n & 1 ? queMin.top() : (queMin.top() + queMax.top()) >> 1;
-		int ret = 0;
-		for (int num : nums) {
-			ret += abs(num - median);
-		}
-		return ret;
-	}
+        for (int num : nums) {
+            // queMin.top() == max{queMin}
+            if (queMin.empty() || num <= queMin.top()) {
+                queMin.emplace(num);
+                if (queMax.size() + 1 < queMin.size()) {
+                    queMax.emplace(queMin.top());
+                    queMin.pop();
+                }
+            }
+            else {
+                queMax.emplace(num);
+                if (queMax.size() > queMin.size()) {
+                    queMin.emplace(queMax.top());
+                    queMax.pop();
+                }
+            }
+        }
+        int n = nums.size();
+        int median = n & 1 ? queMin.top() : (queMin.top() + queMax.top()) >> 1;
+        int ret = 0;
+        for (int num : nums) {
+            ret += abs(num - median);
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨Èı£º¿ìËÙÑ¡ÔñËã·¨£¬µ÷ÓÃnth_element£¬Ê±¼ä 12 ms 56.34%£¬¿Õ¼ä 10.5 MB 82.53%
+// æˆ‘çš„è§£æ³•ä¸‰ï¼šå¿«é€Ÿé€‰æ‹©ç®—æ³•ï¼Œè°ƒç”¨nth_elementï¼Œæ—¶é—´ 12 ms 56.34%ï¼Œç©ºé—´ 10.5 MB 82.53%
 class Solution {
 public:
-	int minMoves2(vector<int>& nums) {
-		int n = nums.size(), mid = n >> 1;
-		auto it1 = nums.end() - mid - 1;
-		nth_element(nums.begin(), it1, nums.end());
-		int median = *it1;
-		if (!(n & 1)) {
-			median = *it1;
-			auto it2 = nums.end() - mid;
-			nth_element(nums.begin(), it2, nums.end());
-			median = (*it2 + median) >> 1;
-		}
-		int ret = 0;
-		for (int num : nums) {
-			ret += abs(num - median);
-		}
-		return ret;
-	}
+    int minMoves2(vector<int>& nums) {
+        int n = nums.size(), mid = n >> 1;
+        auto it1 = nums.end() - mid - 1;
+        nth_element(nums.begin(), it1, nums.end());
+        int median = *it1;
+        if (!(n & 1)) {
+            median = *it1;
+            auto it2 = nums.end() - mid;
+            nth_element(nums.begin(), it2, nums.end());
+            median = (*it2 + median) >> 1;
+        }
+        int ret = 0;
+        for (int num : nums) {
+            ret += abs(num - median);
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨ËÄ£º×ÔĞ´Ëæ»úÑ¡È¡ÊàÖá+¿ìËÙÑ¡ÔñËã·¨£¬Ê±¼ä 8 ms 88.70%£¬¿Õ¼ä 10.5 MB 79.45%
+// æˆ‘çš„è§£æ³•å››ï¼šè‡ªå†™éšæœºé€‰å–æ¢è½´+å¿«é€Ÿé€‰æ‹©ç®—æ³•ï¼Œæ—¶é—´ 8 ms 88.70%ï¼Œç©ºé—´ 10.5 MB 79.45%
 class Solution {
 private:
-	int quickSelect(vector<int>& nums, int left, int right, int index) {
-		int q = randomPartition(nums, left, right);
-		if (q == index) return nums[q];
-		else {
-			return q < index ? quickSelect(nums, q + 1, right, index) : quickSelect(nums, left, q - 1, index);
-		}
-	}
+    int quickSelect(vector<int>& nums, int left, int right, int index) {
+        int q = randomPartition(nums, left, right);
+        if (q == index) return nums[q];
+        else {
+            return q < index ? quickSelect(nums, q + 1, right, index) : quickSelect(nums, left, q - 1, index);
+        }
+    }
 
-	inline int randomPartition(vector<int>& nums, int left, int right) {
-		int i = rand() % (right - left + 1) + left;
-		swap(nums[i], nums[right]);
-		return partition(nums, left, right);
-	}
+    inline int randomPartition(vector<int>& nums, int left, int right) {
+        int i = rand() % (right - left + 1) + left;
+        swap(nums[i], nums[right]);
+        return partition(nums, left, right);
+    }
 
-	inline int partition(vector<int> & nums, int left, int right) {
-		int x = nums[right], i = left - 1;
-		for (int j = left; j < right; ++j) {
-			if (nums[j] < x) {
-				swap(nums[++i], nums[j]);
-			}
-		}
-		swap(nums[i + 1], nums[right]);
-		return i + 1;
-	}
+    inline int partition(vector<int> & nums, int left, int right) {
+        int x = nums[right], i = left - 1;
+        for (int j = left; j < right; ++j) {
+            if (nums[j] < x) {
+                swap(nums[++i], nums[j]);
+            }
+        }
+        swap(nums[i + 1], nums[right]);
+        return i + 1;
+    }
 
 public:
-	int minMoves2(vector<int> & nums) {
-		int n = nums.size(), mid = n >> 1;
-		int median = 0;
-		if (n & 1) {
-			median = quickSelect(nums, 0, n - 1, mid);
-		}
-		else {
-			median = (quickSelect(nums, 0, n - 1, mid - 1) + quickSelect(nums, 0, n - 1, mid)) >> 1;
-		}
-		int ret = 0;
-		for (int num : nums) {
-			ret += abs(num - median);
-		}
-		return ret;
-	}
+    int minMoves2(vector<int> & nums) {
+        int n = nums.size(), mid = n >> 1;
+        int median = 0;
+        if (n & 1) {
+            median = quickSelect(nums, 0, n - 1, mid);
+        }
+        else {
+            median = (quickSelect(nums, 0, n - 1, mid - 1) + quickSelect(nums, 0, n - 1, mid)) >> 1;
+        }
+        int ret = 0;
+        for (int num : nums) {
+            ret += abs(num - median);
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨Îå£ºÈıÊıÈ¡ÖĞ+¿ìËÙÑ¡ÔñËã·¨£¬Ê±¼ä 8 ms 88.70%£¬¿Õ¼ä 10.6 MB 67.12%
+// æˆ‘çš„è§£æ³•äº”ï¼šä¸‰æ•°å–ä¸­+å¿«é€Ÿé€‰æ‹©ç®—æ³•ï¼Œæ—¶é—´ 8 ms 88.70%ï¼Œç©ºé—´ 10.6 MB 67.12%
 class Solution {
 private:
-	int quickSelect(vector<int>& nums, int left, int right, int target) {
-		while (left < right) {
-			int mid = partition(nums, left, right);
-			if (mid == target) {
-				return nums[mid];
-			}
-			else if (mid < target) {
-				left = mid + 1;
-			}
-			else {
-				right = mid - 1;
-			}
-		}
-		return nums[left];
-	}
+    int quickSelect(vector<int>& nums, int left, int right, int target) {
+        while (left < right) {
+            int mid = partition(nums, left, right);
+            if (mid == target) {
+                return nums[mid];
+            }
+            else if (mid < target) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+        return nums[left];
+    }
 
-	int partition(vector<int>& nums, int left, int right) {
-		int mid = (left + right) >> 1;
-		if (nums[left] > nums[right]) {
-			swap(nums[left], nums[right]);
-		}
-		if (nums[mid] > nums[right]) {
-			swap(nums[right], nums[mid]);
-		}
-		if (nums[mid] > nums[left]) {
-			swap(nums[mid], nums[left]);
-		}
-		int key = nums[left];
-		while (left < right) {
-			while (left < right && key <= nums[right]) {
-				--right;
-			}
-			nums[left] = nums[right];
-			while (left < right && nums[left] <= key) {
-				++left;
-			}
-			nums[right] = nums[left];
-		}
-		nums[left] = key;
-		return right;
-	}
+    int partition(vector<int>& nums, int left, int right) {
+        int mid = (left + right) >> 1;
+        if (nums[left] > nums[right]) {
+            swap(nums[left], nums[right]);
+        }
+        if (nums[mid] > nums[right]) {
+            swap(nums[right], nums[mid]);
+        }
+        if (nums[mid] > nums[left]) {
+            swap(nums[mid], nums[left]);
+        }
+        int key = nums[left];
+        while (left < right) {
+            while (left < right && key <= nums[right]) {
+                --right;
+            }
+            nums[left] = nums[right];
+            while (left < right && nums[left] <= key) {
+                ++left;
+            }
+            nums[right] = nums[left];
+        }
+        nums[left] = key;
+        return right;
+    }
 
 public:
-	int minMoves2(vector<int>& nums) {
-		int n = nums.size(), mid = n >> 1;
-		int median = 0;
-		if (n & 1) {
-			median = quickSelect(nums, 0, n - 1, mid);
-		}
-		else {
-			median = (quickSelect(nums, 0, n - 1, mid - 1) + quickSelect(nums, 0, n - 1, mid)) >> 1;
-		}
-		int ret = 0;
-		for (int num : nums) {
-			ret += abs(num - median);
-		}
-		return ret;
-	}
+    int minMoves2(vector<int>& nums) {
+        int n = nums.size(), mid = n >> 1;
+        int median = 0;
+        if (n & 1) {
+            median = quickSelect(nums, 0, n - 1, mid);
+        }
+        else {
+            median = (quickSelect(nums, 0, n - 1, mid - 1) + quickSelect(nums, 0, n - 1, mid)) >> 1;
+        }
+        int ret = 0;
+        for (int num : nums) {
+            ret += abs(num - median);
+        }
+        return ret;
+    }
 };

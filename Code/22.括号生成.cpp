@@ -5,10 +5,10 @@ using namespace std;
 
 struct BiTNode
 {
-	BiTNode *lchild, *rchild;
+    BiTNode *lchild, *rchild;
 };
 
-// ÎÒµÄ½â·¨(¶ş²æÊ÷)
+// æˆ‘çš„è§£æ³•(äºŒå‰æ ‘)
 //class Solution {
 //public:
 //	vector<string> generateParenthesis(int n) {
@@ -48,8 +48,8 @@ struct BiTNode
 //	}
 //};
 
-// ¹Ù·½½â·¨1£º±©Á¦·¨
-// Ë¼Â·£ºÉú³É2^(2n)¸ö×óÀ¨ºÅºÍÓÒÀ¨ºÅ×Ö·û¹¹³ÉµÄĞòÁĞ£¬È»ºó¼ì²éÃ¿Ò»¸öÊÇ·ñÓĞĞ§¡£
+// å®˜æ–¹è§£æ³•1ï¼šæš´åŠ›æ³•
+// æ€è·¯ï¼šç”Ÿæˆ2^(2n)ä¸ªå·¦æ‹¬å·å’Œå³æ‹¬å·å­—ç¬¦æ„æˆçš„åºåˆ—ï¼Œç„¶åæ£€æŸ¥æ¯ä¸€ä¸ªæ˜¯å¦æœ‰æ•ˆã€‚
 //class Solution {
 //private:
 //	bool valid(const string& str) {
@@ -91,48 +91,47 @@ struct BiTNode
 //	}
 //};
 
-// ¹Ù·½½â·¨2£º»ØËİ·¨
-// ÔÚ·½·¨1µÄ»ù´¡ÉÏ£¬Ö»ÔÚĞòÁĞÓĞĞ§Ê±£¬²ÅÌí¼Ó'('»ò')'£¬Í¨¹ı¸ú×ÙÄ¿Ç°ÎªÖ¹·ÅÖÃµÄ×óÀ¨ºÅºÍÓÒÀ¨ºÅµÄÊıÄ¿À´ÊµÏÖ
+// å®˜æ–¹è§£æ³•2ï¼šå›æº¯æ³•
+// åœ¨æ–¹æ³•1çš„åŸºç¡€ä¸Šï¼Œåªåœ¨åºåˆ—æœ‰æ•ˆæ—¶ï¼Œæ‰æ·»åŠ '('æˆ–')'ï¼Œé€šè¿‡è·Ÿè¸ªç›®å‰ä¸ºæ­¢æ”¾ç½®çš„å·¦æ‹¬å·å’Œå³æ‹¬å·çš„æ•°ç›®æ¥å®ç°
 class Solution {
-	void backtrack(vector<string>& ret, string& cur, int open, int close, int n) {
-		if (cur.size() == n * 2) {
-			ret.push_back(cur);
-			return;
-		}
-		if (open < n) {
-			cur.push_back('(');
-			backtrack(ret, cur, open + 1, close, n);
-			cur.pop_back();
-		}
-		if (close < open) {
-			cur.push_back(')');
-			backtrack(ret, cur, open, close + 1, n);
-			cur.pop_back();
-		}
-	}
+    void backtrack(vector<string>& ret, string& cur, int open, int close, int n) {
+        if (cur.size() == n * 2) {
+            ret.push_back(cur);
+            return;
+        }
+        if (open < n) {
+            cur.push_back('(');
+            backtrack(ret, cur, open + 1, close, n);
+            cur.pop_back();
+        }
+        if (close < open) {
+            cur.push_back(')');
+            backtrack(ret, cur, open, close + 1, n);
+            cur.pop_back();
+        }
+    }
 
 public:
-	vector<string> generateParenthesis(int n) {
-		vector<string> result;
-		string current;
-		backtrack(result, current, 0, 0, n);
-		return result;
-	}
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        string current;
+        backtrack(result, current, 0, 0, n);
+        return result;
+    }
 };
 
 int main() {
-	int n = 3;
+    int n = 3;
 
-	Solution s;
-	vector<string> ret = s.generateParenthesis(n);
+    Solution s;
+    vector<string> ret = s.generateParenthesis(n);
 
-	cout << "[";
-	for (int i = 0; i < ret.size(); ++i) {
-		cout << ret[i] << ",";
-	}
-	cout << "]" << endl;
+    cout << "[";
+    for (int i = 0; i < ret.size(); ++i) {
+        cout << ret[i] << ",";
+    }
+    cout << "]" << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }
 

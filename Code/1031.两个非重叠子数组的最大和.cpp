@@ -3,99 +3,99 @@
 #include<algorithm>
 using namespace std;
 
-// ÍøÓÑ½â·¨£ºÊ±¼ä 4 ms 79.94%£¬¿Õ¼ä 8.6 MB 21.04%
+// ç½‘å‹è§£æ³•ï¼šæ—¶é—´ 4 ms 79.94%ï¼Œç©ºé—´ 8.6 MB 21.04%
 class Solution {
 public:
-	int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
-		int n = nums.size();
-		vector<array<int, 4>> dp(n, array<int, 4>{});
-		int preSum = 0;
-		for (int i = 0; i < firstLen; ++i) {
-			preSum += nums[i];
-		}
-		int maxSum = preSum;
-		dp[firstLen - 1][0] = maxSum;
-		for (int i = firstLen; i < n; ++i) {
-			preSum -= nums[i - firstLen];
-			preSum += nums[i];
-			maxSum = max(maxSum, preSum);
-			dp[i][0] = maxSum;
-		}
-		preSum = 0;
-		for (int i = 0; i < secondLen; ++i) {
-			preSum += nums[i];
-		}
-		maxSum = preSum;
-		dp[secondLen - 1][1] = maxSum;
+    int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
+        int n = nums.size();
+        vector<array<int, 4>> dp(n, array<int, 4>{});
+        int preSum = 0;
+        for (int i = 0; i < firstLen; ++i) {
+            preSum += nums[i];
+        }
+        int maxSum = preSum;
+        dp[firstLen - 1][0] = maxSum;
+        for (int i = firstLen; i < n; ++i) {
+            preSum -= nums[i - firstLen];
+            preSum += nums[i];
+            maxSum = max(maxSum, preSum);
+            dp[i][0] = maxSum;
+        }
+        preSum = 0;
+        for (int i = 0; i < secondLen; ++i) {
+            preSum += nums[i];
+        }
+        maxSum = preSum;
+        dp[secondLen - 1][1] = maxSum;
 
-		for (int i = secondLen; i < n; ++i) {
-			preSum -= nums[i - secondLen];
-			preSum += nums[i];
-			maxSum = max(maxSum, preSum);
-			dp[i][1] = maxSum;
-		}
-		preSum = 0;
-		for (int i = n - 1; i >= n - firstLen; --i)
-		{
-			preSum += nums[i];
-		}
-		maxSum = preSum;
-		dp[n - firstLen][2] = maxSum;
-		for (int i = n - firstLen - 1; i >= 0; --i)
-		{
-			preSum -= nums[i + firstLen];
-			preSum += nums[i];
-			maxSum = max(maxSum, preSum);
-			dp[i][2] = maxSum;
-		}
+        for (int i = secondLen; i < n; ++i) {
+            preSum -= nums[i - secondLen];
+            preSum += nums[i];
+            maxSum = max(maxSum, preSum);
+            dp[i][1] = maxSum;
+        }
+        preSum = 0;
+        for (int i = n - 1; i >= n - firstLen; --i)
+        {
+            preSum += nums[i];
+        }
+        maxSum = preSum;
+        dp[n - firstLen][2] = maxSum;
+        for (int i = n - firstLen - 1; i >= 0; --i)
+        {
+            preSum -= nums[i + firstLen];
+            preSum += nums[i];
+            maxSum = max(maxSum, preSum);
+            dp[i][2] = maxSum;
+        }
 
-		preSum = 0;
-		for (int i = n - 1; i >= n - secondLen; --i)
-		{
-			preSum += nums[i];
-		}
-		maxSum = preSum;
-		dp[n - secondLen][3] = maxSum;
-		for (int i = n - secondLen - 1; i >= 0; --i)
-		{
-			preSum -= nums[i + secondLen];
-			preSum += nums[i];
-			maxSum = max(maxSum, preSum);
-			dp[i][3] = maxSum;
-		}
+        preSum = 0;
+        for (int i = n - 1; i >= n - secondLen; --i)
+        {
+            preSum += nums[i];
+        }
+        maxSum = preSum;
+        dp[n - secondLen][3] = maxSum;
+        for (int i = n - secondLen - 1; i >= 0; --i)
+        {
+            preSum -= nums[i + secondLen];
+            preSum += nums[i];
+            maxSum = max(maxSum, preSum);
+            dp[i][3] = maxSum;
+        }
 
-		//¼ÆËã´ğ°¸
-		int res = 0;
-		//LÔÚsecondLen×ó±ß
-		for (int i = firstLen; i <= n - secondLen; ++i)
-			res = max(res, dp[i - 1][0] + dp[i][3]);
-		//secondLenÔÚL×ó±ß
-		for (int i = secondLen; i <= n - firstLen; ++i)
-			res = max(res, dp[i - 1][1] + dp[i][2]);
+        //è®¡ç®—ç­”æ¡ˆ
+        int res = 0;
+        //Låœ¨secondLenå·¦è¾¹
+        for (int i = firstLen; i <= n - secondLen; ++i)
+            res = max(res, dp[i - 1][0] + dp[i][3]);
+        //secondLenåœ¨Lå·¦è¾¹
+        for (int i = secondLen; i <= n - firstLen; ++i)
+            res = max(res, dp[i - 1][1] + dp[i][2]);
 
-		return res;
-	}
+        return res;
+    }
 };
 
-// lee215½â·¨£ºÊ±¼ä 4 ms 79.94%£¬¿Õ¼ä 8.3 MB 80.26%
+// lee215è§£æ³•ï¼šæ—¶é—´ 4 ms 79.94%ï¼Œç©ºé—´ 8.3 MB 80.26%
 class Solution {
 public:
-	int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
-		int n = nums.size();
-		// ÇóÇ°×ººÍ
-		for (int i = 1; i < n; ++i)
-			nums[i] += nums[i - 1];
-		//³õÊ¼»¯×îÖÕ×î´óÖµµÄ³õÊ¼Öµ£¬³õÊ¼»¯firstLen×ÓÊı×éºÍ×î´óÖµ£¬³õÊ¼Öµ»¯secondLen×ÓÊı×éºÍ×î´óÖµ
-		//³õÊ¼»¯ºó£¬ÊÇÇ°×ººÍÊı×éÖĞÂú×ãµ±Ç°×ÓÊı×é³¤¶ÈÏÂ×î¿¿×ó±ßµÄ¼¸¸öÔªËØÖµ
-		int res = nums[firstLen + secondLen - 1], firstMax = nums[firstLen - 1], secondMax = nums[secondLen - 1];
-		for (int i = firstLen + secondLen; i < n; ++i) {
-			//´ÓÇ°Íùºó±éÀúÊı×é£¬ÕÒ³¤¶ÈÎªfirstLenµÄ×ÓÊı×é×î´óºÍ£¬´ËÊ±ÊÇÄ£ÄâfirstLenÊı×éÔÚsecondLenÊı×é×ó±ß£¬nums[i - secondLen]ÊÇµ±Ç°Î»ÖÃ£¬secondLen³¤¶È×ÓÊı×éÖ®Ç°µÄµÚÒ»¸öÔªËØ
-			firstMax = max(firstMax, nums[i - secondLen] - nums[i - firstLen - secondLen]);
-			//´ÓÇ°Íùºó±éÀúÊı×é£¬ÕÒ³¤¶ÈÎªMµÄ×ÓÊı×é×î´óºÍ£¬´ËÊ±ÊÇÄ£ÄâMÊı×éÔÚLÊı×é×ó±ß£¬A[i - L]ÊÇµ±Ç°Î»ÖÃ£¬L³¤¶È×ÓÊı×éÖ®Ç°µÄµÚÒ»¸öÔªËØ
-			secondMax = max(secondMax, nums[i - firstLen] - nums[i - firstLen - secondLen]);
-			//±È½ÏfirstLenÔÚ×ó±ßµÄ×î´óÖµ+×î½üµÄÒ»¸ösecondLen×ÓÊı×éºÍ£¬secondLenÔÚ×ó±ß²¢È¡×î´óÖµ+×î½üµÄÒ»¸öL×ÓÊı×éºÍ
-			res = max(res, max(firstMax + nums[i] - nums[i - secondLen], secondMax + nums[i] - nums[i - firstLen]));
-		}
-		return res;
-	}
+    int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
+        int n = nums.size();
+        // æ±‚å‰ç¼€å’Œ
+        for (int i = 1; i < n; ++i)
+            nums[i] += nums[i - 1];
+        //åˆå§‹åŒ–æœ€ç»ˆæœ€å¤§å€¼çš„åˆå§‹å€¼ï¼Œåˆå§‹åŒ–firstLenå­æ•°ç»„å’Œæœ€å¤§å€¼ï¼Œåˆå§‹å€¼åŒ–secondLenå­æ•°ç»„å’Œæœ€å¤§å€¼
+        //åˆå§‹åŒ–åï¼Œæ˜¯å‰ç¼€å’Œæ•°ç»„ä¸­æ»¡è¶³å½“å‰å­æ•°ç»„é•¿åº¦ä¸‹æœ€é å·¦è¾¹çš„å‡ ä¸ªå…ƒç´ å€¼
+        int res = nums[firstLen + secondLen - 1], firstMax = nums[firstLen - 1], secondMax = nums[secondLen - 1];
+        for (int i = firstLen + secondLen; i < n; ++i) {
+            //ä»å‰å¾€åéå†æ•°ç»„ï¼Œæ‰¾é•¿åº¦ä¸ºfirstLençš„å­æ•°ç»„æœ€å¤§å’Œï¼Œæ­¤æ—¶æ˜¯æ¨¡æ‹ŸfirstLenæ•°ç»„åœ¨secondLenæ•°ç»„å·¦è¾¹ï¼Œnums[i - secondLen]æ˜¯å½“å‰ä½ç½®ï¼ŒsecondLené•¿åº¦å­æ•°ç»„ä¹‹å‰çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
+            firstMax = max(firstMax, nums[i - secondLen] - nums[i - firstLen - secondLen]);
+            //ä»å‰å¾€åéå†æ•°ç»„ï¼Œæ‰¾é•¿åº¦ä¸ºMçš„å­æ•°ç»„æœ€å¤§å’Œï¼Œæ­¤æ—¶æ˜¯æ¨¡æ‹ŸMæ•°ç»„åœ¨Læ•°ç»„å·¦è¾¹ï¼ŒA[i - L]æ˜¯å½“å‰ä½ç½®ï¼ŒLé•¿åº¦å­æ•°ç»„ä¹‹å‰çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
+            secondMax = max(secondMax, nums[i - firstLen] - nums[i - firstLen - secondLen]);
+            //æ¯”è¾ƒfirstLenåœ¨å·¦è¾¹çš„æœ€å¤§å€¼+æœ€è¿‘çš„ä¸€ä¸ªsecondLenå­æ•°ç»„å’Œï¼ŒsecondLenåœ¨å·¦è¾¹å¹¶å–æœ€å¤§å€¼+æœ€è¿‘çš„ä¸€ä¸ªLå­æ•°ç»„å’Œ
+            res = max(res, max(firstMax + nums[i] - nums[i - secondLen], secondMax + nums[i] - nums[i - firstLen]));
+        }
+        return res;
+    }
 };

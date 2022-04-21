@@ -6,7 +6,7 @@ struct ListNode {
     ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 52 ms 8.95%£¬¿Õ¼ä 9.2 MB 98.75%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 52 ms 8.95%ï¼Œç©ºé—´ 9.2 MB 98.75%
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
@@ -30,12 +30,12 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨£º¹Ù·½½â·¨¸Ä½ø£¬´ÓÇ°ÍùºóÕÒ²åÈëµã£¬Ê±¼ä 20 ms 51.06%£¬¿Õ¼ä 9.4 MB 23.27%
+// æˆ‘çš„è§£æ³•ï¼šå®˜æ–¹è§£æ³•æ”¹è¿›ï¼Œä»Žå‰å¾€åŽæ‰¾æ’å…¥ç‚¹ï¼Œæ—¶é—´ 20 ms 51.06%ï¼Œç©ºé—´ 9.4 MB 23.27%
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
         if (!head->next) return head;
-        // ÓÃlastSortedµÄ¼ÇÂ¼ÒÑÅÅÐòÁ´±íµÄ×îºóÒ»¸ö½Úµã£¬ÕâÑù¾Í²»ÐèÒªÃ¿´ÎÄÃµ½´ýÅÅÐò½ÚµãÊ±£¬¶¼´ÓÍ·¿ªÊ¼±È½Ï£¬¶øÊÇ¿´ËüÊÇ·ñÐ¡ÓÚ×îºóÒ»¸öÒÑÅÅÐò½Úµã
+        // ç”¨lastSortedçš„è®°å½•å·²æŽ’åºé“¾è¡¨çš„æœ€åŽä¸€ä¸ªèŠ‚ç‚¹ï¼Œè¿™æ ·å°±ä¸éœ€è¦æ¯æ¬¡æ‹¿åˆ°å¾…æŽ’åºèŠ‚ç‚¹æ—¶ï¼Œéƒ½ä»Žå¤´å¼€å§‹æ¯”è¾ƒï¼Œè€Œæ˜¯çœ‹å®ƒæ˜¯å¦å°äºŽæœ€åŽä¸€ä¸ªå·²æŽ’åºèŠ‚ç‚¹
         ListNode* dummy = new ListNode(0, head), * curr = head, * lastSorted = head;
         while (curr->next) {
             ListNode* temp = curr->next;

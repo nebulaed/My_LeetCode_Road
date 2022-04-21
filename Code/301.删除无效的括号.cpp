@@ -4,133 +4,133 @@
 #include<unordered_set>
 using namespace std;
 
-// ¹Ù·½½â·¨Ò»£º»ØËİ+¼ôÖ¦£¬Ê±¼äO(n¡Á2^n) 4 ms£¬¿Õ¼äO(n^2) 7.5 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå›æº¯+å‰ªæï¼Œæ—¶é—´O(nÃ—2^n) 4 msï¼Œç©ºé—´O(n^2) 7.5 MB
 class Solution {
 private:
-	vector<string> ret;
+    vector<string> ret;
 
-	void dfs(string str, int start, int leftRemove, int rightRemove) {
-		if (leftRemove == 0 && rightRemove == 0) {
-			if (isValid(str)) {
-				ret.emplace_back(str);
-			}
-			return;
-		}
-		for (int i = start; i < str.size(); ++i) {
-			// Óöµ½Á¬ĞøÏàÍ¬×Ö·û£¬Ö»ĞèËÑË÷Ò»´Î¼´¿É
-			if (i != start && str[i] == str[i - 1]) {
-				continue;
-			}
-			// ÈôÊ£Óà×Ö·ûÎŞ·¨Âú×ãÉ¾³ıµÄÊıÁ¿ÒªÇó£¬Ö±½Ó·µ»Ø
-			if (leftRemove + rightRemove > str.size() - i) {
-				return;
-			}
-			// ³¢ÊÔÈ¥µôÒ»¸ö×óÀ¨ºÅ
-			if (leftRemove > 0 && str[i] == '(') {
-				dfs(str.substr(0, i) + str.substr(i + 1), i, leftRemove - 1, rightRemove);
-			}
-			// ³¢ÊÔÈ¥µôÒ»¸öÓÒÀ¨ºÅ
-			if (rightRemove > 0 && str[i] == ')') {
-				dfs(str.substr(0, i) + str.substr(i + 1), i, leftRemove, rightRemove - 1);
-			}
-		}
-	}
+    void dfs(string str, int start, int leftRemove, int rightRemove) {
+        if (leftRemove == 0 && rightRemove == 0) {
+            if (isValid(str)) {
+                ret.emplace_back(str);
+            }
+            return;
+        }
+        for (int i = start; i < str.size(); ++i) {
+            // é‡åˆ°è¿ç»­ç›¸åŒå­—ç¬¦ï¼Œåªéœ€æœç´¢ä¸€æ¬¡å³å¯
+            if (i != start && str[i] == str[i - 1]) {
+                continue;
+            }
+            // è‹¥å‰©ä½™å­—ç¬¦æ— æ³•æ»¡è¶³åˆ é™¤çš„æ•°é‡è¦æ±‚ï¼Œç›´æ¥è¿”å›
+            if (leftRemove + rightRemove > str.size() - i) {
+                return;
+            }
+            // å°è¯•å»æ‰ä¸€ä¸ªå·¦æ‹¬å·
+            if (leftRemove > 0 && str[i] == '(') {
+                dfs(str.substr(0, i) + str.substr(i + 1), i, leftRemove - 1, rightRemove);
+            }
+            // å°è¯•å»æ‰ä¸€ä¸ªå³æ‹¬å·
+            if (rightRemove > 0 && str[i] == ')') {
+                dfs(str.substr(0, i) + str.substr(i + 1), i, leftRemove, rightRemove - 1);
+            }
+        }
+    }
 
-	inline bool isValid(const string& str) {
-		int cnt = 0;
+    inline bool isValid(const string& str) {
+        int cnt = 0;
 
-		for (char c : str) {
-			if (c == '(') {
-				++cnt;
-			}
-			else if (c == ')') {
-				--cnt;
-				if (cnt < 0) {
-					return false;
-				}
-			}
-		}
-		return cnt == 0;
-	}
+        for (char c : str) {
+            if (c == '(') {
+                ++cnt;
+            }
+            else if (c == ')') {
+                --cnt;
+                if (cnt < 0) {
+                    return false;
+                }
+            }
+        }
+        return cnt == 0;
+    }
 public:
-	vector<string> removeInvalidParentheses(string s) {
-		int leftRemove = 0;
-		int rightRemove = 0;
+    vector<string> removeInvalidParentheses(string s) {
+        int leftRemove = 0;
+        int rightRemove = 0;
 
-		// ±éÀúºóµÃÖªÓ¦¸ÃÉ¾³ıµÄ×óÀ¨ºÅ¡¢ÓÒÀ¨ºÅÊıÁ¿
-		for (char c : s) {
-			if (c == '(') {
-				++leftRemove;
-			}
-			else if (c == ')') {
-				if (leftRemove == 0) {
-					++rightRemove;
-				}
-				else {
-					--leftRemove;
-				}
-			}
-		}
-		dfs(s, 0, leftRemove, rightRemove);
-		return ret;
-	}
+        // éå†åå¾—çŸ¥åº”è¯¥åˆ é™¤çš„å·¦æ‹¬å·ã€å³æ‹¬å·æ•°é‡
+        for (char c : s) {
+            if (c == '(') {
+                ++leftRemove;
+            }
+            else if (c == ')') {
+                if (leftRemove == 0) {
+                    ++rightRemove;
+                }
+                else {
+                    --leftRemove;
+                }
+            }
+        }
+        dfs(s, 0, leftRemove, rightRemove);
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºBFS£¬Ê±¼äO(n¡Á2^n) 64 ms£¬¿Õ¼äO(n¡ÁC^(n/2)_n) 24.3 MB
-// Ë¼Â·£º½øĞĞBFSÊ±Ã¿ÂÖÉ¾³ı×Ö·û´®ÖĞµÄ1¸öÀ¨ºÅ£¬Ö±µ½³öÏÖºÏ·¨Æ¥ÅäµÄ×Ö·û´®ÎªÖ¹£¬´ËÊ±½øĞĞÂÖ×ªµÄ´ÎÊı¼´Îª×îÉÙĞèÒªÉ¾³ıÀ¨ºÅµÄ¸öÊı
-// ½øĞĞBFSÊ±£¬Ã¿´Î±£´æÉÏÒ»ÂÖËÑË÷µÄ½á¹û£¬È»ºó¶ÔÉÏÒ»ÂÖÒÑ¾­±£´æµÄ½á¹ûÖĞÃ¿Ò»¸ö×Ö·û´®³¢ÊÔËùÓĞ¿ÉÄÜµÄÉ¾³ıÒ»¸öÀ¨ºÅµÄ·½·¨
-// È»ºó½«±£´æµÄ½á¹û½øĞĞÏÂÒ»ÂÖËÑË÷¡£±£´æ½á¹ûÊ±¿ÉÒÔÀûÓÃ¹şÏ£±íÈ¥ÖØ
+// å®˜æ–¹è§£æ³•äºŒï¼šBFSï¼Œæ—¶é—´O(nÃ—2^n) 64 msï¼Œç©ºé—´O(nÃ—C^(n/2)_n) 24.3 MB
+// æ€è·¯ï¼šè¿›è¡ŒBFSæ—¶æ¯è½®åˆ é™¤å­—ç¬¦ä¸²ä¸­çš„1ä¸ªæ‹¬å·ï¼Œç›´åˆ°å‡ºç°åˆæ³•åŒ¹é…çš„å­—ç¬¦ä¸²ä¸ºæ­¢ï¼Œæ­¤æ—¶è¿›è¡Œè½®è½¬çš„æ¬¡æ•°å³ä¸ºæœ€å°‘éœ€è¦åˆ é™¤æ‹¬å·çš„ä¸ªæ•°
+// è¿›è¡ŒBFSæ—¶ï¼Œæ¯æ¬¡ä¿å­˜ä¸Šä¸€è½®æœç´¢çš„ç»“æœï¼Œç„¶åå¯¹ä¸Šä¸€è½®å·²ç»ä¿å­˜çš„ç»“æœä¸­æ¯ä¸€ä¸ªå­—ç¬¦ä¸²å°è¯•æ‰€æœ‰å¯èƒ½çš„åˆ é™¤ä¸€ä¸ªæ‹¬å·çš„æ–¹æ³•
+// ç„¶åå°†ä¿å­˜çš„ç»“æœè¿›è¡Œä¸‹ä¸€è½®æœç´¢ã€‚ä¿å­˜ç»“æœæ—¶å¯ä»¥åˆ©ç”¨å“ˆå¸Œè¡¨å»é‡
 class Solution {
 private:
-	inline bool isValid(const string& str) {
-		int cnt = 0;
+    inline bool isValid(const string& str) {
+        int cnt = 0;
 
-		for (char c : str) {
-			if (c == '(') {
-				++cnt;
-			}
-			else if (c == ')') {
-				--cnt;
-				if (cnt < 0) {
-					return false;
-				}
-			}
-		}
-		return cnt == 0;
-	}
+        for (char c : str) {
+            if (c == '(') {
+                ++cnt;
+            }
+            else if (c == ')') {
+                --cnt;
+                if (cnt < 0) {
+                    return false;
+                }
+            }
+        }
+        return cnt == 0;
+    }
 public:
-	vector<string> removeInvalidParentheses(string s) {
-		vector<string> ret;
-		unordered_set<string> currSet;
+    vector<string> removeInvalidParentheses(string s) {
+        vector<string> ret;
+        unordered_set<string> currSet;
 
-		currSet.emplace(s);
-		while (true) {
-			// Öğ¸ö¼ì²écurrSetÖĞµÄstrÊÇ·ñºÏ·¨£¬ºÏ·¨µÄ»°·ÅÈëret
-			for (const auto& str : currSet) {
-				if (isValid(str)) {
-					ret.emplace_back(str);
-				}
-			}
-			// Èç¹ûcurrSetÓĞÒ»¸öºÏ·¨×Ö·û´®ÒâÎ¶×ÅËùÓĞºÏ·¨×Ö·û´®ÒÑ½øÈëcurrSet
-			if (ret.size() > 0) return ret;
-			// ÏÂÒ»ÂÖµÄ×Ö·û´®¼¯ºÏ
-			unordered_set<string> nextSet;
-			// Öğ¸ö¼ì²écurrSetÖĞµÄstr
-			for (const auto& str : currSet) {
-				// ´ÓstrµÄµÚ0Î»¿ªÊ¼£¬µü´ú¼ì²éÃ¿Ò»¸ö×Ö·û
-				for (size_t i = 0; i < str.size(); ++i) {
-					// ÈôÓöµ½Á¬ĞøÏàÍ¬×Ö·û£¬Ö»´¦ÀíÒ»´Î(¼´µÚÒ»¸ö)
-					if (i > 0 && str[i] == str[i - 1]) {
-						continue;
-					}
-					// ³¢ÊÔÉ¾³ıµ±Ç°µÚiÎ»µÄ'('»ò')'
-					if (str[i] == '(' || str[i] == ')') {
-						nextSet.emplace(str.substr(0, i) + str.substr(i + 1, str.size()));
-					}
-				}
-			}
-			// nextSet¸³Öµ¸øµ±Ç°¼¯ºÏcurrSet
-			currSet = nextSet;
-		}
-	}
+        currSet.emplace(s);
+        while (true) {
+            // é€ä¸ªæ£€æŸ¥currSetä¸­çš„stræ˜¯å¦åˆæ³•ï¼Œåˆæ³•çš„è¯æ”¾å…¥ret
+            for (const auto& str : currSet) {
+                if (isValid(str)) {
+                    ret.emplace_back(str);
+                }
+            }
+            // å¦‚æœcurrSetæœ‰ä¸€ä¸ªåˆæ³•å­—ç¬¦ä¸²æ„å‘³ç€æ‰€æœ‰åˆæ³•å­—ç¬¦ä¸²å·²è¿›å…¥currSet
+            if (ret.size() > 0) return ret;
+            // ä¸‹ä¸€è½®çš„å­—ç¬¦ä¸²é›†åˆ
+            unordered_set<string> nextSet;
+            // é€ä¸ªæ£€æŸ¥currSetä¸­çš„str
+            for (const auto& str : currSet) {
+                // ä»strçš„ç¬¬0ä½å¼€å§‹ï¼Œè¿­ä»£æ£€æŸ¥æ¯ä¸€ä¸ªå­—ç¬¦
+                for (size_t i = 0; i < str.size(); ++i) {
+                    // è‹¥é‡åˆ°è¿ç»­ç›¸åŒå­—ç¬¦ï¼Œåªå¤„ç†ä¸€æ¬¡(å³ç¬¬ä¸€ä¸ª)
+                    if (i > 0 && str[i] == str[i - 1]) {
+                        continue;
+                    }
+                    // å°è¯•åˆ é™¤å½“å‰ç¬¬iä½çš„'('æˆ–')'
+                    if (str[i] == '(' || str[i] == ')') {
+                        nextSet.emplace(str.substr(0, i) + str.substr(i + 1, str.size()));
+                    }
+                }
+            }
+            // nextSetèµ‹å€¼ç»™å½“å‰é›†åˆcurrSet
+            currSet = nextSet;
+        }
+    }
 };

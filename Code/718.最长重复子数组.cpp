@@ -3,7 +3,7 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®£¬Ê±¼ä O(mn) 296 ms 58%£¬¿Õ¼ä O(mn) 106.5 MB 36%
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ O(mn) 296 ms 58%ï¼Œç©ºé—´ O(mn) 106.5 MB 36%
 class Solution {
 public:
     int findLength(vector<int>& nums1, vector<int>& nums2) {
@@ -25,7 +25,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨2£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é£¬Ê±¼äO(mn) 208 ms 84.26%£¬¿Õ¼ä O(n) 11.5 MB 85%
+// æˆ‘çš„è§£æ³•2ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ï¼Œæ—¶é—´O(mn) 208 ms 84.26%ï¼Œç©ºé—´ O(n) 11.5 MB 85%
 class Solution {
 public:
     int findLength(vector<int>& nums1, vector<int>& nums2) {
@@ -47,7 +47,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨3£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×éĞ¡ÓÅ»¯£¬Ê±¼äO(mn) 192 ms 85.88%£¬¿Õ¼ä O(min{m,n}) 11.4 MB 94.06%
+// æˆ‘çš„è§£æ³•3ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„å°ä¼˜åŒ–ï¼Œæ—¶é—´O(mn) 192 ms 85.88%ï¼Œç©ºé—´ O(min{m,n}) 11.4 MB 94.06%
 class Solution {
 public:
     int findLength(vector<int>& nums1, vector<int>& nums2) {

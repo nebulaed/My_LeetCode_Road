@@ -1,115 +1,116 @@
 #include<iostream>
 #include<vector>
+
 using std::vector;
 
-// ÎÒµÄ½â·¨£º±©Á¦±éÀú£¬Ê±¼äO(n) 24 ms 24.76%£¬¿Õ¼äO(1) 21.7 MB 46.85%
+// æˆ‘çš„è§£æ³•ï¼šæš´åŠ›éå†ï¼Œæ—¶é—´O(n) 24 ms 24.76%ï¼Œç©ºé—´O(1) 21.7 MB 46.85%
 class Solution {
 public:
-	int singleNonDuplicate(vector<int>& nums) {
-		for (size_t i = 0; i < nums.size() - 1; i += 2) {
-			if (nums[i] != nums[i + 1]) {
-				return nums[i];
-			}
-		}
-		return nums.back();
-	}
+    int singleNonDuplicate(vector<int>& nums) {
+        for (size_t i = 0; i < nums.size() - 1; i += 2) {
+            if (nums[i] != nums[i + 1]) {
+                return nums[i];
+            }
+        }
+        return nums.back();
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÒì»ò£¬Ê±¼äO(n) 24 ms 24.76%£¬¿Õ¼äO(1) 21.9 MB 5.41%
+// æˆ‘çš„è§£æ³•ï¼šå¼‚æˆ–ï¼Œæ—¶é—´O(n) 24 ms 24.76%ï¼Œç©ºé—´O(1) 21.9 MB 5.41%
 class Solution {
 public:
-	int singleNonDuplicate(vector<int>& nums) {
-		int ret = 0;
-		for (int num : nums) {
-			ret ^= num;
-		}
-		return ret;
-	}
+    int singleNonDuplicate(vector<int>& nums) {
+        int ret = 0;
+        for (int num : nums) {
+            ret ^= num;
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨£º¶ş·Ö²éÕÒ£¬Ê±¼äO(log n) 20 ms 40%£¬¿Õ¼äO(1) 21.8 MB 19%
+// æˆ‘çš„è§£æ³•ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´O(log n) 20 ms 40%ï¼Œç©ºé—´O(1) 21.8 MB 19%
 class Solution {
 public:
-	int singleNonDuplicate(vector<int>& nums) {
-		int length = nums.size();
-		int left = 0, right = length - 1;
-		while (left <= right) {
-			int mid = (left + right) >> 1;
-			int midVal = nums[mid];
-			bool parity = mid & 1;
-			if ((parity && midVal == nums[mid - 1]) || (mid < length - 1 && !parity && midVal == nums[mid + 1])) {
-				left = mid + 1;
-			}
-			else {
-				right = mid - 1;
-			}
-		}
-		return nums[left];
-	}
-};
-
-
-// ¹Ù·½½â·¨2£º¶ş·ÖËÑË÷£¬Ê±¼äO(log n) 16 ms 47.53%£¬¿Õ¼äO(1) 21.9 MB 5.41%
-// µ±´ÓÖĞĞÄÒÆ³ıÒ»¶ÔÔªËØºó£¬Ê£ÏÂ×ó×ÓÊı×éºÍÓÒ×ÓÊı×é
-// ÓëÔ­Êı×éÒ»Ñù£¬°üº¬µ¥¸öÔªËØµÄ×ÓÊı×éÔªËØ¸öÊı±ØÎªÆæÊı£¬²»°üº¬µ¥¸öÔªËØµÄ×ÓÊı×é±ØÎªÅ¼Êı¡£¾ßÌåËã·¨£º
-// 1. ½«low ºÍhighÖ¸ÏòÊı×éÊ×Î²Á½¸öÔªËØ£¬È»ºó½øĞĞ¶ş·ÖËÑË÷½«Êı×éËÑË÷¿Õ¼ä¼õ°ë£¬Ö±µ½ÕÒµ½µ¥Ò»ÔªËØ»ò½öÊ£Ò»¸öÔªËØÎªÖ¹¡£µ±ËÑË÷¿Õ¼äÖ»Ê£Ò»¸öÔªËØ£¬¸ÃÔªËØ¾ÍÊÇ´ğ°¸¡£
-// 2. ÔÚÃ¿´ÎÑ­»·µü´úÖĞ£¬È·¶¨mid£¬±äÁ¿halvesAreEven = (high-mid)%2 == 0£¬Í¨¹ı²é¿´ÖĞ¼äÔªËØÍ¬Ò»ÔªËØÎª×ó²à×ÓÊı×éµÄ×îºóÒ»¸öÔªËØ»¹ÊÇÓÒ²àÊı×éµÄµÚÒ»¸öÔªËØ£¬¿ÉÒÔÈ·¶¨ÏÖÔÚÄÄÒ»²àÔªËØ¸öÊıÎªÆæÊı£¬²¢¸üĞÂlowºÍhigh
-// 3. ×îÄÑµÄÊÇ¸ù¾İmidºÍhalvesAreEvenÀ´¸üĞÂlowºÍhigh.
-// 3.1 ÖĞ¼äÔªËØµÄÍ¬Ò»ÔªËØÔÚÓÒ±ß£¬ÇÒmidÎªÅ¼Êı£ºlow = mid + 2
-// 3.2 ÖĞ¼äÔªËØµÄÍ¬Ò»ÔªËØÔÚÓÒ±ß£¬ÇÒmidÎªÆæÊı£ºhigh = mid - 1
-// 3.3 ÖĞ¼äÔªËØµÄÍ¬Ò»ÔªËØÔÚ×ó±ß£¬ÇÒmidÎªÅ¼Êı£ºhigh = mid - 2
-// 3.4 ÖĞ¼äÔªËØµÄÍ¬Ò»ÔªËØÔÚ×ó±ß£¬ÇÒmidÎªÆæÊı£ºlow = mid + 1
-class Solution {
-public:
-	int singleNonDuplicate(vector<int>& nums) {
-		int low = 0, high = nums.size() - 1;
-		while (low < high) {
-			int mid = (low + high) >> 1;
-			int midVal = nums[mid];
-			// midÊÇ·ñÎªÅ¼Êı£¬ÊÇÎª1£¬·ñÎª0
-			bool midIsEven = !(mid & 1);
-			// ÖĞ¼äÔªËØµÄÍ¬Ò»ÔªËØÔÚÓÒ±ß
-			if (nums[mid + 1] == midVal) {
-				if (midIsEven) {
-					low = mid + 2;
-				}
-				else {
-					high = mid - 1;
-				}
-			}
-			// ÖĞ¼äÔªËØµÄÍ¬Ò»ÔªËØÔÚ×ó±ß
-			else if (nums[mid - 1] == midVal) {
-				if (midIsEven) {
-					high = mid - 2;
-				}
-				else {
-					low = mid + 1;
-				}
-			}
-			else return midVal;
-		}
-		return nums[low];
-	}
+    int singleNonDuplicate(vector<int>& nums) {
+        int length = nums.size();
+        int left = 0, right = length - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            int midVal = nums[mid];
+            bool parity = mid & 1;
+            if ((parity && midVal == nums[mid - 1]) || (mid < length - 1 && !parity && midVal == nums[mid + 1])) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+        return nums[left];
+    }
 };
 
 
-// ¹Ù·½½â·¨3£º½ö¶ÔÅ¼ÊıË÷Òı½øĞĞ¶ş·ÖËÑË÷£¬Ê±¼äO(log n/2)=O(log n) 20 ms 39.31%£¬¿Õ¼äO(1) 21.8 MB 33.51%
-// ÔÚµ¥¸öÔªËØµÄºóÃæ£¬³É¶ÔÔªËØ±ä³ÉÆæÊıË÷Òıºó¸úËûÃÇµÄÍ¬Ò»ÔªËØ
-// ËµÃ÷ÎÒÃÇÔÚ¼ìË÷µ¥¸öÔªËØºóÃæµÄÅ¼ÊıË÷ÒıÊ±£¬ÆäºóÃ»ÓĞËüµÄÍ¬Ò»ÔªËØ¡£
+// å®˜æ–¹è§£æ³•2ï¼šäºŒåˆ†æœç´¢ï¼Œæ—¶é—´O(log n) 16 ms 47.53%ï¼Œç©ºé—´O(1) 21.9 MB 5.41%
+// å½“ä»ä¸­å¿ƒç§»é™¤ä¸€å¯¹å…ƒç´ åï¼Œå‰©ä¸‹å·¦å­æ•°ç»„å’Œå³å­æ•°ç»„
+// ä¸åŸæ•°ç»„ä¸€æ ·ï¼ŒåŒ…å«å•ä¸ªå…ƒç´ çš„å­æ•°ç»„å…ƒç´ ä¸ªæ•°å¿…ä¸ºå¥‡æ•°ï¼Œä¸åŒ…å«å•ä¸ªå…ƒç´ çš„å­æ•°ç»„å¿…ä¸ºå¶æ•°ã€‚å…·ä½“ç®—æ³•ï¼š
+// 1. å°†low å’ŒhighæŒ‡å‘æ•°ç»„é¦–å°¾ä¸¤ä¸ªå…ƒç´ ï¼Œç„¶åè¿›è¡ŒäºŒåˆ†æœç´¢å°†æ•°ç»„æœç´¢ç©ºé—´å‡åŠï¼Œç›´åˆ°æ‰¾åˆ°å•ä¸€å…ƒç´ æˆ–ä»…å‰©ä¸€ä¸ªå…ƒç´ ä¸ºæ­¢ã€‚å½“æœç´¢ç©ºé—´åªå‰©ä¸€ä¸ªå…ƒç´ ï¼Œè¯¥å…ƒç´ å°±æ˜¯ç­”æ¡ˆã€‚
+// 2. åœ¨æ¯æ¬¡å¾ªç¯è¿­ä»£ä¸­ï¼Œç¡®å®šmidï¼Œå˜é‡halvesAreEven = (high-mid)%2 == 0ï¼Œé€šè¿‡æŸ¥çœ‹ä¸­é—´å…ƒç´ åŒä¸€å…ƒç´ ä¸ºå·¦ä¾§å­æ•°ç»„çš„æœ€åä¸€ä¸ªå…ƒç´ è¿˜æ˜¯å³ä¾§æ•°ç»„çš„ç¬¬ä¸€ä¸ªå…ƒç´ ï¼Œå¯ä»¥ç¡®å®šç°åœ¨å“ªä¸€ä¾§å…ƒç´ ä¸ªæ•°ä¸ºå¥‡æ•°ï¼Œå¹¶æ›´æ–°lowå’Œhigh
+// 3. æœ€éš¾çš„æ˜¯æ ¹æ®midå’ŒhalvesAreEvenæ¥æ›´æ–°lowå’Œhigh.
+// 3.1 ä¸­é—´å…ƒç´ çš„åŒä¸€å…ƒç´ åœ¨å³è¾¹ï¼Œä¸”midä¸ºå¶æ•°ï¼šlow = mid + 2
+// 3.2 ä¸­é—´å…ƒç´ çš„åŒä¸€å…ƒç´ åœ¨å³è¾¹ï¼Œä¸”midä¸ºå¥‡æ•°ï¼šhigh = mid - 1
+// 3.3 ä¸­é—´å…ƒç´ çš„åŒä¸€å…ƒç´ åœ¨å·¦è¾¹ï¼Œä¸”midä¸ºå¶æ•°ï¼šhigh = mid - 2
+// 3.4 ä¸­é—´å…ƒç´ çš„åŒä¸€å…ƒç´ åœ¨å·¦è¾¹ï¼Œä¸”midä¸ºå¥‡æ•°ï¼šlow = mid + 1
 class Solution {
 public:
-	int singleNonDuplicate(vector<int>& nums) {
-		int low = 0, high = nums.size() - 1;
-		while (low < high) {
-			int mid = (low + high) >> 1;
-			if (mid & 1) --mid;
-			if (nums[mid] == nums[mid + 1]) {
-				low = mid + 2;
-			}
-			else {
-				high = mid;
-			}
-		}
-		return nums[low];
-	}
+    int singleNonDuplicate(vector<int>& nums) {
+        int low = 0, high = nums.size() - 1;
+        while (low < high) {
+            int mid = (low + high) >> 1;
+            int midVal = nums[mid];
+            // midæ˜¯å¦ä¸ºå¶æ•°ï¼Œæ˜¯ä¸º1ï¼Œå¦ä¸º0
+            bool midIsEven = !(mid & 1);
+            // ä¸­é—´å…ƒç´ çš„åŒä¸€å…ƒç´ åœ¨å³è¾¹
+            if (nums[mid + 1] == midVal) {
+                if (midIsEven) {
+                    low = mid + 2;
+                }
+                else {
+                    high = mid - 1;
+                }
+            }
+                // ä¸­é—´å…ƒç´ çš„åŒä¸€å…ƒç´ åœ¨å·¦è¾¹
+            else if (nums[mid - 1] == midVal) {
+                if (midIsEven) {
+                    high = mid - 2;
+                }
+                else {
+                    low = mid + 1;
+                }
+            }
+            else return midVal;
+        }
+        return nums[low];
+    }
+};
+
+
+// å®˜æ–¹è§£æ³•3ï¼šä»…å¯¹å¶æ•°ç´¢å¼•è¿›è¡ŒäºŒåˆ†æœç´¢ï¼Œæ—¶é—´O(log n/2)=O(log n) 20 ms 39.31%ï¼Œç©ºé—´O(1) 21.8 MB 33.51%
+// åœ¨å•ä¸ªå…ƒç´ çš„åé¢ï¼Œæˆå¯¹å…ƒç´ å˜æˆå¥‡æ•°ç´¢å¼•åè·Ÿä»–ä»¬çš„åŒä¸€å…ƒç´ 
+// è¯´æ˜æˆ‘ä»¬åœ¨æ£€ç´¢å•ä¸ªå…ƒç´ åé¢çš„å¶æ•°ç´¢å¼•æ—¶ï¼Œå…¶åæ²¡æœ‰å®ƒçš„åŒä¸€å…ƒç´ ã€‚
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int low = 0, high = nums.size() - 1;
+        while (low < high) {
+            int mid = (low + high) >> 1;
+            if (mid & 1) --mid;
+            if (nums[mid] == nums[mid + 1]) {
+                low = mid + 2;
+            }
+            else {
+                high = mid;
+            }
+        }
+        return nums[low];
+    }
 };

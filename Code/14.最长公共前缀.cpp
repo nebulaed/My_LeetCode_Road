@@ -4,7 +4,7 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨
+// æˆ‘çš„è§£æ³•
 //class Solution {
 //public:
 //	string longestCommonPrefix(vector<string>& strs) {
@@ -26,9 +26,9 @@ using namespace std;
 //};
 
 
-// ·ÖÎö£ºÓÃLCP(S1...Sn)±íÊ¾×Ö·û´®S1...SnµÄ×î³¤¹«¹²Ç°×º
+// åˆ†æï¼šç”¨LCP(S1...Sn)è¡¨ç¤ºå­—ç¬¦ä¸²S1...Snçš„æœ€é•¿å…¬å…±å‰ç¼€
 
-// ¹Ù·½½â·¨1£ººáÏòÉ¨Ãè
+// å®˜æ–¹è§£æ³•1ï¼šæ¨ªå‘æ‰«æ
 // LCP(S1...Sn)=LCP(LCP(LCP(S1,S2),S3),...Sn)
 
 //class Solution {
@@ -58,7 +58,7 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨2£º×İÏòÉ¨Ãè
+// å®˜æ–¹è§£æ³•2ï¼šçºµå‘æ‰«æ
 //class Solution {
 //public:
 //	string longestCommonPrefix(vector<string>& strs) {
@@ -79,10 +79,10 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨3£º·ÖÖÎ
+// å®˜æ–¹è§£æ³•3ï¼šåˆ†æ²»
 // LCP(S1...Sn)=LCP(LCP(S1...Sk),LCP(Sk+1...Sn))
-// ÆäÖĞLCP(S1...Sn)ÊÇ×Ö·û´®S1...SnµÄ×î³¤¹«¹²Ç°×º£¬1<k<n
-// ·ÖÖÎ·¨µÃµ½×Ö·û´®Êı×éÖĞµÄ×î³¤¹«¹²Ç°×º£¬¶ÔÎÊÌâLCP(S1...Sj)¿É·Ö½âÎªLCP(Si...Smid)ÓëLCP(Smid+1...Sj)£¬ÆäÖĞmid=(i+j)/2£¬¶ÔÁ½¸ö×ÓÎÊÌâ·Ö±ğÇó½â£¬È»ºó¶ÔÁ½¸ö×ÓÎÊÌâµÄ½â¼ÆËã×î³¤¹«¹²Ç°×º£¬¼´ÎªÔ­ÎÊÌâ½â
+// å…¶ä¸­LCP(S1...Sn)æ˜¯å­—ç¬¦ä¸²S1...Snçš„æœ€é•¿å…¬å…±å‰ç¼€ï¼Œ1<k<n
+// åˆ†æ²»æ³•å¾—åˆ°å­—ç¬¦ä¸²æ•°ç»„ä¸­çš„æœ€é•¿å…¬å…±å‰ç¼€ï¼Œå¯¹é—®é¢˜LCP(S1...Sj)å¯åˆ†è§£ä¸ºLCP(Si...Smid)ä¸LCP(Smid+1...Sj)ï¼Œå…¶ä¸­mid=(i+j)/2ï¼Œå¯¹ä¸¤ä¸ªå­é—®é¢˜åˆ†åˆ«æ±‚è§£ï¼Œç„¶åå¯¹ä¸¤ä¸ªå­é—®é¢˜çš„è§£è®¡ç®—æœ€é•¿å…¬å…±å‰ç¼€ï¼Œå³ä¸ºåŸé—®é¢˜è§£
 
 //class Solution {
 //public:
@@ -119,59 +119,58 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨4£º¶ş·Ö²éÕÒ
+// å®˜æ–¹è§£æ³•4ï¼šäºŒåˆ†æŸ¥æ‰¾
 class MyCompare {
 public:
-	bool operator()(const string& s, const string& t) {
-		return s.size() < t.size();
-	}
+    bool operator()(const string& s, const string& t) {
+        return s.size() < t.size();
+    }
 };
 
 class Solution {
 public:
-	string longestCommonPrefix(vector<string>& strs) {
-		if (!strs.size()) {
-			return "";
-		}
-		int minLength = min_element(strs.begin(), strs.end(), MyCompare())->size();
-		int low = 0, high = minLength;
-		while (low < high) {
-			int mid = (high - low + 1) / 2 + low;
-			if (isCommonPrefix(strs, mid)) {
-				low = mid;
-			}
-			else {
-				high = mid - 1;
-			}
-		}
-		return strs[0].substr(0, low);
-	}
+    string longestCommonPrefix(vector<string>& strs) {
+        if (!strs.size()) {
+            return "";
+        }
+        int minLength = min_element(strs.begin(), strs.end(), MyCompare())->size();
+        int low = 0, high = minLength;
+        while (low < high) {
+            int mid = (high - low + 1) / 2 + low;
+            if (isCommonPrefix(strs, mid)) {
+                low = mid;
+            }
+            else {
+                high = mid - 1;
+            }
+        }
+        return strs[0].substr(0, low);
+    }
 
-	bool isCommonPrefix(const vector<string>& strs, int length) {
-		string str0 = strs[0].substr(0, length);
-		int count = strs.size();
-		for (int i = 1; i < count; ++i) {
-			for (int j = 0; j < length; ++j) {
-				if (str0[j] != strs[i][j]) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+    bool isCommonPrefix(const vector<string>& strs, int length) {
+        string str0 = strs[0].substr(0, length);
+        int count = strs.size();
+        for (int i = 1; i < count; ++i) {
+            for (int j = 0; j < length; ++j) {
+                if (str0[j] != strs[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 };
 
 
 
 int main() {
-	vector<string> strs = { "flower","flow","flight" };
+    vector<string> strs = { "flower","flow","flight" };
 
-	Solution s;
-	
-	string ret = s.longestCommonPrefix(strs);
+    Solution s;
 
-	cout << ret << endl;
+    string ret = s.longestCommonPrefix(strs);
 
-	system("pause");
-	return 0;
+    cout << ret << endl;
+
+    return 0;
 }

@@ -3,82 +3,82 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode* next) : val(x), next(next) {}
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 12 ms£¬¿Õ¼ä 11.6 MB
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 12 msï¼Œç©ºé—´ 11.6 MB
 class Solution {
 public:
-	ListNode* reverseKGroup(ListNode* head, int k) {
-		ListNode* dummyHead = new ListNode(-1, head);
-		ListNode* temp = dummyHead, * p = dummyHead;
-		while (checkout(temp, k)) {
-			vector<ListNode*> list;
-			for (int i = 0; i < k; ++i) {
-				list.push_back(p->next);
-				p = p->next;
-			}
-			temp->next = list[k - 1];
-			list[0]->next = list[k - 1]->next;
-			for (int i = k - 1; i > 0; --i) {
-				list[i]->next = list[i - 1];
-			}
-			temp = list[0];
-		}
-		return dummyHead->next;
-	}
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* dummyHead = new ListNode(-1, head);
+        ListNode* temp = dummyHead, * p = dummyHead;
+        while (checkout(temp, k)) {
+            vector<ListNode*> list;
+            for (int i = 0; i < k; ++i) {
+                list.push_back(p->next);
+                p = p->next;
+            }
+            temp->next = list[k - 1];
+            list[0]->next = list[k - 1]->next;
+            for (int i = k - 1; i > 0; --i) {
+                list[i]->next = list[i - 1];
+            }
+            temp = list[0];
+        }
+        return dummyHead->next;
+    }
 
-	bool checkout(ListNode* temp, const int& k) {
-		for (int i = 0; i < k; ++i) {
-			if (!temp->next) {
-				return false;
-			}
-			temp = temp->next;
-		}
-		return true;
-	}
+    bool checkout(ListNode* temp, const int& k) {
+        for (int i = 0; i < k; ++i) {
+            if (!temp->next) {
+                return false;
+            }
+            temp = temp->next;
+        }
+        return true;
+    }
 };
 
-// ¹Ù·½½â·¨£ºÄ£Äâ£¬Ê±¼ä 16 ms£¬¿Õ¼ä 11.1 MB
+// å®˜æ–¹è§£æ³•ï¼šæ¨¡æ‹Ÿï¼Œæ—¶é—´ 16 msï¼Œç©ºé—´ 11.1 MB
 class Solution {
 public:
-	// ·­×ªÒ»¸ö×ÓÁ´±í£¬²¢ÇÒ·µ»ØĞÂµÄÍ·ºÍÎ²
-	pair<ListNode*, ListNode*> myReverse(ListNode* head, ListNode* tail) {
-		ListNode* prev = tail->next;
-		ListNode* p = head;
-		while (prev != tail) {
-			ListNode* nex = p->next;
-			p->next = prev;
-			prev = p;
-			p = nex;
-		}
-		return { tail,head };
-	}
-	ListNode* reverseKGroup(ListNode* head, int k) {
-		ListNode* hair = new ListNode(0, head);
-		ListNode* pre = hair;
-		
-		while (head) {
-			ListNode* tail = pre;
-			for (int i = 0; i < k; ++i) {
-				tail = tail->next;
-				if (!tail) {
-					return hair->next;
-				}
-			}
-			ListNode* nex = tail->next;
-			pair<ListNode*, ListNode*> result = myReverse(head, tail);
-			head = result.first;
-			tail = result.second;
-			pre->next = head;
-			tail->next = nex;
-			pre = tail;
-			head = tail->next;
-		}
-		return hair->next;
-	}
+    // ç¿»è½¬ä¸€ä¸ªå­é“¾è¡¨ï¼Œå¹¶ä¸”è¿”å›æ–°çš„å¤´å’Œå°¾
+    pair<ListNode*, ListNode*> myReverse(ListNode* head, ListNode* tail) {
+        ListNode* prev = tail->next;
+        ListNode* p = head;
+        while (prev != tail) {
+            ListNode* nex = p->next;
+            p->next = prev;
+            prev = p;
+            p = nex;
+        }
+        return { tail,head };
+    }
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* hair = new ListNode(0, head);
+        ListNode* pre = hair;
+
+        while (head) {
+            ListNode* tail = pre;
+            for (int i = 0; i < k; ++i) {
+                tail = tail->next;
+                if (!tail) {
+                    return hair->next;
+                }
+            }
+            ListNode* nex = tail->next;
+            pair<ListNode*, ListNode*> result = myReverse(head, tail);
+            head = result.first;
+            tail = result.second;
+            pre->next = head;
+            tail->next = nex;
+            pre = tail;
+            head = tail->next;
+        }
+        return hair->next;
+    }
 };

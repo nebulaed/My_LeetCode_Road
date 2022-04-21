@@ -1,77 +1,77 @@
 #include<iostream>
 #include<unordered_set>
 
-using std::unordered_set;
+using namespace std;
 
-// ÎÒµÄ½â·¨1£º¹şÏ£¼¯ºÏ¼ÇÂ¼£¬³öÏÖÑ­»·¼´Îª¼Ù£¬·ñÔòÎªÕæ£¬Ê±¼ä 4 ms 49.39%£¬¿Õ¼ä 6.1 MB 59.51%
+// æˆ‘çš„è§£æ³•1ï¼šå“ˆå¸Œé›†åˆè®°å½•ï¼Œå‡ºç°å¾ªç¯å³ä¸ºå‡ï¼Œå¦åˆ™ä¸ºçœŸï¼Œæ—¶é—´ 4 ms 49.39%ï¼Œç©ºé—´ 6.1 MB 59.51%
 class Solution {
 public:
-	bool isHappy(int n) {
-		unordered_set<int> record;
-		while (!record.count(n)) {
-			record.emplace(n);
-			int sum = 0;
-			while (n != 0) {
-				int cur = n % 10;
-				sum += cur * cur;
-				n /= 10;
-			}
-			if (sum == 1) return true;
-			n = sum;
-		}
-		return false;
-	}
+    bool isHappy(int n) {
+        unordered_set<int> record;
+        while (!record.count(n)) {
+            record.emplace(n);
+            int sum = 0;
+            while (n != 0) {
+                int cur = n % 10;
+                sum += cur * cur;
+                n /= 10;
+            }
+            if (sum == 1) return true;
+            n = sum;
+        }
+        return false;
+    }
 };
 
 
-// ÎÒµÄ½â·¨2£ºFloydÅĞÈ¦Ëã·¨£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.9 MB 77.63%
+// æˆ‘çš„è§£æ³•2ï¼šFloydåˆ¤åœˆç®—æ³•ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.9 MB 77.63%
 class Solution {
 private:
-	int sumOfSquare(int n) {
-		int sum = 0;
-		while (n != 0) {
-			int cur = n % 10;
-			sum += cur * cur;
-			n /= 10;
-		}
-		return sum;
-	}
+    int sumOfSquare(int n) {
+        int sum = 0;
+        while (n != 0) {
+            int cur = n % 10;
+            sum += cur * cur;
+            n /= 10;
+        }
+        return sum;
+    }
 public:
-	bool isHappy(int n) {
-		int slow = n, fast = n;
-		do {
-			slow = sumOfSquare(slow);
-			fast = sumOfSquare(sumOfSquare(fast));
-			if (fast == 1) return true;
-		} while (slow != fast);
-		return false;
-	}
+    bool isHappy(int n) {
+        int slow = n, fast = n;
+        do {
+            slow = sumOfSquare(slow);
+            fast = sumOfSquare(sumOfSquare(fast));
+            if (fast == 1) return true;
+        } while (slow != fast);
+        return false;
+    }
 };
 
 
-// ¹Ù·½½â·¨Èı£º9µÄÊıÎ»Æ½·½ºÍÎª81£¬99µÄÊıÎ»Æ½·½ºÍÎª162£¬999µÄÊıÎ»Æ½·½ºÍÎª243£¬¿ÉÒÔ·¢ÏÖ´ÓÈıÎ»Êı¿ªÊ¼£¬ÊıÎ»Æ½·½ºÍ±È243Ğ¡£¬±È999´óµÄÊı¾­¹ı¶à´ÎÇóÊıÎ»Æ½·½ºÍºó±Ø¶¨½µ»Ø243ÄÚ£¬ËµÃ÷ÊıÎ»Æ½·½ºÍÖ»ÓĞÁ½ÖÖ¿ÉÄÜ£º
-// 1.×îÖÕµÃµ½1
-// 2.ÔÚ243ÒÔÏÂµÄÊıÀïÑ­»·
-// ¾­¹ıÑĞ¾¿¿ÉÒÔ·¢ÏÖ£¬Ö»ÓĞÒ»¸öÑ­»·£º4->16->37->58->89->145->42->20->4
-// ÆäËûÊı×Ö×îÖÕ¶¼»áµ½´ï1
+// å®˜æ–¹è§£æ³•ä¸‰ï¼š9çš„æ•°ä½å¹³æ–¹å’Œä¸º81ï¼Œ99çš„æ•°ä½å¹³æ–¹å’Œä¸º162ï¼Œ999çš„æ•°ä½å¹³æ–¹å’Œä¸º243ï¼Œå¯ä»¥å‘ç°ä»ä¸‰ä½æ•°å¼€å§‹ï¼Œæ•°ä½å¹³æ–¹å’Œæ¯”243å°ï¼Œæ¯”999å¤§çš„æ•°ç»è¿‡å¤šæ¬¡æ±‚æ•°ä½å¹³æ–¹å’Œåå¿…å®šé™å›243å†…ï¼Œè¯´æ˜æ•°ä½å¹³æ–¹å’Œåªæœ‰ä¸¤ç§å¯èƒ½ï¼š
+// 1.æœ€ç»ˆå¾—åˆ°1
+// 2.åœ¨243ä»¥ä¸‹çš„æ•°é‡Œå¾ªç¯
+// ç»è¿‡ç ”ç©¶å¯ä»¥å‘ç°ï¼Œåªæœ‰ä¸€ä¸ªå¾ªç¯ï¼š4->16->37->58->89->145->42->20->4
+// å…¶ä»–æ•°å­—æœ€ç»ˆéƒ½ä¼šåˆ°è¾¾1
 class Solution {
 private:
-	unordered_set<int> cycle{ 4, 16, 37, 58, 89, 145, 42, 20 };
-	int sumOfSquare(int n) {
-		int sum = 0;
-		while (n != 0) {
-			int cur = n % 10;
-			sum += cur * cur;
-			n /= 10;
-		}
-		return sum;
-	}
+    unordered_set<int> cycle{ 4, 16, 37, 58, 89, 145, 42, 20 };
+    int sumOfSquare(int n) {
+        int sum = 0;
+        while (n != 0) {
+            int cur = n % 10;
+            sum += cur * cur;
+            n /= 10;
+        }
+        return sum;
+    }
 public:
-	bool isHappy(int n) {
-		while (!cycle.count(n)) {
-			n = sumOfSquare(n);
-			if (n == 1) return true;
-		}
-		return false;
-	}
+    bool isHappy(int n) {
+        while (!cycle.count(n)) {
+            n = sumOfSquare(n);
+            if (n == 1) return true;
+        }
+        return false;
+    }
 };

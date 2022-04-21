@@ -3,7 +3,7 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºÅÅĞò+¼ÆÊı£¬Ê±¼äO(n logn) 64 ms£¬¿Õ¼äO(1) 32.8 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæ’åº+è®¡æ•°ï¼Œæ—¶é—´O(n logn) 64 msï¼Œç©ºé—´O(1) 32.8 MB
 //class Solution {
 //public:
 //	vector<int> findDisappearedNumbers(vector<int>& nums) {
@@ -31,7 +31,7 @@ using namespace std;
 //	}
 //};
 
-// ÎÒµÄ½â·¨¶ş£º¹şÏ£±íÊ½Êı×é£¬Ê±¼äO(n) 44 ms£¬¿Õ¼äO(n) 33.2 MB£¬Èô½«boolÊı×éÓÃvector<int>´úÌæÔòÎª33.9 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šå“ˆå¸Œè¡¨å¼æ•°ç»„ï¼Œæ—¶é—´O(n) 44 msï¼Œç©ºé—´O(n) 33.2 MBï¼Œè‹¥å°†boolæ•°ç»„ç”¨vector<int>ä»£æ›¿åˆ™ä¸º33.9 MB
 //class Solution {
 //public:
 //	vector<int> findDisappearedNumbers(vector<int>& nums) {
@@ -50,65 +50,64 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨Ò»£ºÔ­µØĞŞ¸Ä£¬Ê±¼äO(n) 48 ms£¬¿Õ¼äO(1) 32.9 MB
-// ÓÃÒ»¸ö¹şÏ£±í¼ÇÂ¼numsÖĞµÄÊı×Ö£¬¼ÇÂ¼Êı×ÖºóÔÙÓÃ¹şÏ£±í¼ì²é[1,n]ÄÚÃ¿Ò»¸öÊıÊÇ·ñ³öÏÖ£¬ÕÒµ½È±Ê§µÄÊı×Ö
-// ÕâÀï¿ÉÒÔÓÃ³¤¶ÈÎªnµÄÊı×é´úÌæ¹şÏ£±í¡£
-// ÎªÈÃ¿Õ¼ä¸´ÔÓ¶ÈÓÅ»¯µ½O(1)£¬¿ÉÒÔÈÃÊäÈënums³äµ±¹şÏ£±í
-// ÓÉÓÚnumsµÄÊı×Ö·¶Î§¾ùÔÚ[1,n]ÖĞ£¬ÎÒÃÇ¿ÉÒÔÀûÓÃÕâÒ»·¶Î§Ö®ÍâµÄÊı×Ö£¬À´±í´ïÊÇ·ñ´æÔÚµÄº¬Òå
-// ¾ßÌå·½·¨£º±éÀúnums£¬Ã¿Óöµ½Ò»¸öÊıx£¬¾ÍÈÃnums[x-1]Ôö¼Ón¡£ÓÉÓÚnumsÖĞËùÓĞÊı¾ùÔÚ[1,n]ÖĞ¡£Ôö¼ÓÒÔºó£¬ÕâĞ©Êı±ØÈ»´óÓÚn¡£×îºóÎÒÃÇ±éÀúnums£¬Èônums[i]Î´´óÓÚn£¬ËµÃ÷Ã»Óöµ½¹ıÊıi+1¡£ÕâÑù¾ÍÕÒµ½ÁËÈ±Ê§µÄÊı×Ö¡£
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŸåœ°ä¿®æ”¹ï¼Œæ—¶é—´O(n) 48 msï¼Œç©ºé—´O(1) 32.9 MB
+// ç”¨ä¸€ä¸ªå“ˆå¸Œè¡¨è®°å½•numsä¸­çš„æ•°å­—ï¼Œè®°å½•æ•°å­—åå†ç”¨å“ˆå¸Œè¡¨æ£€æŸ¥[1,n]å†…æ¯ä¸€ä¸ªæ•°æ˜¯å¦å‡ºç°ï¼Œæ‰¾åˆ°ç¼ºå¤±çš„æ•°å­—
+// è¿™é‡Œå¯ä»¥ç”¨é•¿åº¦ä¸ºnçš„æ•°ç»„ä»£æ›¿å“ˆå¸Œè¡¨ã€‚
+// ä¸ºè®©ç©ºé—´å¤æ‚åº¦ä¼˜åŒ–åˆ°O(1)ï¼Œå¯ä»¥è®©è¾“å…¥numså……å½“å“ˆå¸Œè¡¨
+// ç”±äºnumsçš„æ•°å­—èŒƒå›´å‡åœ¨[1,n]ä¸­ï¼Œæˆ‘ä»¬å¯ä»¥åˆ©ç”¨è¿™ä¸€èŒƒå›´ä¹‹å¤–çš„æ•°å­—ï¼Œæ¥è¡¨è¾¾æ˜¯å¦å­˜åœ¨çš„å«ä¹‰
+// å…·ä½“æ–¹æ³•ï¼šéå†numsï¼Œæ¯é‡åˆ°ä¸€ä¸ªæ•°xï¼Œå°±è®©nums[x-1]å¢åŠ nã€‚ç”±äºnumsä¸­æ‰€æœ‰æ•°å‡åœ¨[1,n]ä¸­ã€‚å¢åŠ ä»¥åï¼Œè¿™äº›æ•°å¿…ç„¶å¤§äºnã€‚æœ€åæˆ‘ä»¬éå†numsï¼Œè‹¥nums[i]æœªå¤§äºnï¼Œè¯´æ˜æ²¡é‡åˆ°è¿‡æ•°i+1ã€‚è¿™æ ·å°±æ‰¾åˆ°äº†ç¼ºå¤±çš„æ•°å­—ã€‚
 class Solution {
 public:
-	vector<int> findDisappearedNumbers(vector<int>& nums) {
-		int n = nums.size();
-		for (int num : nums) {
-			// ×¢Òâ£¬ÓÉÓÚnumÓĞ¿ÉÄÜÊÇÖ®Ç°µÄnums[num-1]£¬±»¼Ó¹ın£¬ËùÒÔÒª¶Ônum-1½øĞĞ³ıÒÔnÈ¡ÓàÊı
-			int x = (num - 1) % n;
-			nums[num - 1] += n;
-		}
-		vector<int> ret;
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] <= n) {
-				ret.emplace_back(i + 1);
-			}
-		}
-		return ret;
-	}
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        int n = nums.size();
+        for (int num : nums) {
+            // æ³¨æ„ï¼Œç”±äºnumæœ‰å¯èƒ½æ˜¯ä¹‹å‰çš„nums[num-1]ï¼Œè¢«åŠ è¿‡nï¼Œæ‰€ä»¥è¦å¯¹num-1è¿›è¡Œé™¤ä»¥nå–ä½™æ•°
+            int x = (num - 1) % n;
+            nums[num - 1] += n;
+        }
+        vector<int> ret;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] <= n) {
+                ret.emplace_back(i + 1);
+            }
+        }
+        return ret;
+    }
 };
 
-// LeetCode 101½â·¨£ºÊ±¼ä O(n) 40 ms 85.10%£¬¿Õ¼ä 32.8 MB 85.50%
-// Ë¼Â·£º½«ÒÑ³öÏÖµÄÊı×Ö¶ÔÓ¦µÄÎ»ÖÃµÄÊı×Ö±äÎª¸ºÊı£¬È»ºó±éÀúÕû¸öÊı×é½«·Ç¸ºµÄÎ»ÖÃ¶ÔÓ¦µÄÊı×Ö·ÅÈë½á¹ûÖĞ
-// Ïàµ±ÓÚ°ÑÔ­Êı×éµ±³É¹şÏ£±íÀ´Ê¹ÓÃ»òÕßÍ°À´Ê¹ÓÃ
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ O(n) 40 ms 85.10%ï¼Œç©ºé—´ 32.8 MB 85.50%
+// æ€è·¯ï¼šå°†å·²å‡ºç°çš„æ•°å­—å¯¹åº”çš„ä½ç½®çš„æ•°å­—å˜ä¸ºè´Ÿæ•°ï¼Œç„¶åéå†æ•´ä¸ªæ•°ç»„å°†éè´Ÿçš„ä½ç½®å¯¹åº”çš„æ•°å­—æ”¾å…¥ç»“æœä¸­
+// ç›¸å½“äºæŠŠåŸæ•°ç»„å½“æˆå“ˆå¸Œè¡¨æ¥ä½¿ç”¨æˆ–è€…æ¡¶æ¥ä½¿ç”¨
 class Solution {
 public:
-	vector<int> findDisappearedNumbers(vector<int>& nums) {
-		for (int num : nums) {
-			int& cur = nums[abs(num) - 1];
-			if (cur > 0) {
-				cur = -cur;
-			}
-		}
-		vector<int> ret;
-		int n = nums.size();
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] > 0) {
-				ret.emplace_back(i + 1);
-			}
-		}
-		return ret;
-	}
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        for (int num : nums) {
+            int& cur = nums[abs(num) - 1];
+            if (cur > 0) {
+                cur = -cur;
+            }
+        }
+        vector<int> ret;
+        int n = nums.size();
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] > 0) {
+                ret.emplace_back(i + 1);
+            }
+        }
+        return ret;
+    }
 };
 
 int main() {
 
-	vector<int> nums = { 4,3,2,7,8,2,3,1 };
+    vector<int> nums = { 4,3,2,7,8,2,3,1 };
 
-	Solution s;
-	vector<int> ret = s.findDisappearedNumbers(nums);
+    Solution s;
+    vector<int> ret = s.findDisappearedNumbers(nums);
 
-	for (int num : ret) {
-		cout << num << ",";
-	}
+    for (int num : ret) {
+        cout << num << ",";
+    }
 
-	system("pause");
-	return 0;
+    return 0;
 }

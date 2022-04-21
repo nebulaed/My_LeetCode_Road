@@ -5,141 +5,141 @@
 #include<queue>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¹şÏ£±í+¶ş²æÅÅĞòÊ÷£¬Ê±¼äO(n log n) 16 ms£¬¿Õ¼äO(n) 13.5 MB
+// æˆ‘çš„è§£æ³•ï¼šå“ˆå¸Œè¡¨+äºŒå‰æ’åºæ ‘ï¼Œæ—¶é—´O(n log n) 16 msï¼Œç©ºé—´O(n) 13.5 MB
 class Solution {
 public:
-	vector<int> topKFrequent(vector<int>& nums, int k) {
-		unordered_map<int, int> numFreq;
-		for (int num : nums) {
-			++numFreq[num];
-		}
-		multimap<int, int> freqNum;
-		for (auto it = numFreq.begin(); it != numFreq.end(); ++it) {
-			freqNum.emplace(it->second, it->first);
-		}
-		vector<int> ret;
-		int count = 0;
-		for (auto rit = freqNum.rbegin(); count < k; ++rit) {
-			ret.emplace_back(rit->second);
-			++count;
-		}
-		return ret;
-	}
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> numFreq;
+        for (int num : nums) {
+            ++numFreq[num];
+        }
+        multimap<int, int> freqNum;
+        for (auto it = numFreq.begin(); it != numFreq.end(); ++it) {
+            freqNum.emplace(it->second, it->first);
+        }
+        vector<int> ret;
+        int count = 0;
+        for (auto rit = freqNum.rbegin(); count < k; ++rit) {
+            ret.emplace_back(rit->second);
+            ++count;
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¶Ñ£¬Ê±¼äO(n log k) 16 ms£¬¿Õ¼äO(n)+O(k) = O(n) 13.2 MB
-// ÏÈÓÃ¹şÏ£±í¼ÇÂ¼Ã¿¸öÊı×Ö³öÏÖµÄ´ÎÊı£¬ĞÎ³ÉÒ»¸ö¡°³öÏÖ´ÎÊıÊı×é¡±
-// ÀûÓÃ¶ÑµÄË¼Ïë£º½¨Á¢Ò»¸öĞ¡¶¥¶Ñ£¬È»ºó±éÀú³öÏÖ´ÎÊıÊı×é£º
-// 1. Èç¹û¶ÑµÄÔªËØ¸öÊıĞ¡ÓÚk£¬Ö±½Ó²åÈë¶ÑÖĞ
-// 2. Èç¹û¶ÑµÄÔªËØ¸öÊıµÈÓÚk£¬Ôò¼ì²é¶Ñ¶¥Óëµ±Ç°Êı³öÏÖ´ÎÊıµÄ´óĞ¡¡£Èç¹û¶Ñ¶¥¸ü´ó£¬ÉáÆúµ±Ç°Öµ£»·ñÔòµ¯³ö¶Ñ¶¥£¬½«µ±Ç°Öµ²åÈë¶ÑÖĞ
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå †ï¼Œæ—¶é—´O(n log k) 16 msï¼Œç©ºé—´O(n)+O(k) = O(n) 13.2 MB
+// å…ˆç”¨å“ˆå¸Œè¡¨è®°å½•æ¯ä¸ªæ•°å­—å‡ºç°çš„æ¬¡æ•°ï¼Œå½¢æˆä¸€ä¸ªâ€œå‡ºç°æ¬¡æ•°æ•°ç»„â€
+// åˆ©ç”¨å †çš„æ€æƒ³ï¼šå»ºç«‹ä¸€ä¸ªå°é¡¶å †ï¼Œç„¶åéå†å‡ºç°æ¬¡æ•°æ•°ç»„ï¼š
+// 1. å¦‚æœå †çš„å…ƒç´ ä¸ªæ•°å°äºkï¼Œç›´æ¥æ’å…¥å †ä¸­
+// 2. å¦‚æœå †çš„å…ƒç´ ä¸ªæ•°ç­‰äºkï¼Œåˆ™æ£€æŸ¥å †é¡¶ä¸å½“å‰æ•°å‡ºç°æ¬¡æ•°çš„å¤§å°ã€‚å¦‚æœå †é¡¶æ›´å¤§ï¼Œèˆå¼ƒå½“å‰å€¼ï¼›å¦åˆ™å¼¹å‡ºå †é¡¶ï¼Œå°†å½“å‰å€¼æ’å…¥å †ä¸­
 class Solution {
 private:
-	static bool cmp(pair<int, int>& left, pair<int, int>& right){
-		return left.second > right.second;
-	}
+    static bool cmp(pair<int, int>& left, pair<int, int>& right){
+        return left.second > right.second;
+    }
 public:
-	vector<int> topKFrequent(vector<int>& nums, int k) {
-		unordered_map<int, int> numFreq;
-		for (int num : nums) {
-			++numFreq[num];
-		}
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> numFreq;
+        for (int num : nums) {
+            ++numFreq[num];
+        }
 
-		priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(&cmp)> q(cmp);
-		for (const auto& item : numFreq) {
-			if (q.size() == k) {
-				if (q.top().second < item.second) {
-					q.pop();
-					q.emplace(item);
-				}
-			}
-			else q.emplace(item);
-		}
-		vector<int> ret;
-		while (!q.empty()) {
-			ret.emplace_back(q.top().first);
-			q.pop();
-		}
-		return ret;
-	}
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(&cmp)> q(cmp);
+        for (const auto& item : numFreq) {
+            if (q.size() == k) {
+                if (q.top().second < item.second) {
+                    q.pop();
+                    q.emplace(item);
+                }
+            }
+            else q.emplace(item);
+        }
+        vector<int> ret;
+        while (!q.empty()) {
+            ret.emplace_back(q.top().first);
+            q.pop();
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º»ùÓÚ¿ìËÙÅÅĞò£¬Ê±¼ä×î»µO(n^2)£¬Æ½¾ùO(n) 8 ms£¬¿Õ¼äO(n) 13.3 MB
-// ¶ÑÊı×éarr[l...r]×ö¿ìËÙÅÅĞòµÄ¹ı³ÌÖĞ£¬½«Êı×é»®·ÖÎªÁ½¸ö²¿·Öarr[i...q-1]ºÍarr[q+1...j]£¬²¢Ê¹µÃarr[i...q-1]ÖĞµÄÃ¿Ò»¸öÖµ¶¼²»³¬¹ıarr[q]£¬ÇÒarr[q+1...j]ÖĞµÄÃ¿Ò»¸öÖµ¶¼´óÓÚarr[q]¡£
-// ¸ù¾İkÓë×ó²à×ÓÊı×éarr[i...q-1]µÄ³¤¶Èq-iµÄ´óĞ¡¹ØÏµ£º
-// 1. Èôk<=q-i£¬ÔòÊı×éarr[l...r]Ç°k´óµÄÖµ£¬¾ÍµÈÓÚ×ÓÊı×éarr[i...q-1]Ç°k´óµÄÖµ¡£
-// 2. ·ñÔò£¬arr[l...r]Ç°k´óµÄÖµ£¬¾ÍµÈÓÚ×ó²à×ÓÊı×éÈ«²¿ÔªËØ£¬¼ÓÉÏÓÒ²à×ÓÊı×éarr[q+1...j]ÖĞÇ°k-(q-i)´óµÄÖµ¡£
+// å®˜æ–¹è§£æ³•äºŒï¼šåŸºäºå¿«é€Ÿæ’åºï¼Œæ—¶é—´æœ€åO(n^2)ï¼Œå¹³å‡O(n) 8 msï¼Œç©ºé—´O(n) 13.3 MB
+// å †æ•°ç»„arr[l...r]åšå¿«é€Ÿæ’åºçš„è¿‡ç¨‹ä¸­ï¼Œå°†æ•°ç»„åˆ’åˆ†ä¸ºä¸¤ä¸ªéƒ¨åˆ†arr[i...q-1]å’Œarr[q+1...j]ï¼Œå¹¶ä½¿å¾—arr[i...q-1]ä¸­çš„æ¯ä¸€ä¸ªå€¼éƒ½ä¸è¶…è¿‡arr[q]ï¼Œä¸”arr[q+1...j]ä¸­çš„æ¯ä¸€ä¸ªå€¼éƒ½å¤§äºarr[q]ã€‚
+// æ ¹æ®kä¸å·¦ä¾§å­æ•°ç»„arr[i...q-1]çš„é•¿åº¦q-içš„å¤§å°å…³ç³»ï¼š
+// 1. è‹¥k<=q-iï¼Œåˆ™æ•°ç»„arr[l...r]å‰kå¤§çš„å€¼ï¼Œå°±ç­‰äºå­æ•°ç»„arr[i...q-1]å‰kå¤§çš„å€¼ã€‚
+// 2. å¦åˆ™ï¼Œarr[l...r]å‰kå¤§çš„å€¼ï¼Œå°±ç­‰äºå·¦ä¾§å­æ•°ç»„å…¨éƒ¨å…ƒç´ ï¼ŒåŠ ä¸Šå³ä¾§å­æ•°ç»„arr[q+1...j]ä¸­å‰k-(q-i)å¤§çš„å€¼ã€‚
 class Solution {
 private:
-	void qsort(vector<pair<int, int>>& vec, size_t start, size_t end, vector<int>& ret, int k) {
-		int picked = rand() % (end - start + 1) + start;
-		swap(vec[picked], vec[start]);
-		
-		int pivot = vec[start].second;
-		size_t index = start;
-		for (size_t i = start + 1; i <= end; ++i) {
-			if (vec[i].second >= pivot) {
-				swap(vec[index + 1], vec[i]);
-				++index;
-			}
-		}
-		swap(vec[start], vec[index]);
+    void qsort(vector<pair<int, int>>& vec, size_t start, size_t end, vector<int>& ret, int k) {
+        int picked = rand() % (end - start + 1) + start;
+        swap(vec[picked], vec[start]);
 
-		if (k <= index - start) {
-			qsort(vec, start, index - 1, ret, k);
-		}
-		else {
-			for (size_t i = start; i <= index; ++i) {
-				ret.emplace_back(vec[i].first);
-			}
-			if (k > index - start + 1) {
-				qsort(vec, index + 1, end, ret, k - (index - start + 1));
-			}
-		}
-	}
+        int pivot = vec[start].second;
+        size_t index = start;
+        for (size_t i = start + 1; i <= end; ++i) {
+            if (vec[i].second >= pivot) {
+                swap(vec[index + 1], vec[i]);
+                ++index;
+            }
+        }
+        swap(vec[start], vec[index]);
+
+        if (k <= index - start) {
+            qsort(vec, start, index - 1, ret, k);
+        }
+        else {
+            for (size_t i = start; i <= index; ++i) {
+                ret.emplace_back(vec[i].first);
+            }
+            if (k > index - start + 1) {
+                qsort(vec, index + 1, end, ret, k - (index - start + 1));
+            }
+        }
+    }
 
 public:
-	vector<int> topKFrequent(vector<int>& nums, int k) {
-		unordered_map<int, int> numFreqs;
-		for (int num : nums) {
-			++numFreqs[num];
-		}
-		vector<pair<int, int>> values;
-		for (const auto& pair : numFreqs) {
-			values.emplace_back(pair);
-		}
-		vector<int> ret;
-		qsort(values, 0, values.size() - 1, ret, k);
-		return ret;
-	}
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> numFreqs;
+        for (int num : nums) {
+            ++numFreqs[num];
+        }
+        vector<pair<int, int>> values;
+        for (const auto& pair : numFreqs) {
+            values.emplace_back(pair);
+        }
+        vector<int> ret;
+        qsort(values, 0, values.size() - 1, ret, k);
+        return ret;
+    }
 };
 
-// LeetCode 101½â·¨£ºÍ°ÅÅĞò£¬Ê±¼ä 16 ms£¬¿Õ¼ä 13.5 MB
-// Ë¼Â·£ºÍ°ÅÅĞòµÄº¬ÒåÊÇÎªÃ¿¸öÖµÉèÁ¢Ò»¸öÍ°£¬Í°ÄÚ¼ÇÂ¼Õâ¸öÖµ³öÏÖµÄ´ÎÊı(»òÆäËûÊôĞÔ)£¬È»ºó¶ÔÍ°½øĞĞÅÅĞò¡£
-// ¶ÔÑùÀı[1,1,1,1,2,2,3,4]£¬ÏÈÍ¨¹ıÍ°ÅÅĞòµÃµ½ËÄ¸öÍ°[1,2,3,4]£¬Öµ·Ö±ğÎª[4,2,1,1]£¬±íÊ¾Ã¿¸öÊı×Ö³öÏÖµÄ´ÎÊı¡£
-// È»ºó¶ÔÍ°µÄÆµ´Î½øĞĞÅÅĞò£¬Ç°k´ó¸öÍ°¾ÍÊÇÇ°k¸öÆµ·±µÄÊı¡£¿ÉÒÔÊ¹ÓÃ¸÷ÖÖÅÅĞòËã·¨£¬ÉõÖÁ¿ÉÒÔÔÙ½øĞĞÒ»´ÎÍ°ÅÅĞò£¬°ÑÃ¿¸ö¾ÉÍ°¸ù¾İÆµ´Î·ÅÔÚ²»Í¬µÄĞÂÍ°ÄÚ¡£
-// ¶ÔÓÚÑùÀı£¬ÒòÎªÄ¿Ç°×î´óÆµ´ÎÊÇ4£¬½¨Á¢[1,2,3,4]ËÄ¸öĞÂÍ°£¬·Ö±ğ·ÅÈëµÄ¾ÉÍ°Îª[[3,4],[2],[],[1]]£¬±íÊ¾²»Í¬Êı×Ö³öÏÖµÄÆµÂÊ¡£×îºó´ÓºóÍùÇ°±éÀú£¬Ö±µ½ÕÒµ½k¸ö¾ÉÍ°¡£
+// LeetCode 101è§£æ³•ï¼šæ¡¶æ’åºï¼Œæ—¶é—´ 16 msï¼Œç©ºé—´ 13.5 MB
+// æ€è·¯ï¼šæ¡¶æ’åºçš„å«ä¹‰æ˜¯ä¸ºæ¯ä¸ªå€¼è®¾ç«‹ä¸€ä¸ªæ¡¶ï¼Œæ¡¶å†…è®°å½•è¿™ä¸ªå€¼å‡ºç°çš„æ¬¡æ•°(æˆ–å…¶ä»–å±æ€§)ï¼Œç„¶åå¯¹æ¡¶è¿›è¡Œæ’åºã€‚
+// å¯¹æ ·ä¾‹[1,1,1,1,2,2,3,4]ï¼Œå…ˆé€šè¿‡æ¡¶æ’åºå¾—åˆ°å››ä¸ªæ¡¶[1,2,3,4]ï¼Œå€¼åˆ†åˆ«ä¸º[4,2,1,1]ï¼Œè¡¨ç¤ºæ¯ä¸ªæ•°å­—å‡ºç°çš„æ¬¡æ•°ã€‚
+// ç„¶åå¯¹æ¡¶çš„é¢‘æ¬¡è¿›è¡Œæ’åºï¼Œå‰kå¤§ä¸ªæ¡¶å°±æ˜¯å‰kä¸ªé¢‘ç¹çš„æ•°ã€‚å¯ä»¥ä½¿ç”¨å„ç§æ’åºç®—æ³•ï¼Œç”šè‡³å¯ä»¥å†è¿›è¡Œä¸€æ¬¡æ¡¶æ’åºï¼ŒæŠŠæ¯ä¸ªæ—§æ¡¶æ ¹æ®é¢‘æ¬¡æ”¾åœ¨ä¸åŒçš„æ–°æ¡¶å†…ã€‚
+// å¯¹äºæ ·ä¾‹ï¼Œå› ä¸ºç›®å‰æœ€å¤§é¢‘æ¬¡æ˜¯4ï¼Œå»ºç«‹[1,2,3,4]å››ä¸ªæ–°æ¡¶ï¼Œåˆ†åˆ«æ”¾å…¥çš„æ—§æ¡¶ä¸º[[3,4],[2],[],[1]]ï¼Œè¡¨ç¤ºä¸åŒæ•°å­—å‡ºç°çš„é¢‘ç‡ã€‚æœ€åä»åå¾€å‰éå†ï¼Œç›´åˆ°æ‰¾åˆ°kä¸ªæ—§æ¡¶ã€‚
 class Solution {
 public:
-	vector<int> topKFrequent(vector<int>& nums, int k) {
-		unordered_map<int, int> numFreqs;
-		int maxCount = 0;
-		for (int num : nums) {
-			maxCount = max(maxCount, ++numFreqs[num]);
-		}
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> numFreqs;
+        int maxCount = 0;
+        for (int num : nums) {
+            maxCount = max(maxCount, ++numFreqs[num]);
+        }
 
-		vector<vector<int>> buckets(maxCount + 1);
-		for (const auto& pair : numFreqs){
-			buckets[pair.second].emplace_back(pair.first);
-		}
+        vector<vector<int>> buckets(maxCount + 1);
+        for (const auto& pair : numFreqs){
+            buckets[pair.second].emplace_back(pair.first);
+        }
 
-		vector<int> ret(k);
-		int ptr = -1;
-		for (int i = maxCount; i >= 0 && ptr < k - 1; --i) {
-			for (int num : buckets[i]) {
-				ret[++ptr] = num;
-				if (ptr == k - 1) break;
-			}
-		}
-		return ret;
-	}
+        vector<int> ret(k);
+        int ptr = -1;
+        for (int i = maxCount; i >= 0 && ptr < k - 1; --i) {
+            for (int num : buckets[i]) {
+                ret[++ptr] = num;
+                if (ptr == k - 1) break;
+            }
+        }
+        return ret;
+    }
 };

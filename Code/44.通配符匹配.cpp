@@ -3,157 +3,157 @@
 #include<vector>
 using namespace std;
 
-// ×Ô¼º½â·¨£º 64 ms£¬27.3 MB
+// è‡ªå·±è§£æ³•ï¼š 64 msï¼Œ27.3 MB
 class Solution {
 public:
-	bool isMatch(string s, string p) {
-		int m = s.size();
-		int n = p.size();
+    bool isMatch(string s, string p) {
+        int m = s.size();
+        int n = p.size();
 
-		auto matches = [&](int i, int j) {
-			if (i == 0) {
-				return false;
-			}
-			if (p[j - 1] == '?') {
-				return true;
-			}
-			return s[i - 1] == p[j - 1];
-		};
+        auto matches = [&](int i, int j) {
+            if (i == 0) {
+                return false;
+            }
+            if (p[j - 1] == '?') {
+                return true;
+            }
+            return s[i - 1] == p[j - 1];
+        };
 
-		vector<vector<int>> f(m + 1, vector<int>(n + 1));
-		f[0][0] = true;
-		// ²Î¿¼´ğ°¸Ö¸µã²¿·Ö
-		for (int i = 1; i <= n; ++i) {
-			if (p[i - 1] == '*') {
-				f[0][i] = true;
-			}
-			else {
-				break;
-			}
-		}
-		//
-		for (int i = 0; i <= m; ++i) {
-			for (int j = 1; j <= n; ++j) {
-				if (p[j - 1] == '*') {
-					if (i > 0) {
-						f[i][j] |= f[i - 1][j];
-						if (j > 1) {
-							// ²Î¿¼´ğ°¸Ö¸µã²¿·Ö
-							// if(matches(i, j-1)){
-							f[i][j] |= f[i][j - 1];
-							// }
-						}
-						else f[i][j] = true;
-					}
-				}
-				else {
-					if (matches(i, j)) {
-						f[i][j] |= f[i - 1][j - 1];
-					}
-				}
-			}
-		}
-		return f[m][n];
-	}
+        vector<vector<int>> f(m + 1, vector<int>(n + 1));
+        f[0][0] = true;
+        // å‚è€ƒç­”æ¡ˆæŒ‡ç‚¹éƒ¨åˆ†
+        for (int i = 1; i <= n; ++i) {
+            if (p[i - 1] == '*') {
+                f[0][i] = true;
+            }
+            else {
+                break;
+            }
+        }
+        //
+        for (int i = 0; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (p[j - 1] == '*') {
+                    if (i > 0) {
+                        f[i][j] |= f[i - 1][j];
+                        if (j > 1) {
+                            // å‚è€ƒç­”æ¡ˆæŒ‡ç‚¹éƒ¨åˆ†
+                            // if(matches(i, j-1)){
+                            f[i][j] |= f[i][j - 1];
+                            // }
+                        }
+                        else f[i][j] = true;
+                    }
+                }
+                else {
+                    if (matches(i, j)) {
+                        f[i][j] |= f[i - 1][j - 1];
+                    }
+                }
+            }
+        }
+        return f[m][n];
+    }
 };
 
-// ¹Ù·½½â·¨1£º¶¯Ì¬¹æ»® O(mn) 64 ms£¬O(mn) 27.1 MB
+// å®˜æ–¹è§£æ³•1ï¼šåŠ¨æ€è§„åˆ’ O(mn) 64 msï¼ŒO(mn) 27.1 MB
 class Solution {
 public:
-	bool isMatch(string s, string p) {
-		int m = s.size();
-		int n = p.size();
-		vector<vector<int>> dp(m + 1, vector<int>(n + 1));
-		dp[0][0] = true;
-		for (int i = 1; i <= n; ++i) {
-			if (p[i - 1] == '*') {
-				dp[0][i] = true;
-			}
-			else {
-				break;
-			}
-		}
-		for (int i = 1; i <= m; ++i) {
-			for (int j = 1; j <= n; ++j) {
-				if (p[j - 1] == '*') {
-					dp[i][j] = dp[i][j - 1] | dp[i - 1][j];
-				}
-				else if (p[j - 1] == '?' || s[i - 1] == p[j - 1]) {
-					dp[i][j] = dp[i - 1][j - 1];
-				}
-			}
-		}
-		return dp[m][n];
-	}
+    bool isMatch(string s, string p) {
+        int m = s.size();
+        int n = p.size();
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1));
+        dp[0][0] = true;
+        for (int i = 1; i <= n; ++i) {
+            if (p[i - 1] == '*') {
+                dp[0][i] = true;
+            }
+            else {
+                break;
+            }
+        }
+        for (int i = 1; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (p[j - 1] == '*') {
+                    dp[i][j] = dp[i][j - 1] | dp[i - 1][j];
+                }
+                else if (p[j - 1] == '?' || s[i - 1] == p[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+            }
+        }
+        return dp[m][n];
+    }
 };
 
-// ¹Ù·½½â·¨2£ºÌ°ĞÄËã·¨ ½¥½øÊ±¼ä¸´ÔÓ¶ÈO(mn)£¬Æ½¾ùÊ±¼ä¸´ÔÓ¶ÈO(mlog n) 8 ms£¬6.4 MB
+// å®˜æ–¹è§£æ³•2ï¼šè´ªå¿ƒç®—æ³• æ¸è¿›æ—¶é—´å¤æ‚åº¦O(mn)ï¼Œå¹³å‡æ—¶é—´å¤æ‚åº¦O(mlog n) 8 msï¼Œ6.4 MB
 class Solution {
 public:
-	bool isMatch(string s, string p) {
-		// ¼ì²éstrÔÚ[left,right)ÄÚÊÇ·ñ¶¼Îª*
-		auto allStars = [](const string& str, int left, int right) {
-			for (int i = left; i < right; ++i) {
-				if (str[i] != '*') {
-					return false;
-				}
-			}
-			return true;
-		};
-		// ¼ì²éuºÍvÊÇ·ñÆ¥Åä
-		auto charMatch = [](char u, char v) {
-			return u == v || v == '?';
-		};
+    bool isMatch(string s, string p) {
+        // æ£€æŸ¥stråœ¨[left,right)å†…æ˜¯å¦éƒ½ä¸º*
+        auto allStars = [](const string& str, int left, int right) {
+            for (int i = left; i < right; ++i) {
+                if (str[i] != '*') {
+                    return false;
+                }
+            }
+            return true;
+        };
+        // æ£€æŸ¥uå’Œvæ˜¯å¦åŒ¹é…
+        auto charMatch = [](char u, char v) {
+            return u == v || v == '?';
+        };
 
-		// Èôs¡¢pµÄ³¤¶È²»Îª0£¬ÇÒpµÄ×îºóÒ»¸ö×Ö·û²»Îª*£¬ÅĞ¶ÏsºÍpµÄ½áÎ²×Ö·ûÊÇ·ñÆ¥Åä£¬ÊÇÔò½«sºÍpµÄ½áÎ²Ò»Í¬Öğ×Ö·ûÉ¾È¥£¬·ñÔòÆ¥ÅäÊ§°Ü
-		while (s.size() && p.size() && p.back() != '*') {
-			if (charMatch(s.back(), p.back())) {
-				s.pop_back();
-				p.pop_back();
-			}
-			else {
-				return false;
-			}
-		}
-		// ÈôpÎª¿Õ£¬ÔòsÎª¿ÕÊ±Æ¥Åä³É¹¦£¬·ñÔòÆ¥ÅäÊ§°Ü
-		if (p.empty()) {
-			return s.empty();
-		}
+        // è‹¥sã€pçš„é•¿åº¦ä¸ä¸º0ï¼Œä¸”pçš„æœ€åä¸€ä¸ªå­—ç¬¦ä¸ä¸º*ï¼Œåˆ¤æ–­så’Œpçš„ç»“å°¾å­—ç¬¦æ˜¯å¦åŒ¹é…ï¼Œæ˜¯åˆ™å°†så’Œpçš„ç»“å°¾ä¸€åŒé€å­—ç¬¦åˆ å»ï¼Œå¦åˆ™åŒ¹é…å¤±è´¥
+        while (s.size() && p.size() && p.back() != '*') {
+            if (charMatch(s.back(), p.back())) {
+                s.pop_back();
+                p.pop_back();
+            }
+            else {
+                return false;
+            }
+        }
+        // è‹¥pä¸ºç©ºï¼Œåˆ™sä¸ºç©ºæ—¶åŒ¹é…æˆåŠŸï¼Œå¦åˆ™åŒ¹é…å¤±è´¥
+        if (p.empty()) {
+            return s.empty();
+        }
 
-		// index´Ó0¿ªÊ¼£¬sRecord´Ó-1¿ªÊ¼£¬ÈôpµÚÒ»¸ö×Ö·ûÊÇ*£¬sRecordºÍpRecord²Å´ÓpIndex¿ªÊ¼£¬·ñÔòÒªÖğÒ»Æ¥Åä×Ö·ûÖ±µ½pµÄµÚÒ»¸ö*
-		int sIndex = 0, pIndex = 0;
-		int sRecord = -1, pRecord = -1;
-		while (sIndex < s.size() && pIndex < p.size()) {
-			if (p[pIndex] == '*') {
-				++pIndex;
-				sRecord = sIndex;
-				pRecord = pIndex;
-			}
-			else if (charMatch(s[sIndex], p[pIndex])) {
-				++sIndex;
-				++pIndex;
-			}
-			else if (sRecord != -1 && sRecord + 1 < s.size()) {
-				++sRecord;
-				sIndex = sRecord;
-				pIndex = pRecord;
-			}
-			else {
-				return false;
-			}
-		}
-		return allStars(p, pIndex, p.size());
-	}
+        // indexä»0å¼€å§‹ï¼ŒsRecordä»-1å¼€å§‹ï¼Œè‹¥pç¬¬ä¸€ä¸ªå­—ç¬¦æ˜¯*ï¼ŒsRecordå’ŒpRecordæ‰ä»pIndexå¼€å§‹ï¼Œå¦åˆ™è¦é€ä¸€åŒ¹é…å­—ç¬¦ç›´åˆ°pçš„ç¬¬ä¸€ä¸ª*
+        int sIndex = 0, pIndex = 0;
+        int sRecord = -1, pRecord = -1;
+        while (sIndex < s.size() && pIndex < p.size()) {
+            if (p[pIndex] == '*') {
+                ++pIndex;
+                sRecord = sIndex;
+                pRecord = pIndex;
+            }
+            else if (charMatch(s[sIndex], p[pIndex])) {
+                ++sIndex;
+                ++pIndex;
+            }
+            else if (sRecord != -1 && sRecord + 1 < s.size()) {
+                ++sRecord;
+                sIndex = sRecord;
+                pIndex = pRecord;
+            }
+            else {
+                return false;
+            }
+        }
+        return allStars(p, pIndex, p.size());
+    }
 };
 
 int main() {
-	string s = "aa";
-	string p = "*";
+    string s = "aa";
+    string p = "*";
 
-	Solution sol;
-	bool ret = sol.isMatch(s, p);
+    Solution sol;
+    bool ret = sol.isMatch(s, p);
 
-	cout << ret << endl;
-	system("pause");
-	return 0;
+    cout << ret << endl;
+
+    return 0;
 }

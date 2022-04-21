@@ -2,226 +2,225 @@
 #include<vector>
 #include<algorithm>
 
-using std::vector;
-using std::max;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º¶¯Ì¬¹æ»®£¬Ê±¼ä 8 ms 11.92%£¬¿Õ¼ä 7.1 MB 9.36%
+// æˆ‘çš„è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 8 ms 11.92%ï¼Œç©ºé—´ 7.1 MB 9.36%
 class Solution {
 public:
-	int wiggleMaxLength(vector<int>& nums) {
-		size_t n = nums.size();
-		vector<int> dp(n, 1);
-		vector<int> prev(n, -1);
-		int maxLength = 0;
-		for (size_t i = 1; i <= n; ++i) {
-			int& cur = dp[i - 1], curNum = nums[i - 1];
-			for (size_t j = i - 1; j > 0; --j) {
-				int pre = dp[j - 1], preNum = nums[j - 1];
-				if (curNum > preNum && (j < 2 || preNum < prev[j - 1])) {
-					if (cur <= pre) {
-						cur = pre + 1;
-						prev[i - 1] = preNum;
-					}
-				}
-				else if (curNum < preNum && (j < 2 || preNum > nums[j - 2])) {
-					if (cur <= pre) {
-						cur = pre + 1;
-						prev[i - 1] = preNum;
-					}
-				}
-			}
-			maxLength = max(maxLength, cur);
-		}
-		return maxLength;
-	}
+    int wiggleMaxLength(vector<int>& nums) {
+        size_t n = nums.size();
+        vector<int> dp(n, 1);
+        vector<int> prev(n, -1);
+        int maxLength = 0;
+        for (size_t i = 1; i <= n; ++i) {
+            int& cur = dp[i - 1], curNum = nums[i - 1];
+            for (size_t j = i - 1; j > 0; --j) {
+                int pre = dp[j - 1], preNum = nums[j - 1];
+                if (curNum > preNum && (j < 2 || preNum < prev[j - 1])) {
+                    if (cur <= pre) {
+                        cur = pre + 1;
+                        prev[i - 1] = preNum;
+                    }
+                }
+                else if (curNum < preNum && (j < 2 || preNum > nums[j - 2])) {
+                    if (cur <= pre) {
+                        cur = pre + 1;
+                        prev[i - 1] = preNum;
+                    }
+                }
+            }
+            maxLength = max(maxLength, cur);
+        }
+        return maxLength;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£º¶¯Ì¬¹æ»®£¬Ê±¼ä 8 ms 11.92%£¬¿Õ¼ä 7.1 MB 15.03%
+// æˆ‘çš„è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 8 ms 11.92%ï¼Œç©ºé—´ 7.1 MB 15.03%
 class Solution {
 public:
-	int wiggleMaxLength(vector<int>& nums) {
-		size_t n = nums.size();
-		vector<int> dp(n, 1);
-		vector<bool> prev(n, false);
-		int maxLength = 0;
-		for (size_t i = 1; i <= n; ++i) {
-			int& cur = dp[i - 1], curNum = nums[i - 1];
-			for (size_t j = i - 1; j > 0; --j) {
-				int pre = dp[j - 1], preNum = nums[j - 1];
-				bool preFlag = prev[j - 1];
-				if (j < 2) {
-					if (cur <= pre) {
-						if (curNum > preNum) {
-							cur = pre + 1;
-							prev[i - 1] = true;
-						}
-						else if (curNum < preNum) {
-							cur = pre + 1;
-							prev[i - 1] = false;
-						}
-					}
-					continue;
-				}
-				if (curNum > preNum && !preFlag) {
-					if (cur <= pre) {
-						cur = pre + 1;
-						prev[i - 1] = !preFlag;
-					}
-				}
-				else if (curNum < preNum && preFlag) {
-					if (cur <= pre) {
-						cur = pre + 1;
-						prev[i - 1] = !preFlag;
-					}
-				}
-			}
-			maxLength = max(maxLength, cur);
-		}
-		return maxLength;
-	}
+    int wiggleMaxLength(vector<int>& nums) {
+        size_t n = nums.size();
+        vector<int> dp(n, 1);
+        vector<bool> prev(n, false);
+        int maxLength = 0;
+        for (size_t i = 1; i <= n; ++i) {
+            int& cur = dp[i - 1], curNum = nums[i - 1];
+            for (size_t j = i - 1; j > 0; --j) {
+                int pre = dp[j - 1], preNum = nums[j - 1];
+                bool preFlag = prev[j - 1];
+                if (j < 2) {
+                    if (cur <= pre) {
+                        if (curNum > preNum) {
+                            cur = pre + 1;
+                            prev[i - 1] = true;
+                        }
+                        else if (curNum < preNum) {
+                            cur = pre + 1;
+                            prev[i - 1] = false;
+                        }
+                    }
+                    continue;
+                }
+                if (curNum > preNum && !preFlag) {
+                    if (cur <= pre) {
+                        cur = pre + 1;
+                        prev[i - 1] = !preFlag;
+                    }
+                }
+                else if (curNum < preNum && preFlag) {
+                    if (cur <= pre) {
+                        cur = pre + 1;
+                        prev[i - 1] = !preFlag;
+                    }
+                }
+            }
+            maxLength = max(maxLength, cur);
+        }
+        return maxLength;
+    }
 };
 
-// ÎÒµÄ½â·¨Èı£ºÌ°ĞÄ£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 7 MB 19.62%
+// æˆ‘çš„è§£æ³•ä¸‰ï¼šè´ªå¿ƒï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 7 MB 19.62%
 class Solution {
 public:
-	int wiggleMaxLength(vector<int>& nums) {
-		size_t n = nums.size();
-		if (n == 1) return n;
-		// ÈôµÚ¶ş¸öÔªËØµÈÓÚµÚÒ»¸öÔªËØ£¬°Ú¶¯ĞòÁĞµÄ¿ªÍ·Ö»ÓĞÒ»¸öÔªËØ£¬·ñÔòÓĞÁ½¸ö
-		bool equal = nums[0] == nums[1];
-		vector<int> endArr{ nums[0] };
-		if (!equal) {
-			endArr.emplace_back(nums[1]);
-		}
-		// ÅĞ¶ÏµÚ¶ş¸öÔªËØÊÇ´óÓÚµÚÒ»¸öÔªËØ»¹ÊÇĞ¡ÓÚµÚÒ»¸öÔªËØ
-		bool swing = nums[0] < nums[1];
-		for (size_t i = 2; i < n; ++i) {
-			int num = nums[i];
-			// Èôµ±Ç°ÔªËØµÈÓÚ°Ú¶¯ĞòÁĞ½áÎ²ÔªËØ£¬Ö±½ÓÌø¹ı
-			if (num == endArr.back()) {
-				continue;
-			}
-			// Èô°Ú¶¯ĞòÁĞÄ¿Ç°Ö»ÓĞÒ»¸öÔªËØ£¬µ±Ç°ÔªËØÖ»ÒªÓë¸ÃÔªËØ²»ÏàµÈ£¬¶¼¿ÉÒÔ·Å½ø°Ú¶¯ĞòÁĞ
-			if (equal) {
-				// ÈôµÚ¶şÔªËØĞ¡ÓÚ°Ú¶¯ĞòÁĞµÚÒ»ÔªËØ£¬±ê¼ÇswingÎª¼Ù
-				if (num < endArr.back()) {
-					swing = false;
-				}
-				// ÈôµÚ¶şÔªËØ´óÓÚ°Ú¶¯ĞòÁĞµÚÒ»ÔªËØ£¬±ê¼ÇswingÎªÕæ
-				else {
-					swing = true;
-				}
-				endArr.emplace_back(num);
-				// °Ú¶¯ĞòÁĞ²»ÔÙÖ»ÓĞÒ»¸öÔªËØ
-				equal = false;
-				continue;
-			}
-			// Èô°Ú¶¯ĞòÁĞ½áÎ²ÔªËØ±ÈÉÏÒ»ÔªËØ´ó
-			if (swing) {
-				// Èôµ±Ç°ÔªËØ±È°Ú¶¯ĞòÁĞ½áÎ²ÔªËØĞ¡£¬¹¹³Éprev < end > num£¬¿ÉÒÔ·Å½ø°Ú¶¯ĞòÁĞ£¬²¢±ê¼ÇswingÎª¼Ù
-				if (num < endArr.back()) {
-					endArr.emplace_back(num);
-					swing = false;
-				}
-				// Èôµ±Ç°ÔªËØ±È°Ú¶¯ĞòÁĞ½áÎ²ÔªËØ´ó£¬¸üĞÂ°Ú¶¯ĞòÁĞ½áÎ²ÔªËØÎªnum
-				else {
-					endArr.back() = num;
-				}
-			}
-			// Èô°Ú¶¯ĞòÁĞ½áÎ²ÔªËØ±ÈÉÏÒ»ÔªËØĞ¡
-			else {
-				// Èôµ±Ç°ÔªËØ±È°Ú¶¯ĞòÁĞ½áÎ²ÔªËØ´ó£¬¹¹³Éprev > end < num£¬¿ÉÒÔ·Å½ø°Ú¶¯ĞòÁĞ£¬²¢±ê¼ÇswingÎªÕæ
-				if (num > endArr.back()) {
-					endArr.emplace_back(num);
-					swing = true;
-				}
-				// Èôµ±Ç°ÔªËØ±È°Ú¶¯ĞòÁĞ½áÎ²ÔªËØĞ¡£¬¸üĞÂ°Ú¶¯ĞòÁĞ½áÎ²ÔªËØÎªnum
-				else {
-					endArr.back() = num;
-				}
-			}
-		}
-		return endArr.size();
-	}
+    int wiggleMaxLength(vector<int>& nums) {
+        size_t n = nums.size();
+        if (n == 1) return n;
+        // è‹¥ç¬¬äºŒä¸ªå…ƒç´ ç­‰äºç¬¬ä¸€ä¸ªå…ƒç´ ï¼Œæ‘†åŠ¨åºåˆ—çš„å¼€å¤´åªæœ‰ä¸€ä¸ªå…ƒç´ ï¼Œå¦åˆ™æœ‰ä¸¤ä¸ª
+        bool equal = nums[0] == nums[1];
+        vector<int> endArr{ nums[0] };
+        if (!equal) {
+            endArr.emplace_back(nums[1]);
+        }
+        // åˆ¤æ–­ç¬¬äºŒä¸ªå…ƒç´ æ˜¯å¤§äºç¬¬ä¸€ä¸ªå…ƒç´ è¿˜æ˜¯å°äºç¬¬ä¸€ä¸ªå…ƒç´ 
+        bool swing = nums[0] < nums[1];
+        for (size_t i = 2; i < n; ++i) {
+            int num = nums[i];
+            // è‹¥å½“å‰å…ƒç´ ç­‰äºæ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ ï¼Œç›´æ¥è·³è¿‡
+            if (num == endArr.back()) {
+                continue;
+            }
+            // è‹¥æ‘†åŠ¨åºåˆ—ç›®å‰åªæœ‰ä¸€ä¸ªå…ƒç´ ï¼Œå½“å‰å…ƒç´ åªè¦ä¸è¯¥å…ƒç´ ä¸ç›¸ç­‰ï¼Œéƒ½å¯ä»¥æ”¾è¿›æ‘†åŠ¨åºåˆ—
+            if (equal) {
+                // è‹¥ç¬¬äºŒå…ƒç´ å°äºæ‘†åŠ¨åºåˆ—ç¬¬ä¸€å…ƒç´ ï¼Œæ ‡è®°swingä¸ºå‡
+                if (num < endArr.back()) {
+                    swing = false;
+                }
+                    // è‹¥ç¬¬äºŒå…ƒç´ å¤§äºæ‘†åŠ¨åºåˆ—ç¬¬ä¸€å…ƒç´ ï¼Œæ ‡è®°swingä¸ºçœŸ
+                else {
+                    swing = true;
+                }
+                endArr.emplace_back(num);
+                // æ‘†åŠ¨åºåˆ—ä¸å†åªæœ‰ä¸€ä¸ªå…ƒç´ 
+                equal = false;
+                continue;
+            }
+            // è‹¥æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ æ¯”ä¸Šä¸€å…ƒç´ å¤§
+            if (swing) {
+                // è‹¥å½“å‰å…ƒç´ æ¯”æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ å°ï¼Œæ„æˆprev < end > numï¼Œå¯ä»¥æ”¾è¿›æ‘†åŠ¨åºåˆ—ï¼Œå¹¶æ ‡è®°swingä¸ºå‡
+                if (num < endArr.back()) {
+                    endArr.emplace_back(num);
+                    swing = false;
+                }
+                    // è‹¥å½“å‰å…ƒç´ æ¯”æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ å¤§ï¼Œæ›´æ–°æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ ä¸ºnum
+                else {
+                    endArr.back() = num;
+                }
+            }
+                // è‹¥æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ æ¯”ä¸Šä¸€å…ƒç´ å°
+            else {
+                // è‹¥å½“å‰å…ƒç´ æ¯”æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ å¤§ï¼Œæ„æˆprev > end < numï¼Œå¯ä»¥æ”¾è¿›æ‘†åŠ¨åºåˆ—ï¼Œå¹¶æ ‡è®°swingä¸ºçœŸ
+                if (num > endArr.back()) {
+                    endArr.emplace_back(num);
+                    swing = true;
+                }
+                    // è‹¥å½“å‰å…ƒç´ æ¯”æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ å°ï¼Œæ›´æ–°æ‘†åŠ¨åºåˆ—ç»“å°¾å…ƒç´ ä¸ºnum
+                else {
+                    endArr.back() = num;
+                }
+            }
+        }
+        return endArr.size();
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¶¯Ì¬¹æ»®£¬Ê±¼äO(n) 4 ms 34.79%£¬¿Õ¼äO(n) 7.1 MB 16.44%
-// ÉÏÉı°Ú¶¯ĞòÁĞ±íÊ¾×îºóÒ»¸öÔªËØÉÏÉıµÄ°Ú¶¯ĞòÁĞ£¬...
-// Ë¼Â·£ºÁĞ³ö×´Ì¬±í´ïÊ½Îª£º
-// 1.up[i]±íÊ¾ÒÔÇ°i¸öÔªËØÖĞµÄÄ³Ò»¸öÎª½áÎ²µÄ×î³¤ÉÏÉı°Ú¶¯ĞòÁĞµÄ³¤¶È
-// 2.down[i]±íÊ¾ÒÔÇ°i¸öÔªËØÖĞµÄÄ³Ò»¸öÎª½áÎ²µÄ×î³¤µÄÏÂ½µ°Ú¶¯ĞòÁĞ³¤¶È
-// ÒÔup[i]ÎªÀı£¬ËµÃ÷Æä×´Ì¬×ªÒÆ¹æÔò£º
-// 1. µ±nums[i] <= nums[i - 1]£¬ÉÏÉı°Ú¶¯ĞòÁĞÎŞ·¨À©Õ¹£¬up[i] = up[i - 1]
-// 2. µ±nums[i] > nums[i - 1]£¬up[i] = max(up[i - 1], down[i - 1] + 1)
-// ÀàËÆµØÓĞ£¬1.down[i] = down[i - 1]
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n) 4 ms 34.79%ï¼Œç©ºé—´O(n) 7.1 MB 16.44%
+// ä¸Šå‡æ‘†åŠ¨åºåˆ—è¡¨ç¤ºæœ€åä¸€ä¸ªå…ƒç´ ä¸Šå‡çš„æ‘†åŠ¨åºåˆ—ï¼Œ...
+// æ€è·¯ï¼šåˆ—å‡ºçŠ¶æ€è¡¨è¾¾å¼ä¸ºï¼š
+// 1.up[i]è¡¨ç¤ºä»¥å‰iä¸ªå…ƒç´ ä¸­çš„æŸä¸€ä¸ªä¸ºç»“å°¾çš„æœ€é•¿ä¸Šå‡æ‘†åŠ¨åºåˆ—çš„é•¿åº¦
+// 2.down[i]è¡¨ç¤ºä»¥å‰iä¸ªå…ƒç´ ä¸­çš„æŸä¸€ä¸ªä¸ºç»“å°¾çš„æœ€é•¿çš„ä¸‹é™æ‘†åŠ¨åºåˆ—é•¿åº¦
+// ä»¥up[i]ä¸ºä¾‹ï¼Œè¯´æ˜å…¶çŠ¶æ€è½¬ç§»è§„åˆ™ï¼š
+// 1. å½“nums[i] <= nums[i - 1]ï¼Œä¸Šå‡æ‘†åŠ¨åºåˆ—æ— æ³•æ‰©å±•ï¼Œup[i] = up[i - 1]
+// 2. å½“nums[i] > nums[i - 1]ï¼Œup[i] = max(up[i - 1], down[i - 1] + 1)
+// ç±»ä¼¼åœ°æœ‰ï¼Œ1.down[i] = down[i - 1]
 // 2. down[i] = max(down[i-1], up[i - 1] + 1)
 class Solution {
 public:
-	int wiggleMaxLength(vector<int>& nums) {
-		int n = nums.size();
-		if (n < 2) {
-			return n;
-		}
-		vector<int> up(n), down(n);
-		up[0] = down[0] = 1;
-		for (int i = 1; i < n; i++) {
-			if (nums[i] > nums[i - 1]) {
-				up[i] = max(up[i - 1], down[i - 1] + 1);
-				down[i] = down[i - 1];
-			}
-			else if (nums[i] < nums[i - 1]) {
-				up[i] = up[i - 1];
-				down[i] = max(up[i - 1] + 1, down[i - 1]);
-			}
-			else {
-				up[i] = up[i - 1];
-				down[i] = down[i - 1];
-			}
-		}
-		return max(up[n - 1], down[n - 1]);
-	}
+    int wiggleMaxLength(vector<int>& nums) {
+        int n = nums.size();
+        if (n < 2) {
+            return n;
+        }
+        vector<int> up(n), down(n);
+        up[0] = down[0] = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > nums[i - 1]) {
+                up[i] = max(up[i - 1], down[i - 1] + 1);
+                down[i] = down[i - 1];
+            }
+            else if (nums[i] < nums[i - 1]) {
+                up[i] = up[i - 1];
+                down[i] = max(up[i - 1] + 1, down[i - 1]);
+            }
+            else {
+                up[i] = up[i - 1];
+                down[i] = down[i - 1];
+            }
+        }
+        return max(up[n - 1], down[n - 1]);
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é£¬Ê±¼äO(n) 0 ms 100%£¬¿Õ¼äO(1) 6.8 MB 69.86%
+// å®˜æ–¹è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ï¼Œæ—¶é—´O(n) 0 ms 100%ï¼Œç©ºé—´O(1) 6.8 MB 69.86%
 class Solution {
 public:
-	int wiggleMaxLength(vector<int>& nums) {
-		int n = nums.size();
-		if (n < 2) {
-			return n;
-		}
-		int up = 1, down = 1;
-		for (int i = 1; i < n; i++) {
-			if (nums[i] > nums[i - 1]) {
-				// ×¢Òâµ½Ã¿ÓĞÒ»¸ö·åµ½¹È£¬down²Å»á+1£¬Ã¿ÓĞÒ»¸ö¹Èµ½·åup²Å»á+1£¬¹ı³ÌÖĞdownÓëupµÄ²îºã²»´óÓÚ1£¬Òò´Ëup<=down + 1ÇÒdown <= up + 1£¬Òò´Ë²»±ØÒª¶ÔupºÍdown+1È¡×î´óÖµ£¬Ò²²»±Ø¶Ôup+1ºÍdownÈ¡×î´óÖµ
-				//up = max(up, down + 1);
-				up = down + 1;
-				
-			}
-			else if (nums[i] < nums[i - 1]) {
-				//down = max(up + 1, down);
-				down = up + 1;
-			}
-		}
-		return max(up, down);
-	}
+    int wiggleMaxLength(vector<int>& nums) {
+        int n = nums.size();
+        if (n < 2) {
+            return n;
+        }
+        int up = 1, down = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > nums[i - 1]) {
+                // æ³¨æ„åˆ°æ¯æœ‰ä¸€ä¸ªå³°åˆ°è°·ï¼Œdownæ‰ä¼š+1ï¼Œæ¯æœ‰ä¸€ä¸ªè°·åˆ°å³°upæ‰ä¼š+1ï¼Œè¿‡ç¨‹ä¸­downä¸upçš„å·®æ’ä¸å¤§äº1ï¼Œå› æ­¤up<=down + 1ä¸”down <= up + 1ï¼Œå› æ­¤ä¸å¿…è¦å¯¹upå’Œdown+1å–æœ€å¤§å€¼ï¼Œä¹Ÿä¸å¿…å¯¹up+1å’Œdownå–æœ€å¤§å€¼
+                //up = max(up, down + 1);
+                up = down + 1;
+
+            }
+            else if (nums[i] < nums[i - 1]) {
+                //down = max(up + 1, down);
+                down = up + 1;
+            }
+        }
+        return max(up, down);
+    }
 };
 
-// ¹Ù·½½â·¨Èı£ºÌ°ĞÄ£¬Ê±¼äO(n) 0 ms 100%£¬¿Õ¼äO(1) 6.9 MB 60.73%
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šè´ªå¿ƒï¼Œæ—¶é—´O(n) 0 ms 100%ï¼Œç©ºé—´O(1) 6.9 MB 60.73%
 class Solution {
 public:
-	int wiggleMaxLength(vector<int>& nums) {
-		int n = nums.size();
-		if (n < 2) return n;
-		int prevdiff = nums[1] - nums[0];
-		int ret = prevdiff != 0 ? 2 : 1;
-		for (int i = 2; i < n; i++) {
-			int diff = nums[i] - nums[i - 1];
-			if ((diff > 0 && prevdiff <= 0) || (diff < 0 && prevdiff >= 0)) {
-				++ret;
-				prevdiff = diff;
-			}
-		}
-		return ret;
-	}
+    int wiggleMaxLength(vector<int>& nums) {
+        int n = nums.size();
+        if (n < 2) return n;
+        int prevdiff = nums[1] - nums[0];
+        int ret = prevdiff != 0 ? 2 : 1;
+        for (int i = 2; i < n; i++) {
+            int diff = nums[i] - nums[i - 1];
+            if ((diff > 0 && prevdiff <= 0) || (diff < 0 && prevdiff >= 0)) {
+                ++ret;
+                prevdiff = diff;
+            }
+        }
+        return ret;
+    }
 };

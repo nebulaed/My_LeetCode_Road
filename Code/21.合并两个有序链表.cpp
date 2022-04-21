@@ -2,88 +2,88 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode* next) : val(x), next(next) {}
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£¬Ð§ÂÊ×îµÍ
+// æˆ‘çš„è§£æ³•ï¼Œæ•ˆçŽ‡æœ€ä½Ž
 class Solution {
 public:
-	ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-		ListNode* dummy1 = new ListNode(0, l1);
-		ListNode* dummy2 = new ListNode(0, l2);
-		ListNode* p, * q, * temp;
-		p = dummy1;
-		q = dummy2;
-		while (p->next && q->next) {
-			if (p->next->val <= q->next->val && (q->next->val <= p->next->next->val || !p->next->next)) {
-				temp = q->next;
-				q->next = temp->next;
-				temp->next = p->next->next;
-				p->next->next = temp;
-			}
-			else if (p->next->val < q->next->val && (p->next->next->val < q->next->val || !p->next->next)) {
-				p = p->next;
-			}
-			else if (p->next->val > q->next->val) {
-				temp = q->next;
-				q->next = temp->next;
-				temp->next = p->next;
-				p->next = temp;
-			}
-		}
-		if (q->next) p->next = q->next;
-		ListNode* ret = dummy1->next;
-		delete dummy1, dummy2;
-		return ret;
-	}
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode* dummy1 = new ListNode(0, l1);
+        ListNode* dummy2 = new ListNode(0, l2);
+        ListNode* p, * q, * temp;
+        p = dummy1;
+        q = dummy2;
+        while (p->next && q->next) {
+            if (p->next->val <= q->next->val && (q->next->val <= p->next->next->val || !p->next->next)) {
+                temp = q->next;
+                q->next = temp->next;
+                temp->next = p->next->next;
+                p->next->next = temp;
+            }
+            else if (p->next->val < q->next->val && (p->next->next->val < q->next->val || !p->next->next)) {
+                p = p->next;
+            }
+            else if (p->next->val > q->next->val) {
+                temp = q->next;
+                q->next = temp->next;
+                temp->next = p->next;
+                p->next = temp;
+            }
+        }
+        if (q->next) p->next = q->next;
+        ListNode* ret = dummy1->next;
+        delete dummy1, dummy2;
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨1£ºµÝ¹é£¬Ð§ÂÊ×î¸ß
+// å®˜æ–¹è§£æ³•1ï¼šé€’å½’ï¼Œæ•ˆçŽ‡æœ€é«˜
 class Solution {
 public:
-	ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-		if (l1 == nullptr) {
-			return l2;
-		}
-		else if (l2 == nullptr) {
-			return l1;
-		}
-		else if (l1->val < l2->val) {
-			l1->next = mergeTwoLists(l1->next, l2);
-			return l1;
-		}
-		else {
-			l2->next = mergeTwoLists(l1, l2->next);
-			return l2;
-		}
-	}
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == nullptr) {
+            return l2;
+        }
+        else if (l2 == nullptr) {
+            return l1;
+        }
+        else if (l1->val < l2->val) {
+            l1->next = mergeTwoLists(l1->next, l2);
+            return l1;
+        }
+        else {
+            l2->next = mergeTwoLists(l1, l2->next);
+            return l2;
+        }
+    }
 };
 
-// ¹Ù·½½â·¨2£ºµü´ú£¬Ð§ÂÊµÚ¶þ
+// å®˜æ–¹è§£æ³•2ï¼šè¿­ä»£ï¼Œæ•ˆçŽ‡ç¬¬äºŒ
 class Solution {
 public:
-	ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-		ListNode* preHead = new ListNode(-1);
-		
-		ListNode* prev = preHead;
-		while (l1 != nullptr && l2 != nullptr) {
-			if (l1->val < l2->val) {
-				prev->next = l1;
-				l1 = l1->next;
-			}
-			else {
-				prev->next = l2;
-				l2 = l2->next;
-			}
-			prev = prev->next;
-		}
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode* preHead = new ListNode(-1);
 
-		prev->next = l1 == nullptr ? l2 : l1;
+        ListNode* prev = preHead;
+        while (l1 != nullptr && l2 != nullptr) {
+            if (l1->val < l2->val) {
+                prev->next = l1;
+                l1 = l1->next;
+            }
+            else {
+                prev->next = l2;
+                l2 = l2->next;
+            }
+            prev = prev->next;
+        }
 
-		return preHead->next;
-	}
+        prev->next = l1 == nullptr ? l2 : l1;
+
+        return preHead->next;
+    }
 };

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 28 ms 79.55%£¬¿Õ¼ä 26.9 MB 26.10%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 28 ms 79.55%ï¼Œç©ºé—´ 26.9 MB 26.10%
 class Solution {
 public:
     int search(vector<int>& nums, int target) {

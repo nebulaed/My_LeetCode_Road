@@ -2,127 +2,127 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºDFS+»ØËİ£¬³¬Ê±
+// æˆ‘çš„è§£æ³•ä¸€ï¼šDFS+å›æº¯ï¼Œè¶…æ—¶
 class Solution {
 private:
-	bool dfs(const vector<vector<int>>& matrix, vector<vector<int>>& visited, int x, int y, int target) {
-		if (matrix[x][y] == target) return true;
-		else if (matrix[x][y] > target) return false;
-		int directions[2][2] = { {0, 1}, {1, 0} };
-		bool ret = false;
-		for (const auto& dir : directions) {
-			int newx = x + dir[0], newy = y + dir[1];
-			if (newx < matrix.size() && newy < matrix[0].size()) {
-				if (!visited[newx][newy]) {
-					if (dfs(matrix, visited, newx, newy, target)) {
-						ret = true;
-						break;
-					}
-				}
-			}
-		}
-		return ret;
-	}
+    bool dfs(const vector<vector<int>>& matrix, vector<vector<int>>& visited, int x, int y, int target) {
+        if (matrix[x][y] == target) return true;
+        else if (matrix[x][y] > target) return false;
+        int directions[2][2] = { {0, 1}, {1, 0} };
+        bool ret = false;
+        for (const auto& dir : directions) {
+            int newx = x + dir[0], newy = y + dir[1];
+            if (newx < matrix.size() && newy < matrix[0].size()) {
+                if (!visited[newx][newy]) {
+                    if (dfs(matrix, visited, newx, newy, target)) {
+                        ret = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
 public:
-	bool searchMatrix(vector<vector<int>>& matrix, int target) {
-		size_t height = matrix.size(), width = matrix[0].size();
-		vector<vector<int>> visited(height, vector<int>(width));
-		bool ret = dfs(matrix, visited, 0, 0, target);
-		return ret;
-	}
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        size_t height = matrix.size(), width = matrix[0].size();
+        vector<vector<int>> visited(height, vector<int>(width));
+        bool ret = dfs(matrix, visited, 0, 0, target);
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º±©Á¦±éÀú£¬Ê±¼ä O(mn) 688 ms£¬¿Õ¼ä O(1) 14.4 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šæš´åŠ›éå†ï¼Œæ—¶é—´ O(mn) 688 msï¼Œç©ºé—´ O(1) 14.4 MB
 class Solution {
 public:
-	bool searchMatrix(vector<vector<int>>& matrix, int target) {
-		for (const auto& row : matrix) {
-			if (row[0] > target) break;
-			for (int element : row) {
-				if (element == target) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        for (const auto& row : matrix) {
+            if (row[0] > target) break;
+            for (int element : row) {
+                if (element == target) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
-// °´¹Ù·½½â·¨¶şË¼Â·Ğ´µÄ³ÌĞò£º¶ÔÃ¿ĞĞ×ö¶ş·Ö²éÕÒ£¬Ê±¼äO(m log n) 168 ms£¬¿Õ¼äO(1) 14.6 MB
+// æŒ‰å®˜æ–¹è§£æ³•äºŒæ€è·¯å†™çš„ç¨‹åºï¼šå¯¹æ¯è¡ŒåšäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´O(m log n) 168 msï¼Œç©ºé—´O(1) 14.6 MB
 class Solution {
 private:
-	bool binarySearch(const vector<int>& nums, int target) {
-		int low = 0, high = nums.size() - 1;
-		while (low <= high) {
-			int mid = (low + high) / 2;
-			if (target < nums[mid]) {
-				high = mid - 1;
-			}
-			else if (target > nums[mid]) {
-				low = mid + 1;
-			}
-			else return true;
-		}
-		return false;
-	}
+    bool binarySearch(const vector<int>& nums, int target) {
+        int low = 0, high = nums.size() - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (target < nums[mid]) {
+                high = mid - 1;
+            }
+            else if (target > nums[mid]) {
+                low = mid + 1;
+            }
+            else return true;
+        }
+        return false;
+    }
 public:
-	bool searchMatrix(vector<vector<int>>& matrix, int target) {
-		for (const auto& row : matrix) {
-			if (row[0] > target) break;
-			if (binarySearch(row, target)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        for (const auto& row : matrix) {
+            if (row[0] > target) break;
+            if (binarySearch(row, target)) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
-// ¹Ù·½½â·¨Èı£ºZ×ÖĞÎ²éÕÒ£¬Ê±¼äO(m+n) 64 ms£¬¿Õ¼äO(1) 14.6 MB
-// ´Ó¾ØÕóÓÒÉÏ½Ç(0, n-1)¿ªÊ¼ËÑË÷£¬ÎÒÃÇÒªËÑË÷µÄ·¶Î§ÊÇÒÔ¾ØÕó×óÏÂ½Ç(n-1, 0)Îª×óÏÂ½Ç£¬ÒÔ(x,y)ÎªÓÒÉÏ½ÇµÄ·¶Î§
-// Èômatrix[x,y] == target£¬ËÑË÷Íê³É
-// Èômatrix[x,y] > target£¬ËµÃ÷µÚyÁĞµÄÔªËØ¶¼´óÓÚtarget£¬¿ÉÈ«²¿ºöÂÔ£¬¹Ê--y
-// Èômatrix[x,y] < target£¬ËµÃ÷µÚxĞĞµÄÔªËØ¶¼Ğ¡ÓÚtarget£¬¿ÉÈ«²¿ºöÂÔ£¬¹Ê++x
-// ÈôÖ±µ½xºÍy³¬³öÊäÈë¾ØÕó±ß½ç£¬ËµÃ÷¾ØÕóÖĞ²»´æÔÚtarget
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šZå­—å½¢æŸ¥æ‰¾ï¼Œæ—¶é—´O(m+n) 64 msï¼Œç©ºé—´O(1) 14.6 MB
+// ä»çŸ©é˜µå³ä¸Šè§’(0, n-1)å¼€å§‹æœç´¢ï¼Œæˆ‘ä»¬è¦æœç´¢çš„èŒƒå›´æ˜¯ä»¥çŸ©é˜µå·¦ä¸‹è§’(n-1, 0)ä¸ºå·¦ä¸‹è§’ï¼Œä»¥(x,y)ä¸ºå³ä¸Šè§’çš„èŒƒå›´
+// è‹¥matrix[x,y] == targetï¼Œæœç´¢å®Œæˆ
+// è‹¥matrix[x,y] > targetï¼Œè¯´æ˜ç¬¬yåˆ—çš„å…ƒç´ éƒ½å¤§äºtargetï¼Œå¯å…¨éƒ¨å¿½ç•¥ï¼Œæ•…--y
+// è‹¥matrix[x,y] < targetï¼Œè¯´æ˜ç¬¬xè¡Œçš„å…ƒç´ éƒ½å°äºtargetï¼Œå¯å…¨éƒ¨å¿½ç•¥ï¼Œæ•…++x
+// è‹¥ç›´åˆ°xå’Œyè¶…å‡ºè¾“å…¥çŸ©é˜µè¾¹ç•Œï¼Œè¯´æ˜çŸ©é˜µä¸­ä¸å­˜åœ¨target
 class Solution {
 public:
-	bool searchMatrix(vector<vector<int>>& matrix, int target) {
-		int height = matrix.size(), width = matrix[0].size();
-		int x = 0, y = width - 1;
-		while (x < height && y >= 0) {
-			int num = matrix[x][y];
-			if (num == target) {
-				return true;
-			}
-			if (num > target) {
-				--y;
-			}
-			else {
-				++x;
-			}
-		}
-		return false;
-	}
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int height = matrix.size(), width = matrix[0].size();
+        int x = 0, y = width - 1;
+        while (x < height && y >= 0) {
+            int num = matrix[x][y];
+            if (num == target) {
+                return true;
+            }
+            if (num > target) {
+                --y;
+            }
+            else {
+                ++x;
+            }
+        }
+        return false;
+    }
 };
 
-// LeetCode 101½â·¨£ºÊ±¼ä 72 ms 96.42%£¬¿Õ¼ä 14.5 MB 56.87%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 72 ms 96.42%ï¼Œç©ºé—´ 14.5 MB 56.87%
 class Solution {
 public:
-	bool searchMatrix(vector<vector<int>>& matrix, int target) {
-		int m = matrix.size();
-		if (m == 0) return false;
-		int n = matrix[0].size(), i = 0, j = n - 1;
-		while (i < m && j >= 0) {
-			int cur = matrix[i][j];
-			if (cur == target) {
-				return true;
-			}
-			else if (cur > target) {
-				--j;
-			}
-			else {
-				++i;
-			}
-		}
-		return false;
-	}
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        if (m == 0) return false;
+        int n = matrix[0].size(), i = 0, j = n - 1;
+        while (i < m && j >= 0) {
+            int cur = matrix[i][j];
+            if (cur == target) {
+                return true;
+            }
+            else if (cur > target) {
+                --j;
+            }
+            else {
+                ++i;
+            }
+        }
+        return false;
+    }
 };

@@ -5,237 +5,236 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨: dfs+»ØËİ 8 ms£¬8 MB
+// æˆ‘çš„è§£æ³•: dfs+å›æº¯ 8 msï¼Œ8 MB
 class Solution {
 private:
-	vector<vector<string>> ret;
-	vector<int> queens;
+    vector<vector<string>> ret;
+    vector<int> queens;
 public:
-	void dfs(int n) {
-		if (queens.size() == n) {
-			vector<string> cur;
-			for (int i = 0; i < n; ++i) {
-				string temp(n, '.');
-				temp[queens[i]] = 'Q';
-				cur.emplace_back(temp);
-			}
-			ret.emplace_back(cur);
-			return;
-		}
+    void dfs(int n) {
+        if (queens.size() == n) {
+            vector<string> cur;
+            for (int i = 0; i < n; ++i) {
+                string temp(n, '.');
+                temp[queens[i]] = 'Q';
+                cur.emplace_back(temp);
+            }
+            ret.emplace_back(cur);
+            return;
+        }
 
-		for (int i = 0; i < n; ++i) {
-			bool flag = true;
-			for (int j = 0; j < queens.size(); ++j) {
-				// ÈôµÚiÁĞµÄĞÂ»ÊºóºÍqueensÖĞµÄ¾É»ÊºóÔÚ¶Ô½ÇÏßÉÏ
-				// queens.size()´ú±íµÄÊÇĞÂ»ÊºóµÄĞĞÊı£¬i´ú±íĞÂ»ÊºóÁĞÊı£¬j´ú±í¾É»ÊºóĞĞÊı£¬queen[j]´ú±í¾É»ÊºóÁĞÊı
-				// º¬Òå¾ÍÊÇĞÂ»ÊºóĞĞÊıÁĞÊıÖ®ºÍÓë¾É»ÊºóĞĞÊıÁĞÊıÖ®ºÍÏàµÈ»òĞÂ»ÊºóĞĞÊıÁĞÊıÖ®²îÓë¾É»ÊºóĞĞÊıÁĞÊıÖ®²îÏàµÈ
-				if (queens.size() + i == j + queens[j] || queens.size() - i == j - queens[j]) {
-					flag = false;
-					break;
-				}
-			}
-			// ÈôĞÂ»ÊºóÓëËùÓĞ¾É»Êºó²»ÔÚÍ¬Ò»ÁĞÇÒ²»ÔÚ¶Ô½ÇÏßÉÏ
-			if (!count(queens.begin(), queens.end(), i) && flag) {
-				queens.emplace_back(i);
-				dfs(n);
-				queens.pop_back();
-			}
-		}
-	}
-	vector<vector<string>> solveNQueens(int n) {
-		dfs(n);
-		return ret;
-	}
+        for (int i = 0; i < n; ++i) {
+            bool flag = true;
+            for (int j = 0; j < queens.size(); ++j) {
+                // è‹¥ç¬¬iåˆ—çš„æ–°çš‡åå’Œqueensä¸­çš„æ—§çš‡ååœ¨å¯¹è§’çº¿ä¸Š
+                // queens.size()ä»£è¡¨çš„æ˜¯æ–°çš‡åçš„è¡Œæ•°ï¼Œiä»£è¡¨æ–°çš‡ååˆ—æ•°ï¼Œjä»£è¡¨æ—§çš‡åè¡Œæ•°ï¼Œqueen[j]ä»£è¡¨æ—§çš‡ååˆ—æ•°
+                // å«ä¹‰å°±æ˜¯æ–°çš‡åè¡Œæ•°åˆ—æ•°ä¹‹å’Œä¸æ—§çš‡åè¡Œæ•°åˆ—æ•°ä¹‹å’Œç›¸ç­‰æˆ–æ–°çš‡åè¡Œæ•°åˆ—æ•°ä¹‹å·®ä¸æ—§çš‡åè¡Œæ•°åˆ—æ•°ä¹‹å·®ç›¸ç­‰
+                if (queens.size() + i == j + queens[j] || queens.size() - i == j - queens[j]) {
+                    flag = false;
+                    break;
+                }
+            }
+            // è‹¥æ–°çš‡åä¸æ‰€æœ‰æ—§çš‡åä¸åœ¨åŒä¸€åˆ—ä¸”ä¸åœ¨å¯¹è§’çº¿ä¸Š
+            if (!count(queens.begin(), queens.end(), i) && flag) {
+                queens.emplace_back(i);
+                dfs(n);
+                queens.pop_back();
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        dfs(n);
+        return ret;
+    }
 };
 
 
-// ÎÒµÄ½â·¨ÓÅ»¯£ºÊ±¼ä 4 ms 92.93%£¬¿Õ¼ä 7.2 MB 67.78%
-// ÌáÇ°¸øºÃÄ£°æcur£¬²»ÓÃÃ¿´Î¶¼ÖØĞÂ¹¹Ôì£¬°ÑÖØ¸´µ÷ÓÃµÄ.size()ºÍqueens[j]ÓÃint±äÁ¿½ÓÊÕ
+// æˆ‘çš„è§£æ³•ä¼˜åŒ–ï¼šæ—¶é—´ 4 ms 92.93%ï¼Œç©ºé—´ 7.2 MB 67.78%
+// æå‰ç»™å¥½æ¨¡ç‰ˆcurï¼Œä¸ç”¨æ¯æ¬¡éƒ½é‡æ–°æ„é€ ï¼ŒæŠŠé‡å¤è°ƒç”¨çš„.size()å’Œqueens[j]ç”¨intå˜é‡æ¥æ”¶
 class Solution {
 private:
-	vector<vector<string>> ret;
-	vector<int> queens;
+    vector<vector<string>> ret;
+    vector<int> queens;
 public:
-	void dfs(vector<string>& cur, int n) {
-		int length = queens.size();
-		if (length == n) {
-			for (int i = 0; i < n; ++i) {
-				cur[i][queens[i]] = 'Q';
-			}
-			ret.emplace_back(cur);
-			for (int i = 0; i < n; ++i) {
-				cur[i][queens[i]] = '.';
-			}
-			return;
-		}
+    void dfs(vector<string>& cur, int n) {
+        int length = queens.size();
+        if (length == n) {
+            for (int i = 0; i < n; ++i) {
+                cur[i][queens[i]] = 'Q';
+            }
+            ret.emplace_back(cur);
+            for (int i = 0; i < n; ++i) {
+                cur[i][queens[i]] = '.';
+            }
+            return;
+        }
 
-		for (int i = 0; i < n; ++i) {
-			bool flag = true;
-			for (int j = 0; j < length; ++j) {
-				int columnj = queens[j];
-				if (length + i == j + columnj || length - i == j - columnj) {
-					flag = false;
-					break;
-				}
-			}
-			if (flag && !count(queens.begin(), queens.end(), i)) {
-				queens.emplace_back(i);
-				dfs(cur, n);
-				queens.pop_back();
-			}
-		}
-	}
-	vector<vector<string>> solveNQueens(int n) {
-		vector<string> cur(n, string(n, '.'));
-		dfs(cur, n);
-		return ret;
-	}
+        for (int i = 0; i < n; ++i) {
+            bool flag = true;
+            for (int j = 0; j < length; ++j) {
+                int columnj = queens[j];
+                if (length + i == j + columnj || length - i == j - columnj) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag && !count(queens.begin(), queens.end(), i)) {
+                queens.emplace_back(i);
+                dfs(cur, n);
+                queens.pop_back();
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<string> cur(n, string(n, '.'));
+        dfs(cur, n);
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨²Î¿¼¹Ù½â£¬12 ms£¬9.7 MB
+// æˆ‘çš„è§£æ³•å‚è€ƒå®˜è§£ï¼Œ12 msï¼Œ9.7 MB
 class Solution {
 private:
-	vector<vector<string>> ret;
-	vector<int> queens;
-	unordered_set<int> columns;
-	unordered_set<int> sums;
-	unordered_set<int> difs;
+    vector<vector<string>> ret;
+    vector<int> queens;
+    unordered_set<int> columns;
+    unordered_set<int> sums;
+    unordered_set<int> difs;
 public:
-	void dfs(int n) {
-		if (queens.size() == n) {
-			vector<string> cur;
-			for (int i = 0; i < n; ++i) {
-				string temp(n, '.');
-				temp[queens[i]] = 'Q';
-				cur.emplace_back(temp);
-			}
-			ret.emplace_back(cur);
-			return;
-		}
+    void dfs(int n) {
+        if (queens.size() == n) {
+            vector<string> cur;
+            for (int i = 0; i < n; ++i) {
+                string temp(n, '.');
+                temp[queens[i]] = 'Q';
+                cur.emplace_back(temp);
+            }
+            ret.emplace_back(cur);
+            return;
+        }
 
-		for (int i = 0; i < n; ++i) {
-			if (!columns.count(i) && !sums.count(queens.size() + i) && !difs.count(queens.size() - i)) {
-				sums.insert(queens.size() + i);
-				difs.insert(queens.size() - i);
-				columns.insert(i);
-				queens.emplace_back(i);
-				dfs(n);
-				queens.pop_back();
-				columns.erase(i);
-				difs.erase(queens.size() - i);
-				sums.erase(queens.size() + i);
-			}
-		}
-	}
-	vector<vector<string>> solveNQueens(int n) {
-		dfs(n);
-		return ret;
-	}
+        for (int i = 0; i < n; ++i) {
+            if (!columns.count(i) && !sums.count(queens.size() + i) && !difs.count(queens.size() - i)) {
+                sums.insert(queens.size() + i);
+                difs.insert(queens.size() - i);
+                columns.insert(i);
+                queens.emplace_back(i);
+                dfs(n);
+                queens.pop_back();
+                columns.erase(i);
+                difs.erase(queens.size() - i);
+                sums.erase(queens.size() + i);
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        dfs(n);
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨1£º»ùÓÚ¼¯ºÏµÄ»ØËİ 16 ms, 9.2 MB
+// å®˜æ–¹è§£æ³•1ï¼šåŸºäºé›†åˆçš„å›æº¯ 16 ms, 9.2 MB
 class Solution {
 public:
-	vector<vector<string>> solveNQueens(int n) {
-		auto solutions = vector<vector<string>>();
-		auto queens = vector<int>(n, -1);
-		auto columns = unordered_set<int>();
-		auto diagonals1 = unordered_set<int>();
-		auto diagonals2 = unordered_set<int>();
-		backtrack(solutions, queens, n, 0, columns, diagonals1, diagonals2);
-		return solutions;
-	}
+    vector<vector<string>> solveNQueens(int n) {
+        auto solutions = vector<vector<string>>();
+        auto queens = vector<int>(n, -1);
+        auto columns = unordered_set<int>();
+        auto diagonals1 = unordered_set<int>();
+        auto diagonals2 = unordered_set<int>();
+        backtrack(solutions, queens, n, 0, columns, diagonals1, diagonals2);
+        return solutions;
+    }
 
-	void backtrack(vector<vector<string>>& solutions, vector<int>& queens, int n, int row, unordered_set<int>& columns, unordered_set<int>& diagonals1, unordered_set<int>& diagonals2) {
-		if (row == n) {
-			vector<string> board = generateBoard(queens, n);
-			solutions.push_back(board);
-		}
-		for (int i = 0; i < n; ++i) {
-			if (columns.find(i) != columns.end()) {
-				continue;
-			}
-			int diagonal1 = row - i;
-			if (diagonals1.find(diagonal1) != diagonals1.end()) {
-				continue;
-			}
-			int diagonal2 = row + i;
-			if (diagonals2.find(diagonal2) != diagonals2.end()) {
-				continue;
-			}
-			queens[row] = i;
-			columns.insert(i);
-			diagonals1.insert(diagonal1);
-			diagonals2.insert(diagonal2);
-			backtrack(solutions, queens, n, row + 1, columns, diagonals1, diagonals2);
-			queens[row] = -1;
-			columns.erase(i);
-			diagonals1.erase(diagonal1);
-			diagonals2.erase(diagonal2);
-		}
-	}
+    void backtrack(vector<vector<string>>& solutions, vector<int>& queens, int n, int row, unordered_set<int>& columns, unordered_set<int>& diagonals1, unordered_set<int>& diagonals2) {
+        if (row == n) {
+            vector<string> board = generateBoard(queens, n);
+            solutions.push_back(board);
+        }
+        for (int i = 0; i < n; ++i) {
+            if (columns.find(i) != columns.end()) {
+                continue;
+            }
+            int diagonal1 = row - i;
+            if (diagonals1.find(diagonal1) != diagonals1.end()) {
+                continue;
+            }
+            int diagonal2 = row + i;
+            if (diagonals2.find(diagonal2) != diagonals2.end()) {
+                continue;
+            }
+            queens[row] = i;
+            columns.insert(i);
+            diagonals1.insert(diagonal1);
+            diagonals2.insert(diagonal2);
+            backtrack(solutions, queens, n, row + 1, columns, diagonals1, diagonals2);
+            queens[row] = -1;
+            columns.erase(i);
+            diagonals1.erase(diagonal1);
+            diagonals2.erase(diagonal2);
+        }
+    }
 
-	vector<string> generateBoard(vector<int>& queens, int n) {
-		auto board = vector<string>();
-		for (int i = 0; i < n; ++i) {
-			string row = string(n, '.');
-			row[queens[i]] = 'Q';
-			board.emplace_back(row);
-		}
-		return board;
-	}
+    vector<string> generateBoard(vector<int>& queens, int n) {
+        auto board = vector<string>();
+        for (int i = 0; i < n; ++i) {
+            string row = string(n, '.');
+            row[queens[i]] = 'Q';
+            board.emplace_back(row);
+        }
+        return board;
+    }
 };
 
-// LeetCode 101½â·¨£ºÊ±¼ä 0 ms 100%£¬¿Õ¼ä 6.9 MB 98.37%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.9 MB 98.37%
 class Solution {
 public:
-	vector<vector<string>> solveNQueens(int n) {
-		vector<vector<string>> ans;
-		vector<string> board(n, string(n, '.'));
-		vector<bool> column(n, false), ldiag(2 * n - 1, false), rdiag(2 * n - 1, false);
-		backtracking(ans, board, column, ldiag, rdiag, 0, n);
-		return ans;
-	}
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> ans;
+        vector<string> board(n, string(n, '.'));
+        vector<bool> column(n, false), ldiag(2 * n - 1, false), rdiag(2 * n - 1, false);
+        backtracking(ans, board, column, ldiag, rdiag, 0, n);
+        return ans;
+    }
 private:
-	void backtracking(vector<vector<string>>& ans, vector<string>& board, vector<bool>& column, vector<bool>& ldiag, vector<bool>& rdiag, int row, int n) {
-		if (row == n) {
-			ans.emplace_back(board);
-			return;
-		}
-		for (int i = 0; i < n; ++i) {
-			if (column[i] || ldiag[n - row + i - 1] || rdiag[row + i]) {
-				continue;
-			}
-			// ĞŞ¸Äµ±Ç°½Úµã×´Ì¬
-			board[row][i] = 'Q';
-			// ½«ÏÂÒ»ĞĞ×óÏÂ½ÇºÍÓÒÏÂ½Ç¶¼±ê¼ÇÎª²»¿É·ÅÖÃ»Êºó×´Ì¬
-			column[i] = ldiag[n - row + i - 1] = rdiag[row + i] = true;
-			// µİ¹é×Ó½Úµã
-			backtracking(ans, board, column, ldiag, rdiag, row + 1, n);
-			// »Ø¸Äµ±Ç°½Úµã×´Ì¬
-			board[row][i] = '.';
-			column[i] = ldiag[n - row + i - 1] = rdiag[row + i] = false;
-		}
-	}
+    void backtracking(vector<vector<string>>& ans, vector<string>& board, vector<bool>& column, vector<bool>& ldiag, vector<bool>& rdiag, int row, int n) {
+        if (row == n) {
+            ans.emplace_back(board);
+            return;
+        }
+        for (int i = 0; i < n; ++i) {
+            if (column[i] || ldiag[n - row + i - 1] || rdiag[row + i]) {
+                continue;
+            }
+            // ä¿®æ”¹å½“å‰èŠ‚ç‚¹çŠ¶æ€
+            board[row][i] = 'Q';
+            // å°†ä¸‹ä¸€è¡Œå·¦ä¸‹è§’å’Œå³ä¸‹è§’éƒ½æ ‡è®°ä¸ºä¸å¯æ”¾ç½®çš‡åçŠ¶æ€
+            column[i] = ldiag[n - row + i - 1] = rdiag[row + i] = true;
+            // é€’å½’å­èŠ‚ç‚¹
+            backtracking(ans, board, column, ldiag, rdiag, row + 1, n);
+            // å›æ”¹å½“å‰èŠ‚ç‚¹çŠ¶æ€
+            board[row][i] = '.';
+            column[i] = ldiag[n - row + i - 1] = rdiag[row + i] = false;
+        }
+    }
 };
 
 
 int main() {
-	int n = 4;
+    int n = 4;
 
-	Solution s;
-	vector<vector<string>> ret = s.solveNQueens(n);
+    Solution s;
+    vector<vector<string>> ret = s.solveNQueens(n);
 
-	for (int i = 0; i < ret.size(); ++i) {
-		cout << "[";
-		for (int j = 0; j < ret[i].size(); ++j) {
-			cout << ret[i][j];
-			if (j != ret[i].size() - 1) cout << ",";
-			else cout << "]";
-			cout << endl;
-		}
-	}
+    for (int i = 0; i < ret.size(); ++i) {
+        cout << "[";
+        for (int j = 0; j < ret[i].size(); ++j) {
+            cout << ret[i][j];
+            if (j != ret[i].size() - 1) cout << ",";
+            else cout << "]";
+            cout << endl;
+        }
+    }
 
-	system("pause");
-	return 0;
+    return 0;
 }

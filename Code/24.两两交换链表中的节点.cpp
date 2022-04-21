@@ -2,106 +2,105 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode* next) : val(x), next(next) {}
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£º´´½¨Ò»¸öĞÂÁ´±í´æ·Å
+// æˆ‘çš„è§£æ³•ï¼šåˆ›å»ºä¸€ä¸ªæ–°é“¾è¡¨å­˜æ”¾
 class Solution {
 public:
-	ListNode* swapPairs(ListNode* head) {
-		ListNode* dummy = new ListNode(-1, head);
-		ListNode* p = head, * q;
-		ListNode* preHead = new ListNode(-1, nullptr);
-		ListNode* prev = preHead;
-		int count = 0;
-		while (p) {
-			if (count % 2 == 0 && p->next) {
-				q = p->next;
-				p->next = q->next;
-				q->next = prev->next;
-				prev->next = q;
-				prev = prev->next;
-				++count;
-			}
-			++count;
-			p = p->next;
-		}
-		p = dummy;
-		prev = preHead->next;
-		while (p && prev) {
-			preHead->next = prev->next;
-			prev->next = p->next;
-			p->next = prev;
-			prev = preHead->next;
-			p = p->next->next;
-		}
-		p = dummy->next;
-		prev = preHead->next;
-		return dummy->next;
-	}
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* dummy = new ListNode(-1, head);
+        ListNode* p = head, * q;
+        ListNode* preHead = new ListNode(-1, nullptr);
+        ListNode* prev = preHead;
+        int count = 0;
+        while (p) {
+            if (count % 2 == 0 && p->next) {
+                q = p->next;
+                p->next = q->next;
+                q->next = prev->next;
+                prev->next = q;
+                prev = prev->next;
+                ++count;
+            }
+            ++count;
+            p = p->next;
+        }
+        p = dummy;
+        prev = preHead->next;
+        while (p && prev) {
+            preHead->next = prev->next;
+            prev->next = p->next;
+            p->next = prev;
+            prev = preHead->next;
+            p = p->next->next;
+        }
+        p = dummy->next;
+        prev = preHead->next;
+        return dummy->next;
+    }
 };
 
-// ¹Ù·½½â·¨1£ºµİ¹é
+// å®˜æ–¹è§£æ³•1ï¼šé€’å½’
 class Solution {
 public:
-	ListNode* swapPairs(ListNode* head) {
-		if (head == nullptr || head->next == nullptr) {
-			return head;
-		}
-		ListNode* newHead = head->next;
-		head->next = swapPairs(newHead->next);
-		newHead->next = head;
-		return newHead;
-	}
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
+        }
+        ListNode* newHead = head->next;
+        head->next = swapPairs(newHead->next);
+        newHead->next = head;
+        return newHead;
+    }
 };
 
-// ¹Ù·½½â·¨2£ºµü´ú
+// å®˜æ–¹è§£æ³•2ï¼šè¿­ä»£
 class Solution {
 public:
-	ListNode* swapPairs(ListNode* head) {
-		ListNode* dummyHead = new ListNode(-1, head);
-		ListNode* temp = dummyHead;
-		while (temp->next != nullptr && temp->next->next != nullptr) {
-			ListNode* node1 = temp->next;
-			ListNode* node2 = temp->next->next;
-			temp->next = node2;
-			node1->next = node2->next;
-			node2->next = node1;
-			temp = node1;
-		}
-		return dummyHead->next;
-	}
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* dummyHead = new ListNode(-1, head);
+        ListNode* temp = dummyHead;
+        while (temp->next != nullptr && temp->next->next != nullptr) {
+            ListNode* node1 = temp->next;
+            ListNode* node2 = temp->next->next;
+            temp->next = node2;
+            node1->next = node2->next;
+            node2->next = node1;
+            temp = node1;
+        }
+        return dummyHead->next;
+    }
 };
 
-// LeetCode 101½â·¨£ºÊ±¼ä 0 ms 100%£¬¿Õ¼ä 7.5 MB 5.31%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 7.5 MB 5.31%
 class Solution {
 public:
-	ListNode* swapPairs(ListNode* head) {
-		ListNode* p = head, * s = nullptr;
-		if (p && p->next) {
-			s = p->next;
-			p->next = s->next;
-			s->next = p;
-			head = s;
-			while (p->next && p->next->next) {
-				s = p->next->next;
-				p->next->next = s->next;
-				s->next = p->next;
-				p->next = s;
-				p = s->next;
-			}
-		}
-		return head;
-	}
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* p = head, * s = nullptr;
+        if (p && p->next) {
+            s = p->next;
+            p->next = s->next;
+            s->next = p;
+            head = s;
+            while (p->next && p->next->next) {
+                s = p->next->next;
+                p->next->next = s->next;
+                s->next = p->next;
+                p->next = s;
+                p = s->next;
+            }
+        }
+        return head;
+    }
 };
 
 int main() {
 
 
-	system("pause");
-	return 0;
+    return 0;
 }

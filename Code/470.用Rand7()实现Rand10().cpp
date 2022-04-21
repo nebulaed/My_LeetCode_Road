@@ -1,101 +1,104 @@
 #include<iostream>
 #include<random>
 
+int rand7(){
+    return 1 + rand() % 7;
+}
 // The rand7() API is already defined for you.
 // int rand7();
 // @return a random integer in the range 1 to 7
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 4 ms 98.92%£¬¿Õ¼ä 8.1 MB 35.94%
-// rand() * rand()µÃµ½Ò»¸öÊınum
-// ³Ë»ıÓĞ1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 24, 25, 28, 30, 35, 36, 42, 49
-// È¨ÖØÎª1, 2, 2, 3, 2, 4, 2, 2, 1, 2,  4,  2,  2,  1,  2,  2,  2,  2,  1,  2,  2,  2,  1,  2,  1
-// ´ËÊ±Ö»ĞèÀûÓÃÉÏËùÓĞ¸ÅÂÊºÍÎª4/49µÄ×éºÏ¼´¿É£¬Ê£ÓàµÄ9/40Ö±½Ó¾Ü¾øµô
-// rand()µÄÑ­»·´ÎÊıÆÚÍûÎª2.45
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 4 ms 98.92%ï¼Œç©ºé—´ 8.1 MB 35.94%
+// rand() * rand()å¾—åˆ°ä¸€ä¸ªæ•°num
+// ä¹˜ç§¯æœ‰1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 24, 25, 28, 30, 35, 36, 42, 49
+// æƒé‡ä¸º1, 2, 2, 3, 2, 4, 2, 2, 1, 2,  4,  2,  2,  1,  2,  2,  2,  2,  1,  2,  2,  2,  1,  2,  1
+// æ­¤æ—¶åªéœ€åˆ©ç”¨ä¸Šæ‰€æœ‰æ¦‚ç‡å’Œä¸º4/49çš„ç»„åˆå³å¯ï¼Œå‰©ä½™çš„9/40ç›´æ¥æ‹’ç»æ‰
+// rand()çš„å¾ªç¯æ¬¡æ•°æœŸæœ›ä¸º2.45
 class Solution {
 public:
-	int rand10() {
-		while (true) {
-			int num = rand7() * rand7();
-			if (num == 1 || num == 4) {
-				return 1;
-			}
-			else if (num == 2 || num == 3) {
-				return 2;
-			}
-			else if (num == 5 || num == 7) {
-				return 3;
-			}
-			else if (num == 6) {
-				return 4;
-			}
-			else if (num == 8 || num == 10) {
-				return 5;
-			}
-			else if (num == 9 || num == 16 || num == 25 || num == 36) {
-				return 6;
-			}
-			else if (num == 12) {
-				return 7;
-			}
-			else if (num == 14 || num == 15) {
-				return 8;
-			}
-			else if (num == 18 || num == 20) {
-				return 9;
-			}
-			else if (num == 21 || num == 24) {
-				return 10;
-			}
-		}
-	}
+    int rand10() {
+        while (true) {
+            int num = rand7() * rand7();
+            if (num == 1 || num == 4) {
+                return 1;
+            }
+            else if (num == 2 || num == 3) {
+                return 2;
+            }
+            else if (num == 5 || num == 7) {
+                return 3;
+            }
+            else if (num == 6) {
+                return 4;
+            }
+            else if (num == 8 || num == 10) {
+                return 5;
+            }
+            else if (num == 9 || num == 16 || num == 25 || num == 36) {
+                return 6;
+            }
+            else if (num == 12) {
+                return 7;
+            }
+            else if (num == 14 || num == 15) {
+                return 8;
+            }
+            else if (num == 18 || num == 20) {
+                return 9;
+            }
+            else if (num == 21 || num == 24) {
+                return 10;
+            }
+        }
+    }
 };
 
 
-// ÎÒµÄ½â·¨ÓÅ»¯£ºÊ±¼ä 4 ms 98.92%£¬¿Õ¼ä 8.1 MB 35.94%
-// ÔÚÒÔÉÏ»ù´¡ÉÏ£¬µ±Éú³ÉËæ»úÊıÔÚ[41,49]ÄÚ£¬Ïàµ±ÓÚµÃµ½ÁËÒ»¸ö[1,9]µÄËæ»úÊı£¬ÔÙµ÷ÓÃÒ»´Îrand7()£¬¾Í¿ÉÒÔÉú³É[1,63]µÄËæ»úÊı£¬±£Áô[1,60]²¢¾Ü¾ø[61,63]£¬µÃµ½[1,3]µÄËæ»úÊı£¬ÔÙµ÷ÓÃrand7()£¬Éú³É[1,21]µÄËæ»úÊı£¬¾Ü¾ø21£¬Óöµ½21Ôò´ÓÍ·¿ªÊ¼£¬ÖØĞÂÉú³É[1,49]µÄËæ»úÊı¡£
-// rand()Ñ­»·´ÎÊıÆÚÍûÎª2.193
+// æˆ‘çš„è§£æ³•ä¼˜åŒ–ï¼šæ—¶é—´ 4 ms 98.92%ï¼Œç©ºé—´ 8.1 MB 35.94%
+// åœ¨ä»¥ä¸ŠåŸºç¡€ä¸Šï¼Œå½“ç”Ÿæˆéšæœºæ•°åœ¨[41,49]å†…ï¼Œç›¸å½“äºå¾—åˆ°äº†ä¸€ä¸ª[1,9]çš„éšæœºæ•°ï¼Œå†è°ƒç”¨ä¸€æ¬¡rand7()ï¼Œå°±å¯ä»¥ç”Ÿæˆ[1,63]çš„éšæœºæ•°ï¼Œä¿ç•™[1,60]å¹¶æ‹’ç»[61,63]ï¼Œå¾—åˆ°[1,3]çš„éšæœºæ•°ï¼Œå†è°ƒç”¨rand7()ï¼Œç”Ÿæˆ[1,21]çš„éšæœºæ•°ï¼Œæ‹’ç»21ï¼Œé‡åˆ°21åˆ™ä»å¤´å¼€å§‹ï¼Œé‡æ–°ç”Ÿæˆ[1,49]çš„éšæœºæ•°ã€‚
+// rand()å¾ªç¯æ¬¡æ•°æœŸæœ›ä¸º2.193
 
 
-// ¹Ù·½½â·¨Ò»£ºÆß½øÖÆ+¾Ü¾ø²ÉÑù£¬Ê±¼ä 8 ms 78.48%£¬¿Õ¼ä 8.1 MB 9.65%
+// å®˜æ–¹è§£æ³•ä¸€ï¼šä¸ƒè¿›åˆ¶+æ‹’ç»é‡‡æ ·ï¼Œæ—¶é—´ 8 ms 78.48%ï¼Œç©ºé—´ 8.1 MB 9.65%
 class Solution {
 public:
-	int rand10() {
-		int row, col, idx;
-		do {
-			row = rand7();
-			col = rand7();
-			idx = col + (row - 1) * 7;
-		} while (idx > 40);
-		return 1 + (idx - 1) % 10;
-	}
+    int rand10() {
+        int row, col, idx;
+        do {
+            row = rand7();
+            col = rand7();
+            idx = col + (row - 1) * 7;
+        } while (idx > 40);
+        return 1 + (idx - 1) % 10;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÆß½øÖÆ+¾Ü¾ø²ÉÑù£¬Ê±¼ä 4 ms 98.92%£¬¿Õ¼ä 8 MB 53.14%
+// å®˜æ–¹è§£æ³•äºŒï¼šä¸ƒè¿›åˆ¶+æ‹’ç»é‡‡æ ·ï¼Œæ—¶é—´ 4 ms 98.92%ï¼Œç©ºé—´ 8 MB 53.14%
 class Solution {
 public:
-	int rand10() {
-		int a, b, idx;
-		while (true) {
-			a = rand7();
-			b = rand7();
-			idx = b + (a - 1) * 7;
-			if (idx <= 40) {
-				return 1 + (idx - 1) % 10;
-			}
-			a = idx - 40;
-			b = rand7();
-			// get uniform dist from 1 - 63
-			idx = b + (a - 1) * 7;
-			if (idx <= 60) {
-				return 1 + (idx - 1) % 10;
-			}
-			a = idx - 60;
-			b = rand7();
-			// get uniform dist from 1 - 21
-			idx = b + (a - 1) * 7;
-			if (idx <= 20) {
-				return 1 + (idx - 1) % 10;
-			}
-		}
-	}
+    int rand10() {
+        int a, b, idx;
+        while (true) {
+            a = rand7();
+            b = rand7();
+            idx = b + (a - 1) * 7;
+            if (idx <= 40) {
+                return 1 + (idx - 1) % 10;
+            }
+            a = idx - 40;
+            b = rand7();
+            // get uniform dist from 1 - 63
+            idx = b + (a - 1) * 7;
+            if (idx <= 60) {
+                return 1 + (idx - 1) % 10;
+            }
+            a = idx - 60;
+            b = rand7();
+            // get uniform dist from 1 - 21
+            idx = b + (a - 1) * 7;
+            if (idx <= 20) {
+                return 1 + (idx - 1) % 10;
+            }
+        }
+    }
 };

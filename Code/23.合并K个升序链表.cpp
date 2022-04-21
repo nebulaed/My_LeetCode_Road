@@ -3,110 +3,110 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode *next) : val(x), next(next) {}
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-// ¹Ù·½½â·¨1£ºË³ĞòºÏ²¢
+// å®˜æ–¹è§£æ³•1ï¼šé¡ºåºåˆå¹¶
 class Solution {
 public:
-	ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
-		if ((!a) || (!b)) return a ? a : b;
-		ListNode head, * tail = &head, * aPtr = a, * bPtr = b;
-		while (aPtr && bPtr) {
-			if (aPtr->val < bPtr->val) {
-				tail->next = aPtr;
-				aPtr = aPtr->next;
-			}
-			else {
-				tail->next = bPtr;
-				bPtr = bPtr->next;
-			}
-			tail = tail->next;
-		}
-		tail->next = aPtr ? aPtr : bPtr;
-		return head.next;
-	}
+    ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
+        if ((!a) || (!b)) return a ? a : b;
+        ListNode head, * tail = &head, * aPtr = a, * bPtr = b;
+        while (aPtr && bPtr) {
+            if (aPtr->val < bPtr->val) {
+                tail->next = aPtr;
+                aPtr = aPtr->next;
+            }
+            else {
+                tail->next = bPtr;
+                bPtr = bPtr->next;
+            }
+            tail = tail->next;
+        }
+        tail->next = aPtr ? aPtr : bPtr;
+        return head.next;
+    }
 
-	ListNode* mergeKLists(vector<ListNode*>& lists) {
-		ListNode* ans = nullptr;
-		for (int i = 0; i < lists.size(); ++i) {
-			ans = mergeTwoLists(ans, lists[i]);
-		}
-		return ans;
-	}
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode* ans = nullptr;
+        for (int i = 0; i < lists.size(); ++i) {
+            ans = mergeTwoLists(ans, lists[i]);
+        }
+        return ans;
+    }
 };
 
-// ¹Ù·½½â·¨2£º·ÖÖÎºÏ²¢
+// å®˜æ–¹è§£æ³•2ï¼šåˆ†æ²»åˆå¹¶
 class Solution {
 public:
-	ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
-		if ((!a) || (!b)) return a ? a : b;
-		ListNode head, * tail = &head, * aPtr = a, * bPtr = b;
-		while (aPtr && bPtr) {
-			if (aPtr->val < bPtr->val) {
-				tail->next = aPtr;
-				aPtr = aPtr->next;
-			}
-			else {
-				tail->next = bPtr;
-				bPtr = bPtr->next;
-			}
-			tail = tail->next;
-		}
-		tail->next = aPtr ? aPtr : bPtr;
-		return head.next;
-	}
+    ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
+        if ((!a) || (!b)) return a ? a : b;
+        ListNode head, * tail = &head, * aPtr = a, * bPtr = b;
+        while (aPtr && bPtr) {
+            if (aPtr->val < bPtr->val) {
+                tail->next = aPtr;
+                aPtr = aPtr->next;
+            }
+            else {
+                tail->next = bPtr;
+                bPtr = bPtr->next;
+            }
+            tail = tail->next;
+        }
+        tail->next = aPtr ? aPtr : bPtr;
+        return head.next;
+    }
 
-	ListNode* merge(vector<ListNode*>& lists, int l, int r) {
-		if (l == r) return lists[l];
-		if (l > r) return nullptr;
-		// (l + r) >> 1±íÊ¾(l + r)µÄ¶ş½øÖÆÊıÓÒÒÆÒ»Î», Ïàµ±ÓÚ³ıÒÔ2
-		int mid = (l + r) / 2;
-		return mergeTwoLists(merge(lists, l, mid), merge(lists, mid + 1, r));
-	}
+    ListNode* merge(vector<ListNode*>& lists, int l, int r) {
+        if (l == r) return lists[l];
+        if (l > r) return nullptr;
+        // (l + r) >> 1è¡¨ç¤º(l + r)çš„äºŒè¿›åˆ¶æ•°å³ç§»ä¸€ä½, ç›¸å½“äºé™¤ä»¥2
+        int mid = (l + r) / 2;
+        return mergeTwoLists(merge(lists, l, mid), merge(lists, mid + 1, r));
+    }
 
-	ListNode* mergeKLists(vector<ListNode*>& lists) {
-		return merge(lists, 0, lists.size() - 1);
-	}
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        return merge(lists, 0, lists.size() - 1);
+    }
 };
 
-// LeetCode 101½â·¨£ºÓÅÏÈ¶ÓÁĞ£¬Ê±¼ä 20 ms 80.19%£¬¿Õ¼ä 13 MB 60.08%
-// °ÑËùÓĞµÄÁ´±í´æ´¢ÔÚÒ»¸öÓÅÏÈ¶ÓÁĞÖĞ£¬Ã¿´ÎÌáÈ¡ËùÓĞÁ´±íÍ·²¿½ÚµãÖµ×îĞ¡µÄÄÇ¸ö½Úµã£¬Ö±µ½ËùÓĞÁ´±í¶¼±»ÌáÈ¡ÍêÎªÖ¹¡£×¢ÒâÒòÎªComp º¯ÊıÄ¬ÈÏÊÇ¶Ô×î´ó¶Ñ½øĞĞ±È½Ï²¢Î¬³ÖµİÔö¹ØÏµ£¬Èç¹ûÎÒÃÇÏëÒª»ñÈ¡×îĞ¡µÄ½ÚµãÖµ£¬ÔòÎÒÃÇĞèÒªÊµÏÖÒ»¸ö×îĞ¡¶Ñ£¬Òò´Ë±È½Ïº¯ÊıÓ¦¸ÃÎ¬³Öµİ¼õ¹ØÏµ£¬ËùÒÔoperator() ÖĞ·µ»ØÊ±ÓÃ´óÓÚºÅ¶ø²»ÊÇµÈÔö¹ØÏµÊ±µÄĞ¡ÓÚºÅ½øĞĞ±È½Ï¡£
+// LeetCode 101è§£æ³•ï¼šä¼˜å…ˆé˜Ÿåˆ—ï¼Œæ—¶é—´ 20 ms 80.19%ï¼Œç©ºé—´ 13 MB 60.08%
+// æŠŠæ‰€æœ‰çš„é“¾è¡¨å­˜å‚¨åœ¨ä¸€ä¸ªä¼˜å…ˆé˜Ÿåˆ—ä¸­ï¼Œæ¯æ¬¡æå–æ‰€æœ‰é“¾è¡¨å¤´éƒ¨èŠ‚ç‚¹å€¼æœ€å°çš„é‚£ä¸ªèŠ‚ç‚¹ï¼Œç›´åˆ°æ‰€æœ‰é“¾è¡¨éƒ½è¢«æå–å®Œä¸ºæ­¢ã€‚æ³¨æ„å› ä¸ºComp å‡½æ•°é»˜è®¤æ˜¯å¯¹æœ€å¤§å †è¿›è¡Œæ¯”è¾ƒå¹¶ç»´æŒé€’å¢å…³ç³»ï¼Œå¦‚æœæˆ‘ä»¬æƒ³è¦è·å–æœ€å°çš„èŠ‚ç‚¹å€¼ï¼Œåˆ™æˆ‘ä»¬éœ€è¦å®ç°ä¸€ä¸ªæœ€å°å †ï¼Œå› æ­¤æ¯”è¾ƒå‡½æ•°åº”è¯¥ç»´æŒé€’å‡å…³ç³»ï¼Œæ‰€ä»¥operator() ä¸­è¿”å›æ—¶ç”¨å¤§äºå·è€Œä¸æ˜¯ç­‰å¢å…³ç³»æ—¶çš„å°äºå·è¿›è¡Œæ¯”è¾ƒã€‚
 class Comp {
 public:
-	bool operator() (ListNode* lhs, ListNode* rhs) {
-		return lhs->val > rhs->val;
-	}
+    bool operator() (ListNode* lhs, ListNode* rhs) {
+        return lhs->val > rhs->val;
+    }
 };
 
 class Solution {
 public:
-	ListNode* mergeKLists(vector<ListNode*>& lists) {
-		if (lists.empty()) return nullptr;
-		// ¹¹½¨Ğ¡¶¥¶Ñ
-		priority_queue<ListNode*, vector<ListNode*>, Comp> q;
-		// ½«ËùÓĞÁ´±íµÄ¿ªÍ··Åµ½ÓÅÏÈ¶ÓÁĞÖĞ£¬»á×Ô¶¯°´ÕÕÖµµÄ´óĞ¡ÅÅÁĞ
-		for (ListNode* list : lists) {
-			if (list) {
-				q.emplace(list);
-			}
-		}
-		// ¹¹ÔìÍ·½Úµã£¬·½±ãÑ­»·
-		ListNode* dummy = new ListNode(0), * cur = dummy;
-		while (!q.empty()) {
-			// ´ÓÓÅÏÈ¶ÓÁĞÖĞÈ¡³öÖµ×îĞ¡µÄ½Úµãq.top()½Óµ½curºóÃæ
-			cur->next = q.top();
-			q.pop();
-			cur = cur->next;
-			// Èôcur->next·Ç¿Õ£¬ËµÃ÷Õâ¸öÁ´±íºóÃæ»¹ÓĞ½Úµã£¬½«cur->next·Å»ØÓÅÏÈ¶ÓÁĞÖĞ°´Öµ´óĞ¡¹¹ÔìĞ¡¶¥¶Ñ
-			if (cur->next) {
-				q.emplace(cur->next);
-			}
-		}
-		return dummy->next;
-	}
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.empty()) return nullptr;
+        // æ„å»ºå°é¡¶å †
+        priority_queue<ListNode*, vector<ListNode*>, Comp> q;
+        // å°†æ‰€æœ‰é“¾è¡¨çš„å¼€å¤´æ”¾åˆ°ä¼˜å…ˆé˜Ÿåˆ—ä¸­ï¼Œä¼šè‡ªåŠ¨æŒ‰ç…§å€¼çš„å¤§å°æ’åˆ—
+        for (ListNode* list : lists) {
+            if (list) {
+                q.emplace(list);
+            }
+        }
+        // æ„é€ å¤´èŠ‚ç‚¹ï¼Œæ–¹ä¾¿å¾ªç¯
+        ListNode* dummy = new ListNode(0), * cur = dummy;
+        while (!q.empty()) {
+            // ä»ä¼˜å…ˆé˜Ÿåˆ—ä¸­å–å‡ºå€¼æœ€å°çš„èŠ‚ç‚¹q.top()æ¥åˆ°curåé¢
+            cur->next = q.top();
+            q.pop();
+            cur = cur->next;
+            // è‹¥cur->nextéç©ºï¼Œè¯´æ˜è¿™ä¸ªé“¾è¡¨åé¢è¿˜æœ‰èŠ‚ç‚¹ï¼Œå°†cur->nextæ”¾å›ä¼˜å…ˆé˜Ÿåˆ—ä¸­æŒ‰å€¼å¤§å°æ„é€ å°é¡¶å †
+            if (cur->next) {
+                q.emplace(cur->next);
+            }
+        }
+        return dummy->next;
+    }
 };

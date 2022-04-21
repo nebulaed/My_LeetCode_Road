@@ -5,31 +5,27 @@
 #include<unordered_set>
 #include<functional>
 
-using std::array;
-using std::vector;
-using std::priority_queue;
-using std::unordered_set;
-using std::greater;
+using namespace std;
 
-// ÎÒµÄ½â·¨£ºÓÅÏÈ¶ÓÁĞ£¬Ê±¼ä ³¬Ê±
+// æˆ‘çš„è§£æ³•ï¼šä¼˜å…ˆé˜Ÿåˆ—ï¼Œæ—¶é—´ è¶…æ—¶
 class Solution {
 public:
     int nthSuperUglyNumber(int n, vector<int>& primes) {
         if (n == 1) return 1;
-        // ¹¹½¨Ğ¡¶¥¶Ñ
+        // æ„å»ºå°é¡¶å †
         priority_queue<long, vector<long>, greater<long>> queMin;
-        // ½«×îĞ¡³¬¼¶³óÊı1·ÅÈë¶ÓÁĞ
+        // å°†æœ€å°è¶…çº§ä¸‘æ•°1æ”¾å…¥é˜Ÿåˆ—
         queMin.emplace(1);
-        // ÓÃÓÚ¼ÇÂ¼ÒÑÈë¹ı¶ÓµÄÊı×Ö
+        // ç”¨äºè®°å½•å·²å…¥è¿‡é˜Ÿçš„æ•°å­—
         unordered_set<long> hashSet{ 1 };
-        // ¾­¹ın-1´Î³ö¶Óºó£¬¶Ñ¶¥¾ÍÊÇµÚn¸ö³¬¼¶³óÊı
+        // ç»è¿‡n-1æ¬¡å‡ºé˜Ÿåï¼Œå †é¡¶å°±æ˜¯ç¬¬nä¸ªè¶…çº§ä¸‘æ•°
         for (int i = 0; i < n - 1; ++i) {
             long x = queMin.top();
             queMin.pop();
-            // ½«³ö¶ÓµÄ×îĞ¡³¬¼¶³óÊıÓëprimesÖĞËùÓĞÖ¸ÊıÏà³Ë£¬µÃµ½ĞÂµÄ³¬¼¶³óÊı
+            // å°†å‡ºé˜Ÿçš„æœ€å°è¶…çº§ä¸‘æ•°ä¸primesä¸­æ‰€æœ‰æŒ‡æ•°ç›¸ä¹˜ï¼Œå¾—åˆ°æ–°çš„è¶…çº§ä¸‘æ•°
             for (int prime : primes) {
                 long superUglyNumber = x * static_cast<long>(prime);
-                // ĞÂ³¬¼¶³óÊı±ØĞëÃ»ÔÚ¶ÓÁĞÖĞ³öÏÖ¹ı
+                // æ–°è¶…çº§ä¸‘æ•°å¿…é¡»æ²¡åœ¨é˜Ÿåˆ—ä¸­å‡ºç°è¿‡
                 if (!hashSet.count(superUglyNumber)) {
                     hashSet.emplace(superUglyNumber);
                     queMin.emplace(superUglyNumber);
@@ -41,7 +37,7 @@ public:
 };
 
 
-// ÎÒµÄ½â·¨£º¶àÂ·¹é²¢£¬Ê±¼ä 1212 ms 40.73%£¬¿Õ¼ä 13.1 MB 63.38%
+// æˆ‘çš„è§£æ³•ï¼šå¤šè·¯å½’å¹¶ï¼Œæ—¶é—´ 1212 ms 40.73%ï¼Œç©ºé—´ 13.1 MB 63.38%
 struct myGreater {
     bool operator() (const array<long, 3>& lhs, const array<long, 3>& rhs) const{
         return lhs[0] > rhs[0];

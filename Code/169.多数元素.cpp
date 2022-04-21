@@ -4,110 +4,110 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨1£º¹şÏ£±í£¬Ê±¼äO(n) 20 ms£¬¿Õ¼äO(n) 19.2 MB
+// æˆ‘çš„è§£æ³•1ï¼šå“ˆå¸Œè¡¨ï¼Œæ—¶é—´O(n) 20 msï¼Œç©ºé—´O(n) 19.2 MB
 class Solution {
 public:
-	int majorityElement(vector<int>& nums) {
-		int maxFreq = 0, maxFreqInd = -1;
-		unordered_map<int, int> numFreq;
-		for (const auto& num : nums) {
-			if (!numFreq.count(num)) {
-				numFreq[num] = 1;
-			}
-			else {
-				++numFreq[num];
-			}
-			if (numFreq[num] > maxFreq) {
-				maxFreq = numFreq[num];
-				maxFreqInd = num;
-				if (maxFreq > nums.size() / 2) break;
-			}
-		}
-		return maxFreqInd;
-	}
+    int majorityElement(vector<int>& nums) {
+        int maxFreq = 0, maxFreqInd = -1;
+        unordered_map<int, int> numFreq;
+        for (const auto& num : nums) {
+            if (!numFreq.count(num)) {
+                numFreq[num] = 1;
+            }
+            else {
+                ++numFreq[num];
+            }
+            if (numFreq[num] > maxFreq) {
+                maxFreq = numFreq[num];
+                maxFreqInd = num;
+                if (maxFreq > nums.size() / 2) break;
+            }
+        }
+        return maxFreqInd;
+    }
 };
 
-// ÎÒµÄ½â·¨2£ºÅÅĞò£¬Ê±¼äO(nlogn) 8 ms£¬¿Õ¼äO(log n) 19.1 MB£¬ÈôÓÃÓïÑÔ×Ô´øµÄÅÅĞòËã·¨£¬ĞèÒªO(n logn)£¬ÓÃ×Ô¼ºĞ´µÄ¶ÑÅÅĞò£¬Ö»ĞèÒªO(1)¿Õ¼ä¡£
+// æˆ‘çš„è§£æ³•2ï¼šæ’åºï¼Œæ—¶é—´O(nlogn) 8 msï¼Œç©ºé—´O(log n) 19.1 MBï¼Œè‹¥ç”¨è¯­è¨€è‡ªå¸¦çš„æ’åºç®—æ³•ï¼Œéœ€è¦O(n logn)ï¼Œç”¨è‡ªå·±å†™çš„å †æ’åºï¼Œåªéœ€è¦O(1)ç©ºé—´ã€‚
 class Solution {
 public:
-	int majorityElement(vector<int>& nums) {
-		sort(nums.begin(), nums.end());
-		int freq = 1, n = nums.size();
-		for (int i = 1; i < n; ++i) {
-			if (nums[i] == nums[i - 1]) ++freq;
-			else freq = 1;
-			if (freq > n / 2) return nums[i];
-		}
-		return nums[0];
-	}
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int freq = 1, n = nums.size();
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] == nums[i - 1]) ++freq;
+            else freq = 1;
+            if (freq > n / 2) return nums[i];
+        }
+        return nums[0];
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÅÅĞò£¬Ê±¼äO(n logn) 24 ms£¬¿Õ¼äO(log n) 19 MB
-// ÅÅĞòºó£¬¶ÔÓÚÓĞÊıÁ¿³¬¹ın/2ÔªËØµÄÊı×é£¬ÖĞÎ»Êı±ØÈ»ÊÇÖÚÊı
+// å®˜æ–¹è§£æ³•äºŒï¼šæ’åºï¼Œæ—¶é—´O(n logn) 24 msï¼Œç©ºé—´O(log n) 19 MB
+// æ’åºåï¼Œå¯¹äºæœ‰æ•°é‡è¶…è¿‡n/2å…ƒç´ çš„æ•°ç»„ï¼Œä¸­ä½æ•°å¿…ç„¶æ˜¯ä¼—æ•°
 class Solution {
 public:
-	int majorityElement(vector<int>& nums) {
-		sort(nums.begin(), nums.end());
-		return nums[nums.size() / 2];
-	}
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        return nums[nums.size() / 2];
+    }
 };
 
-// ¹Ù·½½â·¨Èı£ºËæ»ú»¯£¬×î»µÊ±¼äO(¡Ş)£¬Æ½¾ùÊ±¼ä¸´ÔÓ¶ÈO(n) 16 ms£¬¿Õ¼äO(1) 19.1 MB
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šéšæœºåŒ–ï¼Œæœ€åæ—¶é—´O(âˆ)ï¼Œå¹³å‡æ—¶é—´å¤æ‚åº¦O(n) 16 msï¼Œç©ºé—´O(1) 19.1 MB
 class Solution {
 public:
-	int majorityElement(vector<int>& nums) {
-		while (true) {
-			int candidate = nums[rand() % nums.size()];
-			int count = 0;
-			for (int num : nums) {
-				if (num == candidate) ++count;
-			}
-			if (count > nums.size() / 2) return candidate;
-		}
-		return -1;
-	}
+    int majorityElement(vector<int>& nums) {
+        while (true) {
+            int candidate = nums[rand() % nums.size()];
+            int count = 0;
+            for (int num : nums) {
+                if (num == candidate) ++count;
+            }
+            if (count > nums.size() / 2) return candidate;
+        }
+        return -1;
+    }
 };
 
-// ¹Ù·½½â·¨ËÄ£º·ÖÖÎ£¬Ê±¼äO(n log n) 24 ms£¬¿Õ¼äO(log n) 19.2 MB
+// å®˜æ–¹è§£æ³•å››ï¼šåˆ†æ²»ï¼Œæ—¶é—´O(n log n) 24 msï¼Œç©ºé—´O(log n) 19.2 MB
 class Solution {
 public:
-	int count_in_range(vector<int>& nums, int target, int lo, int hi) {
-		int count = 0;
-		for (int i = lo; i <= hi; ++i) {
-			if (nums[i] == target) ++count;
-		}
-		return count;
-	}
-	int majority_element_rec(vector<int>& nums, int lo, int hi) {
-		if (lo == hi) return nums[lo];
-		int mid = (lo + hi) / 2;
-		int left_majority = majority_element_rec(nums, lo, mid);
-		int right_majority = majority_element_rec(nums, mid + 1, hi);
-		if (count_in_range(nums, left_majority, lo, hi) > (hi - lo + 1) / 2) {
-			return left_majority;
-		}
-		if (count_in_range(nums, right_majority, lo, hi) > (hi - lo + 1) / 2) {
-			return right_majority;
-		}
-		return -1;
-	}
-	int majorityElement(vector<int>& nums) {
-		return majority_element_rec(nums, 0, nums.size() - 1);
-	}
+    int count_in_range(vector<int>& nums, int target, int lo, int hi) {
+        int count = 0;
+        for (int i = lo; i <= hi; ++i) {
+            if (nums[i] == target) ++count;
+        }
+        return count;
+    }
+    int majority_element_rec(vector<int>& nums, int lo, int hi) {
+        if (lo == hi) return nums[lo];
+        int mid = (lo + hi) / 2;
+        int left_majority = majority_element_rec(nums, lo, mid);
+        int right_majority = majority_element_rec(nums, mid + 1, hi);
+        if (count_in_range(nums, left_majority, lo, hi) > (hi - lo + 1) / 2) {
+            return left_majority;
+        }
+        if (count_in_range(nums, right_majority, lo, hi) > (hi - lo + 1) / 2) {
+            return right_majority;
+        }
+        return -1;
+    }
+    int majorityElement(vector<int>& nums) {
+        return majority_element_rec(nums, 0, nums.size() - 1);
+    }
 };
 
-// ¹Ù·½½â·¨Îå£ºBoyer-Moore Í¶Æ±Ëã·¨£¬Ê±¼äO(n) 12 ms£¬¿Õ¼äO(1) 19.2 MB
+// å®˜æ–¹è§£æ³•äº”ï¼šBoyer-Moore æŠ•ç¥¨ç®—æ³•ï¼Œæ—¶é—´O(n) 12 msï¼Œç©ºé—´O(1) 19.2 MB
 class Solution {
 public:
-	int majorityElement(vector<int>& nums) {
-		int candidate = -1, count = 0;
-		for (const int& num : nums) {
-			if (num == candidate) ++count;
-			else if (--count < 0) {
-				candidate = num;
-				count = 1;
-			}
-		}
-		return candidate;
-	}
+    int majorityElement(vector<int>& nums) {
+        int candidate = -1, count = 0;
+        for (const int& num : nums) {
+            if (num == candidate) ++count;
+            else if (--count < 0) {
+                candidate = num;
+                count = 1;
+            }
+        }
+        return candidate;
+    }
 };

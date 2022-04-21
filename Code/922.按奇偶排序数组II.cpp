@@ -3,7 +3,7 @@
 using namespace std;
 
 
-// ÎÒµÄ½â·¨£ºCÓïÑÔ½â·¨£¬Ë«Ö¸Õë£¬Ê±¼ä 84 ms 10.06%£¬¿Õ¼ä 12.6 MB 94.67%
+// æˆ‘çš„è§£æ³•ï¼šCè¯­è¨€è§£æ³•ï¼ŒåŒæŒ‡é’ˆï¼Œæ—¶é—´ 84 ms 10.06%ï¼Œç©ºé—´ 12.6 MB 94.67%
 void swap(int* a, int* b) {
     int temp = *a;
     *a = *b;
@@ -13,7 +13,7 @@ int* sortArrayByParityII(int* nums, int numsSize, int* returnSize) {
     int odd = 1, even = 0;
     while (odd < numsSize) {
         if (!((*(nums + odd)) & 1)) {
-            // ×¢ÒâÕâÀï¿ÉÒÔÉáÈ¥¶ÔevenÊÇ·ñ³¬³ö±ß½çµÄ¼ì²é£¬ÒòÎªÓĞodd±Ø¶¨ÓĞ¶ÔÓ¦µÄeven
+            // æ³¨æ„è¿™é‡Œå¯ä»¥èˆå»å¯¹evenæ˜¯å¦è¶…å‡ºè¾¹ç•Œçš„æ£€æŸ¥ï¼Œå› ä¸ºæœ‰oddå¿…å®šæœ‰å¯¹åº”çš„even
             while (!((*(nums + even)) & 1)) {
                 even += 2;
             }
@@ -25,7 +25,7 @@ int* sortArrayByParityII(int* nums, int numsSize, int* returnSize) {
     return nums;
 }
 
-// ÎÒµÄ½â·¨£ºË«Ö¸Õë£¬Ê±¼ä 20 ms 53.76%£¬¿Õ¼ä 21 MB 35.02%
+// æˆ‘çš„è§£æ³•ï¼šåŒæŒ‡é’ˆï¼Œæ—¶é—´ 20 ms 53.76%ï¼Œç©ºé—´ 21 MB 35.02%
 class Solution {
 public:
     vector<int> sortArrayByParityII(vector<int>& nums) {

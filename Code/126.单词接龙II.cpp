@@ -5,106 +5,102 @@
 #include<unordered_set>
 #include<unordered_map>
 
-using std::string;
-using std::vector;
-using std::set;
-using std::unordered_map;
-using std::unordered_set;
+using namespace std;
 
 
-// LeetCode 101½â·¨£ºÊ±¼ä 4 ms 98.29%£¬¿Õ¼ä 8.4 MB 86.18%
-// Ë¼Â·£º½«ÆğÊ¼×Ö·û´®¡¢ÖÕÖ¹×Ö·û´®¡¢ÒÔ¼°µ¥´Ê±íÀïËùÓĞµÄ×Ö·û´®ÏëÏó³É½Úµã¡£ÈôÁ½¸ö×Ö·û´®Ö»ÓĞÒ»¸ö×Ö·û²»Í¬£¬ÄÇÃ´ÏàÁ¬¡£Ê¹ÓÃ¹ã¶ÈÓÅÏÈËÑË÷£¬ÇóµÃÆğÊ¼½Úµãµ½ÖÕÖ¹½ÚµãµÄ×î¶Ì¾àÀë¡£
-// Ğ¡trick: ´ÓÆğÊ¼½ÚµãºÍÖÕÖ¹½Úµã·Ö±ğ½øĞĞ¹ã¶ÈÓÅÏÈËÑË÷£¬Ã¿´ÎÖ»ÑÓÕ¹µ±Ç°²ã½ÚµãÊı×îÉÙµÄÄÇÒ»¶Ë£¬ÕâÑù¿ÉÒÔ¼õÉÙËÑË÷µÄ×Ü½áµãÊı¡£
-// ËÑË÷½áÊøºó£¬Í¨¹ı»ØËİÀ´ÖØ½¨ËùÓĞ¿ÉÄÜµÄÂ·¾¶
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 4 ms 98.29%ï¼Œç©ºé—´ 8.4 MB 86.18%
+// æ€è·¯ï¼šå°†èµ·å§‹å­—ç¬¦ä¸²ã€ç»ˆæ­¢å­—ç¬¦ä¸²ã€ä»¥åŠå•è¯è¡¨é‡Œæ‰€æœ‰çš„å­—ç¬¦ä¸²æƒ³è±¡æˆèŠ‚ç‚¹ã€‚è‹¥ä¸¤ä¸ªå­—ç¬¦ä¸²åªæœ‰ä¸€ä¸ªå­—ç¬¦ä¸åŒï¼Œé‚£ä¹ˆç›¸è¿ã€‚ä½¿ç”¨å¹¿åº¦ä¼˜å…ˆæœç´¢ï¼Œæ±‚å¾—èµ·å§‹èŠ‚ç‚¹åˆ°ç»ˆæ­¢èŠ‚ç‚¹çš„æœ€çŸ­è·ç¦»ã€‚
+// å°trick: ä»èµ·å§‹èŠ‚ç‚¹å’Œç»ˆæ­¢èŠ‚ç‚¹åˆ†åˆ«è¿›è¡Œå¹¿åº¦ä¼˜å…ˆæœç´¢ï¼Œæ¯æ¬¡åªå»¶å±•å½“å‰å±‚èŠ‚ç‚¹æ•°æœ€å°‘çš„é‚£ä¸€ç«¯ï¼Œè¿™æ ·å¯ä»¥å‡å°‘æœç´¢çš„æ€»ç»“ç‚¹æ•°ã€‚
+// æœç´¢ç»“æŸåï¼Œé€šè¿‡å›æº¯æ¥é‡å»ºæ‰€æœ‰å¯èƒ½çš„è·¯å¾„
 class Solution {
 private:
-	void dfs(const string& src, const string& dst, unordered_map<string, vector<string>>& next, vector<string>& path, vector<vector<string>>& ret) {
-		if (src == dst) {
-			ret.emplace_back(path);
-			return;
-		}
-		for (const auto& s : next[src]) {
-			path.emplace_back(s);
-			dfs(s, dst, next, path, ret);
-			path.pop_back();
-		}
-	}
+    void dfs(const string& src, const string& dst, unordered_map<string, vector<string>>& next, vector<string>& path, vector<vector<string>>& ret) {
+        if (src == dst) {
+            ret.emplace_back(path);
+            return;
+        }
+        for (const auto& s : next[src]) {
+            path.emplace_back(s);
+            dfs(s, dst, next, path, ret);
+            path.pop_back();
+        }
+    }
 public:
-	vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
-		// ĞŞ¸ÄÍ¾¾¶µÄËùÓĞ×Ö·û´®
-		vector<vector<string>> ret;
-		// ½«wordListÀïËùÓĞstring·Åµ½¹şÏ£¼¯ºÏÖĞÈ¥ÖØ²¢·½±ã²éÕÒ
-		unordered_set<string> dict(wordList.begin(), wordList.end());
-		auto it = dict.find(endWord);
-		// ÈôwordListÖĞÃ»ÓĞÖÕµã£¬¿Ï¶¨²»·ûºÏÒªÇó
-		if (it == dict.end()) return ret;
-		// ´ÓdictÖĞÉ¾È¥ÆğµãºÍÖÕµã
-		else dict.erase(it);
-		dict.erase(beginWord);
-		// ¹ã¶ÈÓÅÏÈËÑË÷Ê¹ÓÃµÄ¶ÓÁĞq1ºÍq2£¬Îª·½±ã²éÕÒÊ¹ÓÃ¹şÏ£¼¯ºÏ
-		unordered_set<string> q1{ beginWord }, q2{ endWord }, q;
-		// µ±Ç°×Ö·û´®µÄ¸Ä±äÒ»¸ö×Ö·ûºóÔÚdictÄÚµÄËùÓĞ×Ö·û´®
-		unordered_map<string, vector<string>> next;
-		// reversedÎªfalseÊ±ÊÇ´ÓÆğµã¿ªÊ¼µÄËÑË÷£¬ÎªtrueÊ±ÊÇ´ÓÖÕµã¿ªÊ¼µÄËÑË÷
-		bool reversed = false, found = false;
-		string s;
-		while (!q1.empty()) {
-			// ÎªÁËÄÜÖ±½Ó¸úq1£¬q2½»»»Öµ£¬Ò²²ÉÓÃ¹şÏ£¼¯ºÏ
-			q.clear();
-			for (const auto& word : q1) {
-				// ÎªÊÔÌ½¸Ä±äÒ»¸ö×Ö·ûºóµÄ×Ö·û´®£¬ÒªĞÂ´´½¨Ò»¸ö×Ö·û´®
-				s = word;
-				// ¶Ô×Ö·û´®ÖĞÖğ¸ö×Ö·û³¢ÊÔ×ö¸Ä±ä
-				for (size_t i = 0; i < s.size(); ++i) {
-					// ±£´æÔ­×Ö·û
-					char ch = s[i];
-					//³¢ÊÔ½«s[i]¸ÄÎªÈÎÒâ×Ö·û
-					for (int j = 0; j < 26; ++j) {
-						s[i] = j + 'a';
-						// ÈôÁíÍâÒ»¶Ë³ö·¢µÄÂ·¾¶Àï³öÏÖÁËs£¬ËµÃ÷´ÓÁ½¶ËËÑË÷µÄÂ·¾¶ÏàÓöÁË
-						if (q2.count(s)) {
-							// reversedÎªÕæËµÃ÷µ±Ç°q2Îª´ÓÆğµã³ö·¢µÄ¶ÓÁĞ£¬ËùÒÔÓ¦ÒÔĞŞ¸ÄºóµÄsÎªkey£¬ĞŞ¸ÄÇ°µÄwordÎªval£¬ÒòÎªÆğµã³ö·¢Â·¾¶ÊÇkey->val
-							// ·´Ö®Ôòq1Îª´ÓÆğµã³ö·¢µÄ¶ÓÁĞ£¬ËùÒÔÓ¦ÒÔĞŞ¸ÄÇ°wordÎªkey£¬ĞŞ¸ÄºósÎªval£¬ÒòÎªÆğµã³ö·¢Â·¾¶ÊÇkey->val
-							reversed ? next[s].emplace_back(word) : next[word].emplace_back(s);
-							found = true;
-						}
-						// ÈôdictÖĞÓĞs£¬Â·¾¶qÖĞ·ÅÈëµ±Ç°×Ö·û´®s
-						if (dict.count(s)) {
-							// reversedÎªÕæËµÃ÷µ±Ç°q2Îª´ÓÆğµã³ö·¢µÄ¶ÓÁĞ£¬ËùÒÔÓ¦ÒÔĞŞ¸ÄºóµÄsÎªkey£¬ĞŞ¸ÄÇ°µÄwordÎªval£¬ÒòÎªÆğµã³ö·¢Â·¾¶ÊÇkey->val
-							// ·´Ö®Ôòq1Îª´ÓÆğµã³ö·¢µÄ¶ÓÁĞ£¬ËùÒÔÓ¦ÒÔĞŞ¸ÄÇ°wordÎªkey£¬ĞŞ¸ÄºósÎªval£¬ÒòÎªÆğµã³ö·¢Â·¾¶ÊÇkey->val
-							reversed ? next[s].emplace_back(word) : next[word].emplace_back(s);
-							q.emplace(s);
-						}
-					}
-					// ½«s[i]¸ÄÎªÔ­×Ö·û
-					s[i] = ch;
-				}
-			}
-			if (found) break;
-			for (const auto& word : q) {
-				dict.erase(word);
-			}
-			// Èôµ±Ç°²ã½ÚµãÊıq.size()Ğ¡ÓÚµÈÓÚÁíÒ»¶ËËÑË÷µÄµ±Ç°½ÚµãÊıq2.size()£¬¼ÌĞø´Óµ±Ç°¶ËËÑË÷
-			if (q.size() <= q2.size()) {
-				q1 = q;
-			}
-			// ·ñÔò´ÓÁíÒ»¶Ë¿ªÊ¼ËÑË÷
-			else {
-				reversed = !reversed;
-				q1 = q2;
-				q2 = q;
-			}
-		}
-		// Í¨¹ıDFS+»ØËİ¹¹½¨ËùÓĞ¿ÉĞĞÂ·¾¶
-		if (found) {
-			vector<string> path = { beginWord };
-			dfs(beginWord, endWord, next, path, ret);
-		}
-		return ret;
-	}
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        // ä¿®æ”¹é€”å¾„çš„æ‰€æœ‰å­—ç¬¦ä¸²
+        vector<vector<string>> ret;
+        // å°†wordListé‡Œæ‰€æœ‰stringæ”¾åˆ°å“ˆå¸Œé›†åˆä¸­å»é‡å¹¶æ–¹ä¾¿æŸ¥æ‰¾
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+        auto it = dict.find(endWord);
+        // è‹¥wordListä¸­æ²¡æœ‰ç»ˆç‚¹ï¼Œè‚¯å®šä¸ç¬¦åˆè¦æ±‚
+        if (it == dict.end()) return ret;
+            // ä»dictä¸­åˆ å»èµ·ç‚¹å’Œç»ˆç‚¹
+        else dict.erase(it);
+        dict.erase(beginWord);
+        // å¹¿åº¦ä¼˜å…ˆæœç´¢ä½¿ç”¨çš„é˜Ÿåˆ—q1å’Œq2ï¼Œä¸ºæ–¹ä¾¿æŸ¥æ‰¾ä½¿ç”¨å“ˆå¸Œé›†åˆ
+        unordered_set<string> q1{ beginWord }, q2{ endWord }, q;
+        // å½“å‰å­—ç¬¦ä¸²çš„æ”¹å˜ä¸€ä¸ªå­—ç¬¦ååœ¨dictå†…çš„æ‰€æœ‰å­—ç¬¦ä¸²
+        unordered_map<string, vector<string>> next;
+        // reversedä¸ºfalseæ—¶æ˜¯ä»èµ·ç‚¹å¼€å§‹çš„æœç´¢ï¼Œä¸ºtrueæ—¶æ˜¯ä»ç»ˆç‚¹å¼€å§‹çš„æœç´¢
+        bool reversed = false, found = false;
+        string s;
+        while (!q1.empty()) {
+            // ä¸ºäº†èƒ½ç›´æ¥è·Ÿq1ï¼Œq2äº¤æ¢å€¼ï¼Œä¹Ÿé‡‡ç”¨å“ˆå¸Œé›†åˆ
+            q.clear();
+            for (const auto& word : q1) {
+                // ä¸ºè¯•æ¢æ”¹å˜ä¸€ä¸ªå­—ç¬¦åçš„å­—ç¬¦ä¸²ï¼Œè¦æ–°åˆ›å»ºä¸€ä¸ªå­—ç¬¦ä¸²
+                s = word;
+                // å¯¹å­—ç¬¦ä¸²ä¸­é€ä¸ªå­—ç¬¦å°è¯•åšæ”¹å˜
+                for (size_t i = 0; i < s.size(); ++i) {
+                    // ä¿å­˜åŸå­—ç¬¦
+                    char ch = s[i];
+                    //å°è¯•å°†s[i]æ”¹ä¸ºä»»æ„å­—ç¬¦
+                    for (int j = 0; j < 26; ++j) {
+                        s[i] = j + 'a';
+                        // è‹¥å¦å¤–ä¸€ç«¯å‡ºå‘çš„è·¯å¾„é‡Œå‡ºç°äº†sï¼Œè¯´æ˜ä»ä¸¤ç«¯æœç´¢çš„è·¯å¾„ç›¸é‡äº†
+                        if (q2.count(s)) {
+                            // reversedä¸ºçœŸè¯´æ˜å½“å‰q2ä¸ºä»èµ·ç‚¹å‡ºå‘çš„é˜Ÿåˆ—ï¼Œæ‰€ä»¥åº”ä»¥ä¿®æ”¹åçš„sä¸ºkeyï¼Œä¿®æ”¹å‰çš„wordä¸ºvalï¼Œå› ä¸ºèµ·ç‚¹å‡ºå‘è·¯å¾„æ˜¯key->val
+                            // åä¹‹åˆ™q1ä¸ºä»èµ·ç‚¹å‡ºå‘çš„é˜Ÿåˆ—ï¼Œæ‰€ä»¥åº”ä»¥ä¿®æ”¹å‰wordä¸ºkeyï¼Œä¿®æ”¹åsä¸ºvalï¼Œå› ä¸ºèµ·ç‚¹å‡ºå‘è·¯å¾„æ˜¯key->val
+                            reversed ? next[s].emplace_back(word) : next[word].emplace_back(s);
+                            found = true;
+                        }
+                        // è‹¥dictä¸­æœ‰sï¼Œè·¯å¾„qä¸­æ”¾å…¥å½“å‰å­—ç¬¦ä¸²s
+                        if (dict.count(s)) {
+                            // reversedä¸ºçœŸè¯´æ˜å½“å‰q2ä¸ºä»èµ·ç‚¹å‡ºå‘çš„é˜Ÿåˆ—ï¼Œæ‰€ä»¥åº”ä»¥ä¿®æ”¹åçš„sä¸ºkeyï¼Œä¿®æ”¹å‰çš„wordä¸ºvalï¼Œå› ä¸ºèµ·ç‚¹å‡ºå‘è·¯å¾„æ˜¯key->val
+                            // åä¹‹åˆ™q1ä¸ºä»èµ·ç‚¹å‡ºå‘çš„é˜Ÿåˆ—ï¼Œæ‰€ä»¥åº”ä»¥ä¿®æ”¹å‰wordä¸ºkeyï¼Œä¿®æ”¹åsä¸ºvalï¼Œå› ä¸ºèµ·ç‚¹å‡ºå‘è·¯å¾„æ˜¯key->val
+                            reversed ? next[s].emplace_back(word) : next[word].emplace_back(s);
+                            q.emplace(s);
+                        }
+                    }
+                    // å°†s[i]æ”¹ä¸ºåŸå­—ç¬¦
+                    s[i] = ch;
+                }
+            }
+            if (found) break;
+            for (const auto& word : q) {
+                dict.erase(word);
+            }
+            // è‹¥å½“å‰å±‚èŠ‚ç‚¹æ•°q.size()å°äºç­‰äºå¦ä¸€ç«¯æœç´¢çš„å½“å‰èŠ‚ç‚¹æ•°q2.size()ï¼Œç»§ç»­ä»å½“å‰ç«¯æœç´¢
+            if (q.size() <= q2.size()) {
+                q1 = q;
+            }
+                // å¦åˆ™ä»å¦ä¸€ç«¯å¼€å§‹æœç´¢
+            else {
+                reversed = !reversed;
+                q1 = q2;
+                q2 = q;
+            }
+        }
+        // é€šè¿‡DFS+å›æº¯æ„å»ºæ‰€æœ‰å¯è¡Œè·¯å¾„
+        if (found) {
+            vector<string> path = { beginWord };
+            dfs(beginWord, endWord, next, path, ret);
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨£º¹ã¶ÈÓÅÏÈËÑË÷+Éî¶ÈÓÅÏÈËÑË÷£¬Ê§°Ü
+// æˆ‘çš„è§£æ³•ï¼šå¹¿åº¦ä¼˜å…ˆæœç´¢+æ·±åº¦ä¼˜å…ˆæœç´¢ï¼Œå¤±è´¥
 //class Solution {
 //private:
 //	void dfs(const string& src, const string& dst, unordered_map<string, vector<string>>& nextWord, vector<string>& path, set<vector<string>>& ret) {
@@ -180,23 +176,20 @@ public:
 
 int main() {
 
-	using std::cout;
-
-	string beginWord = "qa", endWord = "sq";
-	vector<string> wordList = { "si","go","se","cm","so","ph","mt","db","mb","sb","kr","ln","tm","le","av","sm","ar","ci","ca","br","ti","ba","to","ra","fa","yo","ow","sn","ya","cr","po","fe","ho","ma","re","or","rn","au","ur","rh","sr","tc","lt","lo","as","fr","nb","yb","if","pb","ge","th","pm","rb","sh","co","ga","li","ha","hz","no","bi","di","hi","qa","pi","os","uh","wm","an","me","mo","na","la","st","er","sc","ne","mn","mi","am","ex","pt","io","be","fm","ta","tb","ni","mr","pa","he","lr","sq","ye" };
+    string beginWord = "qa", endWord = "sq";
+    vector<string> wordList = { "si","go","se","cm","so","ph","mt","db","mb","sb","kr","ln","tm","le","av","sm","ar","ci","ca","br","ti","ba","to","ra","fa","yo","ow","sn","ya","cr","po","fe","ho","ma","re","or","rn","au","ur","rh","sr","tc","lt","lo","as","fr","nb","yb","if","pb","ge","th","pm","rb","sh","co","ga","li","ha","hz","no","bi","di","hi","qa","pi","os","uh","wm","an","me","mo","na","la","st","er","sc","ne","mn","mi","am","ex","pt","io","be","fm","ta","tb","ni","mr","pa","he","lr","sq","ye" };
 
 
-	Solution s;
-	vector<vector<string>> ret = s.findLadders(beginWord, endWord, wordList);
+    Solution s;
+    vector<vector<string>> ret = s.findLadders(beginWord, endWord, wordList);
 
-	for (const auto& path : ret) {
-		cout << "[";
-		for (const auto& word : path) {
-			cout << word << ",";
-		}
-		cout << "]\n";
-	}
+    for (const auto& path : ret) {
+        cout << "[";
+        for (const auto& word : path) {
+            cout << word << ",";
+        }
+        cout << "]\n";
+    }
 
-	system("pause");
-	return 0;
+    return 0;
 }

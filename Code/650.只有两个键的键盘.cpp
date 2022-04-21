@@ -2,28 +2,27 @@
 #include<vector>
 #include<numeric>
 
-using std::vector;
-using std::iota;
+using namespace std;
 
-// LeetCode 101½â·¨£ºÊ±¼ä 0 ms 100%£¬¿Õ¼ä 6.3 MB 70.63%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.3 MB 70.63%
 class Solution {
 public:
-	int minSteps(int n) {
-		vector<int> dp(n + 1);
-		iota(dp.begin(), dp.end(), 0);
-		dp[1] = 0;
-		for (int i = 2; i <= n; ++i) {
-			// ÓÉÓÚ¶Ôj > sqrt(i)µÄÇé¿ö£¬i·Ö½âÖÊÒòÊıºóµÃµ½µÄÁ½¸ö³ËÊıjºÍi/j»áºÍÖ®Ç°µÄi/jºÍjÖØ¸´£¬Òò´ËjÁĞ¾Ùµ½sqrt(i)¼´¿É
-			// Èç12 = 2 * 6£ºj = 2£¬i/j = 6Óë12 = 6 * 2: j = 6, i/j = 2µÄ½á¹û¶¼ÊÇdp[12] = dp[2] + dp[6]
-			for (int j = 2; j * j <= i; ++j) {
-				// ÈôiÄÜ±»jÕû³ı£¬ÄÇÃ´³¤¶Èi¿ÉÓÉ³¤¶Èj²Ù×÷µÃµ½£¬²Ù×÷´ÎÊıµÈ¼ÛÓÚ°Ñ³¤¶ÈÎª1µÄAÑÓÕ¹µ½³¤¶ÈÎªi/j
-				// ÀıÈç£¬AAAAµ½AAAA AAAA AAAAµÄ²Ù×÷ÊıºÍAµ½AAAµÄ²Ù×÷ÊıÒ»ÖÂ
-				if (i % j == 0) {
-					dp[i] = dp[j] + dp[i / j];
-					break;
-				}
-			}
-		}
-		return dp[n];
-	}
+    int minSteps(int n) {
+        vector<int> dp(n + 1);
+        iota(dp.begin(), dp.end(), 0);
+        dp[1] = 0;
+        for (int i = 2; i <= n; ++i) {
+            // ç”±äºå¯¹j > sqrt(i)çš„æƒ…å†µï¼Œiåˆ†è§£è´¨å› æ•°åå¾—åˆ°çš„ä¸¤ä¸ªä¹˜æ•°jå’Œi/jä¼šå’Œä¹‹å‰çš„i/jå’Œjé‡å¤ï¼Œå› æ­¤jåˆ—ä¸¾åˆ°sqrt(i)å³å¯
+            // å¦‚12 = 2 * 6ï¼šj = 2ï¼Œi/j = 6ä¸12 = 6 * 2: j = 6, i/j = 2çš„ç»“æœéƒ½æ˜¯dp[12] = dp[2] + dp[6]
+            for (int j = 2; j * j <= i; ++j) {
+                // è‹¥ièƒ½è¢«jæ•´é™¤ï¼Œé‚£ä¹ˆé•¿åº¦iå¯ç”±é•¿åº¦jæ“ä½œå¾—åˆ°ï¼Œæ“ä½œæ¬¡æ•°ç­‰ä»·äºæŠŠé•¿åº¦ä¸º1çš„Aå»¶å±•åˆ°é•¿åº¦ä¸ºi/j
+                // ä¾‹å¦‚ï¼ŒAAAAåˆ°AAAA AAAA AAAAçš„æ“ä½œæ•°å’ŒAåˆ°AAAçš„æ“ä½œæ•°ä¸€è‡´
+                if (i % j == 0) {
+                    dp[i] = dp[j] + dp[i / j];
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
 };

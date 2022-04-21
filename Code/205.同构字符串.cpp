@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¹þÏ£±í¼ÇÂ¼£¬Ê±¼ä 4 ms 92.73%£¬¿Õ¼ä 6.8 MB 80.97%
+// æˆ‘çš„è§£æ³•ï¼šå“ˆå¸Œè¡¨è®°å½•ï¼Œæ—¶é—´ 4 ms 92.73%ï¼Œç©ºé—´ 6.8 MB 80.97%
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {

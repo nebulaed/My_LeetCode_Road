@@ -2,87 +2,85 @@
 #include<vector>
 #include<queue>
 
-using std::priority_queue;
-using std::vector;
-using std::pair;
+using namespace std;
 
-// LeetCode 101½â·¨£ºÓÅÏÈ¶ÓÁĞ£¬Ê±¼ä 20 ms 91.34%£¬¿Õ¼ä 13.2 MB 85.64%
+// LeetCode 101è§£æ³•ï¼šä¼˜å…ˆé˜Ÿåˆ—ï¼Œæ—¶é—´ 20 ms 91.34%ï¼Œç©ºé—´ 13.2 MB 85.64%
 class Less {
 public:
-	bool operator() (const pair<int, int>& lhs, const pair<int, int>& rhs) {
-		return (lhs.first < rhs.first) || (lhs.first == rhs.first && lhs.second < rhs.second);
-	}
+    bool operator() (const pair<int, int>& lhs, const pair<int, int>& rhs) {
+        return (lhs.first < rhs.first) || (lhs.first == rhs.first && lhs.second < rhs.second);
+    }
 };
 class Solution {
 public:
-	vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
-		// ÕâÀïÖ±½ÓÊ¹ÓÃpriority_queue<pair<int,int>>ÊÇÒ»ÑùµÄĞ§¹û
-		// Ä¬ÈÏÊ¹ÓÃ´ó¶¥¶Ñ£¬pairµÄfirstÔ½´óÔ½¿¿½ü¶Ñ¶¥£¬firstÏàµÈµÄ»°secondÔ½´óÔ½¿¿½ü¶Ñ¶¥
-		priority_queue<pair<int, int>, vector<pair<int, int>>, Less> queMax;
-		vector<vector<int>> ret;
-		int i = 0, length = buildings.size();
-		while (i < length || !queMax.empty()) {
-			int curX = 0;
-			// buildings[i]µÄ×ó¶ËµãĞ¡ÓÚµÈÓÚqueMax´ó¶¥¶Ñ¶Ñ¶¥µÄÓÒ¶Ëµã»ò¶ÓÁĞÎª¿Õ
-			if (queMax.empty() || i < length && buildings[i][0] <= queMax.top().second) {
-				// Ìì¼ÊÏßµÄ×ó¶ËµãµÄx×ø±êÎªbuildings[i]µÄ×ó¶Ëµãx×ø±ê
-				curX = buildings[i][0];
-				// ¼ÙÈçbuildings[i]µÄ×ó¶ËµãÓëÌì¼ÊÏß×ó¶ËµãÏàµÈ£¬Ö±½Ó·Åµ½¶ÓÁĞÖĞ²¢++i£¬¶ø²»ÍùretÖĞÌí¼Óµã
-				while (i < length && curX == buildings[i][0]) {
-					queMax.emplace(buildings[i][2], buildings[i][1]);
-					++i;
-				}
-			}
-			// ¼ÙÈçqueMax²»Îª¿ÕÇÒ[i>=length »òbuildings[i]µÄ×ó¶Ëµã´óÓÚqueMaxµÄ¶Ñ¶¥ÔªËØµÄÓÒ¶Ëµã]
-			else {
-				// Ìì¼ÊÏßµÄ×ó¶ËµãµÄx×ø±êÎª¶Ñ¶¥ÔªËØµÄÓÒ¶Ëµãx×ø±ê
-				curX = queMax.top().second;
-				// ÈôqueMax²»Îª¿ÕÇÒµ±Ç°Ìì¼ÊÏß×ó¶Ëµãx×ø±ê´óÓÚµÈÓÚ¶Ñ¶¥ÔªËØÓÒ¶Ëµãx×ø±ê
-				while (!queMax.empty() && curX >= queMax.top().second) {
-					queMax.pop();
-				}
-			}
-			// Èô¶ÓÁĞÎª¿Õ£¬Ôò¸ÃÌõÌì¼ÊÏß×ó¶ËµãµÄy×ø±ê(¸ß¶È)Îª0£¬·ñÔòÎª¶Ñ¶¥ÔªËØµÄ¸ß¶È
-			int curHeight = queMax.empty() ? 0 : queMax.top().first;
-			// Èô½á¹ûÊı×éÎª¿Õ»òµ±Ç°Ìì¼ÊÏß¸ß¶È²»µÈÓÚ½á¹ûÊı×éÖĞ×îºóÒ»¸öÌì¼ÊÏß×ó¶ËµãµÄ¸ß¶È
-			if (ret.empty() || curHeight != ret.back()[1]) {
-				ret.emplace_back(vector<int>{curX, curHeight});
-			}
-		}
-		return ret;
-	}
+    vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
+        // è¿™é‡Œç›´æ¥ä½¿ç”¨priority_queue<pair<int,int>>æ˜¯ä¸€æ ·çš„æ•ˆæœ
+        // é»˜è®¤ä½¿ç”¨å¤§é¡¶å †ï¼Œpairçš„firstè¶Šå¤§è¶Šé è¿‘å †é¡¶ï¼Œfirstç›¸ç­‰çš„è¯secondè¶Šå¤§è¶Šé è¿‘å †é¡¶
+        priority_queue<pair<int, int>, vector<pair<int, int>>, Less> queMax;
+        vector<vector<int>> ret;
+        int i = 0, length = buildings.size();
+        while (i < length || !queMax.empty()) {
+            int curX = 0;
+            // buildings[i]çš„å·¦ç«¯ç‚¹å°äºç­‰äºqueMaxå¤§é¡¶å †å †é¡¶çš„å³ç«¯ç‚¹æˆ–é˜Ÿåˆ—ä¸ºç©º
+            if (queMax.empty() || i < length && buildings[i][0] <= queMax.top().second) {
+                // å¤©é™…çº¿çš„å·¦ç«¯ç‚¹çš„xåæ ‡ä¸ºbuildings[i]çš„å·¦ç«¯ç‚¹xåæ ‡
+                curX = buildings[i][0];
+                // å‡å¦‚buildings[i]çš„å·¦ç«¯ç‚¹ä¸å¤©é™…çº¿å·¦ç«¯ç‚¹ç›¸ç­‰ï¼Œç›´æ¥æ”¾åˆ°é˜Ÿåˆ—ä¸­å¹¶++iï¼Œè€Œä¸å¾€retä¸­æ·»åŠ ç‚¹
+                while (i < length && curX == buildings[i][0]) {
+                    queMax.emplace(buildings[i][2], buildings[i][1]);
+                    ++i;
+                }
+            }
+                // å‡å¦‚queMaxä¸ä¸ºç©ºä¸”[i>=length æˆ–buildings[i]çš„å·¦ç«¯ç‚¹å¤§äºqueMaxçš„å †é¡¶å…ƒç´ çš„å³ç«¯ç‚¹]
+            else {
+                // å¤©é™…çº¿çš„å·¦ç«¯ç‚¹çš„xåæ ‡ä¸ºå †é¡¶å…ƒç´ çš„å³ç«¯ç‚¹xåæ ‡
+                curX = queMax.top().second;
+                // è‹¥queMaxä¸ä¸ºç©ºä¸”å½“å‰å¤©é™…çº¿å·¦ç«¯ç‚¹xåæ ‡å¤§äºç­‰äºå †é¡¶å…ƒç´ å³ç«¯ç‚¹xåæ ‡
+                while (!queMax.empty() && curX >= queMax.top().second) {
+                    queMax.pop();
+                }
+            }
+            // è‹¥é˜Ÿåˆ—ä¸ºç©ºï¼Œåˆ™è¯¥æ¡å¤©é™…çº¿å·¦ç«¯ç‚¹çš„yåæ ‡(é«˜åº¦)ä¸º0ï¼Œå¦åˆ™ä¸ºå †é¡¶å…ƒç´ çš„é«˜åº¦
+            int curHeight = queMax.empty() ? 0 : queMax.top().first;
+            // è‹¥ç»“æœæ•°ç»„ä¸ºç©ºæˆ–å½“å‰å¤©é™…çº¿é«˜åº¦ä¸ç­‰äºç»“æœæ•°ç»„ä¸­æœ€åä¸€ä¸ªå¤©é™…çº¿å·¦ç«¯ç‚¹çš„é«˜åº¦
+            if (ret.empty() || curHeight != ret.back()[1]) {
+                ret.emplace_back(vector<int>{curX, curHeight});
+            }
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨£º¸ù¾İLeetCode 101Ë¼Â·£¬ÓÅÏÈ¶ÓÁĞ£¬Ê±¼ä 20 ms 91.34%£¬¿Õ¼ä 13 MB 91.96%
+// æˆ‘çš„è§£æ³•ï¼šæ ¹æ®LeetCode 101æ€è·¯ï¼Œä¼˜å…ˆé˜Ÿåˆ—ï¼Œæ—¶é—´ 20 ms 91.34%ï¼Œç©ºé—´ 13 MB 91.96%
 class Solution {
 public:
-	vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
-		priority_queue<pair<int, int>> queMax;
-		vector<vector<int>> ret;
-		int ind = 0, buildNum = buildings.size();
-		while (!queMax.empty() || ind < buildNum) {
-			int curX = 0, curHeight = 0;
-			if (queMax.empty() || (ind < buildNum && buildings[ind][0] <= queMax.top().second)) {
-				int curLeft = buildings[ind][0];
-				while (ind < buildNum && buildings[ind][0] == curLeft) {
-					queMax.emplace(buildings[ind][2], buildings[ind][1]);
-					++ind;
-				}
-				curHeight = queMax.top().first;
-				curX = curLeft;
-			}
-			else {
-				int curRight = queMax.top().second;
-				while (!queMax.empty() && queMax.top().second <= curRight) {
-					queMax.pop();
-				}
-				curHeight = queMax.empty() ? 0 : queMax.top().first;
-				curX = curRight;
-			}
-			if (ret.empty() || ret.back()[1] != curHeight) {
-				ret.emplace_back(vector<int>{curX, curHeight});
-			}
-		}
-		return ret;
-	}
+    vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
+        priority_queue<pair<int, int>> queMax;
+        vector<vector<int>> ret;
+        int ind = 0, buildNum = buildings.size();
+        while (!queMax.empty() || ind < buildNum) {
+            int curX = 0, curHeight = 0;
+            if (queMax.empty() || (ind < buildNum && buildings[ind][0] <= queMax.top().second)) {
+                int curLeft = buildings[ind][0];
+                while (ind < buildNum && buildings[ind][0] == curLeft) {
+                    queMax.emplace(buildings[ind][2], buildings[ind][1]);
+                    ++ind;
+                }
+                curHeight = queMax.top().first;
+                curX = curLeft;
+            }
+            else {
+                int curRight = queMax.top().second;
+                while (!queMax.empty() && queMax.top().second <= curRight) {
+                    queMax.pop();
+                }
+                curHeight = queMax.empty() ? 0 : queMax.top().first;
+                curX = curRight;
+            }
+            if (ret.empty() || ret.back()[1] != curHeight) {
+                ret.emplace_back(vector<int>{curX, curHeight});
+            }
+        }
+        return ret;
+    }
 };

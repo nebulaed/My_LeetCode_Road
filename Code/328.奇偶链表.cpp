@@ -5,7 +5,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
-// ÎÒµÄ½â·¨£ºÊ±¼ä 4 ms 99.06%£¬¿Õ¼ä 10.3 MB 8.57%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 4 ms 99.06%ï¼Œç©ºé—´ 10.3 MB 8.57%
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {

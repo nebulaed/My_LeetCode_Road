@@ -3,95 +3,95 @@
 #include<queue>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨Ò»£ºµİ¹é+ºóĞò±éÀú£¬0 ms£¬18.3 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šé€’å½’+ååºéå†ï¼Œ0 msï¼Œ18.3 MB
 class Solution {
 public:
-	void postOrderTraverse(TreeNode* T, int depth, int& maxdepth) {
-		if (T == nullptr) return;
-		postOrderTraverse(T->left, depth + 1, maxdepth);
-		postOrderTraverse(T->right, depth + 1, maxdepth);
-		maxdepth = depth > maxdepth ? depth : maxdepth;
-	}
+    void postOrderTraverse(TreeNode* T, int depth, int& maxdepth) {
+        if (T == nullptr) return;
+        postOrderTraverse(T->left, depth + 1, maxdepth);
+        postOrderTraverse(T->right, depth + 1, maxdepth);
+        maxdepth = depth > maxdepth ? depth : maxdepth;
+    }
 
-	int maxDepth(TreeNode* root) {
-		int maxdepth = 0;
-		postOrderTraverse(root, 1, maxdepth);
-		return maxdepth;
-	}
+    int maxDepth(TreeNode* root) {
+        int maxdepth = 0;
+        postOrderTraverse(root, 1, maxdepth);
+        return maxdepth;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºµü´ú+ºóĞò±éÀú£¬12 ms£¬18.6 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šè¿­ä»£+ååºéå†ï¼Œ12 msï¼Œ18.6 MB
 class Solution {
 public:
-	int maxDepth(TreeNode* root) {
-		int maxdepth = 0;
-		if (!root) return maxdepth;
-		stack<pair<TreeNode*, int>> stk;
-		int curdepth = 1;
-		stk.emplace(root, curdepth);
-		while (!stk.empty()) {
-			root = stk.top().first;
-			curdepth = stk.top().second;
-			stk.pop();
-			maxdepth = curdepth > maxdepth ? curdepth : maxdepth;
-			if (root->left) {
-				stk.emplace(root->left, curdepth + 1);
-			}
-			if (root->right) {
-				stk.emplace(root->right, curdepth + 1);
-			}
-		}
-		return maxdepth;
-	}
+    int maxDepth(TreeNode* root) {
+        int maxdepth = 0;
+        if (!root) return maxdepth;
+        stack<pair<TreeNode*, int>> stk;
+        int curdepth = 1;
+        stk.emplace(root, curdepth);
+        while (!stk.empty()) {
+            root = stk.top().first;
+            curdepth = stk.top().second;
+            stk.pop();
+            maxdepth = curdepth > maxdepth ? curdepth : maxdepth;
+            if (root->left) {
+                stk.emplace(root->left, curdepth + 1);
+            }
+            if (root->right) {
+                stk.emplace(root->right, curdepth + 1);
+            }
+        }
+        return maxdepth;
+    }
 };
 
-// ÎÒµÄ½â·¨Èı = ¹Ù·½½â·¨Ò»£ºÉî¶ÈÓÅÏÈËÑË÷£¬Ê±¼äO(n) 12 ms£¬¿Õ¼äO(height) 18.3 MB
+// æˆ‘çš„è§£æ³•ä¸‰ = å®˜æ–¹è§£æ³•ä¸€ï¼šæ·±åº¦ä¼˜å…ˆæœç´¢ï¼Œæ—¶é—´O(n) 12 msï¼Œç©ºé—´O(height) 18.3 MB
 class Solution {
 public:
-	int maxDepth(TreeNode* root) {
-		if (root == nullptr) return 0;
-		int num1 = maxDepth(root->left), num2 = maxDepth(root->right);
-		return (num1 > num2 ? num1 : num2) + 1;
-	}
+    int maxDepth(TreeNode* root) {
+        if (root == nullptr) return 0;
+        int num1 = maxDepth(root->left), num2 = maxDepth(root->right);
+        return (num1 > num2 ? num1 : num2) + 1;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º¹ã¶ÈÓÅÏÈËÑË÷£¬Ê±¼äO(n) 8 ms£¬¿Õ¼ä ×î»µÎªO(n) 18.5 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šå¹¿åº¦ä¼˜å…ˆæœç´¢ï¼Œæ—¶é—´O(n) 8 msï¼Œç©ºé—´ æœ€åä¸ºO(n) 18.5 MB
 class Solution {
 public:
-	int maxDepth(TreeNode* root) {
-		if (root == nullptr) return 0;
-		queue<TreeNode*> Q;
-		Q.emplace(root);
-		int ans = 0;
-		while (!Q.empty()) {
-			int sz = Q.size();
-			while (sz > 0) {
-				TreeNode* node = Q.front();
-				Q.pop();
-				if (node->left) Q.emplace(node->left);
-				if (node->right) Q.emplace(node->right);
-				sz -= 1;
-			}
-			ans += 1;
-		}
-		return ans;
-	}
+    int maxDepth(TreeNode* root) {
+        if (root == nullptr) return 0;
+        queue<TreeNode*> Q;
+        Q.emplace(root);
+        int ans = 0;
+        while (!Q.empty()) {
+            int sz = Q.size();
+            while (sz > 0) {
+                TreeNode* node = Q.front();
+                Q.pop();
+                if (node->left) Q.emplace(node->left);
+                if (node->right) Q.emplace(node->right);
+                sz -= 1;
+            }
+            ans += 1;
+        }
+        return ans;
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 4 ms 91.59%£¬¿Õ¼ä 18.4 MB 40.53%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 4 ms 91.59%ï¼Œç©ºé—´ 18.4 MB 40.53%
 class Solution {
 public:
-	int maxDepth(TreeNode* root) {
-		return root ? (max(maxDepth(root->left), maxDepth(root->right)) + 1) : 0;
-	}
+    int maxDepth(TreeNode* root) {
+        return root ? (max(maxDepth(root->left), maxDepth(root->right)) + 1) : 0;
+    }
 };

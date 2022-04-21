@@ -5,24 +5,24 @@ using namespace std;
 
 class Solution {
 public:
-	int eraseOverlapIntervals(vector<vector<int>>& intervals) {
-		// °´ÕÕÇø¼äµÄÓÒ½ç´ÓĞ¡µ½´ó½øĞĞÅÅĞò
-		sort(intervals.begin(), intervals.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
-			return lhs[1] < rhs[1];
-			});
-		// ³õÊ¼»¯Çø¼ä×ÜÊıÎªtotalNum£¬Òª±£ÁôµÄÇø¼äÊıÁ¿Îª1
-		int totalNum = intervals.size(), count = 1;
-		// ³õÊ¼»¯×óÖ¸ÕëÎª0
-		size_t left = 0;
-		for (size_t right = 1; right < totalNum; ++right) {
-			// ÈôÓÒÖ¸ÕëÖ¸ÏòÇø¼äµÄ×ó½ç´óÓÚµÈÓÚ×óÖ¸ÕëÖ¸ÏòÇø¼äµÄÓÒ½ç£¬ËµÃ÷ÕâÁ½¸öÇø¼äÎŞÖØµş£¬rightÖ¸ÕëÖ¸ÏòµÄÇø¼äÒª±£ÁôÏÂÀ´£¬±£ÁôÇø¼äÊıÁ¿count¼ÓÒ»
-			// Í¬Ê±ÓÉÓÚÓÒÖ¸ÕëµÄÇø¼ä±£Áô£¬×óÖ¸Õë¸üĞÂÎªÓÒÖ¸ÕëÖ¸ÏòÇø¼ä
-			if (intervals[right][0] >= intervals[left][1]) {
-				++count;
-				left = right;
-			}
-		}
-		// ×ÜÊı¼õÈ¥±£ÁôÇø¼äÊıÁ¿¼´ÎªÒÆ³ıÇø¼ä×îĞ¡ÊıÁ¿
-		return totalNum - count;
-	}
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        // æŒ‰ç…§åŒºé—´çš„å³ç•Œä»å°åˆ°å¤§è¿›è¡Œæ’åº
+        sort(intervals.begin(), intervals.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
+            return lhs[1] < rhs[1];
+        });
+        // åˆå§‹åŒ–åŒºé—´æ€»æ•°ä¸ºtotalNumï¼Œè¦ä¿ç•™çš„åŒºé—´æ•°é‡ä¸º1
+        int totalNum = intervals.size(), count = 1;
+        // åˆå§‹åŒ–å·¦æŒ‡é’ˆä¸º0
+        size_t left = 0;
+        for (size_t right = 1; right < totalNum; ++right) {
+            // è‹¥å³æŒ‡é’ˆæŒ‡å‘åŒºé—´çš„å·¦ç•Œå¤§äºç­‰äºå·¦æŒ‡é’ˆæŒ‡å‘åŒºé—´çš„å³ç•Œï¼Œè¯´æ˜è¿™ä¸¤ä¸ªåŒºé—´æ— é‡å ï¼ŒrightæŒ‡é’ˆæŒ‡å‘çš„åŒºé—´è¦ä¿ç•™ä¸‹æ¥ï¼Œä¿ç•™åŒºé—´æ•°é‡countåŠ ä¸€
+            // åŒæ—¶ç”±äºå³æŒ‡é’ˆçš„åŒºé—´ä¿ç•™ï¼Œå·¦æŒ‡é’ˆæ›´æ–°ä¸ºå³æŒ‡é’ˆæŒ‡å‘åŒºé—´
+            if (intervals[right][0] >= intervals[left][1]) {
+                ++count;
+                left = right;
+            }
+        }
+        // æ€»æ•°å‡å»ä¿ç•™åŒºé—´æ•°é‡å³ä¸ºç§»é™¤åŒºé—´æœ€å°æ•°é‡
+        return totalNum - count;
+    }
 };

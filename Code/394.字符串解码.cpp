@@ -4,202 +4,201 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºÕ»£¬Ê±¼äO(S+|s|) 0 ms£¬¿Õ¼äO(S) 6.1 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæ ˆï¼Œæ—¶é—´O(S+|s|) 0 msï¼Œç©ºé—´O(S) 6.1 MB
 class Solution {
 public:
-	string decodeString(string s) {
-		// retÓÃÀ´´æ·Å×îÖÕ½á¹û£¬curÓÃÀ´´æ·Åµ±Ç°[]ÄÚ×Ö·û´®£¬curNumÓÃÀ´´æ·Åµ±Ç°Êı×Ö
-		string ret, cur, curNum;
-		// stkFreqÓÃÀ´´æ·Å[]Ç°Êı×Ö£¬±íÊ¾[]ÄÚ×Ö·û´®ÖØ¸´´ÎÊı
-		stack<int> stkFreq;
-		// stkStrÓÃÀ´´æ·Å[]ÄÚ×Ö·û´®
-		stack<string> stkStr;
-		for (size_t i = 0; i < s.size();) {
-			curNum.clear();
-			while (isdigit(s[i])) {
-				curNum += s[i];
-				// ÈôÏÂÒ»¸ö×Ö·û²»ÊÇÊı×Ö£¬Ôò¿É½«curNumÄÚ´æ·ÅµÄ×Ö·û´®×ªÎªÊı×Ö£¬·Å½østkFreqÄÚ
-				if (!isdigit(s[i + 1])) {
-					stkFreq.emplace(stoi(curNum));
-					curNum.clear();
-				}
-				++i;
-			}
-			// Èôµ±Ç°×Ö·ûÎª[£¬ÍùstkStrÖĞ·ÅÈë¿Õ×Ö·û´®
-			if (s[i] == '[') {
-				stkStr.emplace("");
-				++i;
-			}
-			cur.clear();
-			// Èôs[i]ÊÇĞ¡Ğ´×ÖÄ¸£¬·ÅÈëµ±Ç°[]ÄÚ×Ö·û´®curÖĞ
-			while (s[i] >= 'a' && s[i] <= 'z') {
-				cur += s[i];
-				++i;
-			}
-			// Èôs[i]²»ÊÇ]ÇÒiĞ¡ÓÚs³¤¶È£¬²»ÊÇĞ¡Ğ´×ÖÄ¸£¬Ò²¾ÍÒâÎ¶×ÅÊÇÊı×Ö
-			if (s[i] != ']' && i < s.size()) {
-				// ÈôstkStrÎª¿Õ£¬½«cur·ÅÈëstkStrÄÚ
-				if (stkStr.empty()) stkStr.emplace(cur);
-				// ·ñÔòstkStrµÄÕ»¶¥½ÓÉÏcur
-				else stkStr.top() += cur;
-				continue;
-			}
-			// ÈôstkFreq²»Îª¿ÕÇÒs[i]ÊÇ]
-			while (!stkFreq.empty() && s[i] == ']') {
-				// stkStrµÄÕ»¶¥½ÓÉÏcur
-				stkStr.top() += cur;
-				cur.clear();
-				// cur = stkFreq.top()¸östkStr.top()ÖØ¸´
-				string temp = stkStr.top();
-				for (int i = 0; i < stkFreq.top(); ++i) {
-					cur += temp;
-				}
-				stkFreq.pop();
-				stkStr.pop();
-				++i;
-				// ÈôstkStr²»Îª¿Õ
-				if (!stkStr.empty()) {
-					cur = stkStr.top() + cur;
-					stkStr.pop();
-					// Èôµ±Ç°×Ö·ûÎª]£¬ÔòÎªstkStr²¹³äÒ»¸ö¿Õ×Ö·û´®£¬±ÜÃâstkStrºÍstkFreq³¤¶È²»µÈ
-					if (s[i] == ']') stkStr.emplace("");
-				}
-			}
-			if (stkFreq.empty()) ret += cur;
-			// ÈôstkFreq²»Îª¿Õ£¬ËµÃ÷»¹ÓĞ[Ã»Æ¥ÅäÉÏ]£¬Òò´Ë½«cur·ÅÈëstkStrÖĞ
-			else stkStr.emplace(cur);
-		}
-		return ret;
-	}
+    string decodeString(string s) {
+        // retç”¨æ¥å­˜æ”¾æœ€ç»ˆç»“æœï¼Œcurç”¨æ¥å­˜æ”¾å½“å‰[]å†…å­—ç¬¦ä¸²ï¼ŒcurNumç”¨æ¥å­˜æ”¾å½“å‰æ•°å­—
+        string ret, cur, curNum;
+        // stkFreqç”¨æ¥å­˜æ”¾[]å‰æ•°å­—ï¼Œè¡¨ç¤º[]å†…å­—ç¬¦ä¸²é‡å¤æ¬¡æ•°
+        stack<int> stkFreq;
+        // stkStrç”¨æ¥å­˜æ”¾[]å†…å­—ç¬¦ä¸²
+        stack<string> stkStr;
+        for (size_t i = 0; i < s.size();) {
+            curNum.clear();
+            while (isdigit(s[i])) {
+                curNum += s[i];
+                // è‹¥ä¸‹ä¸€ä¸ªå­—ç¬¦ä¸æ˜¯æ•°å­—ï¼Œåˆ™å¯å°†curNumå†…å­˜æ”¾çš„å­—ç¬¦ä¸²è½¬ä¸ºæ•°å­—ï¼Œæ”¾è¿›stkFreqå†…
+                if (!isdigit(s[i + 1])) {
+                    stkFreq.emplace(stoi(curNum));
+                    curNum.clear();
+                }
+                ++i;
+            }
+            // è‹¥å½“å‰å­—ç¬¦ä¸º[ï¼Œå¾€stkSträ¸­æ”¾å…¥ç©ºå­—ç¬¦ä¸²
+            if (s[i] == '[') {
+                stkStr.emplace("");
+                ++i;
+            }
+            cur.clear();
+            // è‹¥s[i]æ˜¯å°å†™å­—æ¯ï¼Œæ”¾å…¥å½“å‰[]å†…å­—ç¬¦ä¸²curä¸­
+            while (s[i] >= 'a' && s[i] <= 'z') {
+                cur += s[i];
+                ++i;
+            }
+            // è‹¥s[i]ä¸æ˜¯]ä¸”iå°äºsé•¿åº¦ï¼Œä¸æ˜¯å°å†™å­—æ¯ï¼Œä¹Ÿå°±æ„å‘³ç€æ˜¯æ•°å­—
+            if (s[i] != ']' && i < s.size()) {
+                // è‹¥stkSträ¸ºç©ºï¼Œå°†curæ”¾å…¥stkStrå†…
+                if (stkStr.empty()) stkStr.emplace(cur);
+                    // å¦åˆ™stkStrçš„æ ˆé¡¶æ¥ä¸Šcur
+                else stkStr.top() += cur;
+                continue;
+            }
+            // è‹¥stkFreqä¸ä¸ºç©ºä¸”s[i]æ˜¯]
+            while (!stkFreq.empty() && s[i] == ']') {
+                // stkStrçš„æ ˆé¡¶æ¥ä¸Šcur
+                stkStr.top() += cur;
+                cur.clear();
+                // cur = stkFreq.top()ä¸ªstkStr.top()é‡å¤
+                string temp = stkStr.top();
+                for (int i = 0; i < stkFreq.top(); ++i) {
+                    cur += temp;
+                }
+                stkFreq.pop();
+                stkStr.pop();
+                ++i;
+                // è‹¥stkSträ¸ä¸ºç©º
+                if (!stkStr.empty()) {
+                    cur = stkStr.top() + cur;
+                    stkStr.pop();
+                    // è‹¥å½“å‰å­—ç¬¦ä¸º]ï¼Œåˆ™ä¸ºstkStrè¡¥å……ä¸€ä¸ªç©ºå­—ç¬¦ä¸²ï¼Œé¿å…stkStrå’ŒstkFreqé•¿åº¦ä¸ç­‰
+                    if (s[i] == ']') stkStr.emplace("");
+                }
+            }
+            if (stkFreq.empty()) ret += cur;
+                // è‹¥stkFreqä¸ä¸ºç©ºï¼Œè¯´æ˜è¿˜æœ‰[æ²¡åŒ¹é…ä¸Š]ï¼Œå› æ­¤å°†curæ”¾å…¥stkSträ¸­
+            else stkStr.emplace(cur);
+        }
+        return ret;
+    }
 };
 
 
-// ¹Ù·½½â·¨Ò»£ºÕ»²Ù×÷£¬Ê±¼äO(S+|s|) 0 ms, ¿Õ¼äO(S) 6.5 MB
-// ±éÀúÊäÈë×Ö·û´®£º
-// 1.Èôµ±Ç°×Ö·ûÎªÊıÎ»£¬½âÎö³öÒ»¸öÊı×Ö(Á¬ĞøµÄ¶à¸öÊıÎ»)²¢½øÕ»
-// 2.Èôµ±Ç°µÄ×Ö·ûÎª×ÖÄ¸»ò×óÀ¨ºÅ£¬½øÕ»
-// 3.Èôµ±Ç°×Ö·ûÎªÓÒÀ¨ºÅ£¬¿ªÊ¼³öÕ»£¬Ò»Ö±µ½×óÀ¨ºÅ³öÕ»£¬³öÕ»ĞòÁĞ·´×ªºóÆ´½Ó³ÉÒ»¸ö×Ö·û´®£¬´ËÊ±È¡Õ»¶¥µÄÊı×Ö£¬¾ÍÊÇÕâ¸ö×Ö·û´®Ó¦¸Ã³öÏÖµÄ´ÎÊı¡£
+// å®˜æ–¹è§£æ³•ä¸€ï¼šæ ˆæ“ä½œï¼Œæ—¶é—´O(S+|s|) 0 ms, ç©ºé—´O(S) 6.5 MB
+// éå†è¾“å…¥å­—ç¬¦ä¸²ï¼š
+// 1.è‹¥å½“å‰å­—ç¬¦ä¸ºæ•°ä½ï¼Œè§£æå‡ºä¸€ä¸ªæ•°å­—(è¿ç»­çš„å¤šä¸ªæ•°ä½)å¹¶è¿›æ ˆ
+// 2.è‹¥å½“å‰çš„å­—ç¬¦ä¸ºå­—æ¯æˆ–å·¦æ‹¬å·ï¼Œè¿›æ ˆ
+// 3.è‹¥å½“å‰å­—ç¬¦ä¸ºå³æ‹¬å·ï¼Œå¼€å§‹å‡ºæ ˆï¼Œä¸€ç›´åˆ°å·¦æ‹¬å·å‡ºæ ˆï¼Œå‡ºæ ˆåºåˆ—åè½¬åæ‹¼æ¥æˆä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œæ­¤æ—¶å–æ ˆé¡¶çš„æ•°å­—ï¼Œå°±æ˜¯è¿™ä¸ªå­—ç¬¦ä¸²åº”è¯¥å‡ºç°çš„æ¬¡æ•°ã€‚
 class Solution {
 private:
-	string getDigits(const string& s, size_t& ptr) {
-		string ret = "";
-		while (isdigit(s[ptr])) {
-			ret += s[ptr++];
-		}
-		return ret;
-	}
+    string getDigits(const string& s, size_t& ptr) {
+        string ret = "";
+        while (isdigit(s[ptr])) {
+            ret += s[ptr++];
+        }
+        return ret;
+    }
 
-	string getString(const vector<string>& vec) {
-		string ret;
-		for (const auto& s : vec) {
-			ret += s;
-		}
-		return ret;
-	}
+    string getString(const vector<string>& vec) {
+        string ret;
+        for (const auto& s : vec) {
+            ret += s;
+        }
+        return ret;
+    }
 public:
-	string decodeString(string s) {
-		vector<string> stk;
-		size_t ptr = 0;
-		while (ptr < s.size()) {
-			char cur = s[ptr];
-			if (isdigit(cur)) {
-				// »ñÈ¡Ò»¸öÊı×Ö²¢½øÕ»
-				string digits = getDigits(s, ptr);
-				stk.emplace_back(digits);
-			}
-			else if (isalpha(cur) || cur == '[') {
-				// »ñÈ¡Ò»¸ö×ÖÄ¸²¢½øÕ»
-				stk.emplace_back(string(1, s[ptr++]));
-			}
-			else {
-				++ptr;
-				vector<string> sub;
-				while (stk.back() != "[") {
-					sub.emplace_back(stk.back());
-					stk.pop_back();
-				}
-				reverse(sub.begin(), sub.end());
-				// ×óÀ¨ºÅ³öÕ»
-				stk.pop_back();
-				// ´ËÊ±Õ»¶¥Îªµ±Ç°sub¶ÔÓ¦µÄ×Ö·û´®Ó¦¸Ã³öÏÖµÄ´ÎÊı
-				int repTime = stoi(stk.back());
-				stk.pop_back();
-				// tÎª¿Õ£¬oÎª[]ÄÚ×Ö·û´®
-				string t, o = getString(sub);
-				// t=repTime*o
-				while (repTime--) t += o;
-				stk.emplace_back(t);
-			}
-		}
-		return getString(stk);
-	}
+    string decodeString(string s) {
+        vector<string> stk;
+        size_t ptr = 0;
+        while (ptr < s.size()) {
+            char cur = s[ptr];
+            if (isdigit(cur)) {
+                // è·å–ä¸€ä¸ªæ•°å­—å¹¶è¿›æ ˆ
+                string digits = getDigits(s, ptr);
+                stk.emplace_back(digits);
+            }
+            else if (isalpha(cur) || cur == '[') {
+                // è·å–ä¸€ä¸ªå­—æ¯å¹¶è¿›æ ˆ
+                stk.emplace_back(string(1, s[ptr++]));
+            }
+            else {
+                ++ptr;
+                vector<string> sub;
+                while (stk.back() != "[") {
+                    sub.emplace_back(stk.back());
+                    stk.pop_back();
+                }
+                reverse(sub.begin(), sub.end());
+                // å·¦æ‹¬å·å‡ºæ ˆ
+                stk.pop_back();
+                // æ­¤æ—¶æ ˆé¡¶ä¸ºå½“å‰subå¯¹åº”çš„å­—ç¬¦ä¸²åº”è¯¥å‡ºç°çš„æ¬¡æ•°
+                int repTime = stoi(stk.back());
+                stk.pop_back();
+                // tä¸ºç©ºï¼Œoä¸º[]å†…å­—ç¬¦ä¸²
+                string t, o = getString(sub);
+                // t=repTime*o
+                while (repTime--) t += o;
+                stk.emplace_back(t);
+            }
+        }
+        return getString(stk);
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºµİ¹é£¬Ê±¼äO(S+|s|) 0 ms£¬¿Õ¼äO(|s|) 6.3 MB
-// ´Ó×óÏòÓÒ½âÎö×Ö·û´®£º
-// 1. Èôµ±Ç°Î»ÖÃÎªÊıÎ»£¬ÄÇÃ´ºóÃæÒ»¶¨°üº¬Ò»¸öÓÃ·½À¨ºÅ±íÊ¾µÄ×Ö·û´®£¬¼´ÊôÓÚÕâÖÖÇé¿ö£ºk[...]:
-// 1.1 ¿ÉÒÔÏÈ½âÎö³öÒ»¸öÊı×Ö£¬È»ºó½âÎöµ½×óÀ¨ºÅ£¬µİ¹éÏòÏÂ½âÎöºóÃæµÄÄÚÈİ£¬Óöµ½¶ÔÓ¦µÄÓÒÀ¨ºÅ¾Í·µ»Ø£¬´ËÊ±¿ÉÒÔ¸ù¾İ½âÎö³öµÄÊı×Öx½âÎö³öµÄÀ¨ºÅÀïµÄ×Ö·û´®s'¹¹Ôì³öĞÂµÄ×Ö·û´®x¡Ás'
-// 1.2 °Ñk[...]½âÎö½áÊøºó£¬ÔÙ´Îµ÷ÓÃµİ¹éº¯Êı£¬½âÎöÓÒÀ¨ºÅÓÒ±ßµÄÄÚÈİ
-// 2 Èç¹ûµ±Ç°Î»ÖÃÊÇ×ÖÄ¸Î»£¬ÄÇÃ´ÎÒÃÇÖ±½Ó½âÎöµ±Ç°Õâ¸ö×ÖÄ¸£¬È»ºóµİ¹éÏòÏÂ½âÎöÕâ¸ö×ÖÄ¸ºóÃæµÄÄÚÈİ¡£
+// å®˜æ–¹è§£æ³•äºŒï¼šé€’å½’ï¼Œæ—¶é—´O(S+|s|) 0 msï¼Œç©ºé—´O(|s|) 6.3 MB
+// ä»å·¦å‘å³è§£æå­—ç¬¦ä¸²ï¼š
+// 1. è‹¥å½“å‰ä½ç½®ä¸ºæ•°ä½ï¼Œé‚£ä¹ˆåé¢ä¸€å®šåŒ…å«ä¸€ä¸ªç”¨æ–¹æ‹¬å·è¡¨ç¤ºçš„å­—ç¬¦ä¸²ï¼Œå³å±äºè¿™ç§æƒ…å†µï¼šk[...]:
+// 1.1 å¯ä»¥å…ˆè§£æå‡ºä¸€ä¸ªæ•°å­—ï¼Œç„¶åè§£æåˆ°å·¦æ‹¬å·ï¼Œé€’å½’å‘ä¸‹è§£æåé¢çš„å†…å®¹ï¼Œé‡åˆ°å¯¹åº”çš„å³æ‹¬å·å°±è¿”å›ï¼Œæ­¤æ—¶å¯ä»¥æ ¹æ®è§£æå‡ºçš„æ•°å­—xè§£æå‡ºçš„æ‹¬å·é‡Œçš„å­—ç¬¦ä¸²s'æ„é€ å‡ºæ–°çš„å­—ç¬¦ä¸²xÃ—s'
+// 1.2 æŠŠk[...]è§£æç»“æŸåï¼Œå†æ¬¡è°ƒç”¨é€’å½’å‡½æ•°ï¼Œè§£æå³æ‹¬å·å³è¾¹çš„å†…å®¹
+// 2 å¦‚æœå½“å‰ä½ç½®æ˜¯å­—æ¯ä½ï¼Œé‚£ä¹ˆæˆ‘ä»¬ç›´æ¥è§£æå½“å‰è¿™ä¸ªå­—æ¯ï¼Œç„¶åé€’å½’å‘ä¸‹è§£æè¿™ä¸ªå­—æ¯åé¢çš„å†…å®¹ã€‚
 class Solution {
 private:
-	string src;
-	size_t ptr;
-	int getDigits() {
-		int ret = 0;
-		while (ptr < src.size() && isdigit(src[ptr])) {
-			ret = ret * 10 + src[ptr++] - '0';
-		}
-		return ret;
-	}
+    string src;
+    size_t ptr;
+    int getDigits() {
+        int ret = 0;
+        while (ptr < src.size() && isdigit(src[ptr])) {
+            ret = ret * 10 + src[ptr++] - '0';
+        }
+        return ret;
+    }
 
-	string getString() {
-		if (ptr == src.size() || src[ptr] == ']') {
-			// String  -> EPS
-			return "";
-		}
+    string getString() {
+        if (ptr == src.size() || src[ptr] == ']') {
+            // String  -> EPS
+            return "";
+        }
 
-		char cur = src[ptr];
-		int repTime = 1;
-		string ret;
+        char cur = src[ptr];
+        int repTime = 1;
+        string ret;
 
-		if (isdigit(cur)) {
-			// String -> Digits[String] String;
-			// ½âÎöDigits
-			repTime = getDigits();
-			// ¹ıÂË×óÀ¨ºÅ
-			++ptr;
-			// ½âÎöString
-			string str = getString();
-			// ¹ıÂËÓÒÀ¨ºÅ
-			++ptr;
-			// ¹¹Ôì×Ö·û´®
-			while (repTime--) ret += str;
-		}
-		else if (isalpha(cur)) {
-			// String -> Char String
-			// ½âÎöChar
-			ret = string(1, src[ptr++]);
-		}
-		return ret + getString();
-	}
+        if (isdigit(cur)) {
+            // String -> Digits[String] String;
+            // è§£æDigits
+            repTime = getDigits();
+            // è¿‡æ»¤å·¦æ‹¬å·
+            ++ptr;
+            // è§£æString
+            string str = getString();
+            // è¿‡æ»¤å³æ‹¬å·
+            ++ptr;
+            // æ„é€ å­—ç¬¦ä¸²
+            while (repTime--) ret += str;
+        }
+        else if (isalpha(cur)) {
+            // String -> Char String
+            // è§£æChar
+            ret = string(1, src[ptr++]);
+        }
+        return ret + getString();
+    }
 public:
-	string decodeString(string s) {
-		src = s;
-		ptr = 0;
-		return getString();
-	}
+    string decodeString(string s) {
+        src = s;
+        ptr = 0;
+        return getString();
+    }
 };
 
 int main() {
 
-	string str = "3[z]2[2[y]pq4[2[jk]e1[f]]]ef";
+    string str = "3[z]2[2[y]pq4[2[jk]e1[f]]]ef";
 
-	Solution s;
-	string ret = s.decodeString(str);
+    Solution s;
+    string ret = s.decodeString(str);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

@@ -4,89 +4,134 @@
 #include<algorithm>
 using namespace std;
 
-// ±¾ÌâÊÇNPÍêÈ«ÎÊÌâ£¬ÕÒ²»µ½¶àÏîÊ½Ê±¼ä¸´ÔÓ¶ÈµÄ½â·¨£¬Òò´Ë±ØĞë³¢ÊÔ·Ç¶àÏîÊ½Ê±¼ä¸´ÔÓ¶ÈµÄ½â·¨£¬ÀıÈçÊ±¼ä¸´ÔÓ¶ÈÓëÔªËØ´óĞ¡Ïà¹ØµÄ¶¯Ì¬¹æ»®
+// æœ¬é¢˜æ˜¯NPå®Œå…¨é—®é¢˜ï¼Œæ‰¾ä¸åˆ°å¤šé¡¹å¼æ—¶é—´å¤æ‚åº¦çš„è§£æ³•ï¼Œå› æ­¤å¿…é¡»å°è¯•éå¤šé¡¹å¼æ—¶é—´å¤æ‚åº¦çš„è§£æ³•ï¼Œä¾‹å¦‚æ—¶é—´å¤æ‚åº¦ä¸å…ƒç´ å¤§å°ç›¸å…³çš„åŠ¨æ€è§„åˆ’
 
-// ±¾ÌâµÄ×ªÊö£º¸ø¶¨Ò»¸öÖ»°üº¬ÕıÕûÊıµÄ·Ç¿ÕÊı×énums[0]£¬ÅĞ¶ÏÊÇ·ñ¿ÉÒÔ´ÓÊı×éÖĞÑ¡³öÒ»Ğ©Êı×Ö£¬Ê¹µÃÕâĞ©Êı×ÖµÄºÍµÈÓÚÕû¸öÊı×éÔªËØºÍµÄÒ»°ë¡£
-// ¸ÃÎÊÌâ¿ÉÒÔ×ª»»³É0-1±³°üÎÊÌâ¡£
+// æœ¬é¢˜çš„è½¬è¿°ï¼šç»™å®šä¸€ä¸ªåªåŒ…å«æ­£æ•´æ•°çš„éç©ºæ•°ç»„nums[0]ï¼Œåˆ¤æ–­æ˜¯å¦å¯ä»¥ä»æ•°ç»„ä¸­é€‰å‡ºä¸€äº›æ•°å­—ï¼Œä½¿å¾—è¿™äº›æ•°å­—çš„å’Œç­‰äºæ•´ä¸ªæ•°ç»„å…ƒç´ å’Œçš„ä¸€åŠã€‚
+// è¯¥é—®é¢˜å¯ä»¥è½¬æ¢æˆ0-1èƒŒåŒ…é—®é¢˜ã€‚
 
-// ÔÚÊ¹ÓÃ¶¯Ì¬¹æ»®Çó½âÖ®Ç°£¬ÏÈ½øĞĞÒÔÏÂÅĞ¶Ï£º
-// 1. ¸ù¾İÊı×éµÄ³¤¶ÈnÅĞ¶ÏÊı×éÊÇ·ñ¿ÉÒÔ±»»®·Ö¡£Èôn < 2£¬ÔòÖ±½Ó·µ»Øfalse
-// 2. ¼ÆËãÕû¸öÊı×éµÄÔªËØºÍsumÒÔ¼°×î´óÔªËØmaxNum¡£Èç¹ûsumÊÇÆæÊı£¬·µ»Øfalse¡£ÈôsumÊÇÅ¼Êı£¬Áîtarget = sum/2£¬ÈômaxNum > target£¬·µ»Øfalse
+// åœ¨ä½¿ç”¨åŠ¨æ€è§„åˆ’æ±‚è§£ä¹‹å‰ï¼Œå…ˆè¿›è¡Œä»¥ä¸‹åˆ¤æ–­ï¼š
+// 1. æ ¹æ®æ•°ç»„çš„é•¿åº¦nåˆ¤æ–­æ•°ç»„æ˜¯å¦å¯ä»¥è¢«åˆ’åˆ†ã€‚è‹¥n < 2ï¼Œåˆ™ç›´æ¥è¿”å›false
+// 2. è®¡ç®—æ•´ä¸ªæ•°ç»„çš„å…ƒç´ å’Œsumä»¥åŠæœ€å¤§å…ƒç´ maxNumã€‚å¦‚æœsumæ˜¯å¥‡æ•°ï¼Œè¿”å›falseã€‚è‹¥sumæ˜¯å¶æ•°ï¼Œä»¤target = sum/2ï¼Œè‹¥maxNum > targetï¼Œè¿”å›false
 
-// ´´½¨¶şÎ¬Êı×édp£¬°üº¬nĞĞtarget + 1ÁĞ£¬ÆäÖĞdp[i][j]±íÊ¾´ÓÊı×éµÄ[0, i]ÏÂ±ê·¶Î§ÄÚÑ¡È¡ÈÎÒâÊıÁ¿(°üÀ¨0)¸öÕıÕûÊı£¬ÊÇ·ñ´æÔÚÒ»ÖÖÑ¡È¡·½°¸Ê¹µÃ±»Ñ¡È¡µÄÕıÕûÊıµÄºÍµÈÓÚj¡£
-// ³õÊ¼Ê±£¬dpÖĞµÄÈ«²¿ÔªËØ¶¼ÊÇfalse¡£
+// åˆ›å»ºäºŒç»´æ•°ç»„dpï¼ŒåŒ…å«nè¡Œtarget + 1åˆ—ï¼Œå…¶ä¸­dp[i][j]è¡¨ç¤ºä»æ•°ç»„çš„[0, i]ä¸‹æ ‡èŒƒå›´å†…é€‰å–ä»»æ„æ•°é‡(åŒ…æ‹¬0)ä¸ªæ­£æ•´æ•°ï¼Œæ˜¯å¦å­˜åœ¨ä¸€ç§é€‰å–æ–¹æ¡ˆä½¿å¾—è¢«é€‰å–çš„æ­£æ•´æ•°çš„å’Œç­‰äºjã€‚
+// åˆå§‹æ—¶ï¼Œdpä¸­çš„å…¨éƒ¨å…ƒç´ éƒ½æ˜¯falseã€‚
 
-// ÔÚ¶¨Òå×´Ì¬ºó£¬ĞèÒª¿¼ÂÇ±ß½çÇé¿ö¡£ÒÔÏÂÁ½ÖÖÇé¿ö¶¼ÊôÓÚ±ß½çÇé¿ö¡£
-// 1.Ö»Òª²»Ñ¡È¡ÈÎºÎÕıÕûÊı£¬±»Ñ¡È¡ÕıÕûÊıºÍ¾ÍÎª0¡£Òò´Ë¶ÔÓÚËùÓĞ0<=i<n£¬¶¼ÓĞdp[i][0] = true
-// 2.µ±i==0Ê±£¬Ö»ÓĞÒ»¸öÕıÕûÊınums[0]¿É±»Ñ¡È¡£¬Òò´Ëdp[0][nums[0]] = true
+// åœ¨å®šä¹‰çŠ¶æ€åï¼Œéœ€è¦è€ƒè™‘è¾¹ç•Œæƒ…å†µã€‚ä»¥ä¸‹ä¸¤ç§æƒ…å†µéƒ½å±äºè¾¹ç•Œæƒ…å†µã€‚
+// 1.åªè¦ä¸é€‰å–ä»»ä½•æ­£æ•´æ•°ï¼Œè¢«é€‰å–æ­£æ•´æ•°å’Œå°±ä¸º0ã€‚å› æ­¤å¯¹äºæ‰€æœ‰0<=i<nï¼Œéƒ½æœ‰dp[i][0] = true
+// 2.å½“i==0æ—¶ï¼Œåªæœ‰ä¸€ä¸ªæ­£æ•´æ•°nums[0]å¯è¢«é€‰å–ï¼Œå› æ­¤dp[0][nums[0]] = true
 
-// ¶ÔÓÚi > 0 ÇÒ j > 0£¬ĞèÒª¿¼ÂÇÒÔÏÂÁ½ÖÖÇé¿ö£º
-// 1. Èôj >= nums[i]£¬¶ÔÓÚµ±Ç°Êı×Önums[i]£¬¿ÉÑ¡Ò²¿ÉÒÔ²»Ñ¡£¬ÕâÁ½ÖÖÖ»ÒªÓĞÒ»¸öÇ°µ¼Çé¿öÎªtrue£¬¾ÍÓĞdp[i][j] = true
-// 1.1 Èô²»Ñ¡È¡nums[i]£¬Ôòdp[i][j] = dp[i-1][j]
-// 1.2 ÈôÑ¡È¡nums[i]£¬Ôòdp[i][j] = dp[i-1][j-nums[i]]
-// ËùÒÔ£¬nums[i] = dp[i-1][j] | dp[i-1][j-nums[i]]
-// 2. Èôj < nums[i]£¬ÔòÔÚÑ¡È¡µÄÊı×ÖºÍµÈÓÚjµÄÇé¿öÏÂÎŞ·¨Ñ¡È¡µ±Ç°Êı×Önums[i]£¬ÄÇÃ´dp[i][j] = dp[i-1][j]
+// å¯¹äºi > 0 ä¸” j > 0ï¼Œéœ€è¦è€ƒè™‘ä»¥ä¸‹ä¸¤ç§æƒ…å†µï¼š
+// 1. è‹¥j >= nums[i]ï¼Œå¯¹äºå½“å‰æ•°å­—nums[i]ï¼Œå¯é€‰ä¹Ÿå¯ä»¥ä¸é€‰ï¼Œè¿™ä¸¤ç§åªè¦æœ‰ä¸€ä¸ªå‰å¯¼æƒ…å†µä¸ºtrueï¼Œå°±æœ‰dp[i][j] = true
+// 1.1 è‹¥ä¸é€‰å–nums[i]ï¼Œåˆ™dp[i][j] = dp[i-1][j]
+// 1.2 è‹¥é€‰å–nums[i]ï¼Œåˆ™dp[i][j] = dp[i-1][j-nums[i]]
+// æ‰€ä»¥ï¼Œnums[i] = dp[i-1][j] | dp[i-1][j-nums[i]]
+// 2. è‹¥j < nums[i]ï¼Œåˆ™åœ¨é€‰å–çš„æ•°å­—å’Œç­‰äºjçš„æƒ…å†µä¸‹æ— æ³•é€‰å–å½“å‰æ•°å­—nums[i]ï¼Œé‚£ä¹ˆdp[i][j] = dp[i-1][j]
 
-// ¹Ù·½½â·¨£º¶¯Ì¬¹æ»®£¬Ê±¼äO(n¡Átarget) 256 ms, ¿Õ¼äO(n¡Átarget) 73.4 MB
+// å®˜æ–¹è§£æ³•ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(nÃ—target) 256 ms, ç©ºé—´O(nÃ—target) 73.4 MB
 class Solution {
 public:
-	bool canPartition(vector<int>& nums) {
-		size_t length = nums.size();
-		if (length < 2) return false;
-		int sum = accumulate(nums.begin(), nums.end(), 0);
-		if (sum & 1) return false;
-		int target = sum / 2, maxNum = *max_element(nums.begin(), nums.end());
-		if (maxNum > target) return false;
-		vector<vector<int>> dp(length, vector<int>(target + 1, 0));
-		for (size_t i = 0; i < length; ++i) {
-			dp[i][0] = true;
-		}
-		dp[0][nums[0]] = true;
-		for (size_t i = 1; i < length; ++i) {
-			for (size_t j = 1; j < target + 1; ++j) {
-				if (j >= nums[i]) {
-					dp[i][j] = dp[i - 1][j] | dp[i - 1][j - nums[i]];
-				}
-				else {
-					dp[i][j] = dp[i - 1][j];
-				}
-			}
-		}
-		return dp[length - 1][target];
-	}
+    bool canPartition(vector<int>& nums) {
+        size_t length = nums.size();
+        if (length < 2) return false;
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if (sum & 1) return false;
+        int target = sum / 2, maxNum = *max_element(nums.begin(), nums.end());
+        if (maxNum > target) return false;
+        vector<vector<int>> dp(length, vector<int>(target + 1, 0));
+        for (size_t i = 0; i < length; ++i) {
+            dp[i][0] = true;
+        }
+        dp[0][nums[0]] = true;
+        for (size_t i = 1; i < length; ++i) {
+            for (size_t j = 1; j < target + 1; ++j) {
+                if (j >= nums[i]) {
+                    dp[i][j] = dp[i - 1][j] | dp[i - 1][j - nums[i]];
+                }
+                else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[length - 1][target];
+    }
 };
 
-// ¹Ù·½½â·¨ÓÅ»¯£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é£¬Ê±¼äO(n¡Átarget) 56 ms, ¿Õ¼äO(target) 9.2 MB
-// ÓÃvector<int> È¡´ú bool Êı×é£¬Ê±¼ä 128 ms£¬¿Õ¼ä 9.6 MB
+// å®˜æ–¹è§£æ³•ä¼˜åŒ–ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ï¼Œæ—¶é—´O(nÃ—target) 56 ms, ç©ºé—´O(target) 9.2 MB
+// ç”¨vector<int> å–ä»£ bool æ•°ç»„ï¼Œæ—¶é—´ 128 msï¼Œç©ºé—´ 9.6 MB
 class Solution {
 public:
-	bool canPartition(vector<int>& nums) {
-		size_t length = nums.size();
-		if (length < 2) return false;
-		int sum = 0, maxNum = 0;
-		for (int num : nums) {
-			sum += num;
-			maxNum = max(num, maxNum);
-		}
-		if (sum & 1) return false;
-		int target = sum / 2;
-		if (maxNum > target) return false;
-		bool* dp = new bool[target + 1]();
-		dp[0] = dp[nums[0]] = true;
-		for (size_t i = 1; i < length; ++i) {
-			// ×¢Òâ£º¸Ã²ãÑ­»·ĞèÒª´Ó´óµ½Ğ¡Ñ­»·£¬·ñÔòdp[j-nums[i]]ÒÑ±»¸üĞÂÎªµ±Ç°²ãµÄÖµ
-			// ÎÒµÄĞ´·¨£º
-			//for (size_t j = target; j != -1; --j) {
-			//	if (j >= nums[i]) {
-			//		dp[j] |= dp[j - nums[i]];
-			//	}
-			//}
-			// ¹Ù·½Ğ´·¨¸ü¼Ñ£º
-			for (size_t j = target; j >= nums[i]; --j) {
-				dp[j] |= dp[j - nums[i]];
-			}
-			if (dp[target]) return true;
-		}
-		return dp[target];
-	}
+    bool canPartition(vector<int>& nums) {
+        size_t length = nums.size();
+        if (length < 2) return false;
+        int sum = 0, maxNum = 0;
+        for (int num : nums) {
+            sum += num;
+            maxNum = max(num, maxNum);
+        }
+        if (sum & 1) return false;
+        int target = sum / 2;
+        if (maxNum > target) return false;
+        bool* dp = new bool[target + 1]();
+        dp[0] = dp[nums[0]] = true;
+        for (size_t i = 1; i < length; ++i) {
+            // æ³¨æ„ï¼šè¯¥å±‚å¾ªç¯éœ€è¦ä»å¤§åˆ°å°å¾ªç¯ï¼Œå¦åˆ™dp[j-nums[i]]å·²è¢«æ›´æ–°ä¸ºå½“å‰å±‚çš„å€¼
+            // æˆ‘çš„å†™æ³•ï¼š
+            //for (size_t j = target; j != -1; --j) {
+            //	if (j >= nums[i]) {
+            //		dp[j] |= dp[j - nums[i]];
+            //	}
+            //}
+            // å®˜æ–¹å†™æ³•æ›´ä½³ï¼š
+            for (size_t j = target; j >= nums[i]; --j) {
+                dp[j] |= dp[j - nums[i]];
+            }
+            if (dp[target]) return true;
+        }
+        return dp[target];
+    }
+};
+
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ O(n*sum/2) 232 ms 26.25%ï¼Œç©ºé—´O(n*sum/2) 11.7 MB 35.39%
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if (sum & 1) return false;
+        int target = sum >> 1, n = nums.size();
+        vector<vector<bool>> dp(n + 1, vector<bool>(target + 1, false));
+        dp[0][0] = true;
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j <= target; ++j) {
+                int num = nums[i - 1];
+                if (j < num) {
+                    dp[i][j] = dp[i - 1][j];
+                }
+                else {
+                    dp[i][j] = dp[i - 1][j] | dp[i - 1][j - num];
+                }
+            }
+        }
+        return dp[n][target];
+    }
+};
+
+// LeetCode 101ç©ºé—´å‹ç¼©è§£æ³•ï¼šæ—¶é—´ O(n*sum/2) 92 ms 88%ï¼Œç©ºé—´O(sum/2) 8.8 MB 94%
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if (sum & 1) return false;
+        int target = sum >> 1, n = nums.size();
+        vector<bool> dp(target + 1, false);
+        dp[0] = true;
+        for (int i = 1; i <= n; ++i) {
+            int num = nums[i - 1];
+            for (int j = target; j >= num; --j) {
+                if (j >= num) {
+                    dp[j] = dp[j] | dp[j - num];
+                }
+            }
+        }
+        return dp[target];
+    }
 };

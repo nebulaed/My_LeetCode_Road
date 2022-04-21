@@ -3,73 +3,72 @@
 #include<unordered_set>
 using namespace std;
 
-// ÎÒµÄÆÕÍ¨½â·¨, Ê±¼äO(n) 252 ms£¬¿Õ¼äO(n) 129.5 MB
+// æˆ‘çš„æ™®é€šè§£æ³•, æ—¶é—´O(n) 252 msï¼Œç©ºé—´O(n) 129.5 MB
 class Solution {
 public:
-	int firstMissingPositive(vector<int>& nums) {
-		unordered_set<int> hashset;
-		for (int i = 0; i < nums.size(); ++i) {
-			hashset.insert(nums[i]);
-		}
-		int i = 1;
-		while (hashset.count(i)) {
-			++i;
-		}
-		return i;
-	}
+    int firstMissingPositive(vector<int>& nums) {
+        unordered_set<int> hashset;
+        for (int i = 0; i < nums.size(); ++i) {
+            hashset.insert(nums[i]);
+        }
+        int i = 1;
+        while (hashset.count(i)) {
+            ++i;
+        }
+        return i;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºÀûÓÃÊäÈëÊı×é¹¹Ôì¹şÏ£±í£¬Ê±¼äO(n) 112ms, ¿Õ¼äO(n) 80.9MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåˆ©ç”¨è¾“å…¥æ•°ç»„æ„é€ å“ˆå¸Œè¡¨ï¼Œæ—¶é—´O(n) 112ms, ç©ºé—´O(n) 80.9MB
 class Solution {
 public:
-	int firstMissingPositive(vector<int>& nums) {
-		int n = nums.size();
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] <= 0) {
-				nums[i] = n + 1;
-			}
-		}
-		for (int i = 0; i < n; ++i) {
-			if (abs(nums[i]) <= n && nums[abs(nums[i]) - 1] > 0) {
-				nums[abs(nums[i]) - 1] = -nums[abs(nums[i]) - 1];
-			}
-		}
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] > 0) {
-				return i + 1;
-			}
-		}
-		return n + 1;
-	}
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] <= 0) {
+                nums[i] = n + 1;
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            if (abs(nums[i]) <= n && nums[abs(nums[i]) - 1] > 0) {
+                nums[abs(nums[i]) - 1] = -nums[abs(nums[i]) - 1];
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] > 0) {
+                return i + 1;
+            }
+        }
+        return n + 1;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÖÃ»»£¬Ê±¼äO(n) 136 ms£¬¿Õ¼äO(1) 80.9 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šç½®æ¢ï¼Œæ—¶é—´O(n) 136 msï¼Œç©ºé—´O(1) 80.9 MB
 class Solution {
 public:
-	int firstMissingPositive(vector<int>& nums) {
-		int n = nums.size();
-		for (int i = 0; i < n; ++i) {
-			while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
-				swap(nums[nums[i] - 1], nums[i]);
-			}
-		}
-		for (int i = 0; i < n; ++i) {
-			if (nums[i] != i + 1) {
-				return i + 1;
-			}
-		}
-		return n + 1;
-	}
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+        for (int i = 0; i < n; ++i) {
+            while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+                swap(nums[nums[i] - 1], nums[i]);
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        return n + 1;
+    }
 };
 
 int main() {
-	vector<int> nums = { 3,4,-1,1 };
+    vector<int> nums = { 3,4,-1,1 };
 
-	Solution s;
-	int ret = s.firstMissingPositive(nums);
+    Solution s;
+    int ret = s.firstMissingPositive(nums);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

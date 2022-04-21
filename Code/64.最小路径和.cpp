@@ -1,4 +1,5 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 using namespace std;
@@ -9,7 +10,7 @@ using namespace std;
 //		cout << "[";
 //		for (int j = 0; j < matrix[i].size(); ++j) {
 //			if (matrix[i][j] < INFINITY) cout << matrix[i][j];
-//			else cout << "¡Ş";
+//			else cout << "âˆ";
 //			if (j != matrix[i].size() - 1) cout << ",";
 //		}
 //		cout << "]";
@@ -17,7 +18,7 @@ using namespace std;
 //	}
 //	cout << endl;
 //}
-// FloydËã·¨Ô­ÓÃ·¨
+// Floydç®—æ³•åŸç”¨æ³•
 //class Solution {
 //public:
 //	int minPathSum(vector<vector<int>>& grid) {
@@ -55,7 +56,7 @@ using namespace std;
 //};
 
 
-// ÎÒµÄ½â·¨£ºFloydËã·¨£¬³¬Ê±
+// æˆ‘çš„è§£æ³•ï¼šFloydç®—æ³•ï¼Œè¶…æ—¶
 //class Solution {
 //public:
 //	int minPathSum(vector<vector<int>>& grid) {
@@ -83,82 +84,82 @@ using namespace std;
 //	}
 //};
 
-// ÎÒµÄ½â·¨¶ş£ºDFS+»ØËİ£¬³¬Ê±
+// æˆ‘çš„è§£æ³•äºŒï¼šDFS+å›æº¯ï¼Œè¶…æ—¶
 class Solution {
 private:
-	int minPath = INT_MAX;
+    int minPath = INT_MAX;
 public:
-	void dfs(int path, const pair<int, int>& pos, const vector<vector<int>>& grid) {
-		if (pos.first == grid.size() - 1 && pos.second == grid[0].size() - 1) {
-			minPath = min(minPath, path);
-		}
-		if (pos.first != grid.size() - 1) {
-			dfs(path + grid[pos.first + 1][pos.second], pair<int, int>(pos.first + 1, pos.second), grid);
-		}
-		if (pos.second != grid[0].size() - 1) {
-			dfs(path + grid[pos.first][pos.second + 1], pair<int, int>(pos.first, pos.second + 1), grid);
-		}
-	}
+    void dfs(int path, const pair<int, int>& pos, const vector<vector<int>>& grid) {
+        if (pos.first == grid.size() - 1 && pos.second == grid[0].size() - 1) {
+            minPath = min(minPath, path);
+        }
+        if (pos.first != grid.size() - 1) {
+            dfs(path + grid[pos.first + 1][pos.second], pair<int, int>(pos.first + 1, pos.second), grid);
+        }
+        if (pos.second != grid[0].size() - 1) {
+            dfs(path + grid[pos.first][pos.second + 1], pair<int, int>(pos.first, pos.second + 1), grid);
+        }
+    }
 
-	int minPathSum(vector<vector<int>>& grid) {
-		dfs(grid[0][0], pair<int, int>(0, 0), grid);
-		return minPath;
-	}
+    int minPathSum(vector<vector<int>>& grid) {
+        dfs(grid[0][0], pair<int, int>(0, 0), grid);
+        return minPath;
+    }
 };
 
-// ÎÒµÄ½â·¨Èı£º¶¯Ì¬¹æ»®£¬12 ms£¬9.9 MB
+// æˆ‘çš„è§£æ³•ä¸‰ï¼šåŠ¨æ€è§„åˆ’ï¼Œ12 msï¼Œ9.9 MB
 class Solution {
 public:
-	int minPathSum(vector<vector<int>>& grid) {
-		int m = grid.size(), n = grid[0].size();
-		vector<vector<int>> dp(m, vector<int>(n, grid[0][0]));
-		for (int i = 1; i < n; ++i) {
-			dp[0][i] = dp[0][i - 1] + grid[0][i];
-		}
-		for (int i = 1; i < m; ++i) {
-			dp[i][0] = dp[i - 1][0] + grid[i][0];
-		}
-		for (int i = 1; i < m; ++i) {
-			for (int j = 1; j < n; ++j) {
-				dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
-			}
-		}
-		return dp[m - 1][n - 1];
-	}
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<int>> dp(m, vector<int>(n, grid[0][0]));
+        for (int i = 1; i < n; ++i) {
+            dp[0][i] = dp[0][i - 1] + grid[0][i];
+        }
+        for (int i = 1; i < m; ++i) {
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
+        }
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+            }
+        }
+        return dp[m - 1][n - 1];
+    }
 };
 
-// ÎÒµÄ½â·¨Èı¶¯Ì¬¹æ»®¼ÌĞøÓÅ»¯£¬4 ms£¬9.5 MB
+// æˆ‘çš„è§£æ³•ä¸‰åŠ¨æ€è§„åˆ’ç»§ç»­ä¼˜åŒ–ï¼Œ4 msï¼Œ9.5 MB
 class Solution {
 public:
-	int minPathSum(vector<vector<int>>& grid) {
-		int m = grid.size(), n = grid[0].size();
-		int* dp = new int[n];
-		dp[0] = grid[0][0];
-		for (int i = 1; i < n; ++i) {
-			dp[i] = dp[i - 1] + grid[0][i];
-		}
-		for (int i = 1; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				if (j != 0) {
-					dp[j] = min(dp[j], dp[j - 1]) + grid[i][j];
-				}
-				else {
-					dp[j] += grid[i][j];
-				}
-			}
-		}
-		return dp[n - 1];
-	}
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        int* dp = new int[n];
+        dp[0] = grid[0][0];
+        for (int i = 1; i < n; ++i) {
+            dp[i] = dp[i - 1] + grid[0][i];
+        }
+        for (int i = 1; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (j != 0) {
+                    dp[j] = min(dp[j], dp[j - 1]) + grid[i][j];
+                }
+                else {
+                    dp[j] += grid[i][j];
+                }
+            }
+        }
+        return dp[n - 1];
+    }
 };
 
 int main() {
-	//vector<vector<int>> grid = {{1, 3, 1},{1, 5, 1},{4, 2, 1}};
-	vector<vector<int>> grid = { {1, 2}, {1, 1} };
+    //vector<vector<int>> grid = {{1, 3, 1},{1, 5, 1},{4, 2, 1}};
+    vector<vector<int>> grid = { {1, 2}, {1, 1} };
 
-	Solution s;
-	int ret = s.minPathSum(grid);
+    Solution s;
+    int ret = s.minPathSum(grid);
 
-	cout << ret << endl;
-	system("pause");
-	return 0;
+    cout << ret << endl;
+
+    return 0;
 }

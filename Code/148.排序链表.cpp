@@ -2,220 +2,220 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode* next) : val(x), next(next) {}
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ¹Ù·½½â·¨Ò»£º×Ô¶¥ÏòÏÂ¹é²¢ÅÅĞò£¬Ê±¼äO(n log n) 68 ms£¬¿Õ¼äO(log n) 29.6 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šè‡ªé¡¶å‘ä¸‹å½’å¹¶æ’åºï¼Œæ—¶é—´O(n log n) 68 msï¼Œç©ºé—´O(log n) 29.6 MB
 class Solution {
 public:
-	ListNode* sortList(ListNode* head) {
-		return sortList(head, nullptr);
-	}
+    ListNode* sortList(ListNode* head) {
+        return sortList(head, nullptr);
+    }
 
-	ListNode* sortList(ListNode* head, ListNode* tail) {
-		if (head == nullptr) {
-			return head;
-		}
-		if (head->next == tail) {
-			head->next = nullptr;
-			return head;
-		}
-		ListNode* slow = head, * fast = head;
-		while (fast != tail) {
-			slow = slow->next;
-			fast = fast->next;
-			if (fast != tail) {
-				fast = fast->next;
-			}
-		}
-		ListNode* mid = slow;
-		return mergeTwoLists(sortList(head, mid), sortList(mid, tail));
-	}
+    ListNode* sortList(ListNode* head, ListNode* tail) {
+        if (head == nullptr) {
+            return head;
+        }
+        if (head->next == tail) {
+            head->next = nullptr;
+            return head;
+        }
+        ListNode* slow = head, * fast = head;
+        while (fast != tail) {
+            slow = slow->next;
+            fast = fast->next;
+            if (fast != tail) {
+                fast = fast->next;
+            }
+        }
+        ListNode* mid = slow;
+        return mergeTwoLists(sortList(head, mid), sortList(mid, tail));
+    }
 
-	ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-		if (l1 == nullptr) {
-			return l2;
-		}
-		else if (l2 == nullptr) {
-			return l1;
-		}
-		else if (l1->val < l2->val) {
-			l1->next = mergeTwoLists(l1->next, l2);
-			return l1;
-		}
-		else {
-			l2->next = mergeTwoLists(l1, l2->next);
-			return l2;
-		}
-	}
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == nullptr) {
+            return l2;
+        }
+        else if (l2 == nullptr) {
+            return l1;
+        }
+        else if (l1->val < l2->val) {
+            l1->next = mergeTwoLists(l1->next, l2);
+            return l1;
+        }
+        else {
+            l2->next = mergeTwoLists(l1, l2->next);
+            return l2;
+        }
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º×Ôµ×ÏòÉÏ¹é²¢ÅÅĞò£¬Ê±¼äO(n log n) 72 ms£¬¿Õ¼äO(1) 29.8 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šè‡ªåº•å‘ä¸Šå½’å¹¶æ’åºï¼Œæ—¶é—´O(n log n) 72 msï¼Œç©ºé—´O(1) 29.8 MB
 class Solution {
 public:
-	ListNode* sortList(ListNode* head) {
-		if (head == nullptr) return head;
-		int length = 0;
-		ListNode* node = head;
-		while (node != nullptr) {
-			++length;
-			node = node->next;
-		}
-		ListNode* dummy = new ListNode(0, head);
-		for (int subLength = 1; subLength < length; subLength <<= 1) {
-			ListNode* prev = dummy, * curr = dummy->next;
-			while (curr != nullptr) {
-				ListNode* head1 = curr;
-				for (int i = 1; i < subLength && curr->next != nullptr; ++i) {
-					curr = curr->next;
-				}
-				ListNode* head2 = curr->next;
-				curr->next = nullptr;
-				curr = head2;
-				for (int i = 1; i < subLength && curr != nullptr && curr->next != nullptr; ++i) {
-					curr = curr->next;
-				}
-				ListNode* next = nullptr;
-				if (curr != nullptr) {
-					next = curr->next;
-					curr->next = nullptr;
-				}
-				ListNode* merged = mergeTwoLists(head1, head2);
-				prev->next = merged;
-				while (prev->next != nullptr) {
-					prev = prev->next;
-				}
-				curr = next;
-			}
-		}
-		return dummy->next;
-	}
+    ListNode* sortList(ListNode* head) {
+        if (head == nullptr) return head;
+        int length = 0;
+        ListNode* node = head;
+        while (node != nullptr) {
+            ++length;
+            node = node->next;
+        }
+        ListNode* dummy = new ListNode(0, head);
+        for (int subLength = 1; subLength < length; subLength <<= 1) {
+            ListNode* prev = dummy, * curr = dummy->next;
+            while (curr != nullptr) {
+                ListNode* head1 = curr;
+                for (int i = 1; i < subLength && curr->next != nullptr; ++i) {
+                    curr = curr->next;
+                }
+                ListNode* head2 = curr->next;
+                curr->next = nullptr;
+                curr = head2;
+                for (int i = 1; i < subLength && curr != nullptr && curr->next != nullptr; ++i) {
+                    curr = curr->next;
+                }
+                ListNode* next = nullptr;
+                if (curr != nullptr) {
+                    next = curr->next;
+                    curr->next = nullptr;
+                }
+                ListNode* merged = mergeTwoLists(head1, head2);
+                prev->next = merged;
+                while (prev->next != nullptr) {
+                    prev = prev->next;
+                }
+                curr = next;
+            }
+        }
+        return dummy->next;
+    }
 
-	ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-		if (l1 == nullptr) {
-			return l2;
-		}
-		else if (l2 == nullptr) {
-			return l1;
-		}
-		else if (l1->val < l2->val) {
-			l1->next = mergeTwoLists(l1->next, l2);
-			return l1;
-		}
-		else {
-			l2->next = mergeTwoLists(l1, l2->next);
-			return l2;
-		}
-	}
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 == nullptr) {
+            return l2;
+        }
+        else if (l2 == nullptr) {
+            return l1;
+        }
+        else if (l1->val < l2->val) {
+            l1->next = mergeTwoLists(l1->next, l2);
+            return l1;
+        }
+        else {
+            l2->next = mergeTwoLists(l1, l2->next);
+            return l2;
+        }
+    }
 };
 
-// ÎÒµÄ½â·¨£º²Î¿¼¹Ù·½½â·¨Ò»£¬Ê±¼ä O(n log n) 80 ms 85.56%£¬¿Õ¼ä O(log n) 47.4 MB 38.95%
-class Solution {
-private:
-	ListNode* merge(ListNode* l1, ListNode* l2) {
-		ListNode* dummy = new ListNode(), * node = dummy;
-		while (l1 && l2) {
-			if (l1->val < l2->val) {
-				node->next = l1;
-				l1 = l1->next;
-			}
-			else {
-				node->next = l2;
-				l2 = l2->next;
-			}
-			node = node->next;
-		}
-		node->next = l1 ? l1 : l2;
-		return dummy->next;
-	}
-public:
-	ListNode* sortList(ListNode* head, ListNode* tail = nullptr) {
-		if (!head) return head;
-		if (head->next == tail) {
-			head->next = nullptr;
-			return head;
-		}
-		ListNode* slow = head, * fast = head;
-		while (fast != tail) {
-			slow = slow->next;
-			fast = fast->next;
-			if (fast != tail) {
-				fast = fast->next;
-			}
-		}
-		ListNode* mid = slow;
-		return merge(sortList(head, mid), sortList(mid, tail));
-	}
-};
-
-// ÎÒµÄ½â·¨£º²Î¿¼¹Ù·½½â·¨¶ş£¬×Ôµ×ÏòÉÏ¹é²¢ÅÅĞò£¬Ê±¼ä O(n log n) 72 ms 96.45%£¬¿Õ¼ä O(1) 31.7 MB 62.41%
+// æˆ‘çš„è§£æ³•ï¼šå‚è€ƒå®˜æ–¹è§£æ³•ä¸€ï¼Œæ—¶é—´ O(n log n) 80 ms 85.56%ï¼Œç©ºé—´ O(log n) 47.4 MB 38.95%
 class Solution {
 private:
-	ListNode* merge(ListNode* l1, ListNode* l2) {
-		ListNode* dummy = new ListNode(), * node = dummy;
-		while (l1 && l2) {
-			if (l1->val < l2->val) {
-				node->next = l1;
-				l1 = l1->next;
-			}
-			else {
-				node->next = l2;
-				l2 = l2->next;
-			}
-			node = node->next;
-		}
-		node->next = l1 ? l1 : l2;
-		return dummy->next;
-	}
+    ListNode* merge(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode(), * node = dummy;
+        while (l1 && l2) {
+            if (l1->val < l2->val) {
+                node->next = l1;
+                l1 = l1->next;
+            }
+            else {
+                node->next = l2;
+                l2 = l2->next;
+            }
+            node = node->next;
+        }
+        node->next = l1 ? l1 : l2;
+        return dummy->next;
+    }
 public:
-	ListNode* sortList(ListNode* head) {
-		int length = 0;
-		ListNode* node = head;
-		// ¼ÆËãÁ´±í×Ü³¤¶È
-		while (node != nullptr) {
-			++length;
-			node = node->next;
-		}
-		ListNode* dummy = new ListNode(0, head);
-		for (int subLength = 1; subLength < length; subLength <<= 1) {
-			ListNode* prev = dummy, * curr = dummy->next;
-			while (curr != nullptr) {
-				// ¶ÔsubLength³¤¶ÈµÄ×ÓÁ´±í1½øĞĞ·Ö¸î
-				ListNode* head1 = curr;
-				for (int i = 1; i < subLength && curr->next != nullptr; ++i) {
-					curr = curr->next;
-				}
-				// ¶ÔsubLength³¤¶ÈµÄ×ÓÁ´±í2½øĞĞ·Ö¸î
-				ListNode* head2 = curr->next;
-				curr->next = nullptr;
-				curr = head2;
-				// ÕÒµ½×ÓÁ´±í2µÄ×îºóÒ»¸ö½Úµã
-				for (int i = 1; i < subLength && curr && curr->next; ++i) {
-					curr = curr->next;
-				}
-				// ¼ÇÂ¼ÏÂcurr->next£¬¼´2 * subLength³¤¶ÈºóµÄµÚÒ»¸ö½Úµã
-				ListNode* next = nullptr;
-				if (curr) {
-					next = curr->next;
-					curr->next = nullptr;
-				}
-				// ºÏ²¢Á½¸öÓĞĞòÁ´±í
-				ListNode* merged = merge(head1, head2);
-				// Ö®Ç°µÄ×îºóÒ»¸ö½ÚµãÓëµ±Ç°ÒÑÅÅĞòÁ´±íµÚÒ»¸ö½Úµã½ÓÉÏ
-				prev->next = merged;
-				// Èôcurr²»Îª¿Õ£¬prevÖ±½ÓÌøµ½curr£¬Àë×îºóÒ»¸ö½Úµã¸ü½ü
-				if (curr) prev = curr;
-				// ÕÒµ½µ±Ç°µÄ×îºóÒ»¸ö½Úµã£¬¸³¸øprev
-				while (prev->next) {
-					prev = prev->next;
-				}
-				curr = next;
-			}
-		}
-		return dummy->next;
-	}
+    ListNode* sortList(ListNode* head, ListNode* tail = nullptr) {
+        if (!head) return head;
+        if (head->next == tail) {
+            head->next = nullptr;
+            return head;
+        }
+        ListNode* slow = head, * fast = head;
+        while (fast != tail) {
+            slow = slow->next;
+            fast = fast->next;
+            if (fast != tail) {
+                fast = fast->next;
+            }
+        }
+        ListNode* mid = slow;
+        return merge(sortList(head, mid), sortList(mid, tail));
+    }
+};
+
+// æˆ‘çš„è§£æ³•ï¼šå‚è€ƒå®˜æ–¹è§£æ³•äºŒï¼Œè‡ªåº•å‘ä¸Šå½’å¹¶æ’åºï¼Œæ—¶é—´ O(n log n) 72 ms 96.45%ï¼Œç©ºé—´ O(1) 31.7 MB 62.41%
+class Solution {
+private:
+    ListNode* merge(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode(), * node = dummy;
+        while (l1 && l2) {
+            if (l1->val < l2->val) {
+                node->next = l1;
+                l1 = l1->next;
+            }
+            else {
+                node->next = l2;
+                l2 = l2->next;
+            }
+            node = node->next;
+        }
+        node->next = l1 ? l1 : l2;
+        return dummy->next;
+    }
+public:
+    ListNode* sortList(ListNode* head) {
+        int length = 0;
+        ListNode* node = head;
+        // è®¡ç®—é“¾è¡¨æ€»é•¿åº¦
+        while (node != nullptr) {
+            ++length;
+            node = node->next;
+        }
+        ListNode* dummy = new ListNode(0, head);
+        for (int subLength = 1; subLength < length; subLength <<= 1) {
+            ListNode* prev = dummy, * curr = dummy->next;
+            while (curr != nullptr) {
+                // å¯¹subLengthé•¿åº¦çš„å­é“¾è¡¨1è¿›è¡Œåˆ†å‰²
+                ListNode* head1 = curr;
+                for (int i = 1; i < subLength && curr->next != nullptr; ++i) {
+                    curr = curr->next;
+                }
+                // å¯¹subLengthé•¿åº¦çš„å­é“¾è¡¨2è¿›è¡Œåˆ†å‰²
+                ListNode* head2 = curr->next;
+                curr->next = nullptr;
+                curr = head2;
+                // æ‰¾åˆ°å­é“¾è¡¨2çš„æœ€åä¸€ä¸ªèŠ‚ç‚¹
+                for (int i = 1; i < subLength && curr && curr->next; ++i) {
+                    curr = curr->next;
+                }
+                // è®°å½•ä¸‹curr->nextï¼Œå³2 * subLengthé•¿åº¦åçš„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹
+                ListNode* next = nullptr;
+                if (curr) {
+                    next = curr->next;
+                    curr->next = nullptr;
+                }
+                // åˆå¹¶ä¸¤ä¸ªæœ‰åºé“¾è¡¨
+                ListNode* merged = merge(head1, head2);
+                // ä¹‹å‰çš„æœ€åä¸€ä¸ªèŠ‚ç‚¹ä¸å½“å‰å·²æ’åºé“¾è¡¨ç¬¬ä¸€ä¸ªèŠ‚ç‚¹æ¥ä¸Š
+                prev->next = merged;
+                // è‹¥currä¸ä¸ºç©ºï¼Œprevç›´æ¥è·³åˆ°currï¼Œç¦»æœ€åä¸€ä¸ªèŠ‚ç‚¹æ›´è¿‘
+                if (curr) prev = curr;
+                // æ‰¾åˆ°å½“å‰çš„æœ€åä¸€ä¸ªèŠ‚ç‚¹ï¼Œèµ‹ç»™prev
+                while (prev->next) {
+                    prev = prev->next;
+                }
+                curr = next;
+            }
+        }
+        return dummy->next;
+    }
 };

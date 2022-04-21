@@ -1,10 +1,11 @@
 #include<iostream>
+#include<climits>
 #include<string>
 #include<unordered_map>
 #include<algorithm>
 using namespace std;
 
-// ×Ô¼ºĞ´µÄ·½·¨
+// è‡ªå·±å†™çš„æ–¹æ³•
 //class Solution {
 //public:
 //	int myAtoi(string s) {
@@ -53,64 +54,63 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨
+// å®˜æ–¹è§£æ³•
 class Automation {
-	string state = "start";
-	unordered_map<string, vector<string>> table = {
-		{"start", {"start","signed", "in_number", "end"}},
-		{"signed", {"end", "end", "in_number", "end"}},
-		{"in_number", {"end", "end", "in_number", "end"}},
-		{"end", {"end", "end", "end", "end"}}
-	};
+    string state = "start";
+    unordered_map<string, vector<string>> table = {
+        {"start", {"start","signed", "in_number", "end"}},
+        {"signed", {"end", "end", "in_number", "end"}},
+        {"in_number", {"end", "end", "in_number", "end"}},
+        {"end", {"end", "end", "end", "end"}}
+    };
 
-	int get_col(char c) {
-		// cÊÇ¿Õ¸ñ·µ»Ø0
-		if (isspace(c)) return 0;
-		// cÊÇ+»ò-·µ»Ø1
-		if (c == '+' || c == '-') return 1;
-		// cÊÇÊı×Ö·µ»Ø1
-		if (isdigit(c)) return 2;
-		// ÆäËûÇé¿ö·µ»Ø3
-		return 3;
-	}
+    int get_col(char c) {
+        // cæ˜¯ç©ºæ ¼è¿”å›0
+        if (isspace(c)) return 0;
+        // cæ˜¯+æˆ–-è¿”å›1
+        if (c == '+' || c == '-') return 1;
+        // cæ˜¯æ•°å­—è¿”å›1
+        if (isdigit(c)) return 2;
+        // å…¶ä»–æƒ…å†µè¿”å›3
+        return 3;
+    }
 public:
-	// ·ûºÅÎ»
-	int sign = 1;
-	// ½á¹û
-	long long ans = 0;
+    // ç¬¦å·ä½
+    int sign = 1;
+    // ç»“æœ
+    long long ans = 0;
 
-	void get(char c) {
-		// Í¨¹ı±í¸ñ»ñÈ¡µ±Ç°×´Ì¬µÄÏÂÒ»×´Ì¬
-		state = table[state][get_col(c)];
-		if (state == "in_number") {
-			ans = ans * 10 + c - '0';
-			// ÓÉÕı¸ºÅĞ¶Ï¸Ã¾ø¶ÔÖµ×î´óÖµÊÇINT_MAX»¹ÊÇ-INT_MIN
-			ans = sign == 1 ? min(ans, (long long)INT_MAX) : min(ans, -(long long)INT_MIN);
-		}
-		else if (state == "signed") {
-			sign = c == '+' ? 1 : -1;
-		}
-	}
+    void get(char c) {
+        // é€šè¿‡è¡¨æ ¼è·å–å½“å‰çŠ¶æ€çš„ä¸‹ä¸€çŠ¶æ€
+        state = table[state][get_col(c)];
+        if (state == "in_number") {
+            ans = ans * 10 + c - '0';
+            // ç”±æ­£è´Ÿåˆ¤æ–­è¯¥ç»å¯¹å€¼æœ€å¤§å€¼æ˜¯INT_MAXè¿˜æ˜¯-INT_MIN
+            ans = sign == 1 ? min(ans, (long long)INT_MAX) : min(ans, -(long long)INT_MIN);
+        }
+        else if (state == "signed") {
+            sign = c == '+' ? 1 : -1;
+        }
+    }
 };
 
 class Solution {
 public:
-	int myAtoi(string str) {
-		Automation automation;
-		for (char c : str) {
-			automation.get(c);
-		}
-		return automation.sign * automation.ans;
-	}
+    int myAtoi(string str) {
+        Automation automation;
+        for (char c : str) {
+            automation.get(c);
+        }
+        return automation.sign * automation.ans;
+    }
 };
 
 int main() {
-	string input = "4193 with words";
+    string input = "4193 with words";
 
-	Solution s;
-	int ret = s.myAtoi(input);
-	cout << ret << endl;
+    Solution s;
+    int ret = s.myAtoi(input);
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

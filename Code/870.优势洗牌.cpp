@@ -6,105 +6,105 @@
 
 using namespace std;
 
-// ÎÒµÄ½â·¨£ººìºÚÊ÷¶àÖØ¼¯ºÏ£¬Ê±¼ä 208 ms 16.71%£¬¿Õ¼ä 73.9 MB 10.77%
+// æˆ‘çš„è§£æ³•ï¼šçº¢é»‘æ ‘å¤šé‡é›†åˆï¼Œæ—¶é—´ 208 ms 16.71%ï¼Œç©ºé—´ 73.9 MB 10.77%
 class Solution {
 public:
-	vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
-		//Ë÷ÒıÊı×é
-		vector<size_t> idx(nums2.size());
-		//½«0...n¸³Öµ¸øË÷ÒıÊı×é
-		iota(idx.begin(), idx.end(), 0);
-		//¸ù¾İnums2ÔªËØ´ÓĞ¡µ½´ó¶ÔË÷ÒıÊı×é½øĞĞÅÅĞò
-		sort(idx.begin(), idx.end(), [&nums2](size_t lhs, size_t rhs) {
-			return nums2[lhs] < nums2[rhs];
-			});
-		//ºìºÚÊ÷¼¯ºÏ£¬²éÕÒ£¬É¾³ı¾ùÎªlog n
-		multiset<int> numSet1(nums1.begin(), nums1.end());
-		for (int i : idx) {
-			auto it = numSet1.upper_bound(nums2[i]);
-			if (it != numSet1.end()) {
-				nums1[i] = *it;
-			}
-			else {
-				it = numSet1.begin();
-				nums1[i] = *it;
-			}
-			numSet1.erase(it);
-		}
-		return nums1;
-	}
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+        //ç´¢å¼•æ•°ç»„
+        vector<size_t> idx(nums2.size());
+        //å°†0...nèµ‹å€¼ç»™ç´¢å¼•æ•°ç»„
+        iota(idx.begin(), idx.end(), 0);
+        //æ ¹æ®nums2å…ƒç´ ä»å°åˆ°å¤§å¯¹ç´¢å¼•æ•°ç»„è¿›è¡Œæ’åº
+        sort(idx.begin(), idx.end(), [&nums2](size_t lhs, size_t rhs) {
+            return nums2[lhs] < nums2[rhs];
+        });
+        //çº¢é»‘æ ‘é›†åˆï¼ŒæŸ¥æ‰¾ï¼Œåˆ é™¤å‡ä¸ºlog n
+        multiset<int> numSet1(nums1.begin(), nums1.end());
+        for (int i : idx) {
+            auto it = numSet1.upper_bound(nums2[i]);
+            if (it != numSet1.end()) {
+                nums1[i] = *it;
+            }
+            else {
+                it = numSet1.begin();
+                nums1[i] = *it;
+            }
+            numSet1.erase(it);
+        }
+        return nums1;
+    }
 };
 
-// ¹Ù·½½â·¨£ºÌï¼ÉÈüÂí£¬Ê±¼ä 136 ms 57.79%£¬¿Õ¼ä 58.3 MB 90.23%
-// ¶Ô±ÈÓÚÉÏÃæ²ÉÓÃºìºÚÊ÷¶àÖØ¼¯ºÏ£¬±ÜÃâÁËÃ¿´ÎÊ¹ÓÃ¶ş·Ö²éÕÒ
+// å®˜æ–¹è§£æ³•ï¼šç”°å¿Œèµ›é©¬ï¼Œæ—¶é—´ 136 ms 57.79%ï¼Œç©ºé—´ 58.3 MB 90.23%
+// å¯¹æ¯”äºä¸Šé¢é‡‡ç”¨çº¢é»‘æ ‘å¤šé‡é›†åˆï¼Œé¿å…äº†æ¯æ¬¡ä½¿ç”¨äºŒåˆ†æŸ¥æ‰¾
 class Solution {
 public:
-	vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
-		sort(nums1.begin(), nums1.end());
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+        sort(nums1.begin(), nums1.end());
 
-		size_t n = nums2.size();
-		//×îºÃ²»ÒªÊ¹ÓÃÕâÖÖÓÃ±ğµÄÊı×éÅÅĞò±¾Êı×éµÄ·½·¨£¬ÓÃpairĞ§ÂÊ¸ü¸ß£¬ËäÈ»¿Õ¼äÕ¼ÓÃ¸ü´ó
-		vector<size_t> idx(n);
-		iota(idx.begin(), idx.end(), 0);
-		sort(idx.begin(), idx.end(), [&nums2](size_t lhs, size_t rhs) {
-			return nums2[lhs] < nums2[rhs];
-			});
-		vector<int> ret(n, -1);
-		size_t id1 = n - 1, id2 = n - 1;
-		while (id1 != -1 && id2 != -1) {
-			int originalID2 = idx[id2];
-			//µ±nums1µ±Ç°Î»ÖÃµÄÖµÄÜ»÷°Ünums2µ±Ç°Î»ÖÃµÄÖµÊ±
-			if (nums1[id1] > nums2[originalID2]) {
-				//½«½á¹ûÊı×é¶ÔÓ¦Î»ÖÃÉèÖÃÎªÄÜ»÷°Ünums2µÄ¸ÃÖµ£¬²¢ÈÃid1×Ô¼õ1
-				ret[originalID2] = nums1[id1--];
-			}
-			//ÎŞÂÛ±È²»±ÈµÃ¹ıid2¶¼Ó¦×Ô¼õ1
-			--id2;
-		}
-		//Èôid1²»Îª-1£¬ËµÃ÷½á¹ûÊı×é»¹ÓĞÒ»Ğ©Î»ÖÃÎ´Ìî³ä
-		if (id1 != -1) {
-			for (int& num : ret) {
-				if (num == -1) {
-					num = nums1[id1--];
-				}
-			}
-		}
-		return ret;
-	}
+        size_t n = nums2.size();
+        //æœ€å¥½ä¸è¦ä½¿ç”¨è¿™ç§ç”¨åˆ«çš„æ•°ç»„æ’åºæœ¬æ•°ç»„çš„æ–¹æ³•ï¼Œç”¨pairæ•ˆç‡æ›´é«˜ï¼Œè™½ç„¶ç©ºé—´å ç”¨æ›´å¤§
+        vector<size_t> idx(n);
+        iota(idx.begin(), idx.end(), 0);
+        sort(idx.begin(), idx.end(), [&nums2](size_t lhs, size_t rhs) {
+            return nums2[lhs] < nums2[rhs];
+        });
+        vector<int> ret(n, -1);
+        size_t id1 = n - 1, id2 = n - 1;
+        while (id1 != -1 && id2 != -1) {
+            int originalID2 = idx[id2];
+            //å½“nums1å½“å‰ä½ç½®çš„å€¼èƒ½å‡»è´¥nums2å½“å‰ä½ç½®çš„å€¼æ—¶
+            if (nums1[id1] > nums2[originalID2]) {
+                //å°†ç»“æœæ•°ç»„å¯¹åº”ä½ç½®è®¾ç½®ä¸ºèƒ½å‡»è´¥nums2çš„è¯¥å€¼ï¼Œå¹¶è®©id1è‡ªå‡1
+                ret[originalID2] = nums1[id1--];
+            }
+            //æ— è®ºæ¯”ä¸æ¯”å¾—è¿‡id2éƒ½åº”è‡ªå‡1
+            --id2;
+        }
+        //è‹¥id1ä¸ä¸º-1ï¼Œè¯´æ˜ç»“æœæ•°ç»„è¿˜æœ‰ä¸€äº›ä½ç½®æœªå¡«å……
+        if (id1 != -1) {
+            for (int& num : ret) {
+                if (num == -1) {
+                    num = nums1[id1--];
+                }
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨¸Ä½ø£ºÌï¼ÉÈüÂí£¬Ê±¼ä 116 ms 85.55%£¬¿Õ¼ä 60 MB 78.33%(Ê¹ÓÃpool_alloc¿É¼õÉÙÎª59.9 MB 78.62%)
-// ²»²ÉÓÃË÷ÒıÊı×é¸ù¾İÔ­Êı×éÅÅĞò£¬¶øÊÇÖ±½Ó¹¹½¨vector<pair<int, size_t>>£¬¸ù¾İfirstÅÅĞò£¬Ğ§ÂÊ¸ü¸ß£¬ÇÒ±ÜÃâºóÃæwhileÑ­»·ĞèÒªÁ½´Îoperator[]
+// å®˜æ–¹è§£æ³•æ”¹è¿›ï¼šç”°å¿Œèµ›é©¬ï¼Œæ—¶é—´ 116 ms 85.55%ï¼Œç©ºé—´ 60 MB 78.33%(ä½¿ç”¨pool_allocå¯å‡å°‘ä¸º59.9 MB 78.62%)
+// ä¸é‡‡ç”¨ç´¢å¼•æ•°ç»„æ ¹æ®åŸæ•°ç»„æ’åºï¼Œè€Œæ˜¯ç›´æ¥æ„å»ºvector<pair<int, size_t>>ï¼Œæ ¹æ®firstæ’åºï¼Œæ•ˆç‡æ›´é«˜ï¼Œä¸”é¿å…åé¢whileå¾ªç¯éœ€è¦ä¸¤æ¬¡operator[]
 class Solution {
 public:
-	vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
-		sort(nums1.begin(), nums1.end());
+    vector<int> advantageCount(vector<int>& nums1, vector<int>& nums2) {
+        sort(nums1.begin(), nums1.end());
 
-		size_t n = nums2.size();
-		vector<pair<int, size_t>> val_idx(n);
-		size_t i = 0;
-		for (auto& [val, id] : val_idx) {
-			val = nums2[i];
-			id = i++;
-		}
-		sort(val_idx.begin(), val_idx.end(), [](const pair<int, int>& lhs, const pair<int, int>& rhs) {
-			return lhs.first < rhs.first;
-			});
-		vector<int> ret(n, -1);
-		size_t id1 = n - 1, id2 = n - 1;
-		while (id1 != -1 && id2 != -1) {
-			if (nums1[id1] > val_idx[id2].first) {
-				ret[val_idx[id2].second] = nums1[id1--];
-			}
-			--id2;
-		}
-		if (id1 != -1) {
-			for (int& num : ret) {
-				if (num == -1) {
-					num = nums1[id1--];
-				}
-			}
-		}
-		return ret;
-	}
+        size_t n = nums2.size();
+        vector<pair<int, size_t>> val_idx(n);
+        size_t i = 0;
+        for (auto& [val, id] : val_idx) {
+            val = nums2[i];
+            id = i++;
+        }
+        sort(val_idx.begin(), val_idx.end(), [](const pair<int, int>& lhs, const pair<int, int>& rhs) {
+            return lhs.first < rhs.first;
+        });
+        vector<int> ret(n, -1);
+        size_t id1 = n - 1, id2 = n - 1;
+        while (id1 != -1 && id2 != -1) {
+            if (nums1[id1] > val_idx[id2].first) {
+                ret[val_idx[id2].second] = nums1[id1--];
+            }
+            --id2;
+        }
+        if (id1 != -1) {
+            for (int& num : ret) {
+                if (num == -1) {
+                    num = nums1[id1--];
+                }
+            }
+        }
+        return ret;
+    }
 };

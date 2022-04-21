@@ -2,55 +2,54 @@
 #include<vector>
 #include<numeric>
 
-using std::vector;
-using std::accumulate;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»²Î¿¼¹Ù·½Ë¼Â·£º0-1±³°üÎÊÌâ£¬¶¯Ì¬¹æ»®£¬Ê±¼äO(n*neg) 16 ms 52.24%£¬¿Õ¼ä O(n*neg) 11.8 MB 24.13%
+// æˆ‘çš„è§£æ³•ä¸€å‚è€ƒå®˜æ–¹æ€è·¯ï¼š0-1èƒŒåŒ…é—®é¢˜ï¼ŒåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n*neg) 16 ms 52.24%ï¼Œç©ºé—´ O(n*neg) 11.8 MB 24.13%
 class Solution {
 public:
-	int findTargetSumWays(vector<int>& nums, int target) {
-		int sum = accumulate(nums.begin(), nums.end(), 0);
-		int neg = sum - target;
-		if (neg < 0 || (neg & 1)) return 0;
-		neg >>= 1;
-		int n = nums.size();
-		vector<vector<int>> dp(n + 1, vector<int>(neg + 1, 0));
-		dp[0][0] = 1;
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        int neg = sum - target;
+        if (neg < 0 || (neg & 1)) return 0;
+        neg >>= 1;
+        int n = nums.size();
+        vector<vector<int>> dp(n + 1, vector<int>(neg + 1, 0));
+        dp[0][0] = 1;
 
-		for (int i = 1; i <= n; ++i) {
-			for (int j = 0; j <= neg; ++j) {
-				if (j < nums[i - 1]) {
-					dp[i][j] = dp[i - 1][j];
-				}
-				else {
-					dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i - 1]];
-				}
-			}
-		}
-		return dp[n][neg];
-	}
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j <= neg; ++j) {
+                if (j < nums[i - 1]) {
+                    dp[i][j] = dp[i - 1][j];
+                }
+                else {
+                    dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i - 1]];
+                }
+            }
+        }
+        return dp[n][neg];
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£º0-1±³°üÎÊÌâ£¬¶¯Ì¬¹æ»®+¹ö¶¯Êı×é£¬Ê±¼äO(n*neg) 8 ms 83.44%£¬¿Õ¼äO(neg) 9 MB 52.30%
+// æˆ‘çš„è§£æ³•äºŒï¼š0-1èƒŒåŒ…é—®é¢˜ï¼ŒåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ï¼Œæ—¶é—´O(n*neg) 8 ms 83.44%ï¼Œç©ºé—´O(neg) 9 MB 52.30%
 class Solution {
 public:
-	int findTargetSumWays(vector<int>& nums, int target) {
-		int sum = accumulate(nums.begin(), nums.end(), 0);
-		int neg = sum - target;
-		if (neg < 0 || (neg & 1)) return 0;
-		neg >>= 1;
-		int n = nums.size();
-		vector<int> dp(neg + 1, 0);
-		dp[0] = 1;
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        int neg = sum - target;
+        if (neg < 0 || (neg & 1)) return 0;
+        neg >>= 1;
+        int n = nums.size();
+        vector<int> dp(neg + 1, 0);
+        dp[0] = 1;
 
-		for (int i = 1; i <= n; ++i) {
-			for (int j = neg; j >= 0; --j) {
-				int cur = nums[i - 1];
-				if (j >= cur) {
-					dp[j] += dp[j - cur];
-				}
-			}
-		}
-		return dp[neg];
-	}
+        for (int i = 1; i <= n; ++i) {
+            for (int j = neg; j >= 0; --j) {
+                int cur = nums[i - 1];
+                if (j >= cur) {
+                    dp[j] += dp[j - cur];
+                }
+            }
+        }
+        return dp[neg];
+    }
 };

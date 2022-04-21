@@ -3,106 +3,106 @@
 using namespace std;
 
 struct ListNode {
-	int val;
-	ListNode* next;
-	ListNode() : val(0), next(nullptr) {}
-	ListNode(int x) : val(x), next(nullptr) {}
-	ListNode(int x, ListNode* next) : val(x), next(next) {}
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨Ò»£ºvector´æ·ÅÁ´±í½Úµã£¬·´ÏòÁ¬½Ó£¬Ê±¼ä O(n) 4 ms£¬¿Õ¼ä O(n) 8.3 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼švectorå­˜æ”¾é“¾è¡¨èŠ‚ç‚¹ï¼Œåå‘è¿æ¥ï¼Œæ—¶é—´ O(n) 4 msï¼Œç©ºé—´ O(n) 8.3 MB
 class Solution {
 public:
-	ListNode* reverseList(ListNode* head) {
-		if (head == nullptr) return head;
-		ListNode* dummy = new ListNode(0, head);
-		ListNode* ptr = dummy;
-		vector<ListNode*> nodeVec;
-		while (ptr->next != nullptr) {
-			nodeVec.emplace_back(ptr->next);
-			ptr = ptr->next;
-		}
-		ptr = dummy;
-		size_t nodeNum = nodeVec.size();
-		ptr->next = nodeVec[nodeNum - 1];
-		nodeVec[0]->next = nullptr;
-		for (size_t i = nodeNum - 1; i > 0; --i) {
-			nodeVec[i]->next = nodeVec[i - 1];
-		}
-		return dummy->next;
-	}
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr) return head;
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* ptr = dummy;
+        vector<ListNode*> nodeVec;
+        while (ptr->next != nullptr) {
+            nodeVec.emplace_back(ptr->next);
+            ptr = ptr->next;
+        }
+        ptr = dummy;
+        size_t nodeNum = nodeVec.size();
+        ptr->next = nodeVec[nodeNum - 1];
+        nodeVec[0]->next = nullptr;
+        for (size_t i = nodeNum - 1; i > 0; --i) {
+            nodeVec[i]->next = nodeVec[i - 1];
+        }
+        return dummy->next;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºµü´úÖ¸Õë£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(1) 8 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šè¿­ä»£æŒ‡é’ˆï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(1) 8 MB
 class Solution {
 public:
-	ListNode* reverseList(ListNode* head) {
-		if (head == nullptr) return head;
-		ListNode* tail = head, * prev = nullptr, * ptr = head, *nex;
-		while (tail->next != nullptr) tail = tail->next;
-		while (prev != tail) {
-			nex = ptr->next;
-			ptr->next = prev;
-			prev = ptr;
-			ptr = nex;
-		}
-		return tail;
-	}
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr) return head;
+        ListNode* tail = head, * prev = nullptr, * ptr = head, *nex;
+        while (tail->next != nullptr) tail = tail->next;
+        while (prev != tail) {
+            nex = ptr->next;
+            ptr->next = prev;
+            prev = ptr;
+            ptr = nex;
+        }
+        return tail;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºµü´ú£¬Ê±¼äO(n) 0 ms£¬¿Õ¼äO(1) 8 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šè¿­ä»£ï¼Œæ—¶é—´O(n) 0 msï¼Œç©ºé—´O(1) 8 MB
 class Solution {
 public:
-	ListNode* reverseList(ListNode* head) {
-		ListNode* prev = nullptr, * curr = head;
-		while (curr) {
-			ListNode* next = curr->next;
-			curr->next = prev;
-			prev = curr;
-			curr = next;
-		}
-		return prev;
-	}
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = nullptr, * curr = head;
+        while (curr) {
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
 };
 
 
-// ¹Ù·½½â·¨¶ş£ºµİ¹é£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(n) 8.3 MB
-// ÏÈÖğ²ãÉîÈëµ½Î²½Úµã£¬È»ºóÔÚµİ¹éÍù»Ø×ßµÄ¹ı³ÌÖĞÄæĞò½«½ÚµãµÄÏÂÒ»¸ö½ÚµãµÄnextÖ¸ÕëÖ¸Ïòµ±Ç°½Úµã
+// å®˜æ–¹è§£æ³•äºŒï¼šé€’å½’ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(n) 8.3 MB
+// å…ˆé€å±‚æ·±å…¥åˆ°å°¾èŠ‚ç‚¹ï¼Œç„¶ååœ¨é€’å½’å¾€å›èµ°çš„è¿‡ç¨‹ä¸­é€†åºå°†èŠ‚ç‚¹çš„ä¸‹ä¸€ä¸ªèŠ‚ç‚¹çš„nextæŒ‡é’ˆæŒ‡å‘å½“å‰èŠ‚ç‚¹
 class Solution {
 public:
-	ListNode* reverseList(ListNode* head) {
-		if (!head || !head->next) {
-			return head;
-		}
-		ListNode* newHead = reverseList(head->next);
-		head->next->next = head;
-		head->next = nullptr;
-		return newHead;
-	}
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next) {
+            return head;
+        }
+        ListNode* newHead = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return newHead;
+    }
 };
 
-// LeetCode 101½â·¨£ºÊ±¼ä 4 ms 94.31%£¬¿Õ¼ä 8.1 MB 60.05%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 4 ms 94.31%ï¼Œç©ºé—´ 8.1 MB 60.05%
 class Solution {
 public:
-	ListNode* reverseList(ListNode* head, ListNode* prev = nullptr) {
-		if (!head) return prev;
-		ListNode* next = head->next;
-		head->next = prev;
-		return reverseList(next, head);
-	}
+    ListNode* reverseList(ListNode* head, ListNode* prev = nullptr) {
+        if (!head) return prev;
+        ListNode* next = head->next;
+        head->next = prev;
+        return reverseList(next, head);
+    }
 };
 
-// ÎÒµÄµÚ¶ş´Î½â·¨£ºÊ±¼ä 4 ms 94.36%£¬¿Õ¼ä 8 MB 90.09%
+// æˆ‘çš„ç¬¬äºŒæ¬¡è§£æ³•ï¼šæ—¶é—´ 4 ms 94.36%ï¼Œç©ºé—´ 8 MB 90.09%
 class Solution {
 public:
-	ListNode* reverseList(ListNode* head) {
-		ListNode* prev = nullptr, * curr = head, * next = nullptr;
-		while (curr) {
-			next = curr->next;
-			curr->next = prev;
-			prev = curr;
-			curr = next;
-		}
-		return prev;
-	}
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = nullptr, * curr = head, * next = nullptr;
+        while (curr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
 };

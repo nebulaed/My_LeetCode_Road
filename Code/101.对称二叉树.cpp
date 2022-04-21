@@ -4,111 +4,111 @@
 #include<queue>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨Ò»£ºÖĞĞò±éÀú£¬4 ms£¬16.2 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šä¸­åºéå†ï¼Œ4 msï¼Œ16.2 MB
 class Solution {
 public:
-	bool isSymmetric(TreeNode* root) {
-		vector<int> inorder;
-		vector<int> depth;
-		stack<pair<TreeNode*, int>> stk;
-		int cur = 1;
-		while (root != nullptr || !stk.empty()) {
-			while (root != nullptr) {
-				stk.emplace(root, cur);
-				root = root->left;
-				++cur;
-			}
-			root = stk.top().first;
-			cur = stk.top().second;
-			stk.pop();
-			inorder.emplace_back(root->val);
-			depth.emplace_back(cur);
-			root = root->right;
-			++cur;
-		}
-		int left = 0, right = inorder.size() - 1;
-		while (left < right) {
-			if (inorder[left] != inorder[right] || depth[left] != depth[right]) {
-				return false;
-			}
-			++left;
-			--right;
-		}
-		return true;
-	}
+    bool isSymmetric(TreeNode* root) {
+        vector<int> inorder;
+        vector<int> depth;
+        stack<pair<TreeNode*, int>> stk;
+        int cur = 1;
+        while (root != nullptr || !stk.empty()) {
+            while (root != nullptr) {
+                stk.emplace(root, cur);
+                root = root->left;
+                ++cur;
+            }
+            root = stk.top().first;
+            cur = stk.top().second;
+            stk.pop();
+            inorder.emplace_back(root->val);
+            depth.emplace_back(cur);
+            root = root->right;
+            ++cur;
+        }
+        int left = 0, right = inorder.size() - 1;
+        while (left < right) {
+            if (inorder[left] != inorder[right] || depth[left] != depth[right]) {
+                return false;
+            }
+            ++left;
+            --right;
+        }
+        return true;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºµİ¹é£¬Ê±¼ä8 ms£¬¿Õ¼ä16.5 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šé€’å½’ï¼Œæ—¶é—´8 msï¼Œç©ºé—´16.5 MB
 class Solution {
 public:
-	void inorderTraverse(TreeNode* T, vector<pair<int, int>>& inorder, int curDepth) {
-		if (T == nullptr) return;
-		inorderTraverse(T->left, inorder, curDepth + 1);
-		inorder.emplace_back(T->val, curDepth);
-		inorderTraverse(T->right, inorder, curDepth + 1);
-	}
-	bool isSymmetric(TreeNode* root) {
-		vector<pair<int, int>> inorder;
-		inorderTraverse(root, inorder, 1);
-		int left = 0, right = inorder.size() - 1;
-		while (left < right) {
-			if (inorder[left] != inorder[right]) return false;
-			++left;
-			--right;
-		}
-		return true;
-	}
+    void inorderTraverse(TreeNode* T, vector<pair<int, int>>& inorder, int curDepth) {
+        if (T == nullptr) return;
+        inorderTraverse(T->left, inorder, curDepth + 1);
+        inorder.emplace_back(T->val, curDepth);
+        inorderTraverse(T->right, inorder, curDepth + 1);
+    }
+    bool isSymmetric(TreeNode* root) {
+        vector<pair<int, int>> inorder;
+        inorderTraverse(root, inorder, 1);
+        int left = 0, right = inorder.size() - 1;
+        while (left < right) {
+            if (inorder[left] != inorder[right]) return false;
+            ++left;
+            --right;
+        }
+        return true;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºµİ¹é£¬Ê±¼äO(n) 8 ms£¬¿Õ¼äO(n) 15.9 MB
-// Í¬²½ÒÆ¶¯Á½¸öÖ¸ÕëpºÍq±éÀúÕû¿ÃÊ÷£¬Ò»¿ªÊ¼¶¼Ö¸Ïò¸ù£¬pÓÒÒÆÊ±£¬q×óÒÆ£¬p×óÒÆÊ±£¬qÓÒÒÆ£¬Ã¿´Î¼ì²éµ±Ç°pºÍq½ÚµãµÄÖµÊÇ·ñÏàµÈ£¬ÈôÏàµÈÔÙÅĞ¶Ï×óÓÒ×ÓÊ÷ÊÇ·ñ¶Ô³Æ
+// å®˜æ–¹è§£æ³•ä¸€ï¼šé€’å½’ï¼Œæ—¶é—´O(n) 8 msï¼Œç©ºé—´O(n) 15.9 MB
+// åŒæ­¥ç§»åŠ¨ä¸¤ä¸ªæŒ‡é’ˆpå’Œqéå†æ•´æ£µæ ‘ï¼Œä¸€å¼€å§‹éƒ½æŒ‡å‘æ ¹ï¼Œpå³ç§»æ—¶ï¼Œqå·¦ç§»ï¼Œpå·¦ç§»æ—¶ï¼Œqå³ç§»ï¼Œæ¯æ¬¡æ£€æŸ¥å½“å‰på’ŒqèŠ‚ç‚¹çš„å€¼æ˜¯å¦ç›¸ç­‰ï¼Œè‹¥ç›¸ç­‰å†åˆ¤æ–­å·¦å³å­æ ‘æ˜¯å¦å¯¹ç§°
 class Solution {
 public:
-	bool check(TreeNode* p, TreeNode* q) {
-		if (!p && !q) return true;
-		if (!p || !q) return false;
-		return p->val == q->val && check(p->left, q->right) && check(p->right, q->left);
-	}
+    bool check(TreeNode* p, TreeNode* q) {
+        if (!p && !q) return true;
+        if (!p || !q) return false;
+        return p->val == q->val && check(p->left, q->right) && check(p->right, q->left);
+    }
 
-	bool isSymmetric(TreeNode* root) {
-		return check(root, root);
-	}
+    bool isSymmetric(TreeNode* root) {
+        return check(root, root);
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºµü´ú£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(n) 16.2 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šè¿­ä»£ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(n) 16.2 MB
 class Solution {
 public:
-	bool check(TreeNode* u, TreeNode* v) {
-		// ÏÈ½øÏÈ³öµÄÊı¾İ½á¹¹
-		queue <TreeNode*> q;
-		q.emplace(u);
-		q.emplace(v);
-		while (!q.empty()) {
-			u = q.front();
-			q.pop();
-			v = q.front();
-			q.pop();
-			if (!u && !v) continue;
-			if ((!u || !v) || (u->val != v->val)) return false;
-			q.emplace(u->left);
-			q.emplace(v->right);
-			q.emplace(u->right);
-			q.emplace(v->left);
-		}
-		return true;
-	}
+    bool check(TreeNode* u, TreeNode* v) {
+        // å…ˆè¿›å…ˆå‡ºçš„æ•°æ®ç»“æ„
+        queue <TreeNode*> q;
+        q.emplace(u);
+        q.emplace(v);
+        while (!q.empty()) {
+            u = q.front();
+            q.pop();
+            v = q.front();
+            q.pop();
+            if (!u && !v) continue;
+            if ((!u || !v) || (u->val != v->val)) return false;
+            q.emplace(u->left);
+            q.emplace(v->right);
+            q.emplace(u->right);
+            q.emplace(v->left);
+        }
+        return true;
+    }
 
-	bool isSymmetric(TreeNode* root) {
-		return check(root, root);
-	}
+    bool isSymmetric(TreeNode* root) {
+        return check(root, root);
+    }
 };

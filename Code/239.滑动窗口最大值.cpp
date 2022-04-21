@@ -5,122 +5,122 @@
 #include<queue>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º³¬Ê±£¬Ê±¼äO(nk)£¬¿Õ¼äO(1)
+// æˆ‘çš„è§£æ³•ä¸€ï¼šè¶…æ—¶ï¼Œæ—¶é—´O(nk)ï¼Œç©ºé—´O(1)
 class Solution {
 public:
-	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-		size_t length = nums.size();
-		vector<int> output(length - k + 1);
-		for (size_t i = 0; i <= length - k; ++i) {
-			int maxNum = -1e5;
-			for (size_t j = i; j < i + k; ++j) {
-				maxNum = max(nums[j], maxNum);
-			}
-			output[i] = maxNum;
-		}
-		return output;
-	}
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        size_t length = nums.size();
+        vector<int> output(length - k + 1);
+        for (size_t i = 0; i <= length - k; ++i) {
+            int maxNum = -1e5;
+            for (size_t j = i; j < i + k; ++j) {
+                maxNum = max(nums[j], maxNum);
+            }
+            output[i] = maxNum;
+        }
+        return output;
+    }
 };
 
-// ÎÒµÄ½â·¨¶þ£º¶þ²æÅÅÐòÊ÷¼¯ºÏ£¬Ê±¼äO(n logn) 560 ms£¬¿Õ¼äO(n) 197.4 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šäºŒå‰æŽ’åºæ ‘é›†åˆï¼Œæ—¶é—´O(n logn) 560 msï¼Œç©ºé—´O(n) 197.4 MB
 class Solution {
 public:
-	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-		size_t length = nums.size();
-		vector<int> output(length - k + 1);
-		multiset<int> winSet(nums.begin(), nums.begin() + k);
-		output[0] = *winSet.rbegin();
-		for (size_t i = 0; i < length - k; ++i) {
-			winSet.erase(winSet.find(nums[i]));
-			winSet.emplace(nums[i + k]);
-			output[i + 1] = *winSet.rbegin();
-		}
-		return output;
-	}
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        size_t length = nums.size();
+        vector<int> output(length - k + 1);
+        multiset<int> winSet(nums.begin(), nums.begin() + k);
+        output[0] = *winSet.rbegin();
+        for (size_t i = 0; i < length - k; ++i) {
+            winSet.erase(winSet.find(nums[i]));
+            winSet.emplace(nums[i + k]);
+            output[i + 1] = *winSet.rbegin();
+        }
+        return output;
+    }
 };
 
-// ¹Ù·½Ìâ½âÒ»£ºÓÅÏÈ¶ÓÁÐ£¬Ê±¼äO(n logn) 268 ms£¬¿Õ¼äO(n) 137.5 MB
-// ÓÅÏÈ¶ÓÁÐ(¶Ñ)£¬ÆäÖÐµÄ´ó¸ù¶Ñ¿ÉÒÔÊµÊ±Î¬»¤Ò»ÏµÁÐÔªËØÖÐµÄ×î´óÖµ¡£
-// ³õÊ¼Ê±£¬½«Êý×énumsµÄÇ°k¸öÔªËØ·Å½øÓÅÏÈ¶ÓÁÐÖÐ¡£Ã¿µ±ÏòÓÒÒÆ¶¯´°¿ÚÊ±£¬¾Í°ÑÒ»¸öÐÂµÄÔªËØ·ÅÈëÓÅÏÈ¶ÓÁÐÖÐ£¬Í¬Ê±¼ì²é¶Ñ¶¥ÔªËØÊÇ·ñÔÚ»¬¶¯´°¿ÚÖÐ£¬Èô²»ÔÚ¾ÍÒÆ³ýµô¸ÃÔªËØ£¬Ö±µ½¶Ñ¶¥ÔªËØÔÚ»¬¶¯´°¿ÚÖÐ£¬´ËÊ±¶Ñ¶¥ÔªËØ¾ÍÊÇ»¬¶¯´°¿ÚÖÐµÄ×î´óÖµ¡£
+// å®˜æ–¹é¢˜è§£ä¸€ï¼šä¼˜å…ˆé˜Ÿåˆ—ï¼Œæ—¶é—´O(n logn) 268 msï¼Œç©ºé—´O(n) 137.5 MB
+// ä¼˜å…ˆé˜Ÿåˆ—(å †)ï¼Œå…¶ä¸­çš„å¤§æ ¹å †å¯ä»¥å®žæ—¶ç»´æŠ¤ä¸€ç³»åˆ—å…ƒç´ ä¸­çš„æœ€å¤§å€¼ã€‚
+// åˆå§‹æ—¶ï¼Œå°†æ•°ç»„numsçš„å‰kä¸ªå…ƒç´ æ”¾è¿›ä¼˜å…ˆé˜Ÿåˆ—ä¸­ã€‚æ¯å½“å‘å³ç§»åŠ¨çª—å£æ—¶ï¼Œå°±æŠŠä¸€ä¸ªæ–°çš„å…ƒç´ æ”¾å…¥ä¼˜å…ˆé˜Ÿåˆ—ä¸­ï¼ŒåŒæ—¶æ£€æŸ¥å †é¡¶å…ƒç´ æ˜¯å¦åœ¨æ»‘åŠ¨çª—å£ä¸­ï¼Œè‹¥ä¸åœ¨å°±ç§»é™¤æŽ‰è¯¥å…ƒç´ ï¼Œç›´åˆ°å †é¡¶å…ƒç´ åœ¨æ»‘åŠ¨çª—å£ä¸­ï¼Œæ­¤æ—¶å †é¡¶å…ƒç´ å°±æ˜¯æ»‘åŠ¨çª—å£ä¸­çš„æœ€å¤§å€¼ã€‚
 class Solution {
 public:
-	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-		size_t length = nums.size();
-		priority_queue<pair<int, int>> q;
-		for (size_t i = 0; i < k; ++i) {
-			q.emplace(nums[i], i);
-		}
-		vector<int> output(length - k + 1);
-		output[0] = q.top().first;
-		for (size_t i = 0; i < length - k; ++i) {
-			q.emplace(nums[i + k], i + k);
-			while (q.top().second <= i) {
-				q.pop();
-			}
-			output[i + 1] = q.top().first;
-		}
-		return output;
-	}
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        size_t length = nums.size();
+        priority_queue<pair<int, int>> q;
+        for (size_t i = 0; i < k; ++i) {
+            q.emplace(nums[i], i);
+        }
+        vector<int> output(length - k + 1);
+        output[0] = q.top().first;
+        for (size_t i = 0; i < length - k; ++i) {
+            q.emplace(nums[i + k], i + k);
+            while (q.top().second <= i) {
+                q.pop();
+            }
+            output[i + 1] = q.top().first;
+        }
+        return output;
+    }
 };
 
-// ¹Ù·½Ìâ½â¶þ£ºµ¥µ÷¶ÓÁÐ£¬Ê±¼äO(n) 236 ms£¬¿Õ¼äO(k) 128.9 MB
-// 1. Èôµ±Ç°»¬¶¯´°¿ÚÖÐÓÐÁ½¸öÏÂ±êiºÍj£¬ÆäÖÐi<j£¬²¢ÇÒnums[i]<=nums[j]
-// µ±»¬¶¯´°¿ÚÏòÓÒÒÆ¶¯Ê±£¬Ö»Òªi»¹ÔÚ´°¿ÚÖÐ£¬ÄÇÃ´jÒ²Ò»¶¨»¹ÔÚ´°¿ÚÖÐ¡£ÄÇÃ´ÓÉÓÚnums[j]µÄ´æÔÚ£¬nums[i]Ò»¶¨²»»áÊÇ»¬¶¯´°¿ÚÖÐµÄ×î´óÖµ£¬¹Ê½«nums[i]ÒÆ³ý
-// Òò´Ë¿ÉÒÔÊ¹ÓÃÒ»¸ö¶ÓÁÐ´æ´¢ËùÓÐ»¹Ã»±»ÒÆ³ýµÄÏÂ±ê£¬[ÔÚ¶ÓÁÐÖÐ´Ó¶ÓÍ·µ½¶ÓÎ²µÄ]ÕâÐ©ÏÂ±ê°´ÕÕ£¬´ÓÐ¡µ½´óµÄË³Ðò±»´æ´¢
-// ÇÒÕâÐ©ÏÂ±ê¶ÔÓ¦µÄnumsÖµÊÇ´Ó´óµ½Ð¡µ¥µ÷µÝ¼õµÄ
-// »¬¶¯´°¿ÚÏòÓÒÒÆ¶¯Ê±£¬ÐèÒª½«ÐÂÔªËØÓë¶ÓÎ²ÔªËØ±È½Ï£¬ÈôÇ°Õß´óÓÚµÈÓÚºóÕß£¬Ôò¶ÓÎ²ÔªËØ±»ÒÆ³ý£¬Ö±µ½¶ÓÁÐÎª¿Õ»òÐÂÔªËØÐ¡ÓÚ¶ÓÎ²ÔªËØ
-// 2. ´ËÍâ£¬µ±´°¿ÚÏòÓÒÒÆ¶¯Ê±£¬Èô¶ÓÊ×ÔªËØ²»ÔÚ´°¿ÚÄÚ£¬ÔòÐè´Ó¶ÓÊ×µ¯³ö¡£
-// ÓÉÓÚÐèÒªÍ¬Ê±µ¯³ö¶ÓÊ×ºÍ¶ÓÎ²µÄÔªËØ£¬ÐèÒªÊ¹ÓÃË«¶Ë¶ÓÁÐ¡£¶ÓÁÐÖÐµÄËùÓÐÏÂ±êºÍÏÂ±ê¶ÔÓ¦ÖµÂú×ãµ¥µ÷ÐÔ£¬¹Ê³Æ×÷µ¥µ÷¶ÓÁÐ
+// å®˜æ–¹é¢˜è§£äºŒï¼šå•è°ƒé˜Ÿåˆ—ï¼Œæ—¶é—´O(n) 236 msï¼Œç©ºé—´O(k) 128.9 MB
+// 1. è‹¥å½“å‰æ»‘åŠ¨çª—å£ä¸­æœ‰ä¸¤ä¸ªä¸‹æ ‡iå’Œjï¼Œå…¶ä¸­i<jï¼Œå¹¶ä¸”nums[i]<=nums[j]
+// å½“æ»‘åŠ¨çª—å£å‘å³ç§»åŠ¨æ—¶ï¼Œåªè¦iè¿˜åœ¨çª—å£ä¸­ï¼Œé‚£ä¹ˆjä¹Ÿä¸€å®šè¿˜åœ¨çª—å£ä¸­ã€‚é‚£ä¹ˆç”±äºŽnums[j]çš„å­˜åœ¨ï¼Œnums[i]ä¸€å®šä¸ä¼šæ˜¯æ»‘åŠ¨çª—å£ä¸­çš„æœ€å¤§å€¼ï¼Œæ•…å°†nums[i]ç§»é™¤
+// å› æ­¤å¯ä»¥ä½¿ç”¨ä¸€ä¸ªé˜Ÿåˆ—å­˜å‚¨æ‰€æœ‰è¿˜æ²¡è¢«ç§»é™¤çš„ä¸‹æ ‡ï¼Œ[åœ¨é˜Ÿåˆ—ä¸­ä»Žé˜Ÿå¤´åˆ°é˜Ÿå°¾çš„]è¿™äº›ä¸‹æ ‡æŒ‰ç…§ï¼Œä»Žå°åˆ°å¤§çš„é¡ºåºè¢«å­˜å‚¨
+// ä¸”è¿™äº›ä¸‹æ ‡å¯¹åº”çš„numså€¼æ˜¯ä»Žå¤§åˆ°å°å•è°ƒé€’å‡çš„
+// æ»‘åŠ¨çª—å£å‘å³ç§»åŠ¨æ—¶ï¼Œéœ€è¦å°†æ–°å…ƒç´ ä¸Žé˜Ÿå°¾å…ƒç´ æ¯”è¾ƒï¼Œè‹¥å‰è€…å¤§äºŽç­‰äºŽåŽè€…ï¼Œåˆ™é˜Ÿå°¾å…ƒç´ è¢«ç§»é™¤ï¼Œç›´åˆ°é˜Ÿåˆ—ä¸ºç©ºæˆ–æ–°å…ƒç´ å°äºŽé˜Ÿå°¾å…ƒç´ 
+// 2. æ­¤å¤–ï¼Œå½“çª—å£å‘å³ç§»åŠ¨æ—¶ï¼Œè‹¥é˜Ÿé¦–å…ƒç´ ä¸åœ¨çª—å£å†…ï¼Œåˆ™éœ€ä»Žé˜Ÿé¦–å¼¹å‡ºã€‚
+// ç”±äºŽéœ€è¦åŒæ—¶å¼¹å‡ºé˜Ÿé¦–å’Œé˜Ÿå°¾çš„å…ƒç´ ï¼Œéœ€è¦ä½¿ç”¨åŒç«¯é˜Ÿåˆ—ã€‚é˜Ÿåˆ—ä¸­çš„æ‰€æœ‰ä¸‹æ ‡å’Œä¸‹æ ‡å¯¹åº”å€¼æ»¡è¶³å•è°ƒæ€§ï¼Œæ•…ç§°ä½œå•è°ƒé˜Ÿåˆ—
 class Solution {
 public:
-	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-		size_t length = nums.size();
-		deque<int> q;
-		for (int i = 0; i < k; ++i) {
-			while (!q.empty() && nums[i] >= nums[q.back()]) {
-				q.pop_back();
-			}
-			q.emplace_back(i);
-		}
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        size_t length = nums.size();
+        deque<int> q;
+        for (int i = 0; i < k; ++i) {
+            while (!q.empty() && nums[i] >= nums[q.back()]) {
+                q.pop_back();
+            }
+            q.emplace_back(i);
+        }
 
-		vector<int> ans = { nums[q.front()] };
-		for (int i = k; i < length; ++i) {
-			while (!q.empty() && nums[i] >= nums[q.back()]) {
-				q.pop_back();
-			}
-			q.emplace_back(i);
-			while (q.front() <= i - k) {
-				q.pop_front();
-			}
-			ans.emplace_back(nums[q.front()]);
-		}
-		return ans;
-	}
+        vector<int> ans = { nums[q.front()] };
+        for (int i = k; i < length; ++i) {
+            while (!q.empty() && nums[i] >= nums[q.back()]) {
+                q.pop_back();
+            }
+            q.emplace_back(i);
+            while (q.front() <= i - k) {
+                q.pop_front();
+            }
+            ans.emplace_back(nums[q.front()]);
+        }
+        return ans;
+    }
 };
 
-// LeetCode 101½â·¨£ºË«¶Ëµ¥µ÷¶ÓÁÐ£¬Ê±¼ä O(n) 232 ms 48.42%£¬¿Õ¼ä O(k) 124.1 MB 98.07%
+// LeetCode 101è§£æ³•ï¼šåŒç«¯å•è°ƒé˜Ÿåˆ—ï¼Œæ—¶é—´ O(n) 232 ms 48.42%ï¼Œç©ºé—´ O(k) 124.1 MB 98.07%
 class Solution {
 public:
-	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-		int n = nums.size(), ind = 0;
-		deque<int> window;
-		vector<int> ret(n - k + 1, 0);
-		for (int i = 0; i < n; ++i) {
-			// Ã¿µ±ÏòÓÒÒÆ¶¯Ê±£¬°Ñ´°¿Ú×ó¶ËµÄÖµ´Ó¶ÓÁÐ×ó¶ËÌÞ³ý
-			if (!window.empty() && window.front() == i - k) {
-				window.pop_front();
-			}
-			// Ã¿µ±ÏòÓÒÒÆ¶¯Ê±£¬°Ñ¶ÓÁÐÓÒ±ßÐ¡ÓÚ´°¿ÚÓÒ¶ËµÄÖµÈ«²¿ÌÞ³ý
-			while (!window.empty() && nums[window.back()] < nums[i]) {
-				window.pop_back();
-			}
-			// ·ÅÈëµ±Ç°Î»ÖÃ
-			window.emplace_back(i);
-			// µ±Î»ÖÃ´óÓÚµÈÓÚ´°¿Ú´óÐ¡¼õ1Ê±£¬¸üÐÂ½á¹ûÊý×é¶ÔÓ¦Î»ÖÃ
-			if (i >= k - 1) {
-				ret[ind++] = nums[window.front()];
-			}
-		}
-		return ret;
-	}
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int n = nums.size(), ind = 0;
+        deque<int> window;
+        vector<int> ret(n - k + 1, 0);
+        for (int i = 0; i < n; ++i) {
+            // æ¯å½“å‘å³ç§»åŠ¨æ—¶ï¼ŒæŠŠçª—å£å·¦ç«¯çš„å€¼ä»Žé˜Ÿåˆ—å·¦ç«¯å‰”é™¤
+            if (!window.empty() && window.front() == i - k) {
+                window.pop_front();
+            }
+            // æ¯å½“å‘å³ç§»åŠ¨æ—¶ï¼ŒæŠŠé˜Ÿåˆ—å³è¾¹å°äºŽçª—å£å³ç«¯çš„å€¼å…¨éƒ¨å‰”é™¤
+            while (!window.empty() && nums[window.back()] < nums[i]) {
+                window.pop_back();
+            }
+            // æ”¾å…¥å½“å‰ä½ç½®
+            window.emplace_back(i);
+            // å½“ä½ç½®å¤§äºŽç­‰äºŽçª—å£å¤§å°å‡1æ—¶ï¼Œæ›´æ–°ç»“æžœæ•°ç»„å¯¹åº”ä½ç½®
+            if (i >= k - 1) {
+                ret[ind++] = nums[window.front()];
+            }
+        }
+        return ret;
+    }
 };

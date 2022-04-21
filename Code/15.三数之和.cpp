@@ -5,7 +5,7 @@
 #include<set>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º³¬³öÊ±¼äÏŞÖÆ
+// æˆ‘çš„è§£æ³•ï¼šè¶…å‡ºæ—¶é—´é™åˆ¶
 //class Solution {
 //public:
 //	vector<vector<int>> threeSum(vector<int>& nums) {
@@ -33,93 +33,92 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨1£ºÅÅĞò+Ë«Ö¸Õë
+// å®˜æ–¹è§£æ³•1ï¼šæ’åº+åŒæŒ‡é’ˆ
 class Solution {
 public:
-	vector<vector<int>> threeSum(vector<int>& nums) {
-		int n = nums.size();
-		sort(nums.begin(), nums.end());
-		vector<vector<int>> ans;
-		// Ã¶¾Ù(a,b,c)ÖĞµÄa
-		for (int first = 0; first < n; ++first) {
-			// Ã¶¾ÙµÄa±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄaÊıÖµ²»µÈ
-			if (first > 0 && nums[first] == nums[first - 1]) {
-				continue;
-			}
-			// c¶ÔÓ¦µÄÖ¸Õë³õÊ¼Ö¸ÏòÊı×éµÄ×îÓÒ¶Ë
-			int third = n - 1;
-			int target = -nums[first];
-			// Ã¶¾Ùb
-			for (int second = first + 1; second < n; ++second) {
-				// Í¬ÑùÒª±£Ö¤Ã¶¾ÙµÄb±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄbÊıÖµ²»µÈ
-				if (second > first + 1 && nums[second] == nums[second - 1]) {
-					continue;
-				}
-				// ĞèÒª±£Ö¤bµÄÖ¸ÕëÔÚcµÄÖ¸Õë×ó²à
-				while (second<third && nums[second] + nums[third]>target) {
-					--third;
-				}
-				// ÈôÖ¸ÕëÖØºÏ£¬Ëæ×ÅbºóĞøµÄÔö¼Ó
-				// ¾Í²»»áÓĞÂú×ãa+b+c = 0²¢ÇÒb<cµÄcÁË£¬¿ÉÒÔÍË³öÑ­»·
-				if (second == third) {
-					break;
-				}
-				if (nums[second] + nums[third] == target) {
-					ans.push_back({ nums[first],nums[second],nums[third] });
-				}
-			}
-		}
-		return ans;
-	}
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        // æšä¸¾(a,b,c)ä¸­çš„a
+        for (int first = 0; first < n; ++first) {
+            // æšä¸¾çš„aå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„aæ•°å€¼ä¸ç­‰
+            if (first > 0 && nums[first] == nums[first - 1]) {
+                continue;
+            }
+            // cå¯¹åº”çš„æŒ‡é’ˆåˆå§‹æŒ‡å‘æ•°ç»„çš„æœ€å³ç«¯
+            int third = n - 1;
+            int target = -nums[first];
+            // æšä¸¾b
+            for (int second = first + 1; second < n; ++second) {
+                // åŒæ ·è¦ä¿è¯æšä¸¾çš„bå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„bæ•°å€¼ä¸ç­‰
+                if (second > first + 1 && nums[second] == nums[second - 1]) {
+                    continue;
+                }
+                // éœ€è¦ä¿è¯bçš„æŒ‡é’ˆåœ¨cçš„æŒ‡é’ˆå·¦ä¾§
+                while (second<third && nums[second] + nums[third]>target) {
+                    --third;
+                }
+                // è‹¥æŒ‡é’ˆé‡åˆï¼Œéšç€båç»­çš„å¢åŠ 
+                // å°±ä¸ä¼šæœ‰æ»¡è¶³a+b+c = 0å¹¶ä¸”b<cçš„cäº†ï¼Œå¯ä»¥é€€å‡ºå¾ªç¯
+                if (second == third) {
+                    break;
+                }
+                if (nums[second] + nums[third] == target) {
+                    ans.push_back({ nums[first],nums[second],nums[third] });
+                }
+            }
+        }
+        return ans;
+    }
 };
 
-// ÎÒµÄµÚ¶ş´Î½â·¨£ºÊ±¼ä 72 ms 73.60%£¬¿Õ¼ä 19.4 MB 81.43%
+// æˆ‘çš„ç¬¬äºŒæ¬¡è§£æ³•ï¼šæ—¶é—´ 72 ms 73.60%ï¼Œç©ºé—´ 19.4 MB 81.43%
 class Solution {
 public:
-	vector<vector<int>> threeSum(vector<int>& nums) {
-		int n = nums.size();
-		sort(nums.begin(), nums.end());
-		vector<vector<int>> ret;
-		for (int i = 0; i < n - 2; ++i) {
-			while (i > 0 && i < n - 2 && nums[i] == nums[i - 1]) {
-				++i;
-			}
-			int first = nums[i], secondptr = i + 1, thirdptr = n - 1;
-			while (secondptr < thirdptr) {
-				if (nums[secondptr] + nums[thirdptr] < -first) {
-					++secondptr;
-				}
-				else if (nums[secondptr] + nums[thirdptr] > -first) {
-					--thirdptr;
-				}
-				else {
-					ret.emplace_back(vector<int>{first, nums[secondptr++], nums[thirdptr]});
-					while (secondptr < thirdptr && nums[secondptr] == nums[secondptr - 1]) {
-						++secondptr;
-					}
-				}
-			}
-		}
-		return ret;
-	}
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ret;
+        for (int i = 0; i < n - 2; ++i) {
+            while (i > 0 && i < n - 2 && nums[i] == nums[i - 1]) {
+                ++i;
+            }
+            int first = nums[i], secondptr = i + 1, thirdptr = n - 1;
+            while (secondptr < thirdptr) {
+                if (nums[secondptr] + nums[thirdptr] < -first) {
+                    ++secondptr;
+                }
+                else if (nums[secondptr] + nums[thirdptr] > -first) {
+                    --thirdptr;
+                }
+                else {
+                    ret.emplace_back(vector<int>{first, nums[secondptr++], nums[thirdptr]});
+                    while (secondptr < thirdptr && nums[secondptr] == nums[secondptr - 1]) {
+                        ++secondptr;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
 };
 
 int main() {
-	vector<int> input = { -1,0,1,2,-1,-4 };
+    vector<int> input = { -1,0,1,2,-1,-4 };
 
-	Solution s;
-	vector<vector<int>> ret = s.threeSum(input);
+    Solution s;
+    vector<vector<int>> ret = s.threeSum(input);
 
-	cout << '[';
-	for (int i = 0; i < ret.size(); ++i) {
-		cout << "[ ";
-		for (int j = 0; j < ret[i].size(); ++j) {
-			cout << ret[i][j] << " ";
-		}
-		cout << ']';
-	}
-	cout << ']' << endl;
+    cout << '[';
+    for (int i = 0; i < ret.size(); ++i) {
+        cout << "[ ";
+        for (int j = 0; j < ret[i].size(); ++j) {
+            cout << ret[i][j] << " ";
+        }
+        cout << ']';
+    }
+    cout << ']' << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

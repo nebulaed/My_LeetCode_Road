@@ -3,61 +3,61 @@
 #include<algorithm>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ¹Ù·½½â·¨Ò»£º¶ş²æÊ÷µÄ¶¯Ì¬¹æ»®£¬Ê±¼äO(n) 16 ms£¬¿Õ¼äO(2n) = O(n) 28 MB
-// Ë¼Â·£ºÓÃcurSelected(o)±íÊ¾Ñ¡Ôño½ÚµãµÄÇé¿öÏÂ£¬o½ÚµãµÄ×ÓÊ÷ÉÏ±»Ñ¡ÔñµÄ½ÚµãµÄ×î´óÈ¨ÖµºÍ
-// curNonSelected(o)±íÊ¾²»Ñ¡Ôño½ÚµãµÄÇé¿öÏÂ£¬o½ÚµãµÄ×ÓÊ÷ÉÏ±»Ñ¡ÔñµÄ½ÚµãµÄ×î´óÈ¨ÖµºÍ
-// 1.µ±o±»Ñ¡ÖĞÊ±£¬oµÄ×óÓÒº¢×Ó¶¼²»ÄÜ±»Ñ¡ÖĞ£¬¹Êo±»Ñ¡ÖĞÇé¿öÏÂ×ÓÊ÷ÉÏ±»Ñ¡ÖĞµãµÄ×î´óÈ¨ÖµºÍÎªo->leftºÍo->right²»±»Ñ¡ÖĞµÄ×î´óÈ¨ÖµºÍÏà¼Ó£¬¼´
+// å®˜æ–¹è§£æ³•ä¸€ï¼šäºŒå‰æ ‘çš„åŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n) 16 msï¼Œç©ºé—´O(2n) = O(n) 28 MB
+// æ€è·¯ï¼šç”¨curSelected(o)è¡¨ç¤ºé€‰æ‹©oèŠ‚ç‚¹çš„æƒ…å†µä¸‹ï¼ŒoèŠ‚ç‚¹çš„å­æ ‘ä¸Šè¢«é€‰æ‹©çš„èŠ‚ç‚¹çš„æœ€å¤§æƒå€¼å’Œ
+// curNonSelected(o)è¡¨ç¤ºä¸é€‰æ‹©oèŠ‚ç‚¹çš„æƒ…å†µä¸‹ï¼ŒoèŠ‚ç‚¹çš„å­æ ‘ä¸Šè¢«é€‰æ‹©çš„èŠ‚ç‚¹çš„æœ€å¤§æƒå€¼å’Œ
+// 1.å½“oè¢«é€‰ä¸­æ—¶ï¼Œoçš„å·¦å³å­©å­éƒ½ä¸èƒ½è¢«é€‰ä¸­ï¼Œæ•…oè¢«é€‰ä¸­æƒ…å†µä¸‹å­æ ‘ä¸Šè¢«é€‰ä¸­ç‚¹çš„æœ€å¤§æƒå€¼å’Œä¸ºo->leftå’Œo->rightä¸è¢«é€‰ä¸­çš„æœ€å¤§æƒå€¼å’Œç›¸åŠ ï¼Œå³
 // curSelected(o) = curNonSelected(o->left) + curNonSelected(o->right)
-// 2.µ±o²»±»Ñ¡ÖĞÊ±£¬oµÄ×óÓÒº¢×Ó¿ÉÒÔÑ¡ÖĞÒ²¿ÉÒÔ²»Ñ¡ÖĞ¡£ÄÇÃ´
+// 2.å½“oä¸è¢«é€‰ä¸­æ—¶ï¼Œoçš„å·¦å³å­©å­å¯ä»¥é€‰ä¸­ä¹Ÿå¯ä»¥ä¸é€‰ä¸­ã€‚é‚£ä¹ˆ
 // curNonSelected(o) = max{curSelected(o->left),curNonSelected(o->left)} + max{curSelected(o->right),curNonSelected(o->right)}
 class Solution {
 private:
-	unordered_map<TreeNode*, int> curSelected, curNonSelected;
+    unordered_map<TreeNode*, int> curSelected, curNonSelected;
 
-	void dfs(TreeNode* T) {
-		if (T == nullptr) return;
-		dfs(T->left);
-		dfs(T->right);
-		// µ±Ç°½ÚµãT±»Íµ£¬ÔòT->leftºÍT->right²»ÄÜ±»Íµ
-		curSelected[T] = T->val + curNonSelected[T->left] + curNonSelected[T->right];
-		// µ±Ç°½ÚµãTÃ»±»Íµ£¬ÔòT->left£¬T->right¿ÉÒÔ±»Íµ¿ÉÒÔ²»±»Íµ£¬È¡×î´óÖµÇé¿ö
-		curNonSelected[T] = max(curSelected[T->left], curNonSelected[T->left]) + max(curSelected[T->right], curNonSelected[T->right]);
-	}
+    void dfs(TreeNode* T) {
+        if (T == nullptr) return;
+        dfs(T->left);
+        dfs(T->right);
+        // å½“å‰èŠ‚ç‚¹Tè¢«å·ï¼Œåˆ™T->leftå’ŒT->rightä¸èƒ½è¢«å·
+        curSelected[T] = T->val + curNonSelected[T->left] + curNonSelected[T->right];
+        // å½“å‰èŠ‚ç‚¹Tæ²¡è¢«å·ï¼Œåˆ™T->leftï¼ŒT->rightå¯ä»¥è¢«å·å¯ä»¥ä¸è¢«å·ï¼Œå–æœ€å¤§å€¼æƒ…å†µ
+        curNonSelected[T] = max(curSelected[T->left], curNonSelected[T->left]) + max(curSelected[T->right], curNonSelected[T->right]);
+    }
 public:
-	int rob(TreeNode* root) {
-		dfs(root);
-		return max(curSelected[root], curNonSelected[root]);
-	}
+    int rob(TreeNode* root) {
+        dfs(root);
+        return max(curSelected[root], curNonSelected[root]);
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¶ş²æÊ÷µÄ¶¯Ì¬¹æ»®+¹ö¶¯Êı×é£¬Ê±¼äO(n) 12 ms£¬¿Õ¼äO(n) 21.7 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šäºŒå‰æ ‘çš„åŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ï¼Œæ—¶é—´O(n) 12 msï¼Œç©ºé—´O(n) 21.7 MB
 class Solution {
 private:
-	// array<int, 2>[0]±íÊ¾±»Ñ¡ÖĞµÄÈ¨ÖµºÍ£¬array<int, 2>[1]±íÊ¾Î´±»Ñ¡ÖĞµÄÈ¨ÖµºÍ
-	pair<int, int> dfs(TreeNode* T) {
-		if (T == nullptr) return { 0, 0 };
-		auto leftSum = dfs(T->left);
-		auto rightSum = dfs(T->right);
-		pair<int, int> sum;
-		// µ±Ç°½ÚµãT±»Íµ£¬ÔòT->leftºÍT->right²»ÄÜ±»Íµ
-		sum.first = T->val + leftSum.second + rightSum.second;
-		// µ±Ç°½ÚµãTÃ»±»Íµ£¬ÔòT->left£¬T->right¿ÉÒÔ±»Íµ¿ÉÒÔ²»±»Íµ£¬È¡×î´óÖµÇé¿ö
-		sum.second = max(leftSum.first, leftSum.second) + max(rightSum.first, rightSum.second);
-		return sum;
-	}
+    // array<int, 2>[0]è¡¨ç¤ºè¢«é€‰ä¸­çš„æƒå€¼å’Œï¼Œarray<int, 2>[1]è¡¨ç¤ºæœªè¢«é€‰ä¸­çš„æƒå€¼å’Œ
+    pair<int, int> dfs(TreeNode* T) {
+        if (T == nullptr) return { 0, 0 };
+        auto leftSum = dfs(T->left);
+        auto rightSum = dfs(T->right);
+        pair<int, int> sum;
+        // å½“å‰èŠ‚ç‚¹Tè¢«å·ï¼Œåˆ™T->leftå’ŒT->rightä¸èƒ½è¢«å·
+        sum.first = T->val + leftSum.second + rightSum.second;
+        // å½“å‰èŠ‚ç‚¹Tæ²¡è¢«å·ï¼Œåˆ™T->leftï¼ŒT->rightå¯ä»¥è¢«å·å¯ä»¥ä¸è¢«å·ï¼Œå–æœ€å¤§å€¼æƒ…å†µ
+        sum.second = max(leftSum.first, leftSum.second) + max(rightSum.first, rightSum.second);
+        return sum;
+    }
 public:
-	int rob(TreeNode* root) {
-		auto ret = dfs(root);
-		return max(ret.first, ret.second);
-	}
+    int rob(TreeNode* root) {
+        auto ret = dfs(root);
+        return max(ret.first, ret.second);
+    }
 };

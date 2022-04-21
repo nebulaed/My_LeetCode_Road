@@ -1,103 +1,101 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<queue>
 #include<unordered_set>
 #include<unordered_map>
 
-using std::vector;
-using std::queue;
-using std::unordered_set;
-using std::unordered_map;
+using namespace std;
 
-// ÎÒµÄ½â·¨£º¹ã¶ÈÓÅÏÈËÑË÷£¬³¬Ê±
+// æˆ‘çš„è§£æ³•ï¼šå¹¿åº¦ä¼˜å…ˆæœç´¢ï¼Œè¶…æ—¶
 class Solution {
 public:
-	vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
-		unordered_map<int, vector<int>> table;
-		for (const auto& edge : edges) {
-			int node1 = edge[0], node2 = edge[1];
-			table[node1].emplace_back(node2);
-			table[node2].emplace_back(node1);
-		}
-		unordered_set<int> path;
-		vector<int> ret;
-		int minDepth = INT_MAX;
-		for (int i = 0; i < n; ++i) {
-			queue<int> q;
-			q.emplace(i);
-			int depth = -1;
-			while (!q.empty()) {
-				size_t curSize = q.size();
-				for (int j = 0; j < curSize; ++j) {
-					int curr = q.front();
-					path.emplace(curr);
-					q.pop();
-					for (int next : table[curr]) {
-						if (!path.count(next)) {
-							q.emplace(next);
-						}
-					}
-				}
-				++depth;
-			}
-			if (depth < minDepth) {
-				minDepth = depth;
-				ret.clear();
-				ret.emplace_back(i);
-			}
-			else if (depth == minDepth) {
-				ret.emplace_back(i);
-			}
-			path.clear();
-		}
-		return ret;
-	}
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        unordered_map<int, vector<int>> table;
+        for (const auto& edge : edges) {
+            int node1 = edge[0], node2 = edge[1];
+            table[node1].emplace_back(node2);
+            table[node2].emplace_back(node1);
+        }
+        unordered_set<int> path;
+        vector<int> ret;
+        int minDepth = INT_MAX;
+        for (int i = 0; i < n; ++i) {
+            queue<int> q;
+            q.emplace(i);
+            int depth = -1;
+            while (!q.empty()) {
+                size_t curSize = q.size();
+                for (int j = 0; j < curSize; ++j) {
+                    int curr = q.front();
+                    path.emplace(curr);
+                    q.pop();
+                    for (int next : table[curr]) {
+                        if (!path.count(next)) {
+                            q.emplace(next);
+                        }
+                    }
+                }
+                ++depth;
+            }
+            if (depth < minDepth) {
+                minDepth = depth;
+                ret.clear();
+                ret.emplace_back(i);
+            }
+            else if (depth == minDepth) {
+                ret.emplace_back(i);
+            }
+            path.clear();
+        }
+        return ret;
+    }
 };
 
 
-// ¿´Ìâ½â½â·¨£ºÊ±¼ä 124 ms 32%£¬¿Õ¼ä 50.9 MB 19%
-// Ë¼Â·£ºµ¹×ÅÀ´£¬´Ó±ßÔµµÄÒ¶×Ó½Úµã¿ªÊ¼£¬ÏÈÕÒµ½ËùÓĞ³ö¶ÈÎª1µÄ½Úµã£¬È»ºó°ÑËùÓĞ³ö¶ÈÎª1µÄ½Úµã½ø¶ÓÁĞ£¬È»ºó²»¶ÏµØbfs£¬×îºóÕÒµ½µÄ¾ÍÊÇÁ½±ßÍ¬Ê±ÏòÖĞ¼ä¿¿½üµÄ½Úµã£¬ÄÇÃ´Õâ¸öÖĞ¼ä½Úµã¾ÍÏàµ±ÓÚ°ÑÕû¸ö¾àÀë¶ş·ÖÁË£¬ÄÇÃ´Ëüµ±È»¾ÍÊÇµ½Á½±ß¾àÀë×îĞ¡µÄµãÀ²£¬Ò²¾ÍÊÇµ½ÆäËûÒ¶×Ó½Úµã×î½üµÄ½ÚµãÁË¡£
-// ±¾ÌâË¼Â·ÀàËÆÍØÆËÅÅĞò
+// çœ‹é¢˜è§£è§£æ³•ï¼šæ—¶é—´ 124 ms 32%ï¼Œç©ºé—´ 50.9 MB 19%
+// æ€è·¯ï¼šå€’ç€æ¥ï¼Œä»è¾¹ç¼˜çš„å¶å­èŠ‚ç‚¹å¼€å§‹ï¼Œå…ˆæ‰¾åˆ°æ‰€æœ‰å‡ºåº¦ä¸º1çš„èŠ‚ç‚¹ï¼Œç„¶åæŠŠæ‰€æœ‰å‡ºåº¦ä¸º1çš„èŠ‚ç‚¹è¿›é˜Ÿåˆ—ï¼Œç„¶åä¸æ–­åœ°bfsï¼Œæœ€åæ‰¾åˆ°çš„å°±æ˜¯ä¸¤è¾¹åŒæ—¶å‘ä¸­é—´é è¿‘çš„èŠ‚ç‚¹ï¼Œé‚£ä¹ˆè¿™ä¸ªä¸­é—´èŠ‚ç‚¹å°±ç›¸å½“äºæŠŠæ•´ä¸ªè·ç¦»äºŒåˆ†äº†ï¼Œé‚£ä¹ˆå®ƒå½“ç„¶å°±æ˜¯åˆ°ä¸¤è¾¹è·ç¦»æœ€å°çš„ç‚¹å•¦ï¼Œä¹Ÿå°±æ˜¯åˆ°å…¶ä»–å¶å­èŠ‚ç‚¹æœ€è¿‘çš„èŠ‚ç‚¹äº†ã€‚
+// æœ¬é¢˜æ€è·¯ç±»ä¼¼æ‹“æ‰‘æ’åº
 class Solution {
 public:
-	vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
-		// ÈôÖ»ÓĞÒ»¸ö½Úµã£¬Ëü¾ÍÊÇ×îĞ¡¸ß¶ÈÊ÷
-		if (n == 1) return { 0 };
-		// ½¨Á¢¸÷¸ö½ÚµãµÄ¶È±í(Á¬½ÓÆäËû½ÚµãµÄ¸öÊı)
-		vector<int> degrees(n);
-		// ½¨Á¢¸÷¸ö½ÚµãµÄÁÚ½Ó±í
-		vector<vector<int>> adjList(n);
-		vector<int> ret;
-		for (const auto& edge : edges) {
-			int node1 = edge[0], node2 = edge[1];
-			++degrees[node1];
-			++degrees[node2];
-			adjList[node1].emplace_back(node2);
-			adjList[node2].emplace_back(node1);
-		}
-		queue<int> q;
-		//°ÑËùÓĞ¶ÈÎª1µÄ½ÚµãÈë¶Ó
-		for (int i = 0; i < n; ++i) {
-			if (degrees[i] == 1) {
-				q.emplace(i);
-			}
-		}
-		while (!q.empty()) {
-			ret.clear();
-			size_t curSize = q.size();
-			while (curSize--) {
-				int curr = q.front();
-				q.pop();
-				// °Ñµ±Ç°½Úµã¼ÓÈë½á¹û¼¯ºÏ£¬ÕâÊÇÃ¿´Î±éÀúÍêÍ¼£¬¾Í»á°Ñ¸Ã²ãµÄËùÓĞ½Úµã´Ó¶ÓÁĞÖĞÒÆ³ı£¬Ïàµ±ÓÚ°ÑÔ­À´µÄÍ¼¼ôµôÒ»È¦Ò¶×Ó½Úµã£¬ĞÎ³ÉËõĞ¡µÄÍ¼
-				ret.emplace_back(curr);
-				for (int next : adjList[curr]) {
-					// µ±Ç°½ÚµãµÄËùÓĞÏàÁÚ½Úµã¶È-1£¬Èç¹ûÏàÁÚ½Úµã±ä³ÉÒ¶×Ó½Úµã£¬ÄÇ¾ÍÒ²·Åµ½¶ÓÁĞÀï
-					if (--degrees[next] == 1) {
-						q.emplace(next);
-					}
-				}
-			}
-		}
-		return ret;
-	}
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        // è‹¥åªæœ‰ä¸€ä¸ªèŠ‚ç‚¹ï¼Œå®ƒå°±æ˜¯æœ€å°é«˜åº¦æ ‘
+        if (n == 1) return { 0 };
+        // å»ºç«‹å„ä¸ªèŠ‚ç‚¹çš„åº¦è¡¨(è¿æ¥å…¶ä»–èŠ‚ç‚¹çš„ä¸ªæ•°)
+        vector<int> degrees(n);
+        // å»ºç«‹å„ä¸ªèŠ‚ç‚¹çš„é‚»æ¥è¡¨
+        vector<vector<int>> adjList(n);
+        vector<int> ret;
+        for (const auto& edge : edges) {
+            int node1 = edge[0], node2 = edge[1];
+            ++degrees[node1];
+            ++degrees[node2];
+            adjList[node1].emplace_back(node2);
+            adjList[node2].emplace_back(node1);
+        }
+        queue<int> q;
+        //æŠŠæ‰€æœ‰åº¦ä¸º1çš„èŠ‚ç‚¹å…¥é˜Ÿ
+        for (int i = 0; i < n; ++i) {
+            if (degrees[i] == 1) {
+                q.emplace(i);
+            }
+        }
+        while (!q.empty()) {
+            ret.clear();
+            size_t curSize = q.size();
+            while (curSize--) {
+                int curr = q.front();
+                q.pop();
+                // æŠŠå½“å‰èŠ‚ç‚¹åŠ å…¥ç»“æœé›†åˆï¼Œè¿™æ˜¯æ¯æ¬¡éå†å®Œå›¾ï¼Œå°±ä¼šæŠŠè¯¥å±‚çš„æ‰€æœ‰èŠ‚ç‚¹ä»é˜Ÿåˆ—ä¸­ç§»é™¤ï¼Œç›¸å½“äºæŠŠåŸæ¥çš„å›¾å‰ªæ‰ä¸€åœˆå¶å­èŠ‚ç‚¹ï¼Œå½¢æˆç¼©å°çš„å›¾
+                ret.emplace_back(curr);
+                for (int next : adjList[curr]) {
+                    // å½“å‰èŠ‚ç‚¹çš„æ‰€æœ‰ç›¸é‚»èŠ‚ç‚¹åº¦-1ï¼Œå¦‚æœç›¸é‚»èŠ‚ç‚¹å˜æˆå¶å­èŠ‚ç‚¹ï¼Œé‚£å°±ä¹Ÿæ”¾åˆ°é˜Ÿåˆ—é‡Œ
+                    if (--degrees[next] == 1) {
+                        q.emplace(next);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
 };

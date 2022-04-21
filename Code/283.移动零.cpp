@@ -2,58 +2,58 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º±éÀú½«¼ì²éµ½µÄ0É¾È¥£¬ÔÙÎ²²åÏàÍ¬ÊıÁ¿µÄ0£¬Ê±¼ä 92 ms£¬¿Õ¼ä 18.8 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šéå†å°†æ£€æŸ¥åˆ°çš„0åˆ å»ï¼Œå†å°¾æ’ç›¸åŒæ•°é‡çš„0ï¼Œæ—¶é—´ 92 msï¼Œç©ºé—´ 18.8 MB
 class Solution {
 public:
-	void moveZeroes(vector<int>& nums) {
-		int count = 0;
-		for (auto it = nums.begin(); it != nums.end();) {
-			if (*it != 0) {
-				++it;
-				continue;
-			}
-			it = nums.erase(it);
-			++count;
-		}
-		for (int i = 0; i < count; ++i) {
-			nums.emplace_back(0);
-		}
-	}
+    void moveZeroes(vector<int>& nums) {
+        int count = 0;
+        for (auto it = nums.begin(); it != nums.end();) {
+            if (*it != 0) {
+                ++it;
+                continue;
+            }
+            it = nums.erase(it);
+            ++count;
+        }
+        for (int i = 0; i < count; ++i) {
+            nums.emplace_back(0);
+        }
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºË«Ö¸Õë·¨£¬½«·Ç0ÊıÖğ¸ö½»»»µ½Ç°Ãæ£¬Ê±¼äO(n) 20 ms£¬¿Õ¼äO(1) 18.6 MB
-// ptr0Ö¸ÏòÊÇ0µÄÊı£¬ptr1Ö¸Ïò·ÇÁãÊı
+// æˆ‘çš„è§£æ³•äºŒï¼šåŒæŒ‡é’ˆæ³•ï¼Œå°†é0æ•°é€ä¸ªäº¤æ¢åˆ°å‰é¢ï¼Œæ—¶é—´O(n) 20 msï¼Œç©ºé—´O(1) 18.6 MB
+// ptr0æŒ‡å‘æ˜¯0çš„æ•°ï¼Œptr1æŒ‡å‘éé›¶æ•°
 class Solution {
 public:
-	void moveZeroes(vector<int>& nums) {
-		size_t ptr0 = 0, ptr1 = 0, length = nums.size();
-		while (ptr1 < length && ptr0 < length) {
-			while (ptr0 < length && nums[ptr0] != 0) {
-				++ptr0;
-			}
-			while (ptr1 < length && nums[ptr1] == 0) {
-				++ptr1;
-			}
-			if (ptr1 < length && ptr0 < length && ptr1 > ptr0) {
-				swap(nums[ptr0], nums[ptr1]);
-				++ptr0;
-			}
-			++ptr1;
-		}
-	}
+    void moveZeroes(vector<int>& nums) {
+        size_t ptr0 = 0, ptr1 = 0, length = nums.size();
+        while (ptr1 < length && ptr0 < length) {
+            while (ptr0 < length && nums[ptr0] != 0) {
+                ++ptr0;
+            }
+            while (ptr1 < length && nums[ptr1] == 0) {
+                ++ptr1;
+            }
+            if (ptr1 < length && ptr0 < length && ptr1 > ptr0) {
+                swap(nums[ptr0], nums[ptr1]);
+                ++ptr0;
+            }
+            ++ptr1;
+        }
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºË«Ö¸Õë£¬Ê±¼äO(n) 20 ms£¬¿Õ¼äO(1) 18.7 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŒæŒ‡é’ˆï¼Œæ—¶é—´O(n) 20 msï¼Œç©ºé—´O(1) 18.7 MB
 class Solution {
 public:
-	void moveZeroes(vector<int>& nums) {
-		size_t length = nums.size(), left = 0, right = 0;
-		while (right < length) {
-			if (nums[right]) {
-				swap(nums[left], nums[right]);
-				++left;
-			}
-			++right;
-		}
-	}
+    void moveZeroes(vector<int>& nums) {
+        size_t length = nums.size(), left = 0, right = 0;
+        while (right < length) {
+            if (nums[right]) {
+                swap(nums[left], nums[right]);
+                ++left;
+            }
+            ++right;
+        }
+    }
 };

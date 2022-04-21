@@ -3,83 +3,83 @@
 #include<algorithm>
 using namespace std;
 
-// ¹Ù·½½â·¨Ò»£º¼ÇÒä»¯ËÑË÷£¬Ê±¼äO(n^3) 888 ms£¬¿Õ¼äO(n^2) 10 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šè®°å¿†åŒ–æœç´¢ï¼Œæ—¶é—´O(n^3) 888 msï¼Œç©ºé—´O(n^2) 10 MB
 class Solution {
 private:
-	vector<vector<int>> rec;
-	vector<int> val;
+    vector<vector<int>> rec;
+    vector<int> val;
 
-	// ÔÚ¿ªÇø¼ä(left, right)ÖĞÑ°ÕÒ×î´óµÄiÊ¹µÃval[left]*val[i]*val[right]×î´ó
-	int solve(size_t left, size_t right) {
-		if (left >= right - 1) return 0;
-		if (rec[left][right] != -1) return rec[left][right];
-		for (size_t i = left + 1; i < right; ++i) {
-			int sum = val[left] * val[i] * val[right];
-			sum += solve(left, i) + solve(i, right);
-			rec[left][right] = max(rec[left][right], sum);
-		}
-		return rec[left][right];
-	}
+    // åœ¨å¼€åŒºé—´(left, right)ä¸­å¯»æ‰¾æœ€å¤§çš„iä½¿å¾—val[left]*val[i]*val[right]æœ€å¤§
+    int solve(size_t left, size_t right) {
+        if (left >= right - 1) return 0;
+        if (rec[left][right] != -1) return rec[left][right];
+        for (size_t i = left + 1; i < right; ++i) {
+            int sum = val[left] * val[i] * val[right];
+            sum += solve(left, i) + solve(i, right);
+            rec[left][right] = max(rec[left][right], sum);
+        }
+        return rec[left][right];
+    }
 public:
-	int maxCoins(vector<int>& nums) {
-		size_t n = nums.size();
-		val.resize(n + 2);
-		val[0] = val[n + 1] = 1;
-		for (size_t i = 1; i <= n; ++i) {
-			val[i] = nums[i - 1];
-		}
-		rec.resize(n + 2, vector<int>(n + 2, -1));
-		return solve(0, n + 1);
-	}
+    int maxCoins(vector<int>& nums) {
+        size_t n = nums.size();
+        val.resize(n + 2);
+        val[0] = val[n + 1] = 1;
+        for (size_t i = 1; i <= n; ++i) {
+            val[i] = nums[i - 1];
+        }
+        rec.resize(n + 2, vector<int>(n + 2, -1));
+        return solve(0, n + 1);
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º¶¯Ì¬¹æ»®£¬Ê±¼äO(n^3) 728 ms£¬¿Õ¼äO(n^2£©10.1 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n^3) 728 msï¼Œç©ºé—´O(n^2ï¼‰10.1 MB
 class Solution {
 public:
-	int maxCoins(vector<int>& nums) {
-		size_t n = nums.size();
-		vector<vector<int>> rec(n + 2, vector<int>(n + 2));
-		vector<int> val(n + 2);
-		val[0] = val[n + 1] = 1;
-		for (size_t i = 1; i <= n; ++i) {
-			val[i] = nums[i - 1];
-		}
-		for (size_t i = n - 1; i != -1; --i) {
-			for (size_t j = i + 2; j <= n + 1; ++j) {
-				for (size_t k = i + 1; k < j; ++k) {
-					int sum = val[i] * val[k] * val[j];
-					sum += rec[i][k] + rec[k][j];
-					rec[i][j] = max(rec[i][j], sum);
-				}
-			}
-		}
-		return rec[0][n + 1];
-	}
+    int maxCoins(vector<int>& nums) {
+        size_t n = nums.size();
+        vector<vector<int>> rec(n + 2, vector<int>(n + 2));
+        vector<int> val(n + 2);
+        val[0] = val[n + 1] = 1;
+        for (size_t i = 1; i <= n; ++i) {
+            val[i] = nums[i - 1];
+        }
+        for (size_t i = n - 1; i != -1; --i) {
+            for (size_t j = i + 2; j <= n + 1; ++j) {
+                for (size_t k = i + 1; k < j; ++k) {
+                    int sum = val[i] * val[k] * val[j];
+                    sum += rec[i][k] + rec[k][j];
+                    rec[i][j] = max(rec[i][j], sum);
+                }
+            }
+        }
+        return rec[0][n + 1];
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º¶¯Ì¬¹æ»®+pool_allocÓÅ»¯£¬Ê±¼äO(n^3) 392 ms 80.47%£¬¿Õ¼äO(n^2£©10.1 MB 15.78%
+// å®˜æ–¹è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’+pool_allocä¼˜åŒ–ï¼Œæ—¶é—´O(n^3) 392 ms 80.47%ï¼Œç©ºé—´O(n^2ï¼‰10.1 MB 15.78%
 #include<ext/pool_allocator.h>
 template<typename T>
 using vectorPool = vector<T, __gnu_cxx::__pool_alloc<T>>;
 class Solution {
 public:
-	int maxCoins(vector<int>& nums) {
-		size_t n = nums.size();
-		vectorPool<vectorPool<int>> rec(n + 2, vectorPool<int>(n + 2));
-		vectorPool<int> val(n + 2);
-		val[0] = val[n + 1] = 1;
-		for (size_t i = 1; i <= n; ++i) {
-			val[i] = nums[i - 1];
-		}
-		for (size_t i = n - 1; i != -1; --i) {
-			for (size_t j = i + 2; j <= n + 1; ++j) {
-				for (size_t k = i + 1; k < j; ++k) {
-					int sum = val[i] * val[k] * val[j];
-					sum += rec[i][k] + rec[k][j];
-					rec[i][j] = max(rec[i][j], sum);
-				}
-			}
-		}
-		return rec[0][n + 1];
-	}
+    int maxCoins(vector<int>& nums) {
+        size_t n = nums.size();
+        vectorPool<vectorPool<int>> rec(n + 2, vectorPool<int>(n + 2));
+        vectorPool<int> val(n + 2);
+        val[0] = val[n + 1] = 1;
+        for (size_t i = 1; i <= n; ++i) {
+            val[i] = nums[i - 1];
+        }
+        for (size_t i = n - 1; i != -1; --i) {
+            for (size_t j = i + 2; j <= n + 1; ++j) {
+                for (size_t k = i + 1; k < j; ++k) {
+                    int sum = val[i] * val[k] * val[j];
+                    sum += rec[i][k] + rec[k][j];
+                    rec[i][j] = max(rec[i][j], sum);
+                }
+            }
+        }
+        return rec[0][n + 1];
+    }
 };

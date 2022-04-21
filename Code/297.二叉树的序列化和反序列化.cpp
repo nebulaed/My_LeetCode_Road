@@ -5,268 +5,268 @@
 #include<list>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-// ÎÒµÄ½â·¨Ò»£º²ãĞò±éÀú²¢½«½á¹û½âÂë£¬Ê§°Ü
+// æˆ‘çš„è§£æ³•ä¸€ï¼šå±‚åºéå†å¹¶å°†ç»“æœè§£ç ï¼Œå¤±è´¥
 class Codec {
 private:
-	void createBiTree(const string& data, size_t pos, TreeNode*& T) {
-		while (data[pos] == '[' || data[pos] == ']' || data[pos] == ',') {
-			++pos;
-		}
-		if (pos > data.size()) return;
-		if (data[pos] == 'n') {
-			T = nullptr;
-		}
-		else {
-			size_t pos_end = pos;
-			while (data[pos_end] >= '0' && data[pos_end] <= '9') {
-				++pos_end;
-			}
-			int val = stoi(data.substr(pos, pos_end - pos));
-			T = new TreeNode(val);
-			createBiTree(data, pos_end, T->left);
-			createBiTree(data, pos_end, T->right);
-		}
-	}
+    void createBiTree(const string& data, size_t pos, TreeNode*& T) {
+        while (data[pos] == '[' || data[pos] == ']' || data[pos] == ',') {
+            ++pos;
+        }
+        if (pos > data.size()) return;
+        if (data[pos] == 'n') {
+            T = nullptr;
+        }
+        else {
+            size_t pos_end = pos;
+            while (data[pos_end] >= '0' && data[pos_end] <= '9') {
+                ++pos_end;
+            }
+            int val = stoi(data.substr(pos, pos_end - pos));
+            T = new TreeNode(val);
+            createBiTree(data, pos_end, T->left);
+            createBiTree(data, pos_end, T->right);
+        }
+    }
 public:
-	// Encodes a tree to a single string.
-	string serialize(TreeNode* root) {
-		string ret = "[";
-		if (root != nullptr) {
-			vector<vector<int>> levelOrder;
-			vector<int> postOrder, depth;
-			stack<pair<TreeNode*, int>> stk;
-			int curDepth = 1;
-			stk.emplace(root, curDepth);
-			while (!stk.empty()) {
-				root = stk.top().first;
-				curDepth = stk.top().second;
-				stk.pop();
-				if (root == nullptr) {
-					postOrder.emplace_back(-1e4);
-					depth.emplace_back(curDepth);
-				}
-				else {
-					postOrder.emplace_back(root->val);
-					depth.emplace_back(curDepth);
-					stk.emplace(root->left, curDepth + 1);
-					stk.emplace(root->right, curDepth + 1);
-				}
-			}
-			int nums = postOrder.size();
-			for (int i = nums - 1; i >= 0; --i) {
-				if (levelOrder.size() < depth[i]) levelOrder.resize(depth[i]);
-				levelOrder[depth[i] - 1].emplace_back(postOrder[i]);
-			}
-			for (const auto& level : levelOrder) {
-				for (int val : level) {
-					if (val == -1e4) {
-						ret += "null,";
-					}
-					else {
-						ret += to_string(val);
-						ret += ',';
-					}
-				}
-			}
-			ret.erase(ret.size() - 1);
-			while (ret.substr(ret.size() - 5, 5) == ",null") {
-				ret.erase(ret.size() - 5, 5);
-			}
-		}
-		ret += "]";
-		return ret;
-	}
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string ret = "[";
+        if (root != nullptr) {
+            vector<vector<int>> levelOrder;
+            vector<int> postOrder, depth;
+            stack<pair<TreeNode*, int>> stk;
+            int curDepth = 1;
+            stk.emplace(root, curDepth);
+            while (!stk.empty()) {
+                root = stk.top().first;
+                curDepth = stk.top().second;
+                stk.pop();
+                if (root == nullptr) {
+                    postOrder.emplace_back(-1e4);
+                    depth.emplace_back(curDepth);
+                }
+                else {
+                    postOrder.emplace_back(root->val);
+                    depth.emplace_back(curDepth);
+                    stk.emplace(root->left, curDepth + 1);
+                    stk.emplace(root->right, curDepth + 1);
+                }
+            }
+            int nums = postOrder.size();
+            for (int i = nums - 1; i >= 0; --i) {
+                if (levelOrder.size() < depth[i]) levelOrder.resize(depth[i]);
+                levelOrder[depth[i] - 1].emplace_back(postOrder[i]);
+            }
+            for (const auto& level : levelOrder) {
+                for (int val : level) {
+                    if (val == -1e4) {
+                        ret += "null,";
+                    }
+                    else {
+                        ret += to_string(val);
+                        ret += ',';
+                    }
+                }
+            }
+            ret.erase(ret.size() - 1);
+            while (ret.substr(ret.size() - 5, 5) == ",null") {
+                ret.erase(ret.size() - 5, 5);
+            }
+        }
+        ret += "]";
+        return ret;
+    }
 
-	// Decodes your encoded data to tree.
-	TreeNode* deserialize(string data) {
-		if (data.size() <= 2) return nullptr;
-		TreeNode* root;
-		createBiTree(data, 0, root);
-		return root;
-	}
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if (data.size() <= 2) return nullptr;
+        TreeNode* root;
+        createBiTree(data, 0, root);
+        return root;
+    }
 };
 
 // Your Codec object will be instantiated and called as such:
 // Codec ser, deser;
 // TreeNode* ans = deser.deserialize(ser.serialize(root));
 
-// ÎÒµÄ½â·¨¶ş£ºÏÈĞò±éÀúÈ»ºóÔÙ½âÂë£¬Ê±¼ä36 ms£¬¿Õ¼ä 30.2 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šå…ˆåºéå†ç„¶åå†è§£ç ï¼Œæ—¶é—´36 msï¼Œç©ºé—´ 30.2 MB
 class Codec {
 private:
-	size_t pos = 0;
-	void createBiTree(const string& data, TreeNode*& T) {
-		if (data[pos] == ',') ++pos;
-		if (pos > data.size()) return;
-		if (data[pos] == '#') {
-			T = nullptr;
-			++pos;
-			return;
-		}
-		size_t pos_end = pos;
-		while ((data[pos_end] >= '0' && data[pos_end] <= '9') || data[pos_end] == '-') {
-			++pos_end;
-		}
-		int val = stoi(data.substr(pos, pos_end - pos));
-		T = new TreeNode(val);
-		pos = pos_end;
-		createBiTree(data, T->left);
-		createBiTree(data, T->right);
-	}
+    size_t pos = 0;
+    void createBiTree(const string& data, TreeNode*& T) {
+        if (data[pos] == ',') ++pos;
+        if (pos > data.size()) return;
+        if (data[pos] == '#') {
+            T = nullptr;
+            ++pos;
+            return;
+        }
+        size_t pos_end = pos;
+        while ((data[pos_end] >= '0' && data[pos_end] <= '9') || data[pos_end] == '-') {
+            ++pos_end;
+        }
+        int val = stoi(data.substr(pos, pos_end - pos));
+        T = new TreeNode(val);
+        pos = pos_end;
+        createBiTree(data, T->left);
+        createBiTree(data, T->right);
+    }
 public:
-	// Encodes a tree to a single string.
-	string serialize(TreeNode* root) {
-		string ret;
-		if (root != nullptr) {
-			stack<TreeNode*> stk;
-			TreeNode* node = root;
-			while (node != nullptr || !stk.empty()) {
-				while (node != nullptr) {
-					ret += to_string(node->val) + ",";
-					stk.emplace(node);
-					node = node->left;
-				}
-				ret += "#,";
-				node = stk.top();
-				stk.pop();
-				node = node->right;
-			}
-			ret += '#';
-		}
-		return ret;
-	}
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string ret;
+        if (root != nullptr) {
+            stack<TreeNode*> stk;
+            TreeNode* node = root;
+            while (node != nullptr || !stk.empty()) {
+                while (node != nullptr) {
+                    ret += to_string(node->val) + ",";
+                    stk.emplace(node);
+                    node = node->left;
+                }
+                ret += "#,";
+                node = stk.top();
+                stk.pop();
+                node = node->right;
+            }
+            ret += '#';
+        }
+        return ret;
+    }
 
-	// Decodes your encoded data to tree.
-	TreeNode* deserialize(string data) {
-		if (data.empty()) return nullptr;
-		TreeNode* root = nullptr;
-		createBiTree(data, root);
-		return root;
-	}
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if (data.empty()) return nullptr;
+        TreeNode* root = nullptr;
+        createBiTree(data, root);
+        return root;
+    }
 };
 
 
-// ¹Ù·½½â·¨Ò»£ºDFS+ÏÈĞò»¯£¬Ê±¼äO(n) 36 ms£¬¿Õ¼äO(n) 39 MB
-// TODO: ÖØµãÔÚÑ§Ï°ÈçºÎ²»ÓÃTreeNode*&£¬Ö»ÓÃTreeNode*¹¹½¨¶ş²æÊ÷
+// å®˜æ–¹è§£æ³•ä¸€ï¼šDFS+å…ˆåºåŒ–ï¼Œæ—¶é—´O(n) 36 msï¼Œç©ºé—´O(n) 39 MB
+// TODO: é‡ç‚¹åœ¨å­¦ä¹ å¦‚ä½•ä¸ç”¨TreeNode*&ï¼Œåªç”¨TreeNode*æ„å»ºäºŒå‰æ ‘
 class Codec {
 private:
-	void rserialize(TreeNode* root, string& str) {
-		if (root == nullptr) {
-			str += "null,";
-		}
-		else {
-			str += to_string(root->val) + ",";
-			rserialize(root->left, str);
-			rserialize(root->right, str);
-		}
-	}
+    void rserialize(TreeNode* root, string& str) {
+        if (root == nullptr) {
+            str += "null,";
+        }
+        else {
+            str += to_string(root->val) + ",";
+            rserialize(root->left, str);
+            rserialize(root->right, str);
+        }
+    }
 
-	TreeNode* rdeserialize(list<string>& dataArray) {
-		if (dataArray.front() == "null") {
-			dataArray.erase(dataArray.begin());
-			return nullptr;
-		}
-		TreeNode* root = new TreeNode(stoi(dataArray.front()));
-		dataArray.erase(dataArray.begin());
-		root->left = rdeserialize(dataArray);
-		root->right = rdeserialize(dataArray);
-		return root;
-	}
+    TreeNode* rdeserialize(list<string>& dataArray) {
+        if (dataArray.front() == "null") {
+            dataArray.erase(dataArray.begin());
+            return nullptr;
+        }
+        TreeNode* root = new TreeNode(stoi(dataArray.front()));
+        dataArray.erase(dataArray.begin());
+        root->left = rdeserialize(dataArray);
+        root->right = rdeserialize(dataArray);
+        return root;
+    }
 public:
-	// Encodes a tree to a single string.
-	string serialize(TreeNode* root) {
-		string ret;
-		rserialize(root, ret);
-		return ret;
-	}
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string ret;
+        rserialize(root, ret);
+        return ret;
+    }
 
-	// Decodes your encoded data to tree.
-	TreeNode* deserialize(string data) {
-		list<string> dataArray;
-		string str;
-		for (const auto& ch : data) {
-			if (ch == ',') {
-				dataArray.emplace_back(str);
-				str.clear();
-			}
-			else {
-				str += ch;
-			}
-		}
-		if (!str.empty()) {
-			dataArray.emplace_back(str);
-		}
-		return rdeserialize(dataArray);
-	}
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        list<string> dataArray;
+        string str;
+        for (const auto& ch : data) {
+            if (ch == ',') {
+                dataArray.emplace_back(str);
+                str.clear();
+            }
+            else {
+                str += ch;
+            }
+        }
+        if (!str.empty()) {
+            dataArray.emplace_back(str);
+        }
+        return rdeserialize(dataArray);
+    }
 };
 
 
-// ¹Ù·½½â·¨¶ş£ºÀ¨ºÅ±íÊ¾±àÂë+µİ¹éÏÂ½µ±àÂë£¬Ê±¼äO(n) 32 ms£¬¿Õ¼äO(n) 49.3 MB
-// ¿ÉÒÔÕâÃ´±íÊ¾Ò»¿Ã¶ş²æÊ÷£º
-// 1.Èôµ±Ç°Ê÷Îª¿Õ£¬Ôò±íÊ¾ÎªX
-// 2.Èôµ±Ç°Ê÷²»Îª¿Õ£¬Ôò±íÊ¾Îª(<LEFT_SUB_TREE>)CUR_NUM(RIGHT_SUB_TREE)£¬ÆäÖĞ£º
-//	2.1 <LEFT_SUB_TREE>ÊÇ×ó×ÓÊ÷ĞòÁĞ»¯ºóµÄ½á¹û
-//	2.2 <RIGHT_SUB_TREE>ÊÇÓÒ×ÓÊ÷ĞòÁĞ»¯ºóµÄ½á¹û
-//	2.3 <CUR_NUM>ÊÇµ±Ç°½ÚµãµÄÖµ
-// ¸ù¾İ¸Ã¶¨Òå£¬ºóĞò±éÀúÕâ¿Ã¶ş²æÊ÷¼´¿É£¬·´ĞòÁĞ»¯·½·¨ÊÇ¸ù¾İ¶¨Òå£¬ÍÆµ¼³ö°Í¿ÆË¹·¶Ê½(BNF): T -> (T) num (T) | X
-// ÆäÒâÒåÊÇ£ºÓÃT´ú±íÒ»¿ÅÊ÷ĞòÁĞ»¯ºóµÄ½á¹û£¬|±íÊ¾TµÄ¹¹³ÉÎª(T) num (T) »òÕß X£¬|×ó±ßÊÇ¶ÔTµÄµİ¹é¶¨Òå£¬ÓÒ±ß¹æ¶¨ÁËµİ¹éÖÕÖ¹µÄ±ß½çÌõ¼ş
-// ÒòÎª1.TµÄ¶¨ÒåÖĞ£¬ĞòÁĞÖĞµÄµÚÒ»¸ö×Ö·ûÒªÃ´ÊÇX£¬ÒªÃ´ÊÇ(£¬ËùÒÔÕâ¸ö¶¨ÒåÊÇ²»º¬×óµİ¹éµÄ
-// 2.µ±ÎÒÃÇ¿ªÊ¼½âÎöÒ»¸ö×Ö·û´®Ê±£¬Èç¹û¿ªÍ·ÊÇX£¬ÎÒÃÇ¾ÍÖªµÀÕâÒ»¶¨ÊÇ½âÎöÒ»¸ö¿ÕÊ÷µÄ½á¹¹£¬Èç¹û¿ªÍ·ÊÇ(£¬ÎÒÃÇ¾ÍÖªµÀĞèÒª½âÎö(T) num (T)µÄ½á¹¹£¬Òò´ËÕâÀïÁ½ÖÖ¿ªÍ·ºÍÁ½ÖÖ½âÎö·½·¨Ò»Ò»¶ÔÓ¦£¬ÎŞ¶şÒåĞÔ
-// ËùÒÔ¸ÃÎÄ·¨ÊÇLL(1)ĞÍÎÄ·¨£¬Ëü¶¨ÒåÁËÒ»ÖÖµİ¹éµÄ·½·¨À´·´ĞòÁĞ»¯£¬Ò²±£Ö¤ÁËÕâ¸ö·½·¨µÄÕıÈ·ĞÔ£¬ÎÒÃÇ¿ÉÒÔÉè¼ÆÒ»¸öµİ¹éº¯Êı£º
-// 1. Õâ¸öµİ¹éº¯Êı´«ÈëÁ½¸ö²ÎÊı£¬´ı½âÎöµÄ×Ö·û´®ºÍµ±Ç°´ı½âÎöµÄÎ»ÖÃptr£¬ptrÖ®Ç°µÄÎ»ÖÃÊÇÒÑ¾­½âÎöµÄ£¬ptrºÍptrºóÃæµÄ×Ö·û´®ÊÇ´ı½âÎöµÄ
-// 2. Èç¹ûµ±Ç°Î»ÖÃÊÇXËµÃ÷½âÎöµ½ÁËÒ»¿Ã¿ÕÊ÷£¬Ö±½Ó·µ»Ø
-// 3. ·ñÔòµ±Ç°Î»ÖÃÒ»¶¨ÊÇ(£¬¶ÔÀ¨ºÅÄÚ²¿°´ÕÕ(T) num (T)µÄÄ£Ê½½âÎö
+// å®˜æ–¹è§£æ³•äºŒï¼šæ‹¬å·è¡¨ç¤ºç¼–ç +é€’å½’ä¸‹é™ç¼–ç ï¼Œæ—¶é—´O(n) 32 msï¼Œç©ºé—´O(n) 49.3 MB
+// å¯ä»¥è¿™ä¹ˆè¡¨ç¤ºä¸€æ£µäºŒå‰æ ‘ï¼š
+// 1.è‹¥å½“å‰æ ‘ä¸ºç©ºï¼Œåˆ™è¡¨ç¤ºä¸ºX
+// 2.è‹¥å½“å‰æ ‘ä¸ä¸ºç©ºï¼Œåˆ™è¡¨ç¤ºä¸º(<LEFT_SUB_TREE>)CUR_NUM(RIGHT_SUB_TREE)ï¼Œå…¶ä¸­ï¼š
+//	2.1 <LEFT_SUB_TREE>æ˜¯å·¦å­æ ‘åºåˆ—åŒ–åçš„ç»“æœ
+//	2.2 <RIGHT_SUB_TREE>æ˜¯å³å­æ ‘åºåˆ—åŒ–åçš„ç»“æœ
+//	2.3 <CUR_NUM>æ˜¯å½“å‰èŠ‚ç‚¹çš„å€¼
+// æ ¹æ®è¯¥å®šä¹‰ï¼Œååºéå†è¿™æ£µäºŒå‰æ ‘å³å¯ï¼Œååºåˆ—åŒ–æ–¹æ³•æ˜¯æ ¹æ®å®šä¹‰ï¼Œæ¨å¯¼å‡ºå·´ç§‘æ–¯èŒƒå¼(BNF): T -> (T) num (T) | X
+// å…¶æ„ä¹‰æ˜¯ï¼šç”¨Tä»£è¡¨ä¸€é¢—æ ‘åºåˆ—åŒ–åçš„ç»“æœï¼Œ|è¡¨ç¤ºTçš„æ„æˆä¸º(T) num (T) æˆ–è€… Xï¼Œ|å·¦è¾¹æ˜¯å¯¹Tçš„é€’å½’å®šä¹‰ï¼Œå³è¾¹è§„å®šäº†é€’å½’ç»ˆæ­¢çš„è¾¹ç•Œæ¡ä»¶
+// å› ä¸º1.Tçš„å®šä¹‰ä¸­ï¼Œåºåˆ—ä¸­çš„ç¬¬ä¸€ä¸ªå­—ç¬¦è¦ä¹ˆæ˜¯Xï¼Œè¦ä¹ˆæ˜¯(ï¼Œæ‰€ä»¥è¿™ä¸ªå®šä¹‰æ˜¯ä¸å«å·¦é€’å½’çš„
+// 2.å½“æˆ‘ä»¬å¼€å§‹è§£æä¸€ä¸ªå­—ç¬¦ä¸²æ—¶ï¼Œå¦‚æœå¼€å¤´æ˜¯Xï¼Œæˆ‘ä»¬å°±çŸ¥é“è¿™ä¸€å®šæ˜¯è§£æä¸€ä¸ªç©ºæ ‘çš„ç»“æ„ï¼Œå¦‚æœå¼€å¤´æ˜¯(ï¼Œæˆ‘ä»¬å°±çŸ¥é“éœ€è¦è§£æ(T) num (T)çš„ç»“æ„ï¼Œå› æ­¤è¿™é‡Œä¸¤ç§å¼€å¤´å’Œä¸¤ç§è§£ææ–¹æ³•ä¸€ä¸€å¯¹åº”ï¼Œæ— äºŒä¹‰æ€§
+// æ‰€ä»¥è¯¥æ–‡æ³•æ˜¯LL(1)å‹æ–‡æ³•ï¼Œå®ƒå®šä¹‰äº†ä¸€ç§é€’å½’çš„æ–¹æ³•æ¥ååºåˆ—åŒ–ï¼Œä¹Ÿä¿è¯äº†è¿™ä¸ªæ–¹æ³•çš„æ­£ç¡®æ€§ï¼Œæˆ‘ä»¬å¯ä»¥è®¾è®¡ä¸€ä¸ªé€’å½’å‡½æ•°ï¼š
+// 1. è¿™ä¸ªé€’å½’å‡½æ•°ä¼ å…¥ä¸¤ä¸ªå‚æ•°ï¼Œå¾…è§£æçš„å­—ç¬¦ä¸²å’Œå½“å‰å¾…è§£æçš„ä½ç½®ptrï¼Œpträ¹‹å‰çš„ä½ç½®æ˜¯å·²ç»è§£æçš„ï¼Œptrå’Œptråé¢çš„å­—ç¬¦ä¸²æ˜¯å¾…è§£æçš„
+// 2. å¦‚æœå½“å‰ä½ç½®æ˜¯Xè¯´æ˜è§£æåˆ°äº†ä¸€æ£µç©ºæ ‘ï¼Œç›´æ¥è¿”å›
+// 3. å¦åˆ™å½“å‰ä½ç½®ä¸€å®šæ˜¯(ï¼Œå¯¹æ‹¬å·å†…éƒ¨æŒ‰ç…§(T) num (T)çš„æ¨¡å¼è§£æ
 class Codec {
 private:
-	inline TreeNode* parseSubtree(const string& data, size_t& ptr) {
-		++ptr;	// Ìø¹ı×óÀ¨ºÅ
-		TreeNode* subtree = parse(data, ptr);
-		++ptr;	// Ìø¹ıÓÒÀ¨ºÅ
-		return subtree;
-	}
+    inline TreeNode* parseSubtree(const string& data, size_t& ptr) {
+        ++ptr;	// è·³è¿‡å·¦æ‹¬å·
+        TreeNode* subtree = parse(data, ptr);
+        ++ptr;	// è·³è¿‡å³æ‹¬å·
+        return subtree;
+    }
 
-	inline int parseInt(const string& data, size_t& ptr) {
-		int x = 0, sgn = 1;
-		if (!isdigit(data[ptr])) {
-			sgn = -1;
-			++ptr;
-		}
-		while (isdigit(data[ptr])) {
-			x = x * 10 + data[ptr++] - '0';
-		}
-		return x * sgn;
-	}
+    inline int parseInt(const string& data, size_t& ptr) {
+        int x = 0, sgn = 1;
+        if (!isdigit(data[ptr])) {
+            sgn = -1;
+            ++ptr;
+        }
+        while (isdigit(data[ptr])) {
+            x = x * 10 + data[ptr++] - '0';
+        }
+        return x * sgn;
+    }
 
-	TreeNode* parse(const string& data, size_t& ptr) {
-		if (data[ptr] == 'X') {
-			++ptr;
-			return nullptr;
-		}
-		TreeNode* cur = new TreeNode(0);
-		cur->left = parseSubtree(data, ptr);
-		cur->val = parseInt(data, ptr);
-		cur->right = parseSubtree(data, ptr);
-		return cur;
-	}
+    TreeNode* parse(const string& data, size_t& ptr) {
+        if (data[ptr] == 'X') {
+            ++ptr;
+            return nullptr;
+        }
+        TreeNode* cur = new TreeNode(0);
+        cur->left = parseSubtree(data, ptr);
+        cur->val = parseInt(data, ptr);
+        cur->right = parseSubtree(data, ptr);
+        return cur;
+    }
 public:
-	// Encodes a tree to a single string.
-	string serialize(TreeNode* root) {
-		if (root == nullptr) return "X";
-		string left = "(" + serialize(root->left) + ")";
-		string right = "(" + serialize(root->right) + ")";
-		return left + to_string(root->val) + right;
-	}
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        if (root == nullptr) return "X";
+        string left = "(" + serialize(root->left) + ")";
+        string right = "(" + serialize(root->right) + ")";
+        return left + to_string(root->val) + right;
+    }
 
-	// Decodes your encoded data to tree.
-	TreeNode* deserialize(string data) {
-		size_t ptr = 0;
-		return parse(data, ptr);
-	}
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        size_t ptr = 0;
+        return parse(data, ptr);
+    }
 };

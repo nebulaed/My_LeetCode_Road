@@ -4,123 +4,119 @@
 #include<string>
 #include<unordered_map>
 
-using std::vector;
-using std::string;
-using std::unordered_map;
-using std::stoi;
-using std::istringstream;
+using namespace std;
 
-// LeetCode 101½â·¨£º·ÖÖÎ£¬Ê±¼ä 8 ms 25.28%£¬¿Õ¼ä 11.4 MB 19.46%
-// Ë¼Â·£ºÒÔ·ûºÅÎªÖĞĞÄ£¬ÏÈ´¦ÀíÁ½²àµÄÊıÑ§±í´ïÊ½£¬ÔÙ´¦Àí´ËÔËËã·ûºÅ¡£
-// ±ß½çÇé¿öÎª×Ö·û´®ÄÚÎŞÔËËã·ûºÅ£¬Ö»ÓĞÊı×Ö
+// LeetCode 101è§£æ³•ï¼šåˆ†æ²»ï¼Œæ—¶é—´ 8 ms 25.28%ï¼Œç©ºé—´ 11.4 MB 19.46%
+// æ€è·¯ï¼šä»¥ç¬¦å·ä¸ºä¸­å¿ƒï¼Œå…ˆå¤„ç†ä¸¤ä¾§çš„æ•°å­¦è¡¨è¾¾å¼ï¼Œå†å¤„ç†æ­¤è¿ç®—ç¬¦å·ã€‚
+// è¾¹ç•Œæƒ…å†µä¸ºå­—ç¬¦ä¸²å†…æ— è¿ç®—ç¬¦å·ï¼Œåªæœ‰æ•°å­—
 class Solution {
 public:
-	vector<int> diffWaysToCompute(string expression) {
-		vector<int> ret;
-		for (int i = 0; i < expression.size(); ++i) {
-			char ch = expression[i];
-			if (ch == '+' || ch == '-' || ch == '*') {
-				vector<int> left = diffWaysToCompute(expression.substr(0, i));
-				vector<int> right = diffWaysToCompute(expression.substr(i + 1));
-				for (int lnum : left) {
-					for (int rnum : right) {
-						switch (ch) {
-						case '+':
-							ret.emplace_back(lnum + rnum);
-							break;
-						case '-':
-							ret.emplace_back(lnum - rnum);
-							break;
-						case '*':
-							ret.emplace_back(lnum * rnum);
-							break;
-						}
-					}
-				}
-			}
-		}
-		if (ret.empty()) ret.emplace_back(stoi(expression));
-		return ret;
-	}
+    vector<int> diffWaysToCompute(string expression) {
+        vector<int> ret;
+        for (int i = 0; i < expression.size(); ++i) {
+            char ch = expression[i];
+            if (ch == '+' || ch == '-' || ch == '*') {
+                vector<int> left = diffWaysToCompute(expression.substr(0, i));
+                vector<int> right = diffWaysToCompute(expression.substr(i + 1));
+                for (int lnum : left) {
+                    for (int rnum : right) {
+                        switch (ch) {
+                            case '+':
+                                ret.emplace_back(lnum + rnum);
+                                break;
+                            case '-':
+                                ret.emplace_back(lnum - rnum);
+                                break;
+                            case '*':
+                                ret.emplace_back(lnum * rnum);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        if (ret.empty()) ret.emplace_back(stoi(expression));
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨£º·ÖÖÎ+¼ÇÒä»¯£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 7 MB 85.69%
+// æˆ‘çš„è§£æ³•ï¼šåˆ†æ²»+è®°å¿†åŒ–ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 7 MB 85.69%
 class Solution {
 private:
-	unordered_map<string, vector<int>> record;
-	vector<int> divide(const string& expression) {
-		auto it = record.find(expression);
-		if (it != record.end()) return it->second;
-		vector<int> ret;
-		for (int i = 0; i < expression.size(); ++i) {
-			char ch = expression[i];
-			if (ch == '+' || ch == '-' || ch == '*') {
-				vector<int> left = divide(expression.substr(0, i));
-				vector<int> right = divide(expression.substr(i + 1));
-				for (int lnum : left) {
-					for (int rnum : right) {
-						switch (ch) {
-						case '+':
-							ret.emplace_back(lnum + rnum);
-							break;
-						case '-':
-							ret.emplace_back(lnum - rnum);
-							break;
-						case '*':
-							ret.emplace_back(lnum * rnum);
-							break;
-						}
-					}
-				}
-			}
-		}
-		if (ret.empty()) ret.emplace_back(stoi(expression));
-		record.emplace(expression, ret);
-		return ret;
-	}
+    unordered_map<string, vector<int>> record;
+    vector<int> divide(const string& expression) {
+        auto it = record.find(expression);
+        if (it != record.end()) return it->second;
+        vector<int> ret;
+        for (int i = 0; i < expression.size(); ++i) {
+            char ch = expression[i];
+            if (ch == '+' || ch == '-' || ch == '*') {
+                vector<int> left = divide(expression.substr(0, i));
+                vector<int> right = divide(expression.substr(i + 1));
+                for (int lnum : left) {
+                    for (int rnum : right) {
+                        switch (ch) {
+                            case '+':
+                                ret.emplace_back(lnum + rnum);
+                                break;
+                            case '-':
+                                ret.emplace_back(lnum - rnum);
+                                break;
+                            case '*':
+                                ret.emplace_back(lnum * rnum);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        if (ret.empty()) ret.emplace_back(stoi(expression));
+        record.emplace(expression, ret);
+        return ret;
+    }
 public:
-	vector<int> diffWaysToCompute(string expression) {
-		return divide(expression);
-	}
+    vector<int> diffWaysToCompute(string expression) {
+        return divide(expression);
+    }
 };
 
-// LeetCode 101½â·¨£º×ÔÏÂ¶øÉÏµÄ¶¯Ì¬¹æ»®£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 6.3 MB 98.26%
+// LeetCode 101è§£æ³•ï¼šè‡ªä¸‹è€Œä¸Šçš„åŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.3 MB 98.26%
 class Solution {
 public:
-	vector<int> diffWaysToCompute(string expression) {
-		vector<int> data;
-		vector<char> ops;
-		int num = 0;
-		char op = ' ';
-		istringstream ss(expression + "+");
-		while (ss >> num && ss >> op) {
-			data.emplace_back(num);
-			ops.emplace_back(op);
-		}
-		int n = data.size();
-		vector<vector<vector<int>>> dp(n, vector<vector<int>>(n, vector<int>()));
-		for (int i = 0; i < n; ++i) {
-			for (int j = i; j >= 0; --j) {
-				if (i == j) {
-					dp[i][j].emplace_back(data[i]);
-				}
-				else {
-					for (int k = j; k < i; ++k) {
-						for (int left : dp[j][k]) {
-							for (int right : dp[k + 1][i]) {
-								int val = 0;
-								switch (ops[k]) {
-								case '+': val = left + right; break;
-								case '-': val = left - right; break;
-								case '*': val = left * right; break;
-								}
-								dp[j][i].emplace_back(val);
-							}
-						}
-					}
-				}
-			}
-		}
-		return dp[0][n - 1];
-	}
+    vector<int> diffWaysToCompute(string expression) {
+        vector<int> data;
+        vector<char> ops;
+        int num = 0;
+        char op = ' ';
+        istringstream ss(expression + "+");
+        while (ss >> num && ss >> op) {
+            data.emplace_back(num);
+            ops.emplace_back(op);
+        }
+        int n = data.size();
+        vector<vector<vector<int>>> dp(n, vector<vector<int>>(n, vector<int>()));
+        for (int i = 0; i < n; ++i) {
+            for (int j = i; j >= 0; --j) {
+                if (i == j) {
+                    dp[i][j].emplace_back(data[i]);
+                }
+                else {
+                    for (int k = j; k < i; ++k) {
+                        for (int left : dp[j][k]) {
+                            for (int right : dp[k + 1][i]) {
+                                int val = 0;
+                                switch (ops[k]) {
+                                    case '+': val = left + right; break;
+                                    case '-': val = left - right; break;
+                                    case '*': val = left * right; break;
+                                }
+                                dp[j][i].emplace_back(val);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return dp[0][n - 1];
+    }
 };

@@ -2,49 +2,48 @@
 #include<vector>
 #include<stack>
 
-using std::vector;
-using std::stack;
+using namespace std;
 
-// LeetCode 101½â·¨£ºµ¥µ÷Õ»£¬Ê±¼ä 128 ms 83.79%£¬¿Õ¼ä 86.9 MB 30.89%
-// Î¬³ÖÒ»¸öµ¥µ÷µİ¼õµÄÕ»£¬ÔÚÕ»ÖĞ´æ·ÅÎ»ÖÃ¶ø·ÇÊıÖµ¡£´Ó×óÏòÓÒ±éÀúÊı×é£¬¶ÔÓÚÃ¿¸öÎ»ÖÃp£¬Èç¹ûpµÄÊıÖµ±ÈÕ»¶¥´æ´¢Î»ÖÃqµÄÊıÖµ´ó£¬ÔòÈ¡³öq£¬²¢¼ÇÂ¼pµ½qµÄ¾àÀëÎªp-q£»ÖØ¸´ÕâÒ»¹ı³Ì£¬Ö±µ½p¶ÔÓ¦ÊıÖµĞ¡ÓÚµÈÓÚÕ»¶¥´æ´¢Î»ÖÃµÄÊıÖµ(»ò¿ÕÕ»)Ê±£¬½«p²åÈëÕ»¶¥£¬È»ºó¼ÌĞø¡£
-// ÔÚÕâ¸ö¹ı³ÌÖĞ£¬Õ»ÄÚÊı×é±£³ÖÓÀÔ¶µ¥µ÷µİ¼õ£¬±ÜÃâÊ¹ÓÃÅÅĞò½øĞĞ±È½Ï¡£
-// ×îºóÕ»ÄÚÊ£ÓàÒ»Ğ©ÈÕÆÚ£¬ËµÃ÷ËüÃÇÖ®ºóÃ»ÓĞ³öÏÖ¸ü´óµÄÊıÖµ¡£
+// LeetCode 101è§£æ³•ï¼šå•è°ƒæ ˆï¼Œæ—¶é—´ 128 ms 83.79%ï¼Œç©ºé—´ 86.9 MB 30.89%
+// ç»´æŒä¸€ä¸ªå•è°ƒé€’å‡çš„æ ˆï¼Œåœ¨æ ˆä¸­å­˜æ”¾ä½ç½®è€Œéæ•°å€¼ã€‚ä»å·¦å‘å³éå†æ•°ç»„ï¼Œå¯¹äºæ¯ä¸ªä½ç½®pï¼Œå¦‚æœpçš„æ•°å€¼æ¯”æ ˆé¡¶å­˜å‚¨ä½ç½®qçš„æ•°å€¼å¤§ï¼Œåˆ™å–å‡ºqï¼Œå¹¶è®°å½•påˆ°qçš„è·ç¦»ä¸ºp-qï¼›é‡å¤è¿™ä¸€è¿‡ç¨‹ï¼Œç›´åˆ°på¯¹åº”æ•°å€¼å°äºç­‰äºæ ˆé¡¶å­˜å‚¨ä½ç½®çš„æ•°å€¼(æˆ–ç©ºæ ˆ)æ—¶ï¼Œå°†pæ’å…¥æ ˆé¡¶ï¼Œç„¶åç»§ç»­ã€‚
+// åœ¨è¿™ä¸ªè¿‡ç¨‹ä¸­ï¼Œæ ˆå†…æ•°ç»„ä¿æŒæ°¸è¿œå•è°ƒé€’å‡ï¼Œé¿å…ä½¿ç”¨æ’åºè¿›è¡Œæ¯”è¾ƒã€‚
+// æœ€åæ ˆå†…å‰©ä½™ä¸€äº›æ—¥æœŸï¼Œè¯´æ˜å®ƒä»¬ä¹‹åæ²¡æœ‰å‡ºç°æ›´å¤§çš„æ•°å€¼ã€‚
 class Solution {
 public:
-	vector<int> dailyTemperatures(vector<int>& temperatures) {
-		stack<int> stk;
-		int n = temperatures.size();
-		vector<int> ret(n, 0);
-		for (int i = 0; i < n; ++i) {
-			while (!stk.empty()) {
-				int prev = stk.top();
-				if (temperatures[i] <= temperatures[prev]) {
-					break;
-				}
-				stk.pop();
-				ret[prev] = i - prev;
-			}
-			stk.emplace(i);
-		}
-		return ret;
-	}
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<int> stk;
+        int n = temperatures.size();
+        vector<int> ret(n, 0);
+        for (int i = 0; i < n; ++i) {
+            while (!stk.empty()) {
+                int prev = stk.top();
+                if (temperatures[i] <= temperatures[prev]) {
+                    break;
+                }
+                stk.pop();
+                ret[prev] = i - prev;
+            }
+            stk.emplace(i);
+        }
+        return ret;
+    }
 };
 
-// ÎÒµÄ½â·¨£ºµ¥µ÷Õ»£¬Ê±¼ä O(n) 132 ms 75.87%£¬¿Õ¼ä O(n) 86.9 MB 14.69%
+// æˆ‘çš„è§£æ³•ï¼šå•è°ƒæ ˆï¼Œæ—¶é—´ O(n) 132 ms 75.87%ï¼Œç©ºé—´ O(n) 86.9 MB 14.69%
 class Solution {
 public:
-	vector<int> dailyTemperatures(vector<int>& temperatures) {
-		stack<int> stk;
-		int n = temperatures.size();
-		vector<int> ret(n, 0);
-		for (int i = 0; i < n; ++i) {
-			while (!stk.empty() && temperatures[i] > temperatures[stk.top()]) {
-				int prev = stk.top();
-				ret[prev] = i - prev;
-				stk.pop();
-			}
-			stk.emplace(i);
-		}
-		return ret;
-	}
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<int> stk;
+        int n = temperatures.size();
+        vector<int> ret(n, 0);
+        for (int i = 0; i < n; ++i) {
+            while (!stk.empty() && temperatures[i] > temperatures[stk.top()]) {
+                int prev = stk.top();
+                ret[prev] = i - prev;
+                stk.pop();
+            }
+            stk.emplace(i);
+        }
+        return ret;
+    }
 };

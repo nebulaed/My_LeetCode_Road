@@ -1,3 +1,4 @@
+#include<cstdio>
 #include<deque>
 #include<queue>
 #include<algorithm>
@@ -12,7 +13,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨£º³¬Ê±
+// æˆ‘çš„è§£æ³•ï¼šè¶…æ—¶
 class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
@@ -49,7 +50,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨²Î¿¼¹Ù·½½â·¨Ò»£ºBFS£¬Ê±¼ä 8 ms 71.41%£¬¿Õ¼ä 16.9 MB 63.74%
+// æˆ‘çš„è§£æ³•å‚è€ƒå®˜æ–¹è§£æ³•ä¸€ï¼šBFSï¼Œæ—¶é—´ 8 ms 71.41%ï¼Œç©ºé—´ 16.9 MB 63.74%
 class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
@@ -91,6 +92,5 @@ int main() {
 
     printf("%d\n", ret);
 
-    system("pause");
     return 0;
 }

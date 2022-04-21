@@ -3,56 +3,56 @@
 
 using std::vector;
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä 16 ms 73%£¬¿Õ¼ä 13.3 MB 78%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ 16 ms 73%ï¼Œç©ºé—´ 13.3 MB 78%
 class Solution {
 private:
-	void dfs(const vector<vector<int>>& isConnected, size_t i, bool visited[]) {
-		visited[i] = true;
-		for (size_t j = 0; j < isConnected.size(); ++j) {
-			if (isConnected[i][j] == 1 && !visited[j]) {
-				dfs(isConnected, j, visited);
-			}
-		}
-	}
+    void dfs(const vector<vector<int>>& isConnected, size_t i, bool visited[]) {
+        visited[i] = true;
+        for (size_t j = 0; j < isConnected.size(); ++j) {
+            if (isConnected[i][j] == 1 && !visited[j]) {
+                dfs(isConnected, j, visited);
+            }
+        }
+    }
 
 public:
-	int findCircleNum(vector<vector<int>>& isConnected) {
-		size_t n = isConnected.size();
-		int count = 0;
-		bool* visited = new bool[n]();
-		for (size_t i = 0; i < n; ++i) {
-			if (!visited[i]) {
-				dfs(isConnected, i, visited);
-				++count;
-			}
-		}
-		return count;
-	}
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        size_t n = isConnected.size();
+        int count = 0;
+        bool* visited = new bool[n]();
+        for (size_t i = 0; i < n; ++i) {
+            if (!visited[i]) {
+                dfs(isConnected, i, visited);
+                ++count;
+            }
+        }
+        return count;
+    }
 };
 
-// LeetCode 101½â·¨£º¼ÇÒä»¯DFS£¬Ê±¼ä 16 ms 92.73%£¬¿Õ¼ä 13.3 MB 82.27%
+// LeetCode 101è§£æ³•ï¼šè®°å¿†åŒ–DFSï¼Œæ—¶é—´ 16 ms 92.73%ï¼Œç©ºé—´ 13.3 MB 82.27%
 class Solution {
 private:
-	void dfs(const vector<vector<int>>& isConnected, size_t i, vector<bool>& visited) {
-		visited[i] = true;
-		for (size_t j = 0; j < isConnected.size(); ++j) {
-			if (isConnected[i][j] == 1 && !visited[j]) {
-				dfs(isConnected, j, visited);
-			}
-		}
-	}
+    void dfs(const vector<vector<int>>& isConnected, size_t i, vector<bool>& visited) {
+        visited[i] = true;
+        for (size_t j = 0; j < isConnected.size(); ++j) {
+            if (isConnected[i][j] == 1 && !visited[j]) {
+                dfs(isConnected, j, visited);
+            }
+        }
+    }
 
 public:
-	int findCircleNum(vector<vector<int>>& isConnected) {
-		size_t n = isConnected.size();
-		int count = 0;
-		vector<bool> visited(n, false);
-		for (size_t i = 0; i < n; ++i) {
-			if (!visited[i]) {
-				dfs(isConnected, i, visited);
-				++count;
-			}
-		}
-		return count;
-	}
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        size_t n = isConnected.size();
+        int count = 0;
+        vector<bool> visited(n, false);
+        for (size_t i = 0; i < n; ++i) {
+            if (!visited[i]) {
+                dfs(isConnected, i, visited);
+                ++count;
+            }
+        }
+        return count;
+    }
 };

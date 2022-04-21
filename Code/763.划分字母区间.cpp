@@ -6,121 +6,120 @@
 using namespace std;
 using namespace chrono;
 
-// ÎÒµÄ½â·¨£º¹şÏ£±í + ºÏ²¢Çø¼ä£¬Ê±¼ä 0 ms£¬¿Õ¼ä 6.5 MB
-// ³¤¶ÈÎª5000µÄ×Ö·û´®ºÄÊ±1.022-1.229 ms£¬Ê±¼äÉÏ±È¹Ù·½½â·¨ÎŞÓÅÊÆ
+// æˆ‘çš„è§£æ³•ï¼šå“ˆå¸Œè¡¨ + åˆå¹¶åŒºé—´ï¼Œæ—¶é—´ 0 msï¼Œç©ºé—´ 6.5 MB
+// é•¿åº¦ä¸º5000çš„å­—ç¬¦ä¸²è€—æ—¶1.022-1.229 msï¼Œæ—¶é—´ä¸Šæ¯”å®˜æ–¹è§£æ³•æ— ä¼˜åŠ¿
 class Solution {
 public:
-	vector<int> partitionLabels(string s) {
-		array<array<int, 2>, 26> alphabet{};
-		for (auto& item : alphabet) {
-			item[0] = item[1] = -1;
-		}
-		for (size_t i = 0; i < s.size(); ++i) {
-			size_t ind = s[i] - 'a';
-			if (alphabet[ind][0] == -1) {
-				alphabet[ind][0] = i;
-			}
-			alphabet[ind][1] = i;
-		}
-		vector<array<int, 2>> intervals;
-		for (const auto& interval : alphabet) {
-			if (interval[0] != -1) {
-				intervals.emplace_back(interval);
-			}
-		}
-		sort(intervals.begin(), intervals.end(), [](const array<int, 2>& lhs, const array<int, 2>& rhs) {
-			return lhs[0] < rhs[0];
-			});
-		vector<int> ranges;
-		size_t length = intervals.size(), left = 0;
-		for (size_t right = 1; right < length; ++right) {
-			if (intervals[right][0] > intervals[left][1]) {
-				ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
-				left = right;
-			}
-			else intervals[left][1] = max(intervals[left][1], intervals[right][1]);
-		}
-		ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
-		return ranges;
-	}
+    vector<int> partitionLabels(string s) {
+        array<array<int, 2>, 26> alphabet{};
+        for (auto& item : alphabet) {
+            item[0] = item[1] = -1;
+        }
+        for (size_t i = 0; i < s.size(); ++i) {
+            size_t ind = s[i] - 'a';
+            if (alphabet[ind][0] == -1) {
+                alphabet[ind][0] = i;
+            }
+            alphabet[ind][1] = i;
+        }
+        vector<array<int, 2>> intervals;
+        for (const auto& interval : alphabet) {
+            if (interval[0] != -1) {
+                intervals.emplace_back(interval);
+            }
+        }
+        sort(intervals.begin(), intervals.end(), [](const array<int, 2>& lhs, const array<int, 2>& rhs) {
+            return lhs[0] < rhs[0];
+        });
+        vector<int> ranges;
+        size_t length = intervals.size(), left = 0;
+        for (size_t right = 1; right < length; ++right) {
+            if (intervals[right][0] > intervals[left][1]) {
+                ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
+                left = right;
+            }
+            else intervals[left][1] = max(intervals[left][1], intervals[right][1]);
+        }
+        ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
+        return ranges;
+    }
 };
 
-// ÎÒµÄ³¢ÊÔ£ºÓÃÍ¨ÓÃvector»»array£¬Ê±¼ä 4 ms£¬¿Õ¼ä 7.1 MB£¬ÓÃunordered_map + vectorĞ§ÂÊ¸üµÍ£¬8 ms£¬7.3 MB£¬unordered_map + arrayĞ§ÂÊÒ²µÍ£¬4 ms£¬ 6.7 MB
+// æˆ‘çš„å°è¯•ï¼šç”¨é€šç”¨vectoræ¢arrayï¼Œæ—¶é—´ 4 msï¼Œç©ºé—´ 7.1 MBï¼Œç”¨unordered_map + vectoræ•ˆç‡æ›´ä½ï¼Œ8 msï¼Œ7.3 MBï¼Œunordered_map + arrayæ•ˆç‡ä¹Ÿä½ï¼Œ4 msï¼Œ 6.7 MB
 class Solution {
 public:
-	vector<int> partitionLabels(string s) {
-		vector<vector<int>> alphabet(26, vector<int>(2, -1));
-		for (size_t i = 0; i < s.size(); ++i) {
-			size_t ind = s[i] - 'a';
-			if (alphabet[ind][0] == -1) {
-				alphabet[ind][0] = i;
-			}
-			alphabet[ind][1] = i;
-		}
-		vector<vector<int>> intervals;
-		for (const auto& interval : alphabet) {
-			if (interval[0] != -1) {
-				intervals.emplace_back(interval);
-			}
-		}
-		sort(intervals.begin(), intervals.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
-			return lhs[0] < rhs[0];
-			});
-		vector<int> ranges;
-		size_t length = intervals.size(), left = 0;
-		for (size_t right = 1; right < length; ++right) {
-			if (intervals[right][0] > intervals[left][1]) {
-				ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
-				left = right;
-			}
-			else intervals[left][1] = max(intervals[left][1], intervals[right][1]);
-		}
-		ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
-		return ranges;
-	}
+    vector<int> partitionLabels(string s) {
+        vector<vector<int>> alphabet(26, vector<int>(2, -1));
+        for (size_t i = 0; i < s.size(); ++i) {
+            size_t ind = s[i] - 'a';
+            if (alphabet[ind][0] == -1) {
+                alphabet[ind][0] = i;
+            }
+            alphabet[ind][1] = i;
+        }
+        vector<vector<int>> intervals;
+        for (const auto& interval : alphabet) {
+            if (interval[0] != -1) {
+                intervals.emplace_back(interval);
+            }
+        }
+        sort(intervals.begin(), intervals.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
+            return lhs[0] < rhs[0];
+        });
+        vector<int> ranges;
+        size_t length = intervals.size(), left = 0;
+        for (size_t right = 1; right < length; ++right) {
+            if (intervals[right][0] > intervals[left][1]) {
+                ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
+                left = right;
+            }
+            else intervals[left][1] = max(intervals[left][1], intervals[right][1]);
+        }
+        ranges.emplace_back(intervals[left][1] - intervals[left][0] + 1);
+        return ranges;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºÌ°ĞÄËã·¨£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(|¦²|) 6.5 MB£¬¦²ÊÇ×Ö·û´®ÖĞµÄ×Ö·û¼¯£¬ÓÉÓÚ×Ö·û´®Ö»°üº¬Ğ¡Ğ´×ÖÄ¸£¬¦²=26
-// ³¤¶ÈÎª5000µÄ×Ö·û´®ºÄÊ±0.973-1.07 ms
+// å®˜æ–¹è§£æ³•ä¸€ï¼šè´ªå¿ƒç®—æ³•ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(|Î£|) 6.5 MBï¼ŒÎ£æ˜¯å­—ç¬¦ä¸²ä¸­çš„å­—ç¬¦é›†ï¼Œç”±äºå­—ç¬¦ä¸²åªåŒ…å«å°å†™å­—æ¯ï¼ŒÎ£=26
+// é•¿åº¦ä¸º5000çš„å­—ç¬¦ä¸²è€—æ—¶0.973-1.07 ms
 class Solution {
 public:
-	vector<int> partitionLabels(string s) {
-		int rightEndPoints[26];
-		int length = s.size();
-		for (int i = 0; i < length; ++i) {
-			rightEndPoints[s[i] - 'a'] = i;
-		}
-		vector<int> partition;
-		int start = 0, end = 0;
-		for (int i = 0; i < length; ++i) {
-			end = max(end, rightEndPoints[s[i] - 'a']);
-			if (i == end) {
-				partition.emplace_back(end - start + 1);
-				start = end + 1;
-			}
-		}
-		return partition;
-	}
+    vector<int> partitionLabels(string s) {
+        int rightEndPoints[26];
+        int length = s.size();
+        for (int i = 0; i < length; ++i) {
+            rightEndPoints[s[i] - 'a'] = i;
+        }
+        vector<int> partition;
+        int start = 0, end = 0;
+        for (int i = 0; i < length; ++i) {
+            end = max(end, rightEndPoints[s[i] - 'a']);
+            if (i == end) {
+                partition.emplace_back(end - start + 1);
+                start = end + 1;
+            }
+        }
+        return partition;
+    }
 };
 
 int main() {
-	
-	string str = "ababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacadefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdehijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklij";
 
-	Solution s;
+    string str = "ababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacaababcbacadefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdedefegdehijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklijhijhklij";
 
-	auto timeStart = system_clock::now();
-	vector<int> partition = s.partitionLabels(str);
-	auto timeEnd = system_clock::now();
-	auto duration = duration_cast<microseconds>(timeEnd - timeStart);
+    Solution s;
 
-	cout << "ºÄÊ±" << static_cast<double>(duration.count())* microseconds::period::num / microseconds::period::den * 1000 << " ms" << endl;
+    auto timeStart = system_clock::now();
+    vector<int> partition = s.partitionLabels(str);
+    auto timeEnd = system_clock::now();
+    auto duration = duration_cast<microseconds>(timeEnd - timeStart);
 
-	for (int num : partition) {
-		cout << num << ",";
-	}
-	cout << endl;
+    cout << "è€—æ—¶" << static_cast<double>(duration.count())* microseconds::period::num / microseconds::period::den * 1000 << " ms" << endl;
 
-	system("pause");
-	return 0;
+    for (int num : partition) {
+        cout << num << ",";
+    }
+    cout << endl;
+
+    return 0;
 }

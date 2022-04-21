@@ -1,110 +1,110 @@
 #include<iostream>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¶ş·Ö²éÕÒ£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.7 MB 97.69%
+// æˆ‘çš„è§£æ³•ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.7 MB 97.69%
 class Solution {
 private:
-	int binarySearch(int maxRoot, int target) {
-		int left = 0, right = maxRoot;
-		while (left <= right) {
-			int mid = (left + right) >> 1;
-			if (mid * mid > target) {
-				right = mid - 1;
-			}
-			else {
-				left = mid + 1;
-			}
-		}
-		return right;
-	}
+    int binarySearch(int maxRoot, int target) {
+        int left = 0, right = maxRoot;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (mid * mid > target) {
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return right;
+    }
 public:
-	int mySqrt(int x) {
-		return binarySearch(46340, x);
-	}
+    int mySqrt(int x) {
+        return binarySearch(46340, x);
+    }
 };
 
-// ¹Ù·½½â·¨1£º¶ş·Ö²éÕÒ£¬Ê±¼äO(log x) 0 ms 100%£¬¿Õ¼äO(1) 5.9 MB 30%
+// å®˜æ–¹è§£æ³•1ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´O(log x) 0 ms 100%ï¼Œç©ºé—´O(1) 5.9 MB 30%
 class Solution {
 public:
-	int mySqrt(int x) {
-		int left = 0, right = x < 46340 ? x : 46340;
-		while (left <= right) {
-			int mid = (left + right) >> 1;
-			if (mid * mid > x) {
-				right = mid - 1;
-			}
-			else {
-				left = mid + 1;
-			}
-		}
-		return right;
-	}
+    int mySqrt(int x) {
+        int left = 0, right = x < 46340 ? x : 46340;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (mid * mid > x) {
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return right;
+    }
 };
 
-// ¹Ù·½½â·¨2£ºĞäÕä¼ÆËãÆ÷Ëã·¨£¬Ê±¼äO(1) 4 ms 55.66%£¬¿Õ¼äO(1) 6.1 MB 5.43%
+// å®˜æ–¹è§£æ³•2ï¼šè¢–çè®¡ç®—å™¨ç®—æ³•ï¼Œæ—¶é—´O(1) 4 ms 55.66%ï¼Œç©ºé—´O(1) 6.1 MB 5.43%
 class Solution {
 public:
-	int mySqrt(int x) {
-		if (x == 0) {
-			return 0;
-		}
-		int ans = exp(0.5 * log(x));
-		return ((long long)(ans + 1) * (ans + 1) <= x ? ans + 1 : ans);
-	}
+    int mySqrt(int x) {
+        if (x == 0) {
+            return 0;
+        }
+        int ans = exp(0.5 * log(x));
+        return ((long long)(ans + 1) * (ans + 1) <= x ? ans + 1 : ans);
+    }
 };
 
-// ¹Ù·½½â·¨3£ºÅ£¶Ùµü´ú£¬Ê±¼äO(log x)£¬¿Õ¼äO(1)
+// å®˜æ–¹è§£æ³•3ï¼šç‰›é¡¿è¿­ä»£ï¼Œæ—¶é—´O(log x)ï¼Œç©ºé—´O(1)
 class Solution {
 public:
-	int mySqrt(int x) {
-		if (x == 0) {
-			return 0;
-		}
+    int mySqrt(int x) {
+        if (x == 0) {
+            return 0;
+        }
 
-		double C = x, x0 = x;
-		while (true) {
-			double xi = 0.5 * (x0 + C / x0);
-			if (fabs(x0 - xi) < 1e-7) {
-				break;
-			}
-			x0 = xi;
-		}
-		return int(x0);
-	}
+        double C = x, x0 = x;
+        while (true) {
+            double xi = 0.5 * (x0 + C / x0);
+            if (fabs(x0 - xi) < 1e-7) {
+                break;
+            }
+            x0 = xi;
+        }
+        return int(x0);
+    }
 };
 
-// LeetCode 101½â·¨1£º¶ş·Ö²éÕÒ£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.9 MB 14.12%
+// LeetCode 101è§£æ³•1ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.9 MB 14.12%
 class Solution {
 public:
-	int mySqrt(int x) {
-		if (x == 0) return x;
-		int left = 1, right = x, mid, sqrt;
-		while (left <= right) {
-			// Îª±ÜÃâmid = (left + right) >> 1¿ÉÄÜÒòÎªleft + rightÒç³öint¶ø´íÎó£¬¹Ê¸ÄÓÃÕâÖÖĞ´·¨
-			mid = left + ((right - left) >> 1);
-			sqrt = x / mid;
-			if (sqrt == mid) {
-				return mid;
-			}
-			else if (mid > sqrt) {
-				right = mid - 1;
-			}
-			else {
-				left = mid + 1;
-			}
-		}
-		return right;
-	}
+    int mySqrt(int x) {
+        if (x == 0) return x;
+        int left = 1, right = x, mid, sqrt;
+        while (left <= right) {
+            // ä¸ºé¿å…mid = (left + right) >> 1å¯èƒ½å› ä¸ºleft + rightæº¢å‡ºintè€Œé”™è¯¯ï¼Œæ•…æ”¹ç”¨è¿™ç§å†™æ³•
+            mid = left + ((right - left) >> 1);
+            sqrt = x / mid;
+            if (sqrt == mid) {
+                return mid;
+            }
+            else if (mid > sqrt) {
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return right;
+    }
 };
 
-// LeetCode 101½â·¨2£ºÅ£¶Ùµü´ú·¨£¬Ê±¼ä 4 ms 55.66%£¬¿Õ¼ä 5.8 MB 54.36%
+// LeetCode 101è§£æ³•2ï¼šç‰›é¡¿è¿­ä»£æ³•ï¼Œæ—¶é—´ 4 ms 55.66%ï¼Œç©ºé—´ 5.8 MB 54.36%
 class Solution {
 public:
-	int mySqrt(int x) {
-		long root = x;
-		while (root * root > x) {
-			root = (root + x / root) / 2;
-		}
-		return root;
-	}
+    int mySqrt(int x) {
+        long root = x;
+        while (root * root > x) {
+            root = (root + x / root) / 2;
+        }
+        return root;
+    }
 };

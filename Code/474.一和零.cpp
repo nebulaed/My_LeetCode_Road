@@ -3,122 +3,115 @@
 #include<string>
 #include<algorithm>
 
-using std::vector;
-using std::string;
-using std::pair;
-using std::make_pair;
-using std::max;
-using std::cout;
-using std::endl;
+using namespace std;
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®£¬Ê±¼äO(lmn) 352 ms 21.27%£¬¿Õ¼äO(lmn) 100.3 MB 13.78%
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(lmn) 352 ms 21.27%ï¼Œç©ºé—´O(lmn) 100.3 MB 13.78%
 class Solution {
 private:
-	pair<int, int> count(const string& str) {
-		int count0 = str.size(), count1 = 0;
-		for (char ch : str) {
-			if (ch == '1') {
-				++count1;
-				--count0;
-			}
-		}
-		return make_pair(count0, count1);
-	}
+    pair<int, int> count(const string& str) {
+        int count0 = str.size(), count1 = 0;
+        for (char ch : str) {
+            if (ch == '1') {
+                ++count1;
+                --count0;
+            }
+        }
+        return make_pair(count0, count1);
+    }
 public:
-	int findMaxForm(vector<string>& strs, int m, int n) {
-		int l = strs.size();
-		vector<vector<vector<int>>> dp(l + 1, vector<vector<int>>(m + 1, vector<int>(n + 1, 0)));
-		for (int i = 1; i <= l; ++i) {
-			// ÀûÓÃC++17µÄ½á¹¹»¯°ó¶¨
-			auto [count0, count1] = count(strs[i - 1]);
-			for (int j = 0; j <= m; ++j) {
-				for (int k = 0; k <= n; ++k) {
-					if (j - count0 >= 0 && k - count1 >= 0) {
-						dp[i][j][k] = max(dp[i - 1][j][k], 1 + dp[i - 1][j - count0][k - count1]);
-					}
-					else {
-						dp[i][j][k] = dp[i - 1][j][k];
-					}
-				}
-			}
-		}
-		return dp[l][m][n];
-	}
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int l = strs.size();
+        vector<vector<vector<int>>> dp(l + 1, vector<vector<int>>(m + 1, vector<int>(n + 1, 0)));
+        for (int i = 1; i <= l; ++i) {
+            // åˆ©ç”¨C++17çš„ç»“æ„åŒ–ç»‘å®š
+            auto [count0, count1] = count(strs[i - 1]);
+            for (int j = 0; j <= m; ++j) {
+                for (int k = 0; k <= n; ++k) {
+                    if (j - count0 >= 0 && k - count1 >= 0) {
+                        dp[i][j][k] = max(dp[i - 1][j][k], 1 + dp[i - 1][j - count0][k - count1]);
+                    }
+                    else {
+                        dp[i][j][k] = dp[i - 1][j][k];
+                    }
+                }
+            }
+        }
+        return dp[l][m][n];
+    }
 };
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é+vector£¬Ê±¼äO(lmn) 200 ms 53%£¬¿Õ¼ä O(mn) 9.6 MB 47%
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„+vectorï¼Œæ—¶é—´O(lmn) 200 ms 53%ï¼Œç©ºé—´ O(mn) 9.6 MB 47%
 class Solution {
 private:
-	pair<int, int> count(const string& str) {
-		int count0 = str.size(), count1 = 0;
-		for (char ch : str) {
-			if (ch == '1') {
-				++count1;
-				--count0;
-			}
-		}
-		return make_pair(count0, count1);
-	}
+    pair<int, int> count(const string& str) {
+        int count0 = str.size(), count1 = 0;
+        for (char ch : str) {
+            if (ch == '1') {
+                ++count1;
+                --count0;
+            }
+        }
+        return make_pair(count0, count1);
+    }
 public:
-	int findMaxForm(vector<string>& strs, int m, int n) {
-		vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
-		for (const string& str : strs) {
-			auto [count0, count1] = count(str);
-			for (int i = m; i >= count0; --i) {
-				for (int j = n; j >= count1; --j) {
-					dp[i][j] = max(dp[i][j], 1 + dp[i - count0][j - count1]);
-				}
-			}
-		}
-		return dp[m][n];
-	}
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        for (const string& str : strs) {
+            auto [count0, count1] = count(str);
+            for (int i = m; i >= count0; --i) {
+                for (int j = n; j >= count1; --j) {
+                    dp[i][j] = max(dp[i][j], 1 + dp[i - count0][j - count1]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
 };
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é+new£¬Ê±¼äO(lmn) 92 ms 94.73%£¬¿Õ¼ä O(mn) 9.3 MB 94.76%
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„+newï¼Œæ—¶é—´O(lmn) 92 ms 94.73%ï¼Œç©ºé—´ O(mn) 9.3 MB 94.76%
 class Solution {
 private:
-	pair<int, int> count(const string& str) {
-		int count0 = str.size(), count1 = 0;
-		for (char ch : str) {
-			if (ch == '1') {
-				++count1;
-				--count0;
-			}
-		}
-		return make_pair(count0, count1);
-	}
+    pair<int, int> count(const string& str) {
+        int count0 = str.size(), count1 = 0;
+        for (char ch : str) {
+            if (ch == '1') {
+                ++count1;
+                --count0;
+            }
+        }
+        return make_pair(count0, count1);
+    }
 public:
-	int findMaxForm(vector<string>& strs, int m, int n) {
-		int** dp = new int* [m + 1];
-		for (int i = 0; i <= m; ++i) {
-			dp[i] = new int[n + 1]{};
-		}
-		for (const string& str : strs) {
-			auto [count0, count1] = count(str);
-			for (int i = m; i >= count0; --i) {
-				for (int j = n; j >= count1; --j) {
-					dp[i][j] = max(dp[i][j], 1 + dp[i - count0][j - count1]);
-				}
-			}
-		}
-		int ret = dp[m][n];
-		for (int i = 0; i <= m; ++i) {
-			delete[] dp[i];
-		}
-		delete[] dp;
-		return ret;
-	}
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        int** dp = new int* [m + 1];
+        for (int i = 0; i <= m; ++i) {
+            dp[i] = new int[n + 1]{};
+        }
+        for (const string& str : strs) {
+            auto [count0, count1] = count(str);
+            for (int i = m; i >= count0; --i) {
+                for (int j = n; j >= count1; --j) {
+                    dp[i][j] = max(dp[i][j], 1 + dp[i - count0][j - count1]);
+                }
+            }
+        }
+        int ret = dp[m][n];
+        for (int i = 0; i <= m; ++i) {
+            delete[] dp[i];
+        }
+        delete[] dp;
+        return ret;
+    }
 };
 
 int main() {
 
-	vector<string> strs = { "10","0001","111001","1","0" };
-	int m = 5, n = 3;
-	Solution s;
-	int ret = s.findMaxForm(strs, m, n);
+    vector<string> strs = { "10","0001","111001","1","0" };
+    int m = 5, n = 3;
+    Solution s;
+    int ret = s.findMaxForm(strs, m, n);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

@@ -2,23 +2,22 @@
 #include<vector>
 #include<algorithm>
 
-using std::vector;
-using std::max;
+using namespace std;
 
-// LeetCode 101½â·¨£º±©Á¦±éÀú£¬Ê±¼ä O(n) 4 ms 17.38%£¬¿Õ¼ä O(1) 6.9 MB 76.07%
+// LeetCode 101è§£æ³•ï¼šæš´åŠ›éå†ï¼Œæ—¶é—´ O(n) 4 ms 17.38%ï¼Œç©ºé—´ O(1) 6.9 MB 76.07%
 class Solution {
 public:
-	int maxChunksToSorted(vector<int>& arr) {
-		int blockNum = 0, curMax = 0, n = arr.size();
-		for (int i = 0; i < n; ++i) {
-			// ¼ÇÂ¼µ½µ±Ç°Î»ÖÃµÄ×î´óÖµ
-			curMax = max(curMax, arr[i]);
-			// Èôµ±Ç°×î´óÖµ´óÓÚÊı×éÎ»ÖÃ£¬ÔòËµÃ÷ÓÒ±ßÒ»¶¨ÓĞĞ¡ÓÚÊı×éÎ»ÖÃµÄÊı×Ö£¬ĞèÒª½«ËüÒ²¼ÓÈë´ıÅÅĞòµÄ
-			// µ±µ½µ±Ç°Î»ÖÃµÄ×î´óÖµÓëµ±Ç°Êı×éÎ»ÖÃÏàµÈÊ±£¬¼ÙÉèÎªp£¬¼´¿ÉÒÔ³É¹¦Íê³ÉÒ»´Î·Ö¸î£¬²¢ÇÒÓëÉÏÒ»·Ö¸îÎ»ÖÃqÖ®¼äµÄ¿éÒ»¶¨ÊÇq+1µ½pµÄËùÓĞÊı×Ö
-			if (curMax == i) {
-				++blockNum;
-			}
-		}
-		return blockNum;
-	}
+    int maxChunksToSorted(vector<int>& arr) {
+        int blockNum = 0, curMax = 0, n = arr.size();
+        for (int i = 0; i < n; ++i) {
+            // è®°å½•åˆ°å½“å‰ä½ç½®çš„æœ€å¤§å€¼
+            curMax = max(curMax, arr[i]);
+            // è‹¥å½“å‰æœ€å¤§å€¼å¤§äºæ•°ç»„ä½ç½®ï¼Œåˆ™è¯´æ˜å³è¾¹ä¸€å®šæœ‰å°äºæ•°ç»„ä½ç½®çš„æ•°å­—ï¼Œéœ€è¦å°†å®ƒä¹ŸåŠ å…¥å¾…æ’åºçš„
+            // å½“åˆ°å½“å‰ä½ç½®çš„æœ€å¤§å€¼ä¸å½“å‰æ•°ç»„ä½ç½®ç›¸ç­‰æ—¶ï¼Œå‡è®¾ä¸ºpï¼Œå³å¯ä»¥æˆåŠŸå®Œæˆä¸€æ¬¡åˆ†å‰²ï¼Œå¹¶ä¸”ä¸ä¸Šä¸€åˆ†å‰²ä½ç½®qä¹‹é—´çš„å—ä¸€å®šæ˜¯q+1åˆ°pçš„æ‰€æœ‰æ•°å­—
+            if (curMax == i) {
+                ++blockNum;
+            }
+        }
+        return blockNum;
+    }
 };

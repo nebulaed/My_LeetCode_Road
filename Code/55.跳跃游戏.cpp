@@ -4,44 +4,43 @@
 using namespace std;
 
 
-// ÎÒµÄ½â·¨£ºÌ°ÐÄËã·¨ Ê±¼ä O(n) 44 ms£¬¿Õ¼ä O(1) 47.1 MB
+// æˆ‘çš„è§£æ³•ï¼šè´ªå¿ƒç®—æ³• æ—¶é—´ O(n) 44 msï¼Œç©ºé—´ O(1) 47.1 MB
 class Solution {
 public:
-	bool canJump(vector<int>& nums) {
-		int maxPos = 0, n = nums.size();
-		for (int i = 0; i < n - 1; ++i) {
-			if (i <= maxPos) {
-				maxPos = max(maxPos, i + nums[i]);
-			}
-			else break;
-		}
-		return maxPos >= n - 1;
-	}
+    bool canJump(vector<int>& nums) {
+        int maxPos = 0, n = nums.size();
+        for (int i = 0; i < n - 1; ++i) {
+            if (i <= maxPos) {
+                maxPos = max(maxPos, i + nums[i]);
+            }
+            else break;
+        }
+        return maxPos >= n - 1;
+    }
 };
 
-// ¹Ù·½½â·¨£ºÌ°ÐÄËã·¨ 40 ms, 47.2 MB
+// å®˜æ–¹è§£æ³•ï¼šè´ªå¿ƒç®—æ³• 40 ms, 47.2 MB
 class Solution {
 public:
-	bool canJump(vector<int>& nums) {
-		int maxPos = 0, n = nums.size();
-		for (int i = 0; i < n - 1; ++i) {
-			if (i <= maxPos) {
-				maxPos = max(maxPos, i + nums[i]);
-			}
-		}
-		return maxPos >= n - 1;
-	}
+    bool canJump(vector<int>& nums) {
+        int maxPos = 0, n = nums.size();
+        for (int i = 0; i < n - 1; ++i) {
+            if (i <= maxPos) {
+                maxPos = max(maxPos, i + nums[i]);
+            }
+        }
+        return maxPos >= n - 1;
+    }
 };
 
 int main() {
 
-	vector<int> nums = { 5,8,1,8,9,8,7,1,7,5,8,6,5,4,7,3,9,9,0,6,6,3,4,8,0,5,8,9,5,3,7,2,0,0,0,0,0,0,0,0,0,0,0,2,8,2,7,9,3,7,6,9,2,0,8,2,7,8,4,4,1,1,6,4,1,0,7,2,0,3,9,8,7,7,0,6,9,9,7,3,6,3,4,8,6,4,3,3,2,7,8,5,8,6,0 };
+    vector<int> nums = { 5,8,1,8,9,8,7,1,7,5,8,6,5,4,7,3,9,9,0,6,6,3,4,8,0,5,8,9,5,3,7,2,0,0,0,0,0,0,0,0,0,0,0,2,8,2,7,9,3,7,6,9,2,0,8,2,7,8,4,4,1,1,6,4,1,0,7,2,0,3,9,8,7,7,0,6,9,9,7,3,6,3,4,8,6,4,3,3,2,7,8,5,8,6,0 };
 
-	Solution s;
-	bool ret = s.canJump(nums);
+    Solution s;
+    bool ret = s.canJump(nums);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

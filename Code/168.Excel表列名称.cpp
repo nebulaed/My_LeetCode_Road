@@ -1,21 +1,19 @@
-#include<iostream>
 #include<string>
 #include<algorithm>
 
-using std::string;
-using std::reverse;
+using namespace std;
 
-// ÎÒµÄ½â·¨£º³ı·¨+È¡Ä££¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.6 MB 97.50%
+// æˆ‘çš„è§£æ³•ï¼šé™¤æ³•+å–æ¨¡ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.6 MB 97.50%
 class Solution {
 public:
-	string convertToTitle(int columnNumber) {
-		string ret;
-		while (columnNumber != 0) {
-			int curr = --columnNumber % 26;
-			columnNumber /= 26;
-			ret += curr + 'A';
-		}
-		reverse(ret.begin(), ret.end());
-		return ret;
-	}
+    string convertToTitle(int columnNumber) {
+        string ret;
+        while (columnNumber != 0) {
+            int curr = --columnNumber % 26;
+            columnNumber /= 26;
+            ret += curr + 'A';
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
 };

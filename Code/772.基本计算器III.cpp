@@ -4,7 +4,7 @@
 #include<string>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ººó×º±í´ïÊ½(Äæ²¨À¼±í´ïÊ½)£¬Ê±¼ä 4 ms 77.16%£¬¿Õ¼ä 6.5 MB 81.47%
+// æˆ‘çš„è§£æ³•ï¼šåç¼€è¡¨è¾¾å¼(é€†æ³¢å…°è¡¨è¾¾å¼)ï¼Œæ—¶é—´ 4 ms 77.16%ï¼Œç©ºé—´ 6.5 MB 81.47%
 class Solution {
 public:
     int calculate(string s) {
@@ -59,18 +59,18 @@ public:
                 int lhs = stk.top();
                 stk.pop();
                 switch (t[i]) {
-                case '+':
-                    stk.emplace(lhs + rhs);
-                    break;
-                case '-':
-                    stk.emplace(lhs - rhs);
-                    break;
-                case '*':
-                    stk.emplace(lhs * rhs);
-                    break;
-                case '/':
-                    stk.emplace(lhs / rhs);
-                    break;
+                    case '+':
+                        stk.emplace(lhs + rhs);
+                        break;
+                    case '-':
+                        stk.emplace(lhs - rhs);
+                        break;
+                    case '*':
+                        stk.emplace(lhs * rhs);
+                        break;
+                    case '/':
+                        stk.emplace(lhs / rhs);
+                        break;
                 }
                 ++i;
             }

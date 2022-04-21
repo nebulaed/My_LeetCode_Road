@@ -2,54 +2,53 @@
 #include<vector>
 #include<unordered_set>
 
-using std::vector;
-using std::unordered_set;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º¹şÏ£¼¯ºÏ£¬Ê±¼ä O(n) 12 ms 33.51%£¬¿Õ¼ä O(n) 10.4 MB 31.63%
+// æˆ‘çš„è§£æ³•ä¸€ï¼šå“ˆå¸Œé›†åˆï¼Œæ—¶é—´ O(n) 12 ms 33.51%ï¼Œç©ºé—´ O(n) 10.4 MB 31.63%
 class Solution {
 public:
-	vector<int> singleNumber(vector<int>& nums) {
-		unordered_set<int> numSet;
-		for (int num : nums) {
-			if (numSet.count(num)) {
-				numSet.erase(num);
-			}
-			else {
-				numSet.emplace(num);
-			}
-		}
-		auto it = numSet.begin();
-		return { *it, *++it };
-	}
+    vector<int> singleNumber(vector<int>& nums) {
+        unordered_set<int> numSet;
+        for (int num : nums) {
+            if (numSet.count(num)) {
+                numSet.erase(num);
+            }
+            else {
+                numSet.emplace(num);
+            }
+        }
+        auto it = numSet.begin();
+        return { *it, *++it };
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºÎ»ÔËËã£¬Ê±¼ä O(n) 4 ms 98.50%£¬¿Õ¼ä O(1) 9.7 MB 72.72%
-// Ô­Àí£ºÓĞÁ½¸öÖ»³öÏÖÒ»´ÎµÄÊı·Ö±ğÎªx1ºÍx2
+// æˆ‘çš„è§£æ³•äºŒï¼šä½è¿ç®—ï¼Œæ—¶é—´ O(n) 4 ms 98.50%ï¼Œç©ºé—´ O(1) 9.7 MB 72.72%
+// åŸç†ï¼šæœ‰ä¸¤ä¸ªåªå‡ºç°ä¸€æ¬¡çš„æ•°åˆ†åˆ«ä¸ºx1å’Œx2
 class Solution {
 public:
-	vector<int> singleNumber(vector<int>& nums) {
-		int mask = 0;
-		for (int num : nums) {
-			mask ^= num;
-		}
-		// ´ËÊ±mask = x1 ^ x2
-		// ×¢Òâµ±mask == INT_MINÊ±£¬-mask»áÒç³ö¡£
-		// mask & -mask È¡³öÁËx1 ^ x2µÄ¶ş½øÖÆ±íÊ¾ÖĞ×îµÍÎ»£¬¼ÙÉèÎªµÚlÎ»1
-		// ¸ÃÎ»x1ºÍx2ÖĞÆäÖĞÒ»¸öÊıµÚlÎ»Îª0£¬ÁíÍâÒ»¸öÊıµÚlÎ»Îª1
-		if (mask != INT_MIN) mask &= -mask;
-		vector<int> ret(2, 0);
-		int& ret1 = ret[0], &ret2 = ret[1];
-		// ´ËÊ±¿ÉÒÔ½«numsÖĞµÄËùÓĞÔªËØ·Ö³ÉÁ½Àà£¬ÆäÖĞÒ»Àà°üº¬ËùÓĞ¶ş½øÖÆ±íÊ¾µÄµÚlÎ»Îª0µÄÊı£¬ÁíÒ»Àà°üº¬ËùÓĞ¶ş½øÖÆ±íÊ¾µÄµÚlÎ»Îª1µÄÊı¡£
-		// 1. ¶ÔÓÚËùÓĞÔÚnumsÖĞ³öÏÖÁ½´ÎµÄÔªËØ£¬¸ÃÔªËØµÄÁ½´Î³öÏÖ»á±»°üº¬ÔÚÍ¬Ò»ÀàÖĞ£¬ËùÒÔ»áÔÚÒì»òÖĞµÖÏûµô¡£
-		// 2. ¶ÔÓÚÈÎÒâÒ»¸öÔÚÊı×énumsÖĞÖ»³öÏÖÁËÒ»´ÎµÄÔªËØ£¬¼´x1£¬x2£¬ËüÃÇ»á±»°üº¬ÔÚ²»Í¬ÀàÖĞ¡£
-		for (int num : nums) {
-			if (num & mask) {
-				ret1 ^= num;
-			}
-			else {
-				ret2 ^= num;
-			}
-		}
-		return ret;
-	}
+    vector<int> singleNumber(vector<int>& nums) {
+        int mask = 0;
+        for (int num : nums) {
+            mask ^= num;
+        }
+        // æ­¤æ—¶mask = x1 ^ x2
+        // æ³¨æ„å½“mask == INT_MINæ—¶ï¼Œ-maskä¼šæº¢å‡ºã€‚
+        // mask & -mask å–å‡ºäº†x1 ^ x2çš„äºŒè¿›åˆ¶è¡¨ç¤ºä¸­æœ€ä½ä½ï¼Œå‡è®¾ä¸ºç¬¬lä½1
+        // è¯¥ä½x1å’Œx2ä¸­å…¶ä¸­ä¸€ä¸ªæ•°ç¬¬lä½ä¸º0ï¼Œå¦å¤–ä¸€ä¸ªæ•°ç¬¬lä½ä¸º1
+        if (mask != INT_MIN) mask &= -mask;
+        vector<int> ret(2, 0);
+        int& ret1 = ret[0], &ret2 = ret[1];
+        // æ­¤æ—¶å¯ä»¥å°†numsä¸­çš„æ‰€æœ‰å…ƒç´ åˆ†æˆä¸¤ç±»ï¼Œå…¶ä¸­ä¸€ç±»åŒ…å«æ‰€æœ‰äºŒè¿›åˆ¶è¡¨ç¤ºçš„ç¬¬lä½ä¸º0çš„æ•°ï¼Œå¦ä¸€ç±»åŒ…å«æ‰€æœ‰äºŒè¿›åˆ¶è¡¨ç¤ºçš„ç¬¬lä½ä¸º1çš„æ•°ã€‚
+        // 1. å¯¹äºæ‰€æœ‰åœ¨numsä¸­å‡ºç°ä¸¤æ¬¡çš„å…ƒç´ ï¼Œè¯¥å…ƒç´ çš„ä¸¤æ¬¡å‡ºç°ä¼šè¢«åŒ…å«åœ¨åŒä¸€ç±»ä¸­ï¼Œæ‰€ä»¥ä¼šåœ¨å¼‚æˆ–ä¸­æŠµæ¶ˆæ‰ã€‚
+        // 2. å¯¹äºä»»æ„ä¸€ä¸ªåœ¨æ•°ç»„numsä¸­åªå‡ºç°äº†ä¸€æ¬¡çš„å…ƒç´ ï¼Œå³x1ï¼Œx2ï¼Œå®ƒä»¬ä¼šè¢«åŒ…å«åœ¨ä¸åŒç±»ä¸­ã€‚
+        for (int num : nums) {
+            if (num & mask) {
+                ret1 ^= num;
+            }
+            else {
+                ret2 ^= num;
+            }
+        }
+        return ret;
+    }
 };

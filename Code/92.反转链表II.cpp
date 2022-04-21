@@ -6,7 +6,7 @@ struct ListNode {
     ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£ºÁ½´Î±éÀú£¬Ê±¼ä 4 ms 49.06%£¬¿Õ¼ä 7.3 MB 26.13%
+// æˆ‘çš„è§£æ³•ï¼šä¸¤æ¬¡éåŽ†ï¼Œæ—¶é—´ 4 ms 49.06%ï¼Œç©ºé—´ 7.3 MB 26.13%
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
@@ -33,28 +33,28 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨¶þ£ºÒ»´Î±éÀú£¬Ê±¼ä O(n) 0 ms 100%£¬¿Õ¼ä O(1) 7.3 MB 39.14%
+// æˆ‘çš„è§£æ³•äºŒï¼šä¸€æ¬¡éåŽ†ï¼Œæ—¶é—´ O(n) 0 ms 100%ï¼Œç©ºé—´ O(1) 7.3 MB 39.14%
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         if (!head || !head->next || left == right) return head;
         ListNode* dummy = new ListNode(0, head), * prev = dummy, * curr = head, * prev2 = nullptr, * next = nullptr;
         int count = 0;
-        // ²éÑ¯·´×ªÇøÓòÆðµã
+        // æŸ¥è¯¢åè½¬åŒºåŸŸèµ·ç‚¹
         while (++count != left) {
             prev = curr;
             curr = curr->next;
         }
-        // ¶Ôµ½·´×ªÇøÓòÖÕµãÎªÖ¹µÄËùÓÐÁ´±í½Úµã½øÐÐ·´×ª
+        // å¯¹åˆ°åè½¬åŒºåŸŸç»ˆç‚¹ä¸ºæ­¢çš„æ‰€æœ‰é“¾è¡¨èŠ‚ç‚¹è¿›è¡Œåè½¬
         while (count++ != right + 1) {
             next = curr->next;
             curr->next = prev2;
             prev2 = curr;
             curr = next;
         }
-        // ½«·´×ªÇøÓòµÄÔ­µÚÒ»¸ö½Úµã½Óµ½·´×ªÇøÓòºóµÄµÚÒ»¸ö½Úµã
+        // å°†åè½¬åŒºåŸŸçš„åŽŸç¬¬ä¸€ä¸ªèŠ‚ç‚¹æŽ¥åˆ°åè½¬åŒºåŸŸåŽçš„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹
         prev->next->next = curr;
-        // ½«·´×ªÇøÓòÇ°µÄ×îºóÒ»¸ö½Úµã½Óµ½·´×ªÇøÓòµÄÔ­×îºóÒ»¸ö½Úµã
+        // å°†åè½¬åŒºåŸŸå‰çš„æœ€åŽä¸€ä¸ªèŠ‚ç‚¹æŽ¥åˆ°åè½¬åŒºåŸŸçš„åŽŸæœ€åŽä¸€ä¸ªèŠ‚ç‚¹
         prev->next = prev2;
         return dummy->next;
     }

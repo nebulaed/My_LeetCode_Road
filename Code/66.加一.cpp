@@ -1,7 +1,7 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º·´Ïòµü´úÆ÷£¬Ê±¼ä O(n) 0 ms 100%£¬¿Õ¼ä O(1) 8.5 MB 66.52%
+// æˆ‘çš„è§£æ³•ï¼šåå‘è¿­ä»£å™¨ï¼Œæ—¶é—´ O(n) 0 ms 100%ï¼Œç©ºé—´ O(1) 8.5 MB 66.52%
 class Solution {
 public:
     vector<int> plusOne(vector<int>& digits) {

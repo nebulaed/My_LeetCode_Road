@@ -4,69 +4,69 @@
 #include<algorithm>
 using namespace std;
 
-// ¹Ù·½Ìâ½âÒ»£º´ÓµÍµ½¸ß¿¼ÂÇ£¬Ê±¼äO(n^2) 44 ms£¬¿Õ¼äO(log n) 11.4 MB
+// å®˜æ–¹é¢˜è§£ä¸€ï¼šä»ä½åˆ°é«˜è€ƒè™‘ï¼Œæ—¶é—´O(n^2) 44 msï¼Œç©ºé—´O(log n) 11.4 MB
 class Solution {
 public:
-	vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
-		// ½«people°´ÕÕÉí¸ßh_iÎªµÚÒ»¹Ø¼ü×ÖÉıĞò£¬k_iÎªµÚ¶ş¹Ø¼ü×Ö½µĞò½øĞĞÅÅĞò
-		sort(people.begin(), people.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
-			return lhs[0] < rhs[0] || (lhs[0] == rhs[0] && lhs[1] > rhs[1]);
-			});
-		size_t n = people.size();
-		// ³õÊ¼»¯Ò»¸ö°üº¬n¸öÎ»ÖÃµÄ¿Õ¶ÓÁĞ
-		vector<vector<int>> ret(n);
-		for (const auto& person : people) {
-			// personµÄÎ»ÖÃ£¬Ó¦¸ÃÔÚ¶ÓÁĞÖĞ´Ó×óÍùÓÒÊıµÚk_i+1¸ö¿ÕÎ»ÖÃ
-			int spaces = person[1] + 1;
-			for (size_t i = 0; i < n; ++i) {
-				if (ret[i].empty()) {
-					// ret[i]ÊÇ¿ÕÎ»ÖÃ£¬spaces¼ÆÊıÆ÷×Ô¼õ1
-					--spaces;
-					// ÒÑµ½´ïµÚk_i+1¸ö¿ÕÎ»ÖÃ£¬¸³Öµ²¢½áÊøÑ­»·
-					if (!spaces) {
-						ret[i] = person;
-						break;
-					}
-				}
-			}
-		}
-		return ret;
-	}
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        // å°†peopleæŒ‰ç…§èº«é«˜h_iä¸ºç¬¬ä¸€å…³é”®å­—å‡åºï¼Œk_iä¸ºç¬¬äºŒå…³é”®å­—é™åºè¿›è¡Œæ’åº
+        sort(people.begin(), people.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
+            return lhs[0] < rhs[0] || (lhs[0] == rhs[0] && lhs[1] > rhs[1]);
+        });
+        size_t n = people.size();
+        // åˆå§‹åŒ–ä¸€ä¸ªåŒ…å«nä¸ªä½ç½®çš„ç©ºé˜Ÿåˆ—
+        vector<vector<int>> ret(n);
+        for (const auto& person : people) {
+            // personçš„ä½ç½®ï¼Œåº”è¯¥åœ¨é˜Ÿåˆ—ä¸­ä»å·¦å¾€å³æ•°ç¬¬k_i+1ä¸ªç©ºä½ç½®
+            int spaces = person[1] + 1;
+            for (size_t i = 0; i < n; ++i) {
+                if (ret[i].empty()) {
+                    // ret[i]æ˜¯ç©ºä½ç½®ï¼Œspacesè®¡æ•°å™¨è‡ªå‡1
+                    --spaces;
+                    // å·²åˆ°è¾¾ç¬¬k_i+1ä¸ªç©ºä½ç½®ï¼Œèµ‹å€¼å¹¶ç»“æŸå¾ªç¯
+                    if (!spaces) {
+                        ret[i] = person;
+                        break;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½Ìâ½â¶ş£º´Ó¸ßµ½µÍ¿¼ÂÇ£¬Ê±¼äO(n^2) 140 ms£¬¿Õ¼äO(log n) 11.7 MB
+// å®˜æ–¹é¢˜è§£äºŒï¼šä»é«˜åˆ°ä½è€ƒè™‘ï¼Œæ—¶é—´O(n^2) 140 msï¼Œç©ºé—´O(log n) 11.7 MB
 class Solution {
 public:
-	vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
-		// ½«people°´ÕÕÉí¸ßh_iÎªµÚÒ»¹Ø¼ü×Ö½µĞò£¬k_iÎªµÚ¶ş¹Ø¼ü×ÖÉıĞò½øĞĞÅÅĞò
-		sort(people.begin(), people.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
-			return lhs[0] > rhs[0] || (lhs[0] == rhs[0] && lhs[1] < rhs[1]);
-			});
-		vector<vector<int>> ret;
-		// ·ÅÈëµÚi¸öÈËÊ±£¬½«Æä²åÈëµ½k_i+1µÄÎ»ÖÃ
-		for (const vector<int>& person : people) {
-			ret.emplace(ret.begin() + person[1], person);
-		}
-		return ret;
-	}
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        // å°†peopleæŒ‰ç…§èº«é«˜h_iä¸ºç¬¬ä¸€å…³é”®å­—é™åºï¼Œk_iä¸ºç¬¬äºŒå…³é”®å­—å‡åºè¿›è¡Œæ’åº
+        sort(people.begin(), people.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
+            return lhs[0] > rhs[0] || (lhs[0] == rhs[0] && lhs[1] < rhs[1]);
+        });
+        vector<vector<int>> ret;
+        // æ”¾å…¥ç¬¬iä¸ªäººæ—¶ï¼Œå°†å…¶æ’å…¥åˆ°k_i+1çš„ä½ç½®
+        for (const vector<int>& person : people) {
+            ret.emplace(ret.begin() + person[1], person);
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½Ìâ½â¶şÓÅ»¯£ºÓÃË«ÏòÁ´±íÌá¸ß²åÈëĞ§ÂÊ£¬Ê±¼äO(n^2) 32 ms£¬¿Õ¼äO(n) 12.8 MB
+// å®˜æ–¹é¢˜è§£äºŒä¼˜åŒ–ï¼šç”¨åŒå‘é“¾è¡¨æé«˜æ’å…¥æ•ˆç‡ï¼Œæ—¶é—´O(n^2) 32 msï¼Œç©ºé—´O(n) 12.8 MB
 class Solution {
 public:
-	vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
-		// ½«people°´ÕÕÉí¸ßh_iÎªµÚÒ»¹Ø¼ü×Ö½µĞò£¬k_iÎªµÚ¶ş¹Ø¼ü×ÖÉıĞò½øĞĞÅÅĞò
-		sort(people.begin(), people.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
-			return lhs[0] > rhs[0] || (lhs[0] == rhs[0] && lhs[1] < rhs[1]);
-			});
-		list<vector<int>> ret;
-		// ·ÅÈëµÚi¸öÈËÊ±£¬½«Æä²åÈëµ½k_i+1µÄÎ»ÖÃ
-		for (const vector<int>& person : people) {
-			auto it = ret.begin();
-			// ½«itµü´úÆ÷ÏòÇ°ÒÆ¶¯person[1]´Î
-			advance(it, person[1]);
-			ret.emplace(it, person);
-		}
-		return vector<vector<int>>(ret.begin(),ret.end());
-	}
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        // å°†peopleæŒ‰ç…§èº«é«˜h_iä¸ºç¬¬ä¸€å…³é”®å­—é™åºï¼Œk_iä¸ºç¬¬äºŒå…³é”®å­—å‡åºè¿›è¡Œæ’åº
+        sort(people.begin(), people.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
+            return lhs[0] > rhs[0] || (lhs[0] == rhs[0] && lhs[1] < rhs[1]);
+        });
+        list<vector<int>> ret;
+        // æ”¾å…¥ç¬¬iä¸ªäººæ—¶ï¼Œå°†å…¶æ’å…¥åˆ°k_i+1çš„ä½ç½®
+        for (const vector<int>& person : people) {
+            auto it = ret.begin();
+            // å°†itè¿­ä»£å™¨å‘å‰ç§»åŠ¨person[1]æ¬¡
+            advance(it, person[1]);
+            ret.emplace(it, person);
+        }
+        return vector<vector<int>>(ret.begin(),ret.end());
+    }
 };

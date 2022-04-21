@@ -1,70 +1,69 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
-using std::vector;
-using std::min;
+using namespace std;
 
-// ÎÒµÄ½â·¨£º±©Á¦±éÀú£¬Ê±¼ä O(n) 8 ms 42.89%£¬¿Õ¼ä O(1) 12 MB 23.84%
+// æˆ‘çš„è§£æ³•ï¼šæš´åŠ›éå†ï¼Œæ—¶é—´ O(n) 8 ms 42.89%ï¼Œç©ºé—´ O(1) 12 MB 23.84%
 class Solution {
 public:
-	int findMin(vector<int>& nums) {
-		int minVal = 1e5;
-		for (int num : nums) {
-			minVal = min(minVal, num);
-		}
-		return minVal;
-	}
+    int findMin(vector<int>& nums) {
+        int minVal = 1e5;
+        for (int num : nums) {
+            minVal = min(minVal, num);
+        }
+        return minVal;
+    }
 };
 
-// ÎÒµÄ½â·¨£º¶ş·Ö²éÕÒ£¬Ê±¼ä Æ½¾ùO(log n)£¬×î»µO(n) 4 ms 87.02%£¬¿Õ¼ä O(1) 12 MB 18.62%
+// æˆ‘çš„è§£æ³•ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ å¹³å‡O(log n)ï¼Œæœ€åO(n) 4 ms 87.02%ï¼Œç©ºé—´ O(1) 12 MB 18.62%
 class Solution {
 public:
-	int findMin(vector<int>& nums) {
-		int left = 0, right = nums.size() - 1, minVal = 1e4;
-		while (left <= right) {
-			int mid = (left + right) >> 1, midVal = nums[mid];
-			if (nums[left] == midVal) {
-				minVal = min(minVal, midVal);
-				++left;
-			}
-			// ÓÒÇø¼äÎªÔöĞò
-			else if (midVal <= nums[right]) {
-				minVal = min(minVal, midVal);
-				right = mid - 1;
-			}
-			// ×óÇø¼äÎªÔöĞò
-			else {
-				minVal = min(minVal, nums[left]);
-				left = mid + 1;
-			}
-		}
-		return minVal;
-	}
+    int findMin(vector<int>& nums) {
+        int left = 0, right = nums.size() - 1, minVal = 1e4;
+        while (left <= right) {
+            int mid = (left + right) >> 1, midVal = nums[mid];
+            if (nums[left] == midVal) {
+                minVal = min(minVal, midVal);
+                ++left;
+            }
+                // å³åŒºé—´ä¸ºå¢åº
+            else if (midVal <= nums[right]) {
+                minVal = min(minVal, midVal);
+                right = mid - 1;
+            }
+                // å·¦åŒºé—´ä¸ºå¢åº
+            else {
+                minVal = min(minVal, nums[left]);
+                left = mid + 1;
+            }
+        }
+        return minVal;
+    }
 };
 
-// ¹Ù·½½â·¨£º¶ş·Ö²éÕÒ£¬Ê±¼ä Æ½¾ùO(log n)£¬×î»µO(n) 0 ms 100%£¬¿Õ¼äO(1) 11.9 MB 86.26%
-// ÎÒÃÇ¿¼ÂÇĞı×ªÅÅĞòÊı×éÖĞµÄ×îºóÒ»¸öÔªËØx£ºÔÚ×îĞ¡ÖµÓÒ²àµÄÔªËØ£¬ÖµÒ»¶¨Ğ¡ÓÚµÈÓÚx£»ÔÚ×îĞ¡Öµ×ó²àµÄÔªËØ£¬ÖµÒ»¶¨´óÓÚµÈÓÚx¡£
-// ¸ù¾İÕâÌõĞÔÖÊ£¬Í¨¹ı¶ş·Ö²éÕÒµÄ·½·¨ÕÒ³ö×îĞ¡Öµ
-// ¶ş·Ö²éÕÒµÄÃ¿Ò»²½ÖĞ£¬×îĞ¡Öµ¾ÍÔÚlowºÍhighÖ®¼ä£¬ÖĞµãÎªpivot¡£
-// ½«ÖĞµãÔªËØnums[pivot]ºÍÓÒ±ß½çÔªËØnums[high]½øĞĞ±È½Ï£¬¿ÉÄÜÓĞÒÔÏÂÈıÖÖÇé¿ö£º
-// 1. nums[pivot]<nums[high]¡£ÈçÏÂÍ¼ËùÊ¾£¬ËµÃ÷nums[pivot]ÊÇ×îĞ¡ÖµÓÒ²àÔªËØ£¬¿ÉÒÔºöÂÔpivotµ½high¼äµÄÓÒ²àÇø¼ä¡£
-// 2. nums[pivot]>nums[high]£¬ËµÃ÷nums[pivot]ÊÇ×îĞ¡Öµ×ó²àÔªËØ£¬ºöÂÔlowµ½pivotÖ®¼äµÄ×ó²àÇø¼ä¡£
-// 3. nums[pivot]=nums[high]£¬²»ÄÜÈ·¶¨nums[pivot]ÔÚ×îĞ¡Öµ×ó²à»¹ÊÇÓÒ²à¡£Èç3 4 0 1 1 1 1ºÍ3 3 3 3 0 1 3¡£Ö»ÄÜÈ·¶¨Ò»¶¨ÓĞÓënums[high]ÏàµÈµÄÔªËØ£¬Ö»ÄÜºöÂÔhigh
+// å®˜æ–¹è§£æ³•ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ å¹³å‡O(log n)ï¼Œæœ€åO(n) 0 ms 100%ï¼Œç©ºé—´O(1) 11.9 MB 86.26%
+// æˆ‘ä»¬è€ƒè™‘æ—‹è½¬æ’åºæ•°ç»„ä¸­çš„æœ€åä¸€ä¸ªå…ƒç´ xï¼šåœ¨æœ€å°å€¼å³ä¾§çš„å…ƒç´ ï¼Œå€¼ä¸€å®šå°äºç­‰äºxï¼›åœ¨æœ€å°å€¼å·¦ä¾§çš„å…ƒç´ ï¼Œå€¼ä¸€å®šå¤§äºç­‰äºxã€‚
+// æ ¹æ®è¿™æ¡æ€§è´¨ï¼Œé€šè¿‡äºŒåˆ†æŸ¥æ‰¾çš„æ–¹æ³•æ‰¾å‡ºæœ€å°å€¼
+// äºŒåˆ†æŸ¥æ‰¾çš„æ¯ä¸€æ­¥ä¸­ï¼Œæœ€å°å€¼å°±åœ¨lowå’Œhighä¹‹é—´ï¼Œä¸­ç‚¹ä¸ºpivotã€‚
+// å°†ä¸­ç‚¹å…ƒç´ nums[pivot]å’Œå³è¾¹ç•Œå…ƒç´ nums[high]è¿›è¡Œæ¯”è¾ƒï¼Œå¯èƒ½æœ‰ä»¥ä¸‹ä¸‰ç§æƒ…å†µï¼š
+// 1. nums[pivot]<nums[high]ã€‚å¦‚ä¸‹å›¾æ‰€ç¤ºï¼Œè¯´æ˜nums[pivot]æ˜¯æœ€å°å€¼å³ä¾§å…ƒç´ ï¼Œå¯ä»¥å¿½ç•¥pivotåˆ°highé—´çš„å³ä¾§åŒºé—´ã€‚
+// 2. nums[pivot]>nums[high]ï¼Œè¯´æ˜nums[pivot]æ˜¯æœ€å°å€¼å·¦ä¾§å…ƒç´ ï¼Œå¿½ç•¥lowåˆ°pivotä¹‹é—´çš„å·¦ä¾§åŒºé—´ã€‚
+// 3. nums[pivot]=nums[high]ï¼Œä¸èƒ½ç¡®å®šnums[pivot]åœ¨æœ€å°å€¼å·¦ä¾§è¿˜æ˜¯å³ä¾§ã€‚å¦‚3 4 0 1 1 1 1å’Œ3 3 3 3 0 1 3ã€‚åªèƒ½ç¡®å®šä¸€å®šæœ‰ä¸nums[high]ç›¸ç­‰çš„å…ƒç´ ï¼Œåªèƒ½å¿½ç•¥high
 class Solution {
 public:
-	int findMin(vector<int>& nums) {
-		int low = 0, high = nums.size() - 1;
-		while (low < high) {
-			int pivot = (low + high) >> 1;
-			int pivotVal = nums[pivot], highVal = nums[high];
-			if (pivotVal < highVal) {
-				high = pivot;
-			}
-			else if (pivotVal > highVal) {
-				low = pivot + 1;
-			}
-			else --high;
-		}
-		return nums[low];
-	}
+    int findMin(vector<int>& nums) {
+        int low = 0, high = nums.size() - 1;
+        while (low < high) {
+            int pivot = (low + high) >> 1;
+            int pivotVal = nums[pivot], highVal = nums[high];
+            if (pivotVal < highVal) {
+                high = pivot;
+            }
+            else if (pivotVal > highVal) {
+                low = pivot + 1;
+            }
+            else --high;
+        }
+        return nums[low];
+    }
 };

@@ -5,189 +5,189 @@
 #include<queue>
 using namespace std;
 
-// ¹Ù·½Ìâ½âÒ»£º²¢²é¼¯£¬Ê±¼äO((N+Q) logA) 0 ms£¬¿Õ¼äO(A) 7.9 MB£¬ÆäÖĞNÎªÊäÈë·½³Ìequations³¤¶È£¬QÎª²éÑ¯·½³ÌqueriesµÄ³¤¶È£¬AÊÇequationsÀï²»Í¬×Ö·ûµÄ¸öÊı£¬logA±íÊ¾Ã¿Ò»´ÎÖ´ĞĞºÏ²¢²Ù×÷µÄºÍÃ¿Ò»´Î²éÑ¯Ê±Ö´ĞĞÂ·¾¶Ñ¹ËõµÄÊ±¼ä¸´ÔÓ¶È
+// å®˜æ–¹é¢˜è§£ä¸€ï¼šå¹¶æŸ¥é›†ï¼Œæ—¶é—´O((N+Q) logA) 0 msï¼Œç©ºé—´O(A) 7.9 MBï¼Œå…¶ä¸­Nä¸ºè¾“å…¥æ–¹ç¨‹equationsé•¿åº¦ï¼ŒQä¸ºæŸ¥è¯¢æ–¹ç¨‹queriesçš„é•¿åº¦ï¼ŒAæ˜¯equationsé‡Œä¸åŒå­—ç¬¦çš„ä¸ªæ•°ï¼ŒlogAè¡¨ç¤ºæ¯ä¸€æ¬¡æ‰§è¡Œåˆå¹¶æ“ä½œçš„å’Œæ¯ä¸€æ¬¡æŸ¥è¯¢æ—¶æ‰§è¡Œè·¯å¾„å‹ç¼©çš„æ—¶é—´å¤æ‚åº¦
 class UnionFind {
 private:
-	vector<int> parent;	// ´æ·Å¸¸½Úµã
-	vector<double> weight;	// Ö¸Ïò¸¸½ÚµãµÄÈ¨Öµ
+    vector<int> parent;	// å­˜æ”¾çˆ¶èŠ‚ç‚¹
+    vector<double> weight;	// æŒ‡å‘çˆ¶èŠ‚ç‚¹çš„æƒå€¼
 public:
-	// È¨ÖØ³õÊ¼»¯Îª1.0£¬Ã¿¸ö½ÚµãµÄ¸¸½Úµã³õÊ¼»¯Îª×Ô¼º
-	UnionFind(size_t n) : weight(n, 1.0) {
-		parent.resize(n);
-		iota(parent.begin(), parent.end(), 0);
-	}
-	// Â·¾¶Ñ¹Ëõ£¬·µ»Ø¸ù½Úµãid
-	int findRoot(int x) {
-		// µİ¹éÑ°ÕÒ¸ù½Úµã£¬¸üĞÂ¸Ãµãµ½¸ùµÄÈ¨ÖØ
-		if (x != parent[x]) {
-			int x_parent = parent[x];
-			parent[x] = findRoot(parent[x]);
-			weight[x] *= weight[x_parent];
-		}
-		return parent[x];
-	}
-	// ·µ»Ø³ı·¨½á¹û¡£ÈôÁ½¸öÖµ²»´æÔÚÔò-1
-	double isConnected(int x, int y) {
-		int rootX = findRoot(x);
-		int rootY = findRoot(y);
-		// ÈôÁ½¸öÖµÓĞ¹²Í¬µÄ¸ùÒ²¾ÍÊÇ¿ÉÒÔ¼ÆËã£¬ÔòËã½á¹û¡£·ñÔò²»ÔÚÍ¬Ò»¸ö²¢²é¼¯£¬·µ»Ø-1
-		if (rootX == rootY) {
-			return weight[x] / weight[y];
-		}
-		else return -1.0;
-	}
-	void unite(int x, int y, double val) {
-		// ·Ö±ğÕÒµ½Á½ÕßµÄ¸ù½Úµã
-		int rootX = findRoot(x), rootY = findRoot(y);
-		// Á½ÕßÒÑ¾­Ö¸ÏòÍ¬Ò»¸ö¸ù½Úµã
-		if (rootX == rootY) return;
-		// Áî·Ö×ÓÖ¸Ïò·ÖÄ¸µÄ¸ù½Úµã£¬È¨ÖØÎª[·ÖÄ¸µ½¸ùµÄÈ¨ÖØ]*[·ÖÄ¸³ı·Ö×ÓµÄÖµ]/[·Ö×Óµ½¸ùµÄÈ¨ÖØ]£¬Ò»¿ªÊ¼¶¼ÊÇ1
-		parent[rootX] = rootY;
-		weight[rootX] = weight[y] * val / weight[x];
-	}
+    // æƒé‡åˆå§‹åŒ–ä¸º1.0ï¼Œæ¯ä¸ªèŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹åˆå§‹åŒ–ä¸ºè‡ªå·±
+    UnionFind(size_t n) : weight(n, 1.0) {
+        parent.resize(n);
+        iota(parent.begin(), parent.end(), 0);
+    }
+    // è·¯å¾„å‹ç¼©ï¼Œè¿”å›æ ¹èŠ‚ç‚¹id
+    int findRoot(int x) {
+        // é€’å½’å¯»æ‰¾æ ¹èŠ‚ç‚¹ï¼Œæ›´æ–°è¯¥ç‚¹åˆ°æ ¹çš„æƒé‡
+        if (x != parent[x]) {
+            int x_parent = parent[x];
+            parent[x] = findRoot(parent[x]);
+            weight[x] *= weight[x_parent];
+        }
+        return parent[x];
+    }
+    // è¿”å›é™¤æ³•ç»“æœã€‚è‹¥ä¸¤ä¸ªå€¼ä¸å­˜åœ¨åˆ™-1
+    double isConnected(int x, int y) {
+        int rootX = findRoot(x);
+        int rootY = findRoot(y);
+        // è‹¥ä¸¤ä¸ªå€¼æœ‰å…±åŒçš„æ ¹ä¹Ÿå°±æ˜¯å¯ä»¥è®¡ç®—ï¼Œåˆ™ç®—ç»“æœã€‚å¦åˆ™ä¸åœ¨åŒä¸€ä¸ªå¹¶æŸ¥é›†ï¼Œè¿”å›-1
+        if (rootX == rootY) {
+            return weight[x] / weight[y];
+        }
+        else return -1.0;
+    }
+    void unite(int x, int y, double val) {
+        // åˆ†åˆ«æ‰¾åˆ°ä¸¤è€…çš„æ ¹èŠ‚ç‚¹
+        int rootX = findRoot(x), rootY = findRoot(y);
+        // ä¸¤è€…å·²ç»æŒ‡å‘åŒä¸€ä¸ªæ ¹èŠ‚ç‚¹
+        if (rootX == rootY) return;
+        // ä»¤åˆ†å­æŒ‡å‘åˆ†æ¯çš„æ ¹èŠ‚ç‚¹ï¼Œæƒé‡ä¸º[åˆ†æ¯åˆ°æ ¹çš„æƒé‡]*[åˆ†æ¯é™¤åˆ†å­çš„å€¼]/[åˆ†å­åˆ°æ ¹çš„æƒé‡]ï¼Œä¸€å¼€å§‹éƒ½æ˜¯1
+        parent[rootX] = rootY;
+        weight[rootX] = weight[y] * val / weight[x];
+    }
 };
 
 class Solution {
 public:
-	vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-		// ³õÊ¼»¯²¢²é¼¯
-		size_t equationSize = equations.size();
-		UnionFind uf(2 * equationSize);
-		// µÚÒ»²½£ºÔ¤´¦Àí£¬½«±äÁ¿µÄÖµºÍid½øĞĞÓ³Éä
-		unordered_map<string, int> hashMap;
-		int id = 0;
-		for (size_t i = 0; i < equationSize; ++i) {
-			// ´æ·Ö×Ó£¬·ÖÄ¸£¬ÖµÎªid
-			const string& var1 = equations[i][0];
-			const string& var2 = equations[i][1];
-			if (!hashMap.count(var1)) {
-				hashMap[var1] = id++;
-			}
-			if (!hashMap.count(var2)) {
-				hashMap[var2] = id++;
-			}
-			// °Ñ·Ö×Ó·ÖÄ¸ÓÃÓĞÏò±ßÁ¬½ÓÆğÀ´
-			uf.unite(hashMap[var1], hashMap[var2], values[i]);
-		}
-		// µÚ¶ş²½£º²éÑ¯
-		size_t queriesSize = queries.size();
-		vector<double> ret(queriesSize, -1.0);
-		for (size_t i = 0; i < queriesSize; ++i) {
-			const string& var1 = queries[i][0];
-			const string& var2 = queries[i][1];
-			// ÈôÁ½¸öÖµÖÁÉÙÒ»¸ö²»ÔÚequationsÖĞ£¬½á¹ûÎª-1£¬·ñÔò·µ»Ø³ı·¨½á¹û
-			if (hashMap.count(var1) && hashMap.count(var2)) {
-				ret[i] = uf.isConnected(hashMap[var1], hashMap[var2]);
-			}
-		}
-		return ret;
-	}
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        // åˆå§‹åŒ–å¹¶æŸ¥é›†
+        size_t equationSize = equations.size();
+        UnionFind uf(2 * equationSize);
+        // ç¬¬ä¸€æ­¥ï¼šé¢„å¤„ç†ï¼Œå°†å˜é‡çš„å€¼å’Œidè¿›è¡Œæ˜ å°„
+        unordered_map<string, int> hashMap;
+        int id = 0;
+        for (size_t i = 0; i < equationSize; ++i) {
+            // å­˜åˆ†å­ï¼Œåˆ†æ¯ï¼Œå€¼ä¸ºid
+            const string& var1 = equations[i][0];
+            const string& var2 = equations[i][1];
+            if (!hashMap.count(var1)) {
+                hashMap[var1] = id++;
+            }
+            if (!hashMap.count(var2)) {
+                hashMap[var2] = id++;
+            }
+            // æŠŠåˆ†å­åˆ†æ¯ç”¨æœ‰å‘è¾¹è¿æ¥èµ·æ¥
+            uf.unite(hashMap[var1], hashMap[var2], values[i]);
+        }
+        // ç¬¬äºŒæ­¥ï¼šæŸ¥è¯¢
+        size_t queriesSize = queries.size();
+        vector<double> ret(queriesSize, -1.0);
+        for (size_t i = 0; i < queriesSize; ++i) {
+            const string& var1 = queries[i][0];
+            const string& var2 = queries[i][1];
+            // è‹¥ä¸¤ä¸ªå€¼è‡³å°‘ä¸€ä¸ªä¸åœ¨equationsä¸­ï¼Œç»“æœä¸º-1ï¼Œå¦åˆ™è¿”å›é™¤æ³•ç»“æœ
+            if (hashMap.count(var1) && hashMap.count(var2)) {
+                ret[i] = uf.isConnected(hashMap[var1], hashMap[var2]);
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½Ìâ½â¶ş£ºBFS£¬Ê±¼äO(ML+Q¡¤(L+M)) 4 ms£¬¿Õ¼äO(NL+M) 8.1 MB£¬ÆäÖĞNÎªµãµÄÊıÁ¿£¬MÎª±ßÊıÁ¿£¬QÎª²éÑ¯·½³ÌqueriesµÄ³¤¶È£¬LÎª×Ö·û´®Æ½¾ù³¤¶È¡£
-// ¿ÉÒÔ½«Õû¸öÎÊÌâ½¨Ä£³ÉÒ»ÕÅÍ¼£º¸ø¶¨Í¼ÖĞÒ»Ğ©µã(±äÁ¿)£¬ÒÔ¼°Ä³Ğ©±ßµÄÈ¨Öµ(Á½¸ö±äÁ¿µÄ±ÈÖµ)£¬ÊÔ¶ÔÈÎÒâÁ½µã(Á½¸ö±äÁ¿)Çó³öÆäÂ·¾¶³¤(Á½¸ö±äÁ¿µÄ±ÈÖµ)¡£
-// Òò´Ë£¬Ê×ÏÈĞèÒª±éÀúeuqationsÊı×é£¬ÕÒ³öÆäÖĞËùÓĞ²»Í¬µÄ×Ö·û´®£¬²¢Í¨¹ı¹şÏ£±í½«Ã¿¸ö²»Í¬µÄ×Ö·û´®Ó³Éä³ÉÕûÊı¡£
-// ÔÚ¹¹½¨ÍêÍ¼ºó£¬¶ÔÓÚÈÎºÎÒ»¸ö²éÑ¯£¬¾Í¿ÉÒÔ´ÓÆğµã³ö·¢£¬Í¨¹ıBFS£¬²»¶Ï¸üĞÂÆğµãÓëµ±Ç°µãÖ®¼äµÄÂ·¾¶³¤¶È£¬Ö±µ½ËÑË÷µ½ÖÕµãÎªÖ¹¡£
+// å®˜æ–¹é¢˜è§£äºŒï¼šBFSï¼Œæ—¶é—´O(ML+QÂ·(L+M)) 4 msï¼Œç©ºé—´O(NL+M) 8.1 MBï¼Œå…¶ä¸­Nä¸ºç‚¹çš„æ•°é‡ï¼ŒMä¸ºè¾¹æ•°é‡ï¼ŒQä¸ºæŸ¥è¯¢æ–¹ç¨‹queriesçš„é•¿åº¦ï¼ŒLä¸ºå­—ç¬¦ä¸²å¹³å‡é•¿åº¦ã€‚
+// å¯ä»¥å°†æ•´ä¸ªé—®é¢˜å»ºæ¨¡æˆä¸€å¼ å›¾ï¼šç»™å®šå›¾ä¸­ä¸€äº›ç‚¹(å˜é‡)ï¼Œä»¥åŠæŸäº›è¾¹çš„æƒå€¼(ä¸¤ä¸ªå˜é‡çš„æ¯”å€¼)ï¼Œè¯•å¯¹ä»»æ„ä¸¤ç‚¹(ä¸¤ä¸ªå˜é‡)æ±‚å‡ºå…¶è·¯å¾„é•¿(ä¸¤ä¸ªå˜é‡çš„æ¯”å€¼)ã€‚
+// å› æ­¤ï¼Œé¦–å…ˆéœ€è¦éå†euqationsæ•°ç»„ï¼Œæ‰¾å‡ºå…¶ä¸­æ‰€æœ‰ä¸åŒçš„å­—ç¬¦ä¸²ï¼Œå¹¶é€šè¿‡å“ˆå¸Œè¡¨å°†æ¯ä¸ªä¸åŒçš„å­—ç¬¦ä¸²æ˜ å°„æˆæ•´æ•°ã€‚
+// åœ¨æ„å»ºå®Œå›¾åï¼Œå¯¹äºä»»ä½•ä¸€ä¸ªæŸ¥è¯¢ï¼Œå°±å¯ä»¥ä»èµ·ç‚¹å‡ºå‘ï¼Œé€šè¿‡BFSï¼Œä¸æ–­æ›´æ–°èµ·ç‚¹ä¸å½“å‰ç‚¹ä¹‹é—´çš„è·¯å¾„é•¿åº¦ï¼Œç›´åˆ°æœç´¢åˆ°ç»ˆç‚¹ä¸ºæ­¢ã€‚
 class Solution {
 public:
-	vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-		int nvars = 0;
-		unordered_map<string, int> variables;
-		size_t n = equations.size();
-		for (size_t i = 0; i < n; ++i) {
-			if (variables.find(equations[i][0]) == variables.end()) {
-				variables[equations[i][0]] = nvars++;
-			}
-			if (variables.find(equations[i][1]) == variables.end()) {
-				variables[equations[i][1]] = nvars++;
-			}
-		}
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        int nvars = 0;
+        unordered_map<string, int> variables;
+        size_t n = equations.size();
+        for (size_t i = 0; i < n; ++i) {
+            if (variables.find(equations[i][0]) == variables.end()) {
+                variables[equations[i][0]] = nvars++;
+            }
+            if (variables.find(equations[i][1]) == variables.end()) {
+                variables[equations[i][1]] = nvars++;
+            }
+        }
 
-		// ¶ÔÓÚÃ¿¸öµã£¬´æ´¢ÆäÖ±½ÓÁ¬½Óµ½µÄËùÓĞµã¼°¶ÔÓ¦È¨Öµ
-		vector<vector<pair<int, double>>> edges(nvars);
-		for (size_t i = 0; i < n; ++i) {
-			int va = variables[equations[i][0]], vb = variables[equations[i][1]];
-			edges[va].emplace_back(vb, values[i]);
-			edges[vb].emplace_back(va, 1.0 / values[i]);
-		}
+        // å¯¹äºæ¯ä¸ªç‚¹ï¼Œå­˜å‚¨å…¶ç›´æ¥è¿æ¥åˆ°çš„æ‰€æœ‰ç‚¹åŠå¯¹åº”æƒå€¼
+        vector<vector<pair<int, double>>> edges(nvars);
+        for (size_t i = 0; i < n; ++i) {
+            int va = variables[equations[i][0]], vb = variables[equations[i][1]];
+            edges[va].emplace_back(vb, values[i]);
+            edges[vb].emplace_back(va, 1.0 / values[i]);
+        }
 
-		vector<double> ret;
-		for (const auto& query : queries) {
-			double result = -1.0;
-			if (variables.find(query[0]) != variables.end() && variables.find(query[1]) != variables.end()) {
-				int ia = variables[query[0]], ib = variables[query[1]];
-				if (ia == ib) result = 1.0;
-				else {
-					queue<int> points;
-					points.emplace(ia);
-					vector<double> ratios(nvars, -1.0);
-					ratios[ia] = 1.0;
+        vector<double> ret;
+        for (const auto& query : queries) {
+            double result = -1.0;
+            if (variables.find(query[0]) != variables.end() && variables.find(query[1]) != variables.end()) {
+                int ia = variables[query[0]], ib = variables[query[1]];
+                if (ia == ib) result = 1.0;
+                else {
+                    queue<int> points;
+                    points.emplace(ia);
+                    vector<double> ratios(nvars, -1.0);
+                    ratios[ia] = 1.0;
 
-					while (!points.empty() && ratios[ib] < 0) {
-						int x = points.front();
-						points.pop();
-						// edge.firstÎªµãy£¬edge.secondÎªÈ¨ÖØval
-						for (const auto edge : edges[x]) {
-							if (ratios[edge.first] < 0) {
-								ratios[edge.first] = ratios[x] * edge.second;
-								points.emplace(edge.first);
-							}
-						}
-					}
-					result = ratios[ib];
-				}
-			}
-			ret.emplace_back(result);
-		}
-		return ret;
-	}
+                    while (!points.empty() && ratios[ib] < 0) {
+                        int x = points.front();
+                        points.pop();
+                        // edge.firstä¸ºç‚¹yï¼Œedge.secondä¸ºæƒé‡val
+                        for (const auto edge : edges[x]) {
+                            if (ratios[edge.first] < 0) {
+                                ratios[edge.first] = ratios[x] * edge.second;
+                                points.emplace(edge.first);
+                            }
+                        }
+                    }
+                    result = ratios[ib];
+                }
+            }
+            ret.emplace_back(result);
+        }
+        return ret;
+    }
 };
 
 
-// ¹Ù·½½â·¨¶ş£ºÍ¼µÄFloydËã·¨£¬²éÑ¯×î¶ÌÂ·¾¶£¬Ê±¼äO(ML+N^3+QL)£¬¿Õ¼äO(NL+N^2)
+// å®˜æ–¹è§£æ³•äºŒï¼šå›¾çš„Floydç®—æ³•ï¼ŒæŸ¥è¯¢æœ€çŸ­è·¯å¾„ï¼Œæ—¶é—´O(ML+N^3+QL)ï¼Œç©ºé—´O(NL+N^2)
 class Solution {
 public:
-	vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-		int nvars = 0;
-		unordered_map<string, int> variables;
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        int nvars = 0;
+        unordered_map<string, int> variables;
 
-		size_t n = equations.size();
-		for (size_t i = 0; i < n; i++) {
-			if (variables.find(equations[i][0]) == variables.end()) {
-				variables[equations[i][0]] = nvars++;
-			}
-			if (variables.find(equations[i][1]) == variables.end()) {
-				variables[equations[i][1]] = nvars++;
-			}
-		}
-		vector<vector<double>> graph(nvars, vector<double>(nvars, -1.0));
-		for (size_t i = 0; i < n; i++) {
-			int va = variables[equations[i][0]], vb = variables[equations[i][1]];
-			graph[va][vb] = values[i];
-			graph[vb][va] = 1.0 / values[i];
-		}
+        size_t n = equations.size();
+        for (size_t i = 0; i < n; i++) {
+            if (variables.find(equations[i][0]) == variables.end()) {
+                variables[equations[i][0]] = nvars++;
+            }
+            if (variables.find(equations[i][1]) == variables.end()) {
+                variables[equations[i][1]] = nvars++;
+            }
+        }
+        vector<vector<double>> graph(nvars, vector<double>(nvars, -1.0));
+        for (size_t i = 0; i < n; i++) {
+            int va = variables[equations[i][0]], vb = variables[equations[i][1]];
+            graph[va][vb] = values[i];
+            graph[vb][va] = 1.0 / values[i];
+        }
 
-		for (size_t k = 0; k < nvars; k++) {
-			for (size_t i = 0; i < nvars; i++) {
-				for (size_t j = 0; j < nvars; j++) {
-					if (graph[i][k] > 0 && graph[k][j] > 0) {
-						graph[i][j] = graph[i][k] * graph[k][j];
-					}
-				}
-			}
-		}
+        for (size_t k = 0; k < nvars; k++) {
+            for (size_t i = 0; i < nvars; i++) {
+                for (size_t j = 0; j < nvars; j++) {
+                    if (graph[i][k] > 0 && graph[k][j] > 0) {
+                        graph[i][j] = graph[i][k] * graph[k][j];
+                    }
+                }
+            }
+        }
 
-		vector<double> ret;
-		for (const auto& q : queries) {
-			double result = -1.0;
-			if (variables.find(q[0]) != variables.end() && variables.find(q[1]) != variables.end()) {
-				int ia = variables[q[0]], ib = variables[q[1]];
-				if (graph[ia][ib] > 0) {
-					result = graph[ia][ib];
-				}
-			}
-			ret.emplace_back(result);
-		}
-		return ret;
-	}
+        vector<double> ret;
+        for (const auto& q : queries) {
+            double result = -1.0;
+            if (variables.find(q[0]) != variables.end() && variables.find(q[1]) != variables.end()) {
+                int ia = variables[q[0]], ib = variables[q[1]];
+                if (graph[ia][ib] > 0) {
+                    result = graph[ia][ib];
+                }
+            }
+            ret.emplace_back(result);
+        }
+        return ret;
+    }
 };

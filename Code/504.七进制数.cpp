@@ -1,24 +1,22 @@
-#include<iostream>
 #include<string>
 
-using std::string;
-using std::to_string;
+using namespace std;
 
-// LeetCode 101½â·¨£ºÀûÓÃ³ı·¨ºÍÈ¡Óà(Ä£)À´¼ÆËã¡£Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.8 MB 82%
-// ×¢Òâ¸ºÊıºÍÁãµÄÏ¸½Ú¡£Èç¹ûÊä³öÊÇÊı×Ö²»ÊÇ×Ö·û´®£¬Òª×¢Òâ¿¼ÂÇÊÇ·ñ³¬³öintÉÏÏÂ½ç
+// LeetCode 101è§£æ³•ï¼šåˆ©ç”¨é™¤æ³•å’Œå–ä½™(æ¨¡)æ¥è®¡ç®—ã€‚æ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.8 MB 82%
+// æ³¨æ„è´Ÿæ•°å’Œé›¶çš„ç»†èŠ‚ã€‚å¦‚æœè¾“å‡ºæ˜¯æ•°å­—ä¸æ˜¯å­—ç¬¦ä¸²ï¼Œè¦æ³¨æ„è€ƒè™‘æ˜¯å¦è¶…å‡ºintä¸Šä¸‹ç•Œ
 class Solution {
 public:
-	string convertToBase7(int num) {
-		if (num == 0) return "0";
-		bool negative = num < 0;
-		if (negative) num = -num;
-		string ret;
-		while (num) {
-			int a = num / 7, b = num % 7;
-			ret.insert(0, to_string(b));
-			num = a;
-		}
-		return (negative ? "-" : "") + ret;
-	}
+    string convertToBase7(int num) {
+        if (num == 0) return "0";
+        bool negative = num < 0;
+        if (negative) num = -num;
+        string ret;
+        while (num) {
+            int a = num / 7, b = num % 7;
+            ret.insert(0, to_string(b));
+            num = a;
+        }
+        return (negative ? "-" : "") + ret;
+    }
 };
 

@@ -1,58 +1,57 @@
 #include<iostream>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º¶¯Ì¬¹æ»® Ê±¼ä O(n) 0 ms£¬¿Õ¼äO(n) 6.1 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’ æ—¶é—´ O(n) 0 msï¼Œç©ºé—´O(n) 6.1 MB
 class Solution {
 public:
-	int climbStairs(int n) {
-		if (n == 1) return 1;
-		int* dp = new int[n];
-		dp[0] = 1, dp[1] = 2;
-		for (int i = 2; i < n; ++i) {
-			dp[i] = dp[i - 1] + dp[i - 2];
-		}
-		return dp[n - 1];
-	}
+    int climbStairs(int n) {
+        if (n == 1) return 1;
+        int* dp = new int[n];
+        dp[0] = 1, dp[1] = 2;
+        for (int i = 2; i < n; ++i) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n - 1];
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é Ê±¼ä O(n) 0 ms£¬¿Õ¼äO(1) 5.8 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„ æ—¶é—´ O(n) 0 msï¼Œç©ºé—´O(1) 5.8 MB
 class Solution {
 public:
-	int climbStairs(int n) {
-		if (n == 1) return 1;
-		int a = 1, b = 1, c = 2;
-		for (int i = 3; i <= n; ++i) {
-			a = b;
-			b = c;
-			c = a + b;
-		}
-		return c;
-	}
+    int climbStairs(int n) {
+        if (n == 1) return 1;
+        int a = 1, b = 1, c = 2;
+        for (int i = 3; i <= n; ++i) {
+            a = b;
+            b = c;
+            c = a + b;
+        }
+        return c;
+    }
 };
 
 class Solution {
 public:
-	int climbStairs(int n) {
-		int p = 0, q = 0, r = 1;
-		for (int i = 1; i <= n; ++i) {
-			p = q;
-			q = r;
-			r = p + q;
-		}
-		return r;
-	}
+    int climbStairs(int n) {
+        int p = 0, q = 0, r = 1;
+        for (int i = 1; i <= n; ++i) {
+            p = q;
+            q = r;
+            r = p + q;
+        }
+        return r;
+    }
 };
 
 
 
 int main() {
-	int n = 3;
+    int n = 3;
 
-	Solution s;
-	int ret = s.climbStairs(n);
+    Solution s;
+    int ret = s.climbStairs(n);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

@@ -1,7 +1,8 @@
 #include<iostream>
+#include<climits>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º²Î¿¼¹Ù·½¿ìËÙÃÝµÝ¹é·½·¨
+// æˆ‘çš„è§£æ³•ï¼šå‚è€ƒå®˜æ–¹å¿«é€Ÿå¹‚é€’å½’æ–¹æ³•
 //class Solution {
 //public:
 //	double powResolution(double x, int n) {
@@ -14,40 +15,39 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â·¨2£º¿ìËÙÃÝµü´ú·½·¨
+// å®˜æ–¹è§£æ³•2ï¼šå¿«é€Ÿå¹‚è¿­ä»£æ–¹æ³•
 class Solution {
 public:
-	double quickMul(double x, long long n) {
-		double ret = 1.0;
-		// ¹±Ï×µÄ³õÊ¼ÖµÎªx
-		double x_contribute = x;
-		// ÔÚ¶Ôn½øÐÐ¶þ½øÖÆ²ð·ÖµÄÍ¬Ê±¼ÆËã´ð°¸
-		while (n > 0) {
-			// Èôn¶þ½øÖÆ±íÊ¾µÄ×îµÍÎ»Îª1£¬ÄÇÃ´ÐèÒª¼ÆÈë¹±Ï×
-			if (n % 2 == 1) {
-				ret *= x_contribute;
-			}
-			// ½«¹±Ï×²»¶ÏÆ½·½
-			x_contribute *= x_contribute;
-			// ÉáÆúN¶þ½øÖÆ±íÊ¾µÄ×îµÍÎ»£¬ÕâÑùÎÒÃÇÃ¿´ÎÖ»ÒªÅÐ¶Ï×îµÍÎ»¼´¿É
-			n /= 2;
-		}
-		return ret;
-	}
-	double myPow(double x, int n) {
-		long long N = n;
-		return N >= 0 ? quickMul(x, N) : 1 / quickMul(x, -N);
-	}
+    double quickMul(double x, long long n) {
+        double ret = 1.0;
+        // è´¡çŒ®çš„åˆå§‹å€¼ä¸ºx
+        double x_contribute = x;
+        // åœ¨å¯¹nè¿›è¡ŒäºŒè¿›åˆ¶æ‹†åˆ†çš„åŒæ—¶è®¡ç®—ç­”æ¡ˆ
+        while (n > 0) {
+            // è‹¥näºŒè¿›åˆ¶è¡¨ç¤ºçš„æœ€ä½Žä½ä¸º1ï¼Œé‚£ä¹ˆéœ€è¦è®¡å…¥è´¡çŒ®
+            if (n % 2 == 1) {
+                ret *= x_contribute;
+            }
+            // å°†è´¡çŒ®ä¸æ–­å¹³æ–¹
+            x_contribute *= x_contribute;
+            // èˆå¼ƒNäºŒè¿›åˆ¶è¡¨ç¤ºçš„æœ€ä½Žä½ï¼Œè¿™æ ·æˆ‘ä»¬æ¯æ¬¡åªè¦åˆ¤æ–­æœ€ä½Žä½å³å¯
+            n /= 2;
+        }
+        return ret;
+    }
+    double myPow(double x, int n) {
+        long long N = n;
+        return N >= 0 ? quickMul(x, N) : 1 / quickMul(x, -N);
+    }
 };
 
 int main() {
-	double x = 1;
-	int n = INT_MIN;
-	Solution s;
-	double ret = s.myPow(x, n);
+    double x = 1;
+    int n = INT_MIN;
+    Solution s;
+    double ret = s.myPow(x, n);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

@@ -1,4 +1,5 @@
 #include<iostream>
+#include<climits>
 #include<unordered_map>
 #include<list>
 using namespace std;
@@ -8,7 +9,7 @@ struct Node {
     Node(int _key, int _val, int _fre = 1) : key(_key), value(_val), freq(_fre) {}
 };
 
-// ÎÒµÄ½â·¨²Î¿¼¹Ù·½Ë¼Â·£ºË«¹şÏ£±íÄÚº¬Ë«ÏòÁ´±í£¬Ê±¼ä 496 ms 26.72%£¬¿Õ¼ä 178.3 MB 31.49% 
+// æˆ‘çš„è§£æ³•å‚è€ƒå®˜æ–¹æ€è·¯ï¼šåŒå“ˆå¸Œè¡¨å†…å«åŒå‘é“¾è¡¨ï¼Œæ—¶é—´ 496 ms 26.72%ï¼Œç©ºé—´ 178.3 MB 31.49%
 class LFUCache {
 private:
     unordered_map<int, list<Node>> freqTable;
@@ -65,7 +66,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨¸Ä½ø£º²»ÓÃÃ¿´ÎgetºÍreplaceÊ±É¾³ıkeyTable£¬Ö±½ÓÔÚÏàÓ¦Î»ÖÃÉÏ²åÈë£¬Ê±¼ä 428 ms 77.77%£¬¿Õ¼ä 175.7 MB 51.23%
+// æˆ‘çš„è§£æ³•æ”¹è¿›ï¼šä¸ç”¨æ¯æ¬¡getå’Œreplaceæ—¶åˆ é™¤keyTableï¼Œç›´æ¥åœ¨ç›¸åº”ä½ç½®ä¸Šæ’å…¥ï¼Œæ—¶é—´ 428 ms 77.77%ï¼Œç©ºé—´ 175.7 MB 51.23%
 class LFUCache {
 private:
     unordered_map<int, list<Node>> freqTable;
@@ -123,7 +124,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨£º½«Î²²åÍ·É¾¸ÄÎªÍ·²åÎ²É¾£¬Ê±¼ä 416 ms 84.71%£¬¿Õ¼ä 175.5 MB 72.09%
+// æˆ‘çš„è§£æ³•ï¼šå°†å°¾æ’å¤´åˆ æ”¹ä¸ºå¤´æ’å°¾åˆ ï¼Œæ—¶é—´ 416 ms 84.71%ï¼Œç©ºé—´ 175.5 MB 72.09%
 class LFUCache {
 private:
     unordered_map<int, list<Node>> freqTable;
@@ -188,6 +189,103 @@ public:
  * obj->put(key,value);
  */
 
+struct DListNode {
+    int key, value, freq;
+    DListNode* prev, * next;
+    DListNode(int _key = -1, int _val = -1, int _fre = 1, DListNode* _prev = nullptr, DListNode* _next = nullptr) : key(_key), value(_val), freq(_fre), prev(_prev), next(_next) {}
+};
+
+class LFUCache {
+private:
+    unordered_map<int, pair<DListNode*, DListNode*>> freqTable;
+    unordered_map<int, DListNode*> keyTable;
+    int capacity, minFreq;
+
+    void removeNode(DListNode* node) {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+        delete node;
+    }
+
+    void pushFrontNode(pair<DListNode*, DListNode*>& insertedList, DListNode* node) {
+        auto& [head, tail] = insertedList;
+        node->next = head->next;
+        head->next->prev = node;
+        node->prev = head;
+        head->next = node;
+    }
+
+    void popBackNode(pair<DListNode*, DListNode*>& insertedList) {
+        auto& tail = insertedList.second;
+        DListNode* delNode = tail->prev;
+        delNode->prev->next = tail;
+        tail->prev = delNode->prev;
+        delete delNode;
+    }
+
+    void constructList(pair<DListNode*, DListNode*>& insertedList) {
+        auto& [head, tail] = insertedList;
+        head = new DListNode(), tail = new DListNode(-2, -2, 1, head);
+        head->next = tail;
+    }
+public:
+    LFUCache(int capacity) : capacity(capacity), minFreq(INT_MAX) {}
+
+    int get(int key) {
+        if (capacity == 0) return -1;
+        auto it = keyTable.find(key);
+        if (it != keyTable.end()) {
+            DListNode* preDel = it->second;
+            int findVal = preDel->value, findFreq = preDel->freq;
+            removeNode(preDel);
+            auto& findList = freqTable[findFreq];
+            if (findList.first->next == findList.second && findFreq == minFreq) {
+                ++minFreq;
+            }
+            auto& insertedList = freqTable[++findFreq];
+            if (insertedList.first == nullptr) constructList(insertedList);
+            DListNode* newNode = new DListNode(key, findVal, findFreq);
+            pushFrontNode(insertedList, newNode);
+            it->second = newNode;
+            return findVal;
+        }
+        else return -1;
+    }
+
+    void put(int key, int value) {
+        if (capacity == 0) return;
+        auto it = keyTable.find(key);
+        if (it == keyTable.end()) {
+            if (keyTable.size() == capacity) {
+                auto& delList = freqTable[minFreq];
+                int preDelKey = delList.second->prev->key;
+                popBackNode(delList);
+                keyTable.erase(preDelKey);
+            }
+            auto& insertedList = freqTable[1];
+            if (insertedList.first == nullptr) constructList(insertedList);
+            DListNode* newNode = new DListNode(key, value);
+            pushFrontNode(insertedList, newNode);
+            keyTable.emplace(key, newNode);
+            minFreq = 1;
+        }
+        else {
+            DListNode* preDel = it->second;
+            int findFreq = preDel->freq;
+            removeNode(preDel);
+            auto& findList = freqTable[findFreq];
+            if (findList.first->next == findList.second && findFreq == minFreq) {
+                ++minFreq;
+            }
+            auto& insertedList = freqTable[++findFreq];
+            if (insertedList.first == nullptr) constructList(insertedList);
+            DListNode* newNode = new DListNode(key, value, findFreq);
+            pushFrontNode(insertedList, newNode);
+            it->second = newNode;
+        }
+    }
+};
+
 int main() {
 
     LFUCache LFU(2);
@@ -203,6 +301,5 @@ int main() {
     cout << LFU.get(3) << endl;
     cout << LFU.get(4) << endl;
 
-    system("pause");
     return 0;
 }

@@ -4,109 +4,109 @@
 #include<unordered_map>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºË«Ö¸Õë(»¬¶¯´°¿Ú)£¬Ê±¼ä 4 ms 98.72%£¬¿Õ¼ä 6.7 MB 98.72%
+// æˆ‘çš„è§£æ³•ï¼šåŒæŒ‡é’ˆ(æ»‘åŠ¨çª—å£)ï¼Œæ—¶é—´ 4 ms 98.72%ï¼Œç©ºé—´ 6.7 MB 98.72%
 class Solution {
 public:
-	int lengthOfLongestSubstringKDistinct(string s, int k) {
-		// ÈôkÎª0£¬ÈÎºÎ³¤¶È´óÓÚ0µÄ×Ö·û´®°üº¬µÄ×Ö·ûÖÖÀà¶¼´óÓÚ0£¬Òò´Ë·µ»Ø0
-		if (k == 0) return k;
-		// ×Ö·û¹şÏ£±í£¬±íÊ¾¸Ã×Ö·ûÊÇ·ñ³öÏÖÔÚ»¬¶¯´°¿ÚÄÚ
-		bool flag[128]{};
-		// ×Ö·û³öÏÖ´ÎÊı¹şÏ£±í£¬±íÊ¾¸Ã×Ö·ûÔÚ»¬¶¯´°¿ÚÄÚ³öÏÖµÄ´ÎÊı
-		int charFreq[128]{};
-		// cnt±íÊ¾»¬¶¯´°¿ÚÄÚ×Ö·ûµÄÖÖÀàÊı£¬left±íÊ¾»¬¶¯´°¿Ú×ó¶Ëµã£¬maxSize±íÊ¾×î´ó´°¿Ú³¤¶È
-		int cnt = 0, left = 0, maxSize = 0;
-		for (int right = 0; right < s.size(); ++right) {
-			// »¬¶¯´°¿ÚÓÒ¶ËµãµÄ×Ö·ûµÄ³öÏÖ´ÎÊı+1
-			++charFreq[s[right]];
-			// ÈôÓÒ¶Ëµã×Ö·ûÔÚ»¬¶¯´°¿ÚÖĞÖ®Ç°Ã»³öÏÖ¹ı
-			if (!flag[s[right]]) {
-				// »¬¶¯´°¿ÚÄÚ×Ö·ûÖÖÀàÊı+1
-				++cnt;
-				// ½«¸ÃÖÖÀà×Ö·û³öÏÖÖÃÎªÕæ
-				flag[s[right]] = true;
-			}
-			// ÈôÓÒ¶ËµãÔÚs×îºóÒ»¸öÎ»ÖÃ»òsÏÂÒ»¸ö×Ö·ûÎ´ÔÚ»¬¶¯´°¿ÚÖĞ³öÏÖ
-			if (right == s.size() - 1 || !flag[s[right + 1]]) {
-				while (cnt == k) {
-					// Èôµ±Ç°»¬¶¯´°¿Ú´óĞ¡´óÓÚmaxSize£¬¸üĞÂmaxSize
-					maxSize = max(maxSize, right - left + 1);
-					// Èô×ó¶ËµãÓÒÒÆºóÔ­×ó¶Ëµã×Ö·û²»ÔÙ³öÏÖÔÚ»¬¶¯´°¿ÚÄÚ£¬»¬¶¯´°¿ÚÄÚ×Ö·ûÖÖÀàÊı-1£¬²¢½«¸ÃÖÖÀà×Ö·û³öÏÖÖÃÎª¼Ù
-					if (--charFreq[s[left]] == 0) {
-						--cnt;
-						flag[s[left]] = false;
-					}
-					++left;
-				}
-			}
-		}
-		// ÈômaxSizeÎª0£¬ËµÃ÷sÄÚµÄ×Ö·ûÖÖÀàĞ¡ÓÚk£¬·µ»ØsÈ«³¤
-		return maxSize == 0 ? s.size() : maxSize;
-	}
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+        // è‹¥kä¸º0ï¼Œä»»ä½•é•¿åº¦å¤§äº0çš„å­—ç¬¦ä¸²åŒ…å«çš„å­—ç¬¦ç§ç±»éƒ½å¤§äº0ï¼Œå› æ­¤è¿”å›0
+        if (k == 0) return k;
+        // å­—ç¬¦å“ˆå¸Œè¡¨ï¼Œè¡¨ç¤ºè¯¥å­—ç¬¦æ˜¯å¦å‡ºç°åœ¨æ»‘åŠ¨çª—å£å†…
+        bool flag[128]{};
+        // å­—ç¬¦å‡ºç°æ¬¡æ•°å“ˆå¸Œè¡¨ï¼Œè¡¨ç¤ºè¯¥å­—ç¬¦åœ¨æ»‘åŠ¨çª—å£å†…å‡ºç°çš„æ¬¡æ•°
+        int charFreq[128]{};
+        // cntè¡¨ç¤ºæ»‘åŠ¨çª—å£å†…å­—ç¬¦çš„ç§ç±»æ•°ï¼Œleftè¡¨ç¤ºæ»‘åŠ¨çª—å£å·¦ç«¯ç‚¹ï¼ŒmaxSizeè¡¨ç¤ºæœ€å¤§çª—å£é•¿åº¦
+        int cnt = 0, left = 0, maxSize = 0;
+        for (int right = 0; right < s.size(); ++right) {
+            // æ»‘åŠ¨çª—å£å³ç«¯ç‚¹çš„å­—ç¬¦çš„å‡ºç°æ¬¡æ•°+1
+            ++charFreq[s[right]];
+            // è‹¥å³ç«¯ç‚¹å­—ç¬¦åœ¨æ»‘åŠ¨çª—å£ä¸­ä¹‹å‰æ²¡å‡ºç°è¿‡
+            if (!flag[s[right]]) {
+                // æ»‘åŠ¨çª—å£å†…å­—ç¬¦ç§ç±»æ•°+1
+                ++cnt;
+                // å°†è¯¥ç§ç±»å­—ç¬¦å‡ºç°ç½®ä¸ºçœŸ
+                flag[s[right]] = true;
+            }
+            // è‹¥å³ç«¯ç‚¹åœ¨sæœ€åä¸€ä¸ªä½ç½®æˆ–sä¸‹ä¸€ä¸ªå­—ç¬¦æœªåœ¨æ»‘åŠ¨çª—å£ä¸­å‡ºç°
+            if (right == s.size() - 1 || !flag[s[right + 1]]) {
+                while (cnt == k) {
+                    // è‹¥å½“å‰æ»‘åŠ¨çª—å£å¤§å°å¤§äºmaxSizeï¼Œæ›´æ–°maxSize
+                    maxSize = max(maxSize, right - left + 1);
+                    // è‹¥å·¦ç«¯ç‚¹å³ç§»ååŸå·¦ç«¯ç‚¹å­—ç¬¦ä¸å†å‡ºç°åœ¨æ»‘åŠ¨çª—å£å†…ï¼Œæ»‘åŠ¨çª—å£å†…å­—ç¬¦ç§ç±»æ•°-1ï¼Œå¹¶å°†è¯¥ç§ç±»å­—ç¬¦å‡ºç°ç½®ä¸ºå‡
+                    if (--charFreq[s[left]] == 0) {
+                        --cnt;
+                        flag[s[left]] = false;
+                    }
+                    ++left;
+                }
+            }
+        }
+        // è‹¥maxSizeä¸º0ï¼Œè¯´æ˜så†…çš„å­—ç¬¦ç§ç±»å°äºkï¼Œè¿”å›så…¨é•¿
+        return maxSize == 0 ? s.size() : maxSize;
+    }
 };
 
-// ÎÒµÄ½â·¨ÔÙÓÅ»¯£ºÊ±¼ä 0 ms 100%£¬¿Õ¼ä 6.9 MB 85.29%
+// æˆ‘çš„è§£æ³•å†ä¼˜åŒ–ï¼šæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.9 MB 85.29%
 class Solution {
 public:
-	int lengthOfLongestSubstringKDistinct(string s, int k) {
-		// ÈôkÎª0£¬ÈÎºÎ³¤¶È´óÓÚ0µÄ×Ö·û´®°üº¬µÄ×Ö·ûÖÖÀà¶¼´óÓÚ0£¬Òò´Ë·µ»Ø0
-		if (k == 0) return k;
-		// ×Ö·û³öÏÖ´ÎÊı¹şÏ£±í£¬±íÊ¾¸Ã×Ö·ûÔÚ»¬¶¯´°¿ÚÄÚ³öÏÖµÄ´ÎÊı
-		int charFreq[128]{};
-		// cnt±íÊ¾»¬¶¯´°¿ÚÄÚ×Ö·ûµÄÖÖÀàÊı£¬left±íÊ¾»¬¶¯´°¿Ú×ó¶Ëµã£¬maxSize±íÊ¾×î´ó´°¿Ú³¤¶È
-		int cnt = 0, left = 0, maxSize = 0;
-		for (int right = 0; right < s.size(); ++right) {
-			// »¬¶¯´°¿ÚÓÒ¶ËµãµÄ×Ö·ûµÄ³öÏÖ´ÎÊı+1
-			if (charFreq[s[right]]++ == 0) {
-				// ÈôÓÒ¶Ëµã×Ö·ûÔÚ»¬¶¯´°¿ÚÖĞÖ®Ç°Ã»³öÏÖ¹ı£¬»¬¶¯´°¿ÚÄÚ×Ö·ûÖÖÀàÊı+1
-				++cnt;
-			}
-			// ÈôÓÒ¶ËµãÔÚs×îºóÒ»¸öÎ»ÖÃ»òsÏÂÒ»¸ö×Ö·ûÎ´ÔÚ»¬¶¯´°¿ÚÖĞ³öÏÖ
-			if (right == s.size() - 1 || charFreq[s[right + 1]] == 0) {
-				while (cnt == k) {
-					// Èôµ±Ç°»¬¶¯´°¿Ú´óĞ¡´óÓÚmaxSize£¬¸üĞÂmaxSize
-					maxSize = max(maxSize, right - left + 1);
-					// Èô×ó¶ËµãÓÒÒÆºóÔ­×ó¶Ëµã×Ö·û²»ÔÙ³öÏÖÔÚ»¬¶¯´°¿ÚÄÚ£¬»¬¶¯´°¿ÚÄÚ×Ö·ûÖÖÀàÊı-1£¬²¢½«¸ÃÖÖÀà×Ö·û³öÏÖÖÃÎª¼Ù
-					if (--charFreq[s[left]] == 0) {
-						--cnt;
-					}
-					++left;
-				}
-			}
-		}
-		// ÈômaxSizeÎª0£¬ËµÃ÷sÄÚµÄ×Ö·ûÖÖÀàĞ¡ÓÚk£¬·µ»ØsÈ«³¤
-		return maxSize == 0 ? s.size() : maxSize;
-	}
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+        // è‹¥kä¸º0ï¼Œä»»ä½•é•¿åº¦å¤§äº0çš„å­—ç¬¦ä¸²åŒ…å«çš„å­—ç¬¦ç§ç±»éƒ½å¤§äº0ï¼Œå› æ­¤è¿”å›0
+        if (k == 0) return k;
+        // å­—ç¬¦å‡ºç°æ¬¡æ•°å“ˆå¸Œè¡¨ï¼Œè¡¨ç¤ºè¯¥å­—ç¬¦åœ¨æ»‘åŠ¨çª—å£å†…å‡ºç°çš„æ¬¡æ•°
+        int charFreq[128]{};
+        // cntè¡¨ç¤ºæ»‘åŠ¨çª—å£å†…å­—ç¬¦çš„ç§ç±»æ•°ï¼Œleftè¡¨ç¤ºæ»‘åŠ¨çª—å£å·¦ç«¯ç‚¹ï¼ŒmaxSizeè¡¨ç¤ºæœ€å¤§çª—å£é•¿åº¦
+        int cnt = 0, left = 0, maxSize = 0;
+        for (int right = 0; right < s.size(); ++right) {
+            // æ»‘åŠ¨çª—å£å³ç«¯ç‚¹çš„å­—ç¬¦çš„å‡ºç°æ¬¡æ•°+1
+            if (charFreq[s[right]]++ == 0) {
+                // è‹¥å³ç«¯ç‚¹å­—ç¬¦åœ¨æ»‘åŠ¨çª—å£ä¸­ä¹‹å‰æ²¡å‡ºç°è¿‡ï¼Œæ»‘åŠ¨çª—å£å†…å­—ç¬¦ç§ç±»æ•°+1
+                ++cnt;
+            }
+            // è‹¥å³ç«¯ç‚¹åœ¨sæœ€åä¸€ä¸ªä½ç½®æˆ–sä¸‹ä¸€ä¸ªå­—ç¬¦æœªåœ¨æ»‘åŠ¨çª—å£ä¸­å‡ºç°
+            if (right == s.size() - 1 || charFreq[s[right + 1]] == 0) {
+                while (cnt == k) {
+                    // è‹¥å½“å‰æ»‘åŠ¨çª—å£å¤§å°å¤§äºmaxSizeï¼Œæ›´æ–°maxSize
+                    maxSize = max(maxSize, right - left + 1);
+                    // è‹¥å·¦ç«¯ç‚¹å³ç§»ååŸå·¦ç«¯ç‚¹å­—ç¬¦ä¸å†å‡ºç°åœ¨æ»‘åŠ¨çª—å£å†…ï¼Œæ»‘åŠ¨çª—å£å†…å­—ç¬¦ç§ç±»æ•°-1ï¼Œå¹¶å°†è¯¥ç§ç±»å­—ç¬¦å‡ºç°ç½®ä¸ºå‡
+                    if (--charFreq[s[left]] == 0) {
+                        --cnt;
+                    }
+                    ++left;
+                }
+            }
+        }
+        // è‹¥maxSizeä¸º0ï¼Œè¯´æ˜så†…çš„å­—ç¬¦ç§ç±»å°äºkï¼Œè¿”å›så…¨é•¿
+        return maxSize == 0 ? s.size() : maxSize;
+    }
 };
 
 
-// ¹Ù·½½â·¨Ò»£º»¬¶¯´°¿Ú+¹şÏ£±í£¬Ê±¼äO(nk) 12 ms 67.40%£¬¿Õ¼äO(k) 8 MB 36.81%£¬kÎªÊäÈë×Ö·û´®sÄÚ×Ö·ûÖÖÀàÊı
+// å®˜æ–¹è§£æ³•ä¸€ï¼šæ»‘åŠ¨çª—å£+å“ˆå¸Œè¡¨ï¼Œæ—¶é—´O(nk) 12 ms 67.40%ï¼Œç©ºé—´O(k) 8 MB 36.81%ï¼Œkä¸ºè¾“å…¥å­—ç¬¦ä¸²så†…å­—ç¬¦ç§ç±»æ•°
 class Solution {
 public:
-	int lengthOfLongestSubstringKDistinct(string s, int k) {
-		int n = s.size();
-		// Èôs³¤¶ÈÎª0»òkÎª0£¬·µ»Ø0
-		if (n * k == 0) return 0;
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+        int n = s.size();
+        // è‹¥sé•¿åº¦ä¸º0æˆ–kä¸º0ï¼Œè¿”å›0
+        if (n * k == 0) return 0;
 
-		int left = 0, right = 0;
-		// ±£´æ×Ö·ûÔÚ»¬¶¯´°¿ÚÄÚ×îºóÒ»´Î³öÏÖµÄÎ»ÖÃ
-		unordered_map<char, int> hashMap;
-		int maxLen = 1;
-		while (right < n) {
-			// ½«s[right]³öÏÖÔÚ»¬¶¯´°¿ÚÄÚµÄ×îºóÒ»¸öÎ»ÖÃ¸üĞÂÎªright£¬È»ºóright×Ô¼Ó1
-			hashMap[s[right++]] = right;
-			// Èô»¬¶¯´°¿ÚÄÚ×Ö·ûÖÖÀàÒÑ¾­´óÓÚk
-			if (hashMap.size() == k + 1) {
-				// ÕÒ³öhashMapÄÚÔÚ»¬¶¯´°¿ÚÄÚ×îºóÒ»´Î³öÏÖ×î¿¿Ç°µÄ×Ö·ûµÄÎ»ÖÃ
-				int del_idx = min_element(hashMap.begin(), hashMap.end(), [](const auto& lhs, const auto& rhs) {
-					return lhs.second < rhs.second;
-					})->second;
-				// É¾µôhashMapÄÚ¶ÔÓ¦×Ö·û
-				hashMap.erase(s[del_idx]);
-				left = del_idx + 1;
-			}
-			maxLen = max(maxLen, right - left);
-		}
-		return maxLen;
-	}
+        int left = 0, right = 0;
+        // ä¿å­˜å­—ç¬¦åœ¨æ»‘åŠ¨çª—å£å†…æœ€åä¸€æ¬¡å‡ºç°çš„ä½ç½®
+        unordered_map<char, int> hashMap;
+        int maxLen = 1;
+        while (right < n) {
+            // å°†s[right]å‡ºç°åœ¨æ»‘åŠ¨çª—å£å†…çš„æœ€åä¸€ä¸ªä½ç½®æ›´æ–°ä¸ºrightï¼Œç„¶årightè‡ªåŠ 1
+            hashMap[s[right++]] = right;
+            // è‹¥æ»‘åŠ¨çª—å£å†…å­—ç¬¦ç§ç±»å·²ç»å¤§äºk
+            if (hashMap.size() == k + 1) {
+                // æ‰¾å‡ºhashMapå†…åœ¨æ»‘åŠ¨çª—å£å†…æœ€åä¸€æ¬¡å‡ºç°æœ€é å‰çš„å­—ç¬¦çš„ä½ç½®
+                int del_idx = min_element(hashMap.begin(), hashMap.end(), [](const auto& lhs, const auto& rhs) {
+                    return lhs.second < rhs.second;
+                })->second;
+                // åˆ æ‰hashMapå†…å¯¹åº”å­—ç¬¦
+                hashMap.erase(s[del_idx]);
+                left = del_idx + 1;
+            }
+            maxLen = max(maxLen, right - left);
+        }
+        return maxLen;
+    }
 };

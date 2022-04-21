@@ -5,12 +5,12 @@
 #include<numeric>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ººó×º±í´ïÊ½(Äæ²¨À¼±í´ïÊ½)£¬Ê±¼ä ³¬Ê±
-// È¥µôµÚ108¸ö²âÊÔÓÃÀıºó£¬Ê±¼ä 4 ms 96.58%£¬¿Õ¼ä 7.6 MB 96.62%
+// æˆ‘çš„è§£æ³•ï¼šåç¼€è¡¨è¾¾å¼(é€†æ³¢å…°è¡¨è¾¾å¼)ï¼Œæ—¶é—´ è¶…æ—¶
+// å»æ‰ç¬¬108ä¸ªæµ‹è¯•ç”¨ä¾‹åï¼Œæ—¶é—´ 4 ms 96.58%ï¼Œç©ºé—´ 7.6 MB 96.62%
 class Solution {
 public:
     int calculate(string s) {
-        //if (s.size() > 10000) return 199; // Õë¶ÔµÚ108¸ö²âÊÔÓÃÀı
+        //if (s.size() > 10000) return 199; // é’ˆå¯¹ç¬¬108ä¸ªæµ‹è¯•ç”¨ä¾‹
         string t;
         stack<int, vector<int>> stk;
         size_t length = s.size();
@@ -51,18 +51,10 @@ public:
                 int lhs = stk.top();
                 stk.pop();
                 switch (t[i]) {
-                case '+':
-                    stk.emplace(lhs + rhs);
-                    break;
-                case '-':
-                    stk.emplace(lhs - rhs);
-                    break;
-                case '*':
-                    stk.emplace(lhs * rhs);
-                    break;
-                case '/':
-                    stk.emplace(lhs / rhs);
-                    break;
+                    case '+': stk.emplace(lhs + rhs); break;
+                    case '-': stk.emplace(lhs - rhs); break;
+                    case '*': stk.emplace(lhs * rhs); break;
+                    case '/': stk.emplace(lhs / rhs); break;
                 }
                 ++i;
             }
@@ -71,8 +63,8 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨£ººó×º±í´ïÊ½(Äæ²¨À¼±í´ïÊ½)£¬Ê±¼ä 12 ms  44.42%£¬¿Õ¼ä 8.6 MB 47.36%
-// ×¢Òâ²»ÒªÓÃstoi£¬²ÉÓÃÕı³£µÄstring×ªint·½Ê½¼´¿É±ÜÃâ³¬Ê±
+// æˆ‘çš„è§£æ³•ï¼šåç¼€è¡¨è¾¾å¼(é€†æ³¢å…°è¡¨è¾¾å¼)ï¼Œæ—¶é—´ 12 ms  44.42%ï¼Œç©ºé—´ 8.6 MB 47.36%
+// æ³¨æ„ä¸è¦ç”¨stoiï¼Œé‡‡ç”¨æ­£å¸¸çš„stringè½¬intæ–¹å¼å³å¯é¿å…è¶…æ—¶
 class Solution {
 public:
     int calculate(string s) {
@@ -103,9 +95,6 @@ public:
                 while (isdigit(t[i])) {
                     num = 10 * num + (t[i++] - '0');
                 }
-                if (num == 0) {
-                    int j = 1;
-                }
                 stk.emplace(num);
             }
             else {
@@ -118,18 +107,18 @@ public:
                 int lhs = stk.top();
                 stk.pop();
                 switch (t[i]) {
-                case '+':
-                    stk.emplace(lhs + rhs);
-                    break;
-                case '-':
-                    stk.emplace(lhs - rhs);
-                    break;
-                case '*':
-                    stk.emplace(lhs * rhs);
-                    break;
-                case '/':
-                    stk.emplace(lhs / rhs);
-                    break;
+                    case '+':
+                        stk.emplace(lhs + rhs);
+                        break;
+                    case '-':
+                        stk.emplace(lhs - rhs);
+                        break;
+                    case '*':
+                        stk.emplace(lhs * rhs);
+                        break;
+                    case '/':
+                        stk.emplace(lhs / rhs);
+                        break;
                 }
                 ++i;
             }
@@ -138,10 +127,10 @@ public:
     }
 };
 
-// LeetCode 101½â·¨£ºµİ¹é£¬Ê±¼ä 8 ms 76.80%£¬¿Õ¼ä 7.6 MB 96.82%
+// LeetCode 101è§£æ³•ï¼šé€’å½’ï¼Œæ—¶é—´ 8 ms 76.80%ï¼Œç©ºé—´ 7.6 MB 96.82%
 class Solution {
 private:
-    // ¸¨º¯Êı£¬Ñ­»·±éÀús´ÓÎ»ÖÃi¿ªÊ¼µÄÊ£Óà×Ö·û´®
+    // è¾…å‡½æ•°ï¼Œå¾ªç¯éå†sä»ä½ç½®iå¼€å§‹çš„å‰©ä½™å­—ç¬¦ä¸²
     int parseExpr(const string& s, int& i) {
         char op = '+';
         int left = 0, right = 0;
@@ -149,7 +138,7 @@ private:
             if (s[i] != ' ') {
                 int n = parseNum(s, i);
                 switch (op) {
-                    // +£¬-ÏÈÓÃÓÒÖµ´æÆğÀ´£¬ÏÂ´ÎÈôÓöµ½+£¬-£¬¾ÍÈÃ×óÖµ¼ÓÉÏÓÒÖµ£»ÈôÓöµ½*£¬/£¬¾ÍÈÃÓÒÖµÏÈ¸ún×ö³Ë³ıÔËËã
+                    // +ï¼Œ-å…ˆç”¨å³å€¼å­˜èµ·æ¥ï¼Œä¸‹æ¬¡è‹¥é‡åˆ°+ï¼Œ-ï¼Œå°±è®©å·¦å€¼åŠ ä¸Šå³å€¼ï¼›è‹¥é‡åˆ°*ï¼Œ/ï¼Œå°±è®©å³å€¼å…ˆè·Ÿnåšä¹˜é™¤è¿ç®—
                     case '+': left += right; right = n; break;
                     case '-': left += right; right = -n; break;
                     case '*': right *= n; break;
@@ -163,7 +152,7 @@ private:
         }
         return left + right;
     }
-    // ¸¨º¯Êı£¬¼ì²â²¢·µ»Øs´ÓÎ»ÖÃi¿ªÊ¼µÄÒ»¸öÊı×Ö
+    // è¾…å‡½æ•°ï¼Œæ£€æµ‹å¹¶è¿”å›sä»ä½ç½®iå¼€å§‹çš„ä¸€ä¸ªæ•°å­—
     int parseNum(const string& s, int& i) {
         int n = 0;
         while (i < s.size() && isdigit(s[i])) {
@@ -178,31 +167,30 @@ public:
     }
 };
 
-// ¹Ù·½Ìâ½â£ºÕ»£¬Ê±¼ä 4 ms 96.58%£¬¿Õ¼ä 8.7 MB 33.33%
+// å®˜æ–¹é¢˜è§£ï¼šæ ˆï¼Œæ—¶é—´ 4 ms 96.58%ï¼Œç©ºé—´ 8.7 MB 33.33%
 class Solution {
 public:
     int calculate(string s) {
         vector<int> stk;
         char preSign = '+';
-        int num = 0;
-        int n = s.size();
+        int num = 0, n = s.size();
         for (int i = 0; i < n; ++i) {
             if (isdigit(s[i])) {
                 num = num * 10 + (s[i] - '0');
             }
             if (!isdigit(s[i]) && s[i] != ' ' || i == n - 1) {
                 switch (preSign) {
-                case '+':
-                    stk.emplace_back(num);
-                    break;
-                case '-':
-                    stk.emplace_back(-num);
-                    break;
-                case '*':
-                    stk.back() *= num;
-                    break;
-                default:
-                    stk.back() /= num;
+                    case '+':
+                        stk.emplace_back(num);
+                        break;
+                    case '-':
+                        stk.emplace_back(-num);
+                        break;
+                    case '*':
+                        stk.back() *= num;
+                        break;
+                    default:
+                        stk.back() /= num;
                 }
                 preSign = s[i];
                 num = 0;
@@ -217,6 +205,6 @@ int main() {
     Solution sol;
     int ret = sol.calculate(s);
     cout << ret << endl;
-    system("pause");
+
     return 0;
 }

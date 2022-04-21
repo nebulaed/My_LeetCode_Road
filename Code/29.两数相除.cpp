@@ -1,82 +1,83 @@
 #include<iostream>
+#include<climits>
+
 using namespace std;
 
 class Solution {
 public:
-	// ¿ìËÙ³ËËã·¨
-	bool quickAdd(int y, int z, int x) {
-		int ret = 0, add = y;
-		while (z) {
-			// °´Î»Óë²Ù×÷£¬¼´zÓë¶ş½øÖÆµÄ00000001ÖğÎ»È¡Óë£¬Ïàµ±ÓÚz%2
-			if (z & 1) {
-				// Ğè±£Ö¤ret + add >= x
-				if (ret < x - add) {
-					return false;
-				}
-				ret += add;
-			}
-			if (z != 1) {
-				// Í¬ÑùĞè±£Ö¤add + add >= x;
-				// ·ñÔò¾Í²»Âú×ã¶ş·Ö·¨ÁË
-				if (add < x - add) {
-					return false;
-				}
-				add += add;
-			}
-			// ²»ÄÜÓÃ³ı·¨£¬Õâ¸ö±íÊ¾zµÄ¶ş½øÖÆÊıÏòÓÒÒÆÒ»Î»£¬×îºóÒ»Î»ÉáÈ¥£¬Ïàµ±ÓÚz/=2
-			z >>= 1;
-		}
-		return true;
-	}
+    // å¿«é€Ÿä¹˜ç®—æ³•
+    bool quickAdd(int y, int z, int x) {
+        int ret = 0, add = y;
+        while (z) {
+            // æŒ‰ä½ä¸æ“ä½œï¼Œå³zä¸äºŒè¿›åˆ¶çš„00000001é€ä½å–ä¸ï¼Œç›¸å½“äºz%2
+            if (z & 1) {
+                // éœ€ä¿è¯ret + add >= x
+                if (ret < x - add) {
+                    return false;
+                }
+                ret += add;
+            }
+            if (z != 1) {
+                // åŒæ ·éœ€ä¿è¯add + add >= x;
+                // å¦åˆ™å°±ä¸æ»¡è¶³äºŒåˆ†æ³•äº†
+                if (add < x - add) {
+                    return false;
+                }
+                add += add;
+            }
+            // ä¸èƒ½ç”¨é™¤æ³•ï¼Œè¿™ä¸ªè¡¨ç¤ºzçš„äºŒè¿›åˆ¶æ•°å‘å³ç§»ä¸€ä½ï¼Œæœ€åä¸€ä½èˆå»ï¼Œç›¸å½“äºz/=2
+            z >>= 1;
+        }
+        return true;
+    }
 
-	int divide(int dividend, int divisor) {
-		// ¿¼ÂÇ±»³ıÊıÎªINT×îĞ¡ÖµµÄÇé¿ö
-		if (dividend == INT_MIN) {
-			if (divisor == 1) {
-				return INT_MIN;
-			}
-			if (divisor == -1) {
-				return INT_MAX;
-			}
-		}
-		// ¿¼ÂÇ³ıÊıÎªINT×îĞ¡ÖµµÄÇé¿ö
-		if (divisor == INT_MIN) {
-			return dividend == INT_MIN ? 1 : 0;
-		}
-		// ¿¼ÂÇ±»³ıÊıÎª0µÄÇé¿ö
-		if (dividend == 0) {
-			return 0;
-		}
+    int divide(int dividend, int divisor) {
+        // è€ƒè™‘è¢«é™¤æ•°ä¸ºINTæœ€å°å€¼çš„æƒ…å†µ
+        if (dividend == INT_MIN) {
+            if (divisor == 1) {
+                return INT_MIN;
+            }
+            if (divisor == -1) {
+                return INT_MAX;
+            }
+        }
+        // è€ƒè™‘é™¤æ•°ä¸ºINTæœ€å°å€¼çš„æƒ…å†µ
+        if (divisor == INT_MIN) {
+            return dividend == INT_MIN ? 1 : 0;
+        }
+        // è€ƒè™‘è¢«é™¤æ•°ä¸º0çš„æƒ…å†µ
+        if (dividend == 0) {
+            return 0;
+        }
 
-		// Ò»°ãÇé¿ö£¬Ê¹ÓÃ¶ş·Ö²éÕÒ
-		// ½«ËùÓĞµÄÕıÊıÈ¡Ïà·´Êı£¬ÕâÑùÖ»ĞèÒª¿¼ÂÇÒ»ÖÖÇé¿ö
-		bool rev = false;
-		if (dividend > 0) {
-			dividend = -dividend;
-			rev = !rev;
-		}
-		if (divisor > 0) {
-			divisor = -divisor;
-			rev = !rev;
-		}
+        // ä¸€èˆ¬æƒ…å†µï¼Œä½¿ç”¨äºŒåˆ†æŸ¥æ‰¾
+        // å°†æ‰€æœ‰çš„æ­£æ•°å–ç›¸åæ•°ï¼Œè¿™æ ·åªéœ€è¦è€ƒè™‘ä¸€ç§æƒ…å†µ
+        bool rev = false;
+        if (dividend > 0) {
+            dividend = -dividend;
+            rev = !rev;
+        }
+        if (divisor > 0) {
+            divisor = -divisor;
+            rev = !rev;
+        }
 
-		int left = 1, right = INT_MAX, ans = 0;
-		while (left <= right) {
-			// ×¢ÒâÒç³ö£¬²¢ÇÒ²»ÄÜÊ¹ÓÃ³ı·¨
-			// (right-left)>>1Ïàµ±ÓÚ(right-left)/2
-			int mid = left + ((right - left) >> 1);
-			bool check = quickAdd(divisor, mid, dividend);
-			if (check) {
-				ans = mid;
-				// ×¢ÒâÒç³ö
-				if (mid == INT_MAX)
-					break;
-				left = mid + 1;
-			}
-			else {
-				right = mid - 1;
-			}
-		}
-		return rev ? -ans : ans;		
-	}
+        int left = 1, right = INT_MAX, ans = 0;
+        while (left <= right) {
+            // æ³¨æ„æº¢å‡ºï¼Œå¹¶ä¸”ä¸èƒ½ä½¿ç”¨é™¤æ³•
+            // (right-left)>>1ç›¸å½“äº(right-left)/2
+            int mid = left + ((right - left) >> 1);
+            bool check = quickAdd(divisor, mid, dividend);
+            if (check) {
+                ans = mid;
+                // æ³¨æ„æº¢å‡º
+                if (mid == INT_MAX)
+                    break;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return rev ? -ans : ans;
+    }
 };

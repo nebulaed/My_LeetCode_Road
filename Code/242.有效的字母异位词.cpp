@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÁ½´Î¹þÏ£±í¼ÆÊý£¬Ê±¼ä 4 ms 91.49%£¬¿Õ¼ä 7.2 MB 30.60%
+// æˆ‘çš„è§£æ³•ï¼šä¸¤æ¬¡å“ˆå¸Œè¡¨è®¡æ•°ï¼Œæ—¶é—´ 4 ms 91.49%ï¼Œç©ºé—´ 7.2 MB 30.60%
 class Solution {
 public:
     bool isAnagram(string s, string t) {
@@ -20,7 +20,7 @@ public:
     }
 };
 
-// LeetCode 101½â·¨£ºÒ»´Î¹þÏ£±í¼ÆÊý£¬Ê±¼ä 4 ms 91.49%£¬¿Õ¼ä 7 MB 93.11%
+// LeetCode 101è§£æ³•ï¼šä¸€æ¬¡å“ˆå¸Œè¡¨è®¡æ•°ï¼Œæ—¶é—´ 4 ms 91.49%ï¼Œç©ºé—´ 7 MB 93.11%
 class Solution {
 public:
     bool isAnagram(string s, string t) {

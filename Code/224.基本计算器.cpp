@@ -3,12 +3,12 @@
 #include<string>
 using namespace std;
 
-// �ҵĽⷨ���沨������ʽ��ʱ�� 12 ms 54%���ռ� 9 MB 38%
-// �ؼ��㣺һԪ����ʽ��-���Ĵ���
+// 我的解法：逆波兰表达式，时间 12 ms 54%，空间 9 MB 38%
+// 关键点：一元表达式“-”的处理
 class Solution {
 public:
     int calculate(string s) {
-        // ����׺����ʽת��Ϊ��׺����ʽ
+        // 将中缀表达式转换为后缀表达式
         string t;
         stack<int, vector<int>> stk;
         size_t length = s.size();
@@ -33,7 +33,7 @@ public:
                     stk.pop();
                 }
                 else {
-                    // �ؼ��㣺������Ϊ'-'��ǰ�����κ��������ֻ���ţ�����ǰ����'('ʱ���Ӹ�0
+                    // 关键点：当符号为'-'且前面无任何其他数字或符号，或者前面是'('时，加个0
                     if (s[i] == '-' && (t.empty() || !flag)) {
                         t += "0,";
                     }
@@ -49,7 +49,7 @@ public:
             t += static_cast<char>(stk.top());
             stk.pop();
         }
-        // �Ժ�׺����ʽͨ����ջ��ջ�������д������õ�������
+        // 对后缀表达式通过出栈入栈操作进行处理，得到计算结果
         for (size_t i = 0; i < t.size();) {
             if (isdigit(t[i])) {
                 int num = 0;
@@ -79,10 +79,10 @@ public:
     }
 };
 
-// �ٷ��ⷨһ������չ�� + ջ��ʱ�� O(n) 4 ms 97.89%���ռ� O(n) 7.8 MB 88.34%
-// ԭ������sign = {-1, +1}������ǰ�ķ��ţ��������ű���ʽ�����ʣ�����ȡֵ��
-// 1. ���ַ����е�ǰλ�õ�������й�
-// 2. ����ǰλ����һϵ�з����ڣ���Ҳ����Щ����ǰ����������أ�ÿ������һ����-�ſ�ͷ�����ţ�����ζ�Ŵ˺�ķ��Ŷ�Ҫ����ת
+// 官方解法一：括号展开 + 栈，时间 O(n) 4 ms 97.89%，空间 O(n) 7.8 MB 88.34%
+// 原理：用sign = {-1, +1}代表当前的符号，根据括号表达式的性质，它的取值：
+// 1. 与字符串中当前位置的运算符有关
+// 2. 若当前位置在一系列符号内，则也与这些括号前面的运算符相关：每当遇到一个以-号开头的括号，则意味着此后的符号都要被翻转
 class Solution {
 public:
     int calculate(string s) {
@@ -120,7 +120,7 @@ public:
     }
 };
 
-// �ҵĵڶ��νⷨ������չ��+ջ��û��Ҫ��vector<bool>��ʱ�� 8 ms 80.30%���ռ� 7.8 MB 87.75%
+// 我的第二次解法：括号展开+栈，没必要用vector<bool>，时间 8 ms 80.30%，空间 7.8 MB 87.75%
 class Solution {
 public:
     int calculate(string s) {

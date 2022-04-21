@@ -1,81 +1,82 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¶¯Ì¬¹æ»®£¬Ê±¼äO(n sqrt(n)) 176 ms£¬¿Õ¼äO(n) 9.3 MB
+// æˆ‘çš„è§£æ³•ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n sqrt(n)) 176 msï¼Œç©ºé—´O(n) 9.3 MB
 class Solution {
 public:
-	int numSquares(int n) {
-		vector<int> nums;
-		for (int i = 1; i * i <= n; ++i) {
-			nums.emplace_back(i * i);
-		}
-		vector<int> f(n + 1, 0);
-		for (int i = 1; i <= n; ++i) {
-			int minStep = INT_MAX;
-			for (int j = 0; j < nums.size(); ++j) {
-				if (i - nums[j] >= 0) {
-					minStep = min(minStep, f[i - nums[j]]);
-				}
-				else break;
-			}
-			f[i] = minStep + 1;
-		}
-		return f[n];
-	}
+    int numSquares(int n) {
+        vector<int> nums;
+        for (int i = 1; i * i <= n; ++i) {
+            nums.emplace_back(i * i);
+        }
+        vector<int> f(n + 1, 0);
+        for (int i = 1; i <= n; ++i) {
+            int minStep = INT_MAX;
+            for (int j = 0; j < nums.size(); ++j) {
+                if (i - nums[j] >= 0) {
+                    minStep = min(minStep, f[i - nums[j]]);
+                }
+                else break;
+            }
+            f[i] = minStep + 1;
+        }
+        return f[n];
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¶¯Ì¬¹æ»®£¬Ê±¼äO(n sqrt(n)) 72 ms£¬¿Õ¼äO(n) 8.9 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´O(n sqrt(n)) 72 msï¼Œç©ºé—´O(n) 8.9 MB
 class Solution {
 public:
-	int numSquares(int n) {
-		vector<int> f(n + 1);
-		for (int i = 1; i <= n; i++) {
-			int minn = INT_MAX;
-			for (int j = 1; j * j <= i; j++) {
-				minn = min(minn, f[i - j * j]);
-			}
-			f[i] = minn + 1;
-		}
-		return f[n];
-	}
+    int numSquares(int n) {
+        vector<int> f(n + 1);
+        for (int i = 1; i <= n; i++) {
+            int minn = INT_MAX;
+            for (int j = 1; j * j <= i; j++) {
+                minn = min(minn, f[i - j * j]);
+            }
+            f[i] = minn + 1;
+        }
+        return f[n];
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºËÄÆ½·½ºÍ¶¨Àí£¬ÈÎÒâÒ»¸öÕıÕûÊı¿ÉÒÔ±íÊ¾ÎªÖÁ¶àËÄ¸öÕıÕûÊıµÄÆ½·½ºÍ
-// Ê±¼äO(sqrt(n)) 4 ms£¬¿Õ¼ä O(1) 5.8 MB
-// µ±ÇÒ½öµ±n¡Ù4^k*(8m+7)Ê±£¬n¿ÉÒÔ±»±íÊ¾ÎªÖÁ¶àÈı¸öÕıÕûÊıµÄÆ½·½ºÍ¡£µ±n=4^k*(8m+7)Ê±£¬nÖ»ÄÜ±»±íÊ¾ÎªËÄ¸öÕıÕûÊıµÄÆ½·½ºÍ£¬´ËÊ±·µ»Ø4
-// Ê£ÏÂ3ÖÖÇé¿ö£ºÎª1Ê±£¬nÎªÍêÈ«Æ½·½Êı
-// ¼ì²éËùÓĞµÄn-a^2(1<=a<=sqrt(n))ÊÇ·ñÎªÍêÈ«Æ½·½Êı£¬ÊÇÔòÎª2£¬·ñÔòÎª3
+// å®˜æ–¹è§£æ³•äºŒï¼šå››å¹³æ–¹å’Œå®šç†ï¼Œä»»æ„ä¸€ä¸ªæ­£æ•´æ•°å¯ä»¥è¡¨ç¤ºä¸ºè‡³å¤šå››ä¸ªæ­£æ•´æ•°çš„å¹³æ–¹å’Œ
+// æ—¶é—´O(sqrt(n)) 4 msï¼Œç©ºé—´ O(1) 5.8 MB
+// å½“ä¸”ä»…å½“nâ‰ 4^k*(8m+7)æ—¶ï¼Œnå¯ä»¥è¢«è¡¨ç¤ºä¸ºè‡³å¤šä¸‰ä¸ªæ­£æ•´æ•°çš„å¹³æ–¹å’Œã€‚å½“n=4^k*(8m+7)æ—¶ï¼Œnåªèƒ½è¢«è¡¨ç¤ºä¸ºå››ä¸ªæ­£æ•´æ•°çš„å¹³æ–¹å’Œï¼Œæ­¤æ—¶è¿”å›4
+// å‰©ä¸‹3ç§æƒ…å†µï¼šä¸º1æ—¶ï¼Œnä¸ºå®Œå…¨å¹³æ–¹æ•°
+// æ£€æŸ¥æ‰€æœ‰çš„n-a^2(1<=a<=sqrt(n))æ˜¯å¦ä¸ºå®Œå…¨å¹³æ–¹æ•°ï¼Œæ˜¯åˆ™ä¸º2ï¼Œå¦åˆ™ä¸º3
 class Solution {
 private:
-	// ÅĞ¶ÏÊÇ·ñÎªÍêÈ«Æ½·½Êı
-	bool isPerfectSquare(int x) {
-		int y = sqrt(x);
-		return y * y == x;
-	}
+    // åˆ¤æ–­æ˜¯å¦ä¸ºå®Œå…¨å¹³æ–¹æ•°
+    bool isPerfectSquare(int x) {
+        int y = sqrt(x);
+        return y * y == x;
+    }
 
-	bool checkAnswer4(int x) {
-		while (x % 4 == 0) {
-			x /= 4;
-		}
-		return x % 8 == 7;
-	}
+    bool checkAnswer4(int x) {
+        while (x % 4 == 0) {
+            x /= 4;
+        }
+        return x % 8 == 7;
+    }
 
 public:
-	int numSquares(int n) {
-		if (isPerfectSquare(n)) {
-			return 1;
-		}
-		if (checkAnswer4(n)) {
-			return 4;
-		}
-		for (int i = 1; i * i <= n; ++i) {
-			int j = n - i * i;
-			if (isPerfectSquare(j)) {
-				return 2;
-			}
-		}
-		return 3;
-	}
+    int numSquares(int n) {
+        if (isPerfectSquare(n)) {
+            return 1;
+        }
+        if (checkAnswer4(n)) {
+            return 4;
+        }
+        for (int i = 1; i * i <= n; ++i) {
+            int j = n - i * i;
+            if (isPerfectSquare(j)) {
+                return 2;
+            }
+        }
+        return 3;
+    }
 };

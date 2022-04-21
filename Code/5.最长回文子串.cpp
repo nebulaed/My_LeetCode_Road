@@ -6,215 +6,215 @@ using namespace std;
 
 class Solution {
 public:
-	string longestPalindrome(string s) {
-		string maxSubStr = s.substr(0,1);
-		int maxSubStrSize = 1;
-		bool flag;
-		for (int i = 0; i < s.size(); i++) {
-			for (int j = i + 1; j < s.size(); j++) {
-				flag = true;
-				int it1 = i;
-				int it2 = j;
-				for (; it1 < it2; it1++, it2--) {
-					if (s[it1] != s[it2]) {
-						flag = false;
-						break;
-					}
-				}
-				if (flag) {
-					if ((j + 1 - i) > maxSubStrSize) {
-						maxSubStrSize = j + 1 - i;
-						maxSubStr = s.substr(i, maxSubStrSize);
-					}
-				}
-			}
-		}
-		return maxSubStr;
-	}
+    string longestPalindrome(string s) {
+        string maxSubStr = s.substr(0,1);
+        int maxSubStrSize = 1;
+        bool flag;
+        for (int i = 0; i < s.size(); i++) {
+            for (int j = i + 1; j < s.size(); j++) {
+                flag = true;
+                int it1 = i;
+                int it2 = j;
+                for (; it1 < it2; it1++, it2--) {
+                    if (s[it1] != s[it2]) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    if ((j + 1 - i) > maxSubStrSize) {
+                        maxSubStrSize = j + 1 - i;
+                        maxSubStr = s.substr(i, maxSubStrSize);
+                    }
+                }
+            }
+        }
+        return maxSubStr;
+    }
 };
 
-// ¶¯Ì¬¹æ»®
+// åŠ¨æ€è§„åˆ’
 class Solution {
 public:
-	string longestPalindrome(string s) {
-		int n = s.size();
-		if (n < 2) {
-			return s;
-		}
-		int maxLen = 1;
-		int begin = 0;
-		// dp(i,j)±íÊ¾×Ö·û´®sµÄµÚiµ½j¸ö×ÖÄ¸×é³ÉµÄ´®(ÏÂÎÄ±íÊ¾³És[i:j])ÊÇ·ñÎª»ØÎÄ´®£¬ÊÇÎª1£¬·ñÎª0
-		vector<vector<int>> dp(n, vector<int>(n));
-		// ËùÓĞ³¤¶È
-		for (int i = 0; i < n; i++) {
-			dp[i][i] = true;
-		}
-		// Ã¶¾Ù×Ó´®³¤¶È
-		for (int L = 2; L <= n; L++) {
-			// Ã¶¾Ù×ó±ß½ç£¬×ó±ß½ç¿ÉÒÔÏÈ²»¿¼ÂÇL³¤¶ÈµÄÏŞÖÆ
-			for (int i = 0; i < n; i++) {
-				int j = L + i - 1;
-				// ÈôÓÒ±ß½çÔ½½ç£¬¾ÍÍË³öµ±Ç°Ñ­»·
-				if (j >= n) {
-					break;
-				}
+    string longestPalindrome(string s) {
+        int n = s.size();
+        if (n < 2) {
+            return s;
+        }
+        int maxLen = 1;
+        int begin = 0;
+        // dp(i,j)è¡¨ç¤ºå­—ç¬¦ä¸²sçš„ç¬¬iåˆ°jä¸ªå­—æ¯ç»„æˆçš„ä¸²(ä¸‹æ–‡è¡¨ç¤ºæˆs[i:j])æ˜¯å¦ä¸ºå›æ–‡ä¸²ï¼Œæ˜¯ä¸º1ï¼Œå¦ä¸º0
+        vector<vector<int>> dp(n, vector<int>(n));
+        // æ‰€æœ‰é•¿åº¦
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
+        }
+        // æšä¸¾å­ä¸²é•¿åº¦
+        for (int L = 2; L <= n; L++) {
+            // æšä¸¾å·¦è¾¹ç•Œï¼Œå·¦è¾¹ç•Œå¯ä»¥å…ˆä¸è€ƒè™‘Lé•¿åº¦çš„é™åˆ¶
+            for (int i = 0; i < n; i++) {
+                int j = L + i - 1;
+                // è‹¥å³è¾¹ç•Œè¶Šç•Œï¼Œå°±é€€å‡ºå½“å‰å¾ªç¯
+                if (j >= n) {
+                    break;
+                }
 
-				if (s[i] != s[j]) {
-					dp[i][j] = false;
-				}
-				else {
-					// ÈôL < 4 »ò j - i < 3£¬ÔòÔÚs[i] == s[j]µÄÇ°ÌáÏÂ£¬s[i:j]±ØÎª»ØÎÄ´®
-					if (L < 4) {
-						dp[i][j] = true;
-					}
-					// ÈôL >= 4£¬Ôò»¹ĞèÒª¿¼ÂÇÄÚ²¿ÊÇ·ñÎª»ØÎÄ´®
-					else {
-						dp[i][j] = dp[i + 1][j - 1];
-					}
-				}
+                if (s[i] != s[j]) {
+                    dp[i][j] = false;
+                }
+                else {
+                    // è‹¥L < 4 æˆ– j - i < 3ï¼Œåˆ™åœ¨s[i] == s[j]çš„å‰æä¸‹ï¼Œs[i:j]å¿…ä¸ºå›æ–‡ä¸²
+                    if (L < 4) {
+                        dp[i][j] = true;
+                    }
+                        // è‹¥L >= 4ï¼Œåˆ™è¿˜éœ€è¦è€ƒè™‘å†…éƒ¨æ˜¯å¦ä¸ºå›æ–‡ä¸²
+                    else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
 
-				// ¸üĞÂ×î³¤»ØÎÄ×Ó´®³¤¶ÈºÍ½á¹û
-				if (dp[i][j] && L > maxLen) {
-					maxLen = L;
-					begin = i;
-				}
-			}
-		}
+                // æ›´æ–°æœ€é•¿å›æ–‡å­ä¸²é•¿åº¦å’Œç»“æœ
+                if (dp[i][j] && L > maxLen) {
+                    maxLen = L;
+                    begin = i;
+                }
+            }
+        }
 
-		return s.substr(begin, maxLen);
-	}
+        return s.substr(begin, maxLen);
+    }
 };
 
-// ÖĞĞÄÀ©Õ¹Ëã·¨
+// ä¸­å¿ƒæ‰©å±•ç®—æ³•
 class Solution {
 public:
-	string longestPalindrome(string s) {
-		if (s.size() == 0) {
-			return "";
-		}
-		int start = 0;
-		int maxLen = 1;
-		for (int i = 0; i < s.size(); ++i) {
-			int len1 = expandAroundCenter(s, i, i);
-			int len2 = expandAroundCenter(s, i, i + 1);
-			int len = max(len1, len2);
-			if (len > maxLen) {
-				start = i - (len - 1) / 2;
-				maxLen = len;
-			}
-		}
-		return s.substr(start, maxLen);
-	}
+    string longestPalindrome(string s) {
+        if (s.size() == 0) {
+            return "";
+        }
+        int start = 0;
+        int maxLen = 1;
+        for (int i = 0; i < s.size(); ++i) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = max(len1, len2);
+            if (len > maxLen) {
+                start = i - (len - 1) / 2;
+                maxLen = len;
+            }
+        }
+        return s.substr(start, maxLen);
+    }
 
-	int expandAroundCenter(const string& s, int left, int right) {
-		while (left >= 0 && right < s.size() && s[left] == s[right]) {
-			--left;
-			++right;
-		}
-		// okµÄ²»ÊÇs[left,right]¶øÊÇs[left+1, right-1]
-		return right - left - 1;
-	}
+    int expandAroundCenter(const string& s, int left, int right) {
+        while (left >= 0 && right < s.size() && s[left] == s[right]) {
+            --left;
+            ++right;
+        }
+        // okçš„ä¸æ˜¯s[left,right]è€Œæ˜¯s[left+1, right-1]
+        return right - left - 1;
+    }
 };
 
-// ManacherËã·¨
+// Manacherç®—æ³•
 class Solution {
 public:
-	string longestPalindrome(string s) {
-		int start = 0, maxLen = 1;
-		string t = "#";
-		// ±éÀú×Ö·û´®sÖĞµÄÃ¿¸ö×Ö·ûc
-		for (char& c : s) {
-			t += c;
-			t += '#';
-		}
-		t += '#';
-		s = t;
+    string longestPalindrome(string s) {
+        int start = 0, maxLen = 1;
+        string t = "#";
+        // éå†å­—ç¬¦ä¸²sä¸­çš„æ¯ä¸ªå­—ç¬¦c
+        for (char& c : s) {
+            t += c;
+            t += '#';
+        }
+        t += '#';
+        s = t;
 
-		// »ØÎÄ´®µÄ±Û³¤
-		vector<int> armLen;
-		int right = -1, j = -1;
-		int cur_arm_len;
-		for (int i = 0; i < s.size(); ++i) {
-			if (right >= i) {
-				// i_symÊÇiÒÔjÎªÖĞĞÄµÄ¾µÏñÎ»
-				int i_sym = j * 2 - i;
-				// rightÎªÒÔjÎªÖĞĞÄµÄ×î³¤»ØÎÄ´®±Û³¤ËùÄÜ¸²¸Çµ½µÄ×îÔ¶ÔªËØ£¬right-i¾ÍÊÇÒÔiÎªÖĞĞÄÔÚjµÄ±Û³¤¸²¸Ç·¶Î§ÄÚµÄ×î´ó±Û³¤¡£
-				int min_arm_len = min(armLen[i_sym], right - i);
-				// ÓÉÓÚi_symµÄ±Û³¤¼ÇÂ¼armLenÖĞÒÑ¼ÇÂ¼ÏÂÒÔi_symÎªÖĞĞÄµÄ»ØÎÄ´®±Û³¤£¬¹Ê¼ì²éÒÔiÎªÖĞĞÄµÄ»ØÎÄ´®±Û³¤Ê±£¬Ö»Ğè´Ói-min_arm_lenµ½i+min_arm_len¿ªÊ¼ÍùÍâÍØÕ¹£¬ÓÉÓÚÏÖÔÚ±ØÎª³¤¶ÈÆæÊı×Ö·û´®£¬¹Ê±Û³¤Îª(³¤¶È-1)/2
-				cur_arm_len = (expandAroundCenter(s, i - min_arm_len, i + min_arm_len) - 1) / 2;
-			}
-			else {
-				cur_arm_len = (expandAroundCenter(s, i, i) - 1) / 2;
-			}
-			armLen.push_back(cur_arm_len);
-			if (i + cur_arm_len > right) {
-				j = i;
-				right = i + cur_arm_len;
-			}
-			if (cur_arm_len * 2 + 1 > maxLen) {
-				start = i - cur_arm_len;
-				maxLen = 2 * cur_arm_len;
-			}
-		}
+        // å›æ–‡ä¸²çš„è‡‚é•¿
+        vector<int> armLen;
+        int right = -1, j = -1;
+        int cur_arm_len;
+        for (int i = 0; i < s.size(); ++i) {
+            if (right >= i) {
+                // i_symæ˜¯iä»¥jä¸ºä¸­å¿ƒçš„é•œåƒä½
+                int i_sym = j * 2 - i;
+                // rightä¸ºä»¥jä¸ºä¸­å¿ƒçš„æœ€é•¿å›æ–‡ä¸²è‡‚é•¿æ‰€èƒ½è¦†ç›–åˆ°çš„æœ€è¿œå…ƒç´ ï¼Œright-iå°±æ˜¯ä»¥iä¸ºä¸­å¿ƒåœ¨jçš„è‡‚é•¿è¦†ç›–èŒƒå›´å†…çš„æœ€å¤§è‡‚é•¿ã€‚
+                int min_arm_len = min(armLen[i_sym], right - i);
+                // ç”±äºi_symçš„è‡‚é•¿è®°å½•armLenä¸­å·²è®°å½•ä¸‹ä»¥i_symä¸ºä¸­å¿ƒçš„å›æ–‡ä¸²è‡‚é•¿ï¼Œæ•…æ£€æŸ¥ä»¥iä¸ºä¸­å¿ƒçš„å›æ–‡ä¸²è‡‚é•¿æ—¶ï¼Œåªéœ€ä»i-min_arm_lenåˆ°i+min_arm_lenå¼€å§‹å¾€å¤–æ‹“å±•ï¼Œç”±äºç°åœ¨å¿…ä¸ºé•¿åº¦å¥‡æ•°å­—ç¬¦ä¸²ï¼Œæ•…è‡‚é•¿ä¸º(é•¿åº¦-1)/2
+                cur_arm_len = (expandAroundCenter(s, i - min_arm_len, i + min_arm_len) - 1) / 2;
+            }
+            else {
+                cur_arm_len = (expandAroundCenter(s, i, i) - 1) / 2;
+            }
+            armLen.push_back(cur_arm_len);
+            if (i + cur_arm_len > right) {
+                j = i;
+                right = i + cur_arm_len;
+            }
+            if (cur_arm_len * 2 + 1 > maxLen) {
+                start = i - cur_arm_len;
+                maxLen = 2 * cur_arm_len;
+            }
+        }
 
-		string ret;
-		for (int i = start; i <= start + maxLen; ++i) {
-			if (s[i] != '#') {
-				ret += s[i];
-			}
-		}
-		return ret;
-	}
+        string ret;
+        for (int i = start; i <= start + maxLen; ++i) {
+            if (s[i] != '#') {
+                ret += s[i];
+            }
+        }
+        return ret;
+    }
 
-	int expandAroundCenter(const string& s, int left, int right) {
-		while (left >= 0 && right < s.size() && s[left] == s[right]) {
-			--left;
-			++right;
-		}
-		// okµÄ²»ÊÇs[left,right]¶øÊÇs[left+1, right-1]
-		return right - left - 1;
-	}
+    int expandAroundCenter(const string& s, int left, int right) {
+        while (left >= 0 && right < s.size() && s[left] == s[right]) {
+            --left;
+            ++right;
+        }
+        // okçš„ä¸æ˜¯s[left,right]è€Œæ˜¯s[left+1, right-1]
+        return right - left - 1;
+    }
 };
 
-// ÎÒµÄµÚ¶ş´Î½â·¨£ºÖĞĞÄÀ©Õ¹£¬Ê±¼ä 12 ms 94.97%£¬¿Õ¼ä 7.1 MB 78.71%
+// æˆ‘çš„ç¬¬äºŒæ¬¡è§£æ³•ï¼šä¸­å¿ƒæ‰©å±•ï¼Œæ—¶é—´ 12 ms 94.97%ï¼Œç©ºé—´ 7.1 MB 78.71%
 class Solution {
 private:
-	int expandAroundCenter(const string& s, int left, int right) {
-		while (left >= 0 && right < s.size() && s[left] == s[right]) {
-			--left;
-			++right;
-		}
-		return right - left - 1;
-	}
+    int expandAroundCenter(const string& s, int left, int right) {
+        while (left >= 0 && right < s.size() && s[left] == s[right]) {
+            --left;
+            ++right;
+        }
+        return right - left - 1;
+    }
 public:
-	string longestPalindrome(string s) {
-		int start = 0, maxLen = 1, n = s.size();
-		for (int i = 0; i < n - 1; ++i) {
-			int singularLen = expandAroundCenter(s, i, i);
-			int evenLen = expandAroundCenter(s, i, i + 1);
-			if (singularLen > evenLen) {
-				if (singularLen > maxLen) {
-					maxLen = singularLen;
-					start = i - (maxLen >> 1);
-				}
-			}
-			else {
-				if (evenLen > maxLen) {
-					maxLen = evenLen;
-					start = i - (maxLen >> 1) + 1;
-				}
-			}
-		}
-		return s.substr(start, maxLen);
-	}
+    string longestPalindrome(string s) {
+        int start = 0, maxLen = 1, n = s.size();
+        for (int i = 0; i < n - 1; ++i) {
+            int singularLen = expandAroundCenter(s, i, i);
+            int evenLen = expandAroundCenter(s, i, i + 1);
+            if (singularLen > evenLen) {
+                if (singularLen > maxLen) {
+                    maxLen = singularLen;
+                    start = i - (maxLen >> 1);
+                }
+            }
+            else {
+                if (evenLen > maxLen) {
+                    maxLen = evenLen;
+                    start = i - (maxLen >> 1) + 1;
+                }
+            }
+        }
+        return s.substr(start, maxLen);
+    }
 };
 
 int main()
 {
-	Solution s;
-	string ret = s.longestPalindrome("cbbd");
-	//string ret = s.longestPalindrome("ababba");
-	cout << "×î³¤»ØÎÄ×Ó´®Îª£º" << ret << endl;
-	system("pause");
-	return 0;
+    Solution s;
+    string ret = s.longestPalindrome("cbbd");
+    //string ret = s.longestPalindrome("ababba");
+    cout << "æœ€é•¿å›æ–‡å­ä¸²ä¸ºï¼š" << ret << endl;
+
+    return 0;
 }

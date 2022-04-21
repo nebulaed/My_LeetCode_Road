@@ -2,22 +2,21 @@
 #include<vector>
 #include<numeric>
 
-using std::vector;
-using std::accumulate;
+using namespace std;
 
-// LeetCode 101½â·¨£ºÊ±¼ä 4 ms 47.82%£¬¿Õ¼ä 7.1 MB 74%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 4 ms 47.82%ï¼Œç©ºé—´ 7.1 MB 74%
 class Solution {
 public:
-	int numberOfArithmeticSlices(vector<int>& nums) {
-		size_t length = nums.size();
-		if (length <= 2) return 0;
-		vector<int> dp(length, 0);
-		for (size_t i = 2; i < length; ++i) {
-			int temp = nums[i - 1];
-			if (nums[i] - temp == temp - nums[i - 2]) {
-				dp[i] = dp[i - 1] + 1;
-			}
-		}
-		return accumulate(dp.begin(), dp.end(), 0);
-	}
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        size_t length = nums.size();
+        if (length <= 2) return 0;
+        vector<int> dp(length, 0);
+        for (size_t i = 2; i < length; ++i) {
+            int temp = nums[i - 1];
+            if (nums[i] - temp == temp - nums[i - 2]) {
+                dp[i] = dp[i - 1] + 1;
+            }
+        }
+        return accumulate(dp.begin(), dp.end(), 0);
+    }
 };

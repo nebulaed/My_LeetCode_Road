@@ -1,9 +1,10 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<queue>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º»¬¶¯´°¿Ú£¬Ê±¼ä O(n) 4 ms 94.02%£¬¿Õ¼ä O(1) 10.3 MB 39.00%
+// æˆ‘çš„è§£æ³•ï¼šæ»‘åŠ¨çª—å£ï¼Œæ—¶é—´ O(n) 4 ms 94.02%ï¼Œç©ºé—´ O(1) 10.3 MB 39.00%
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
@@ -13,7 +14,7 @@ public:
                 sum += nums[right++];
             }
             if (right >= n && sum < target) break;
-            //minLen = min(minLen, right - left); // Ã»±ØÒª£¬ÒòÎªºóÃæ»áËõ¼õ´°¿Ú£¬¼ÓÉÏÕâ¾äÊ±¼ä»áÔöÖÁ8 ms£¬60.90%
+            //minLen = min(minLen, right - left); // æ²¡å¿…è¦ï¼Œå› ä¸ºåé¢ä¼šç¼©å‡çª—å£ï¼ŒåŠ ä¸Šè¿™å¥æ—¶é—´ä¼šå¢è‡³8 msï¼Œ60.90%
             while (sum >= target) {
                 sum -= nums[left++];
             }
@@ -23,21 +24,21 @@ public:
     }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÇ°×ººÍ+¶ş·Ö²éÕÒ£¬Ê±¼ä O(n log n) 16 ms 21.10%£¬¿Õ¼ä O(n) 10.6 MB 5.07%
+// å®˜æ–¹è§£æ³•äºŒï¼šå‰ç¼€å’Œ+äºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ O(n log n) 16 ms 21.10%ï¼Œç©ºé—´ O(n) 10.6 MB 5.07%
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
         int n = nums.size();
         if (n == 0) return n;
-        // ÇóÇ°×ººÍ
+        // æ±‚å‰ç¼€å’Œ
         vector<int> sums(n + 1, 0);
         for (int i = 1; i <= n; ++i) {
             sums[i] = sums[i - 1] + nums[i - 1];
         }
-        // Çó×î¶ÌÂú×ãºÍµÄ×ÓÊı×é³¤¶È
+        // æ±‚æœ€çŸ­æ»¡è¶³å’Œçš„å­æ•°ç»„é•¿åº¦
         int ret = INT_MAX;
         for (int i = 1; i <= n; ++i) {
-            // ÎªÊ¹sums[end] - sums[i - 1] == target£¬ĞèÔÚsumsÖĞ¶ş·Ö²éÕÒtarget + sums[i - 1]
+            // ä¸ºä½¿sums[end] - sums[i - 1] == targetï¼Œéœ€åœ¨sumsä¸­äºŒåˆ†æŸ¥æ‰¾target + sums[i - 1]
             int endSum = target + sums[i - 1];
             auto end = lower_bound(sums.begin(), sums.end(), endSum);
             if (end != sums.end()) {
@@ -59,6 +60,5 @@ int main() {
 
     cout << ret << endl;
 
-    system("pause");
     return 0;
 }

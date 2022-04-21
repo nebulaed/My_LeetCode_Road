@@ -1,35 +1,33 @@
 #include<iostream>
 #include<vector>
 
-using std::vector;
-using std::swap;
-using std::move;
+using namespace std;
 
-// LeetCode 101½â·¨Ò»£ºFisher-YatesÏ´ÅÆËã·¨£¬ÕıÏòÏ´ÅÆ£¬Ê±¼ä 112 ms 36.93%£¬¿Õ¼ä 88.1 MB 65.02%
-// Ô­ÀíÊÇÍ¨¹ıËæ»ú½»»»Î»ÖÃÀ´ÊµÏÖËæ»ú´òÂÒ
+// LeetCode 101è§£æ³•ä¸€ï¼šFisher-Yatesæ´—ç‰Œç®—æ³•ï¼Œæ­£å‘æ´—ç‰Œï¼Œæ—¶é—´ 112 ms 36.93%ï¼Œç©ºé—´ 88.1 MB 65.02%
+// åŸç†æ˜¯é€šè¿‡éšæœºäº¤æ¢ä½ç½®æ¥å®ç°éšæœºæ‰“ä¹±
 class Solution {
 private:
-	vector<int> memory;
+    vector<int> memory;
 public:
-	Solution(vector<int>& nums) : memory(nums) {}
-	// Ê¹ÓÃstd::moveÄÜ°ÑÊ±¼ä¼Ó¿ìµ½96 ms 77.71%
-	//Solution(vector<int>& nums) : memory(move(nums)) {}
+    Solution(vector<int>& nums) : memory(nums) {}
+    // ä½¿ç”¨std::moveèƒ½æŠŠæ—¶é—´åŠ å¿«åˆ°96 ms 77.71%
+    //Solution(vector<int>& nums) : memory(move(nums)) {}
 
-	vector<int> reset() {
-		return memory;
-	}
+    vector<int> reset() {
+        return memory;
+    }
 
-	vector<int> shuffle() {
-		if (memory.empty()) return {};
-		vector<int> shuffled(memory);
-		int n = memory.size();
-		// ÕıÏòÏ´ÅÆ
-		for (int i = 0; i < n; ++i) {
-			int pos = rand() % (n - i);
-			swap(shuffled[i], shuffled[i + pos]);
-		}
-		return shuffled;
-	}
+    vector<int> shuffle() {
+        if (memory.empty()) return {};
+        vector<int> shuffled(memory);
+        int n = memory.size();
+        // æ­£å‘æ´—ç‰Œ
+        for (int i = 0; i < n; ++i) {
+            int pos = rand() % (n - i);
+            swap(shuffled[i], shuffled[i + pos]);
+        }
+        return shuffled;
+    }
 };
 
 /**
@@ -39,27 +37,27 @@ public:
  * vector<int> param_2 = obj->shuffle();
  */
 
-// LeetCode 101½â·¨¶ş£ºFisher-YatesÏ´ÅÆËã·¨£¬·´ÏòÏ´ÅÆ£¬Ê±¼ä 116 ms 29.94%£¬¿Õ¼ä 88 MB 83.66%
+// LeetCode 101è§£æ³•äºŒï¼šFisher-Yatesæ´—ç‰Œç®—æ³•ï¼Œåå‘æ´—ç‰Œï¼Œæ—¶é—´ 116 ms 29.94%ï¼Œç©ºé—´ 88 MB 83.66%
 class Solution {
 private:
-	vector<int> memory;
+    vector<int> memory;
 public:
-	Solution(vector<int>& nums) : memory(nums) {}
-	// Ê¹ÓÃstd::moveºó£¬Ê±¼ä 100 ms 67.10%£¬¿Õ¼ä 88.2 MB 22.06%
-	//Solution(vector<int>& nums) : memory(move(nums)) {}
+    Solution(vector<int>& nums) : memory(nums) {}
+    // ä½¿ç”¨std::moveåï¼Œæ—¶é—´ 100 ms 67.10%ï¼Œç©ºé—´ 88.2 MB 22.06%
+    //Solution(vector<int>& nums) : memory(move(nums)) {}
 
-	vector<int> reset() {
-		return memory;
-	}
+    vector<int> reset() {
+        return memory;
+    }
 
-	vector<int> shuffle() {
-		if (memory.empty()) return {};
-		vector<int> shuffled(memory);
-		int n = memory.size();
-		// ·´ÏòÏ´ÅÆ
-		for (int i = n - 1; i >= 0; --i) {
-			swap(shuffled[i], shuffled[rand() % (i + 1)]);
-		}
-		return shuffled;
-	}
+    vector<int> shuffle() {
+        if (memory.empty()) return {};
+        vector<int> shuffled(memory);
+        int n = memory.size();
+        // åå‘æ´—ç‰Œ
+        for (int i = n - 1; i >= 0; --i) {
+            swap(shuffled[i], shuffled[rand() % (i + 1)]);
+        }
+        return shuffled;
+    }
 };

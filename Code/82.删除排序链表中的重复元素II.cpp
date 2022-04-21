@@ -9,13 +9,13 @@ struct ListNode {
     ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä O(n) 8 ms 55.44%£¬¿Õ¼ä O(1) 10.9 MB 19.10%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ O(n) 8 ms 55.44%ï¼Œç©ºé—´ O(1) 10.9 MB 19.10%
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
         if (!head) return head;
         ListNode* dummy = new ListNode(101, head), * curr = dummy;
-        // ×¢ÒâÌØÊâÇé¿ö£ºÓÐ¿ÉÄÜ°Ñµ±Ç°½ÚµãºóÃæµÄ½ÚµãÈ«²¿É¾³ý£¬µ¼ÖÂcurr->nextÎª¿Õ£¬ËùÒÔ¼ì²éÌõ¼þÎªcurr->next && curr->next->next
+        // æ³¨æ„ç‰¹æ®Šæƒ…å†µï¼šæœ‰å¯èƒ½æŠŠå½“å‰èŠ‚ç‚¹åŽé¢çš„èŠ‚ç‚¹å…¨éƒ¨åˆ é™¤ï¼Œå¯¼è‡´curr->nextä¸ºç©ºï¼Œæ‰€ä»¥æ£€æŸ¥æ¡ä»¶ä¸ºcurr->next && curr->next->next
         while (curr->next && curr->next->next) {
             int preDeleted = curr->next->val;
             if (curr->next->next->val == preDeleted) {
@@ -28,12 +28,12 @@ public:
             }
             else curr = curr->next;
         }
-        // ÑÏ¸ñÀ´ËµÓ¦¸ÃÕâÃ´·µ»Ø
+        // ä¸¥æ ¼æ¥è¯´åº”è¯¥è¿™ä¹ˆè¿”å›ž
         ListNode* ret = dummy->next;
         delete dummy;
         dummy = nullptr;
         return ret;
-        // dummyÖ¸Ïò¶ÑÉÏµÄ±äÁ¿£¬·µ»ØºóÃ»ÈË¶ÔËüÖ¸ÏòµÄÄÚ´æ½øÐÐÉ¾³ý¹ÜÀí£¬ÈÝÒ×µ¼ÖÂÄÚ´æÐ¹Â©
+        // dummyæŒ‡å‘å †ä¸Šçš„å˜é‡ï¼Œè¿”å›žåŽæ²¡äººå¯¹å®ƒæŒ‡å‘çš„å†…å­˜è¿›è¡Œåˆ é™¤ç®¡ç†ï¼Œå®¹æ˜“å¯¼è‡´å†…å­˜æ³„æ¼
         //return dummy->next;
     }
 };
@@ -50,6 +50,5 @@ int main() {
         cout << it->val << ",";
     }
 
-    system("pause");
     return 0;
 }

@@ -1,22 +1,22 @@
 #include<iostream>
 
-// ÎÒµÄ½â·¨£º¼ÆËã½×³ËÖĞÎåµÄ¸öÊı£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.8 MB 66.10%
-// Ë¼Â·£ºÎåµÄ¸öÊı»á´øÀ´ÁãµÄ¸öÊı
+// æˆ‘çš„è§£æ³•ï¼šè®¡ç®—é˜¶ä¹˜ä¸­äº”çš„ä¸ªæ•°ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.8 MB 66.10%
+// æ€è·¯ï¼šäº”çš„ä¸ªæ•°ä¼šå¸¦æ¥é›¶çš„ä¸ªæ•°
 class Solution {
 public:
-	int trailingZeroes(int n) {
-		int ret = 0;
-		for (int factor = 5; factor <= n; factor *= 5) {
-			ret += n / factor;
-		}
-		return ret;
-	}
+    int trailingZeroes(int n) {
+        int ret = 0;
+        for (int factor = 5; factor <= n; factor *= 5) {
+            ret += n / factor;
+        }
+        return ret;
+    }
 };
 
-// LeetCode 101½â·¨£ºÍ³¼Æ½×³Ë½á¹ûÖĞÖÊÒò×Ó5µÄ¸öÊı£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 5.8 MB 64.23%
+// LeetCode 101è§£æ³•ï¼šç»Ÿè®¡é˜¶ä¹˜ç»“æœä¸­è´¨å› å­5çš„ä¸ªæ•°ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 5.8 MB 64.23%
 class Solution {
 public:
-	int trailingZeroes(int n) {
-		return n == 0 ? 0 : (n / 5 + trailingZeroes(n / 5));
-	}
+    int trailingZeroes(int n) {
+        return n == 0 ? 0 : (n / 5 + trailingZeroes(n / 5));
+    }
 };

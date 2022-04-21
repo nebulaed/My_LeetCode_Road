@@ -2,7 +2,7 @@
 #include<unordered_map>
 using namespace std;
 
-// ¹Ù·½½â·¨Ò»£º³¤³ı·¨£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 6.2 MB 74.89%
+// å®˜æ–¹è§£æ³•ä¸€ï¼šé•¿é™¤æ³•ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 6.2 MB 74.89%
 class Solution {
 public:
     string fractionToDecimal(int numerator, int denominator) {
@@ -11,16 +11,16 @@ public:
             return to_string(numeratorLong / denominatorLong);
         }
         string ret;
-        // Èô·Ö×ÓºÍ·ÖÄ¸ÖĞÒ»¸öĞ¡ÓÚ0Ò»¸ö²»Ğ¡ÓÚ0
+        // è‹¥åˆ†å­å’Œåˆ†æ¯ä¸­ä¸€ä¸ªå°äº0ä¸€ä¸ªä¸å°äº0
         if (numeratorLong < 0 ^ denominatorLong < 0) {
             ret += '-';
         }
-        // ¼ÆËãÕûÊı²¿·Ö
+        // è®¡ç®—æ•´æ•°éƒ¨åˆ†
         numeratorLong = abs(numeratorLong), denominatorLong = abs(denominatorLong);
         int intPart = numeratorLong / denominatorLong;
         ret += to_string(intPart) + '.';
 
-        // ¼ÆËãĞ¡Êı²¿·Ö
+        // è®¡ç®—å°æ•°éƒ¨åˆ†
         string fractionPart;
         unordered_map<int, int> remainderMap;
         long long remainder = numeratorLong % denominatorLong, index = 0;

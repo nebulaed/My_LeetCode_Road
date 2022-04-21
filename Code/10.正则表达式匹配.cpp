@@ -5,121 +5,120 @@ using namespace std;
 
 class Solution {
 public:
-	bool isMatch(string s, string p) {
-		int m = s.size();
-		int n = p.size();
+    bool isMatch(string s, string p) {
+        int m = s.size();
+        int n = p.size();
 
-		auto matches = [&](int i, int j) {
-			if (i == 0) {
-				return false;
-			}
-			if (p[j - 1] == '.') {
-				return true;
-			}
-			return s[i - 1] == p[j - 1];
-		};
-	
-		vector<vector<int>> f(m + 1, vector<int>(n + 1));
-		f[0][0] = true;
-		for (int i = 0; i <= m; ++i) {
-			for (int j = 1; j <= n; ++j) {
-				if (p[j - 1] == '*') {
-					f[i][j] |= f[i][j - 2];
-					if (matches(i, j - 1)) {
-						f[i][j] |= f[i - 1][j];
-					}
-				}
-				else {
-					if (matches(i, j)) {
-						f[i][j] |= f[i - 1][j - 1];
-					}
-				}
-			}
-		}
-		return f[m][n];
-	}
+        auto matches = [&](int i, int j) {
+            if (i == 0) {
+                return false;
+            }
+            if (p[j - 1] == '.') {
+                return true;
+            }
+            return s[i - 1] == p[j - 1];
+        };
+
+        vector<vector<int>> f(m + 1, vector<int>(n + 1));
+        f[0][0] = true;
+        for (int i = 0; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (p[j - 1] == '*') {
+                    f[i][j] |= f[i][j - 2];
+                    if (matches(i, j - 1)) {
+                        f[i][j] |= f[i - 1][j];
+                    }
+                }
+                else {
+                    if (matches(i, j)) {
+                        f[i][j] |= f[i - 1][j - 1];
+                    }
+                }
+            }
+        }
+        return f[m][n];
+    }
 };
 
 class Solution {
 public:
-	bool isMatch(string s, string p) {
-		if (s == p) return true;
-		int i = 0, j = 0;
-		while (i < s.size() && j < s.size()) {
-			if (p[j] >= 'a' && p[j] <= 'z') {
-				if (s[i] != p[j]) {
-					break;
-				}
-				++i;
-				++j;
-			}
-			else if (p[j] == '.') {
-				++i;
-				++j;
-			}
-			else (p[j] == '*') {
-				if (p[j - 1] == '.') {
-					if (j == p.size()) {
-						i = s.size()
-					}
-					++j;
-				}
-			}
-		}
-	}
+    bool isMatch(string s, string p) {
+        if (s == p) return true;
+        int i = 0, j = 0;
+        while (i < s.size() && j < s.size()) {
+            if (p[j] >= 'a' && p[j] <= 'z') {
+                if (s[i] != p[j]) {
+                    break;
+                }
+                ++i;
+                ++j;
+            }
+            else if (p[j] == '.') {
+                ++i;
+                ++j;
+            }
+            else (p[j] == '*') {
+                if (p[j - 1] == '.') {
+                    if (j == p.size()) {
+                        i = s.size()
+                    }
+                    ++j;
+                }
+            }
+        }
+    }
 };
 
-// LeetCode 101½â·¨£º¶¯Ì¬¹æ»®£¬Ê±¼ä 4 ms 87.12%£¬¿Õ¼ä 6.6 MB 76.37%
+// LeetCode 101è§£æ³•ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 4 ms 87.12%ï¼Œç©ºé—´ 6.6 MB 76.37%
 class Solution {
 public:
-	bool isMatch(string s, string p) {
-		int m = s.size(), n = p.size();
-		// dp[i][j]±íÊ¾ÒÔi½ØÖ¹µÄ×Ö·û´®ÊÇ·ñ¿ÉÒÔ±»ÒÔj½ØÖ¹µÄÕýÔò±í´ïÊ½Æ¥Åä
-		vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
-		dp[0][0] = true;
-		for (int i = 1; i <= n; ++i) {
-			// ÈôpµÄµÚi¸ö×Ö·ûÎª*£¬Ö»ÒªÒÔ0½ØÖ¹µÄ×Ö·û´®sÄÜ±»ÒÔi-2½ØÖ¹µÄÕýÔò±í´ïÊ½pÆ¥Åä£¬ÄÇÃ´sÒ²ÄÜ±»ÒÔi½ØÖ¹µÄpÆ¥Åä
-			if (p[i - 1] == '*') {
-				dp[0][i] = dp[0][i - 2];
-			}
-		}
-		for (int i = 1; i <= m; ++i) {
-			for (int j = 1; j <= n; ++j) {
-				// ÈôpµÄµÚj¸ö×Ö·ûÎª.£¬Ö»ÒªÒÔi-1½ØÖ¹µÄ×Ö·û´®sÄÜ±»ÒÔj-1½ØÖ¹µÄÕýÔò±í´ïÊ½pÆ¥Åä£¬ÄÇÃ´sÒ²ÄÜ±»ÒÔi½ØÖ¹µÄpÆ¥Åä
-				if (p[j - 1] == '.') {
-					dp[i][j] = dp[i - 1][j - 1];
-				}
-				// ÈôpµÄµÚj¸ö×Ö·û²»Îª*Ò²²»Îª.£¬ÄÇÃ´Ö»ÓÐµ±ÒÔi-1½ØÖ¹µÄ×Ö·û´®sÄÜ±»ÒÔj-1½ØÖ¹µÄÕýÔò±í´ïÊ½pÆ¥Åä£¬ÇÒsµÄµÚi¸ö×Ö·ûºÍpµÄµÚj¸ö×Ö·ûÒ»ÖÂ£¬²ÅÄÜÆ¥Åä
-				else if (p[j - 1] != '*') {
-					dp[i][j] = dp[i - 1][j - 1] & (p[j - 1] == s[i - 1]);
-				}
-				// ÈôpµÄµÚj¸ö×Ö·ûÎª*£¬ÇÒpµÄµÚj-1¸ö×Ö·ûÓësµÄµÚi¸ö×Ö·û²»Ò»ÖÂ£¬ÇÒpµÄµÚj-1¸ö×Ö·û²»ÊÇ.£¬ÄÇÃ´sÓëpÊÇ·ñÆ¥ÅäÈ¡¾öÓÚÒÔi½ØÖ¹µÄsÓëÒÔj-2½ØÖ¹µÄpÊÇ·ñÆ¥Åä£¬Ò²¾ÍÊÇpµÄµÚj-1ºÍj×Ö·û£º?*Æ¥ÅäÁËÁã¸öÔªËØ
-				else if ((p[j - 2] != s[i - 1]) & (p[j - 2] != '.')) {
-					dp[i][j] = dp[i][j - 2];
-				}
-				// ÈôpµÄµÚj¸ö×Ö·ûÎª*£¬ÇÒpµÄµÚj-1¸ö×Ö·ûÓësµÄµÚi¸ö×Ö·ûÆ¥Åä(°üÀ¨Õý³£Æ¥Åä»òÓÃ.Æ¥Åä)£¬ÄÇÃ´Ö»ÒªÒÔi½áÎ²µÄsÓëÒÔj-1½áÎ²µÄpÆ¥Åä»òÒÔi-1½áÎ²µÄsÄÜÓëÒÔj½áÎ²µÄpÆ¥Åä»òÒÔi½áÎ²µÄsÄÜÓëÒÔj-2½áÎ²µÄpÆ¥Åä£¬ÄÇÃ´sºÍpÆ¥Åä¡£
-				// µÚÒ»ÖÖºÃÀí½â£¬¾ÍÊÇÈç¹ûbaºÍba*±È½Ï£¬Èç¹ûs[i]=baºÍp[j-1]=baÄÜÆ¥ÅäÉÏ£¬ÄÇÃ´sºÍpÄÜÆ¥ÅäÉÏ
-				// µÚ¶þÖÖ±íÊ¾£¬Èç¹ûaabºÍc*a*b*±È½Ï£¬s[i]=aaºÍp[j-1]=c*aÆ¥Åä²»ÁË£¬Èç¹ûs[i-1]=aºÍp[j]=c*a*Æ¥Åä£¬ÄÇÃ´s=aaºÍp=c*a*ÄÜÆ¥Åä
-				// µÚÈýÖÖ±íÊ¾£¬Èç¹ûabºÍabd*±È½Ï£¬s[i]=abºÍp[j-2]=abÄÜÆ¥Åä£¬ÄÇs=abºÍp=abd*Ò²ÄÜÆ¥Åä
-				else {
-					dp[i][j] = dp[i][j - 1] | dp[i - 1][j] | dp[i][j - 2];
-				}
-			}
-		}
-		return dp[m][n];
-	}
+    bool isMatch(string s, string p) {
+        int m = s.size(), n = p.size();
+        // dp[i][j]è¡¨ç¤ºä»¥iæˆªæ­¢çš„å­—ç¬¦ä¸²æ˜¯å¦å¯ä»¥è¢«ä»¥jæˆªæ­¢çš„æ­£åˆ™è¡¨è¾¾å¼åŒ¹é…
+        vector<vector<bool>> dp(m + 1, vector<bool>(n + 1, false));
+        dp[0][0] = true;
+        for (int i = 1; i <= n; ++i) {
+            // è‹¥pçš„ç¬¬iä¸ªå­—ç¬¦ä¸º*ï¼Œåªè¦ä»¥0æˆªæ­¢çš„å­—ç¬¦ä¸²sèƒ½è¢«ä»¥i-2æˆªæ­¢çš„æ­£åˆ™è¡¨è¾¾å¼påŒ¹é…ï¼Œé‚£ä¹ˆsä¹Ÿèƒ½è¢«ä»¥iæˆªæ­¢çš„påŒ¹é…
+            if (p[i - 1] == '*') {
+                dp[0][i] = dp[0][i - 2];
+            }
+        }
+        for (int i = 1; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                // è‹¥pçš„ç¬¬jä¸ªå­—ç¬¦ä¸º.ï¼Œåªè¦ä»¥i-1æˆªæ­¢çš„å­—ç¬¦ä¸²sèƒ½è¢«ä»¥j-1æˆªæ­¢çš„æ­£åˆ™è¡¨è¾¾å¼påŒ¹é…ï¼Œé‚£ä¹ˆsä¹Ÿèƒ½è¢«ä»¥iæˆªæ­¢çš„påŒ¹é…
+                if (p[j - 1] == '.') {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+                    // è‹¥pçš„ç¬¬jä¸ªå­—ç¬¦ä¸ä¸º*ä¹Ÿä¸ä¸º.ï¼Œé‚£ä¹ˆåªæœ‰å½“ä»¥i-1æˆªæ­¢çš„å­—ç¬¦ä¸²sèƒ½è¢«ä»¥j-1æˆªæ­¢çš„æ­£åˆ™è¡¨è¾¾å¼påŒ¹é…ï¼Œä¸”sçš„ç¬¬iä¸ªå­—ç¬¦å’Œpçš„ç¬¬jä¸ªå­—ç¬¦ä¸€è‡´ï¼Œæ‰èƒ½åŒ¹é…
+                else if (p[j - 1] != '*') {
+                    dp[i][j] = dp[i - 1][j - 1] & (p[j - 1] == s[i - 1]);
+                }
+                    // è‹¥pçš„ç¬¬jä¸ªå­—ç¬¦ä¸º*ï¼Œä¸”pçš„ç¬¬j-1ä¸ªå­—ç¬¦ä¸Žsçš„ç¬¬iä¸ªå­—ç¬¦ä¸ä¸€è‡´ï¼Œä¸”pçš„ç¬¬j-1ä¸ªå­—ç¬¦ä¸æ˜¯.ï¼Œé‚£ä¹ˆsä¸Žpæ˜¯å¦åŒ¹é…å–å†³äºŽä»¥iæˆªæ­¢çš„sä¸Žä»¥j-2æˆªæ­¢çš„pæ˜¯å¦åŒ¹é…ï¼Œä¹Ÿå°±æ˜¯pçš„ç¬¬j-1å’Œjå­—ç¬¦ï¼š?*åŒ¹é…äº†é›¶ä¸ªå…ƒç´ 
+                else if ((p[j - 2] != s[i - 1]) & (p[j - 2] != '.')) {
+                    dp[i][j] = dp[i][j - 2];
+                }
+                    // è‹¥pçš„ç¬¬jä¸ªå­—ç¬¦ä¸º*ï¼Œä¸”pçš„ç¬¬j-1ä¸ªå­—ç¬¦ä¸Žsçš„ç¬¬iä¸ªå­—ç¬¦åŒ¹é…(åŒ…æ‹¬æ­£å¸¸åŒ¹é…æˆ–ç”¨.åŒ¹é…)ï¼Œé‚£ä¹ˆåªè¦ä»¥iç»“å°¾çš„sä¸Žä»¥j-1ç»“å°¾çš„påŒ¹é…æˆ–ä»¥i-1ç»“å°¾çš„sèƒ½ä¸Žä»¥jç»“å°¾çš„påŒ¹é…æˆ–ä»¥iç»“å°¾çš„sèƒ½ä¸Žä»¥j-2ç»“å°¾çš„påŒ¹é…ï¼Œé‚£ä¹ˆså’ŒpåŒ¹é…ã€‚
+                    // ç¬¬ä¸€ç§å¥½ç†è§£ï¼Œå°±æ˜¯å¦‚æžœbaå’Œba*æ¯”è¾ƒï¼Œå¦‚æžœs[i]=baå’Œp[j-1]=baèƒ½åŒ¹é…ä¸Šï¼Œé‚£ä¹ˆså’Œpèƒ½åŒ¹é…ä¸Š
+                    // ç¬¬äºŒç§è¡¨ç¤ºï¼Œå¦‚æžœaabå’Œc*a*b*æ¯”è¾ƒï¼Œs[i]=aaå’Œp[j-1]=c*aåŒ¹é…ä¸äº†ï¼Œå¦‚æžœs[i-1]=aå’Œp[j]=c*a*åŒ¹é…ï¼Œé‚£ä¹ˆs=aaå’Œp=c*a*èƒ½åŒ¹é…
+                    // ç¬¬ä¸‰ç§è¡¨ç¤ºï¼Œå¦‚æžœabå’Œabd*æ¯”è¾ƒï¼Œs[i]=abå’Œp[j-2]=abèƒ½åŒ¹é…ï¼Œé‚£s=abå’Œp=abd*ä¹Ÿèƒ½åŒ¹é…
+                else {
+                    dp[i][j] = dp[i][j - 1] | dp[i - 1][j] | dp[i][j - 2];
+                }
+            }
+        }
+        return dp[m][n];
+    }
 };
 
 int main() {
 
-	string s = "mississippi";
-	string p = "mis*is*p*.";
+    string s = "mississippi";
+    string p = "mis*is*p*.";
 
-	Solution sol;
-	bool ret = sol.isMatch(s, p);
-	if (ret) cout << "true" << endl;
-	else cout << "false" << endl;
+    Solution sol;
+    bool ret = sol.isMatch(s, p);
+    if (ret) cout << "true" << endl;
+    else cout << "false" << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

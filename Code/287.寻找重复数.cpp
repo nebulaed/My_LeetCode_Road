@@ -3,91 +3,91 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£ºÊ±¼äO(n logn) 124 ms£¬¿Õ¼äO(1) 59.8 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæ—¶é—´O(n logn) 124 msï¼Œç©ºé—´O(1) 59.8 MB
 class Solution {
 public:
-	int findDuplicate(vector<int>& nums) {
-		sort(nums.begin(), nums.end());
-		for (size_t i = 1; i < nums.size(); ++i) {
-			if (nums[i] == nums[i - 1]) {
-				return nums[i];
-			}
-		}
-		return 0;
-	}
+    int findDuplicate(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        for (size_t i = 1; i < nums.size(); ++i) {
+            if (nums[i] == nums[i - 1]) {
+                return nums[i];
+            }
+        }
+        return 0;
+    }
 };
 
-// ¹Ù·½Ìâ½âÒ»£º¶ş·Ö²éÕÒ£¬Ê±¼äO(n logn) 92 ms£¬¿Õ¼äO(1) 59.8 MB
-// ¼Ù¶¨ÖØ¸´ÊıÎªtarget£¬ÄÇÃ´[1, target-1]µÄËùÓĞÊı¶¼Âú×ãĞ¡ÓÚµÈÓÚiµÄÊıcnt[i]<=i£¬[target,n]ÀïµÄËùÓĞÊıÂú×ãcnt[i]>i£¬¾ßÓĞµ¥µ÷ĞÔ
-// Òò´Ë¿ÉÒÔÔÚ[1,n]ÄÚÊ¹ÓÃ¶ş·Ö²éÕÒ
+// å®˜æ–¹é¢˜è§£ä¸€ï¼šäºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´O(n logn) 92 msï¼Œç©ºé—´O(1) 59.8 MB
+// å‡å®šé‡å¤æ•°ä¸ºtargetï¼Œé‚£ä¹ˆ[1, target-1]çš„æ‰€æœ‰æ•°éƒ½æ»¡è¶³å°äºç­‰äºiçš„æ•°cnt[i]<=iï¼Œ[target,n]é‡Œçš„æ‰€æœ‰æ•°æ»¡è¶³cnt[i]>iï¼Œå…·æœ‰å•è°ƒæ€§
+// å› æ­¤å¯ä»¥åœ¨[1,n]å†…ä½¿ç”¨äºŒåˆ†æŸ¥æ‰¾
 class Solution {
 public:
-	int findDuplicate(vector<int>& nums) {
-		size_t n = nums.size();
-		size_t left = 1, right = n - 1, ret = -1;
-		while (left <= right) {
-			size_t mid = (left + right) >> 1;
-			int cnt = 0;
-			for (size_t i = 0; i < n; ++i) {
-				cnt += (nums[i] <= mid);
-			}
-			if (cnt <= mid) {
-				left = mid + 1;
-			}
-			else {
-				right = mid - 1;
-				ret = mid;
-			}
-		}
-		return ret;
-	}
+    int findDuplicate(vector<int>& nums) {
+        size_t n = nums.size();
+        size_t left = 1, right = n - 1, ret = -1;
+        while (left <= right) {
+            size_t mid = (left + right) >> 1;
+            int cnt = 0;
+            for (size_t i = 0; i < n; ++i) {
+                cnt += (nums[i] <= mid);
+            }
+            if (cnt <= mid) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+                ret = mid;
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½Ìâ½â¶ş£º¶ş½øÖÆ£¬Ê±¼äO(n log n) 176 ms£¬¿Õ¼äO(1) 59.8 MB
+// å®˜æ–¹é¢˜è§£äºŒï¼šäºŒè¿›åˆ¶ï¼Œæ—¶é—´O(n log n) 176 msï¼Œç©ºé—´O(1) 59.8 MB
 class Solution {
 public:
-	int findDuplicate(vector<int>& nums) {
-		int n = nums.size(), ret = 0;
-		// È·¶¨¶ş½øÖÆÏÂ×î¸ßÎ»ÊÇ¶àÉÙ
-		int bit_max = 31;
-		while (!((n - 1) >> bit_max)) {
-			bit_max -= 1;
-		}
-		for (int bit = 0; bit <= bit_max; ++bit) {
-			int x = 0, y = 0;
-			for (int i = 0; i < n; ++i) {
-				if (nums[i] & 1 << bit) {
-					x += 1;
-				}
-				if (i >= 1 && (i & (1 << bit))) {
-					y += 1;
-				}
-			}
-			if (x > y) {
-				ret |= 1 << bit;
-			}
-		}
-		return ret;
-	}
+    int findDuplicate(vector<int>& nums) {
+        int n = nums.size(), ret = 0;
+        // ç¡®å®šäºŒè¿›åˆ¶ä¸‹æœ€é«˜ä½æ˜¯å¤šå°‘
+        int bit_max = 31;
+        while (!((n - 1) >> bit_max)) {
+            bit_max -= 1;
+        }
+        for (int bit = 0; bit <= bit_max; ++bit) {
+            int x = 0, y = 0;
+            for (int i = 0; i < n; ++i) {
+                if (nums[i] & 1 << bit) {
+                    x += 1;
+                }
+                if (i >= 1 && (i & (1 << bit))) {
+                    y += 1;
+                }
+            }
+            if (x > y) {
+                ret |= 1 << bit;
+            }
+        }
+        return ret;
+    }
 };
 
-// ¹Ù·½Ìâ½âÈı£º¿ìÂıÖ¸Õë£¬Ê±¼äO(n) 84 ms£¬¿Õ¼äO(1) 59.8 MB
-// ·½·¨ÀàËÆ»·ĞÎÁ´±íÖĞµÄFloydÅĞÈ¦Ëã·¨
-// Ë¼Â·£º¶ÔnumsÊı×é½¨Í¼£¬Ã¿¸öÎ»ÖÃiÁ¬½ÓÒ»Ìõi->nums[i]µÄ±ß£¬ÓÉÓÚ´æÔÚÖØ¸´Êı×Ötarget£¬Òò´ËtargetÕâ¸öÎ»ÖÃÒ»¶¨ÓĞÆğÂëÁ½ÌõÖ¸ÏòËüµÄ±ß£¬Òò´ËÕûÕÅÍ¼Ò»¶¨´æÔÚ»·¡£
-// ÉèÖÃ¿ìÖ¸ÕëºÍÂıÖ¸Õë£¬ÂıÖ¸ÕëÃ¿´Î×ßÒ»²½£¬¿ìÖ¸ÕëÃ¿´Î×ßÁ½²½¡£ÏàÓöºóÔÙ½«slow·Åµ½Æğµã£¬Á½¸öÖ¸ÕëÃ¿´ÎÍ¬Ê±ÒÆ¶¯Ò»²½£¬ÏàÓöµÄµã¾ÍÊÇ´ğ°¸¡£
+// å®˜æ–¹é¢˜è§£ä¸‰ï¼šå¿«æ…¢æŒ‡é’ˆï¼Œæ—¶é—´O(n) 84 msï¼Œç©ºé—´O(1) 59.8 MB
+// æ–¹æ³•ç±»ä¼¼ç¯å½¢é“¾è¡¨ä¸­çš„Floydåˆ¤åœˆç®—æ³•
+// æ€è·¯ï¼šå¯¹numsæ•°ç»„å»ºå›¾ï¼Œæ¯ä¸ªä½ç½®iè¿æ¥ä¸€æ¡i->nums[i]çš„è¾¹ï¼Œç”±äºå­˜åœ¨é‡å¤æ•°å­—targetï¼Œå› æ­¤targetè¿™ä¸ªä½ç½®ä¸€å®šæœ‰èµ·ç ä¸¤æ¡æŒ‡å‘å®ƒçš„è¾¹ï¼Œå› æ­¤æ•´å¼ å›¾ä¸€å®šå­˜åœ¨ç¯ã€‚
+// è®¾ç½®å¿«æŒ‡é’ˆå’Œæ…¢æŒ‡é’ˆï¼Œæ…¢æŒ‡é’ˆæ¯æ¬¡èµ°ä¸€æ­¥ï¼Œå¿«æŒ‡é’ˆæ¯æ¬¡èµ°ä¸¤æ­¥ã€‚ç›¸é‡åå†å°†slowæ”¾åˆ°èµ·ç‚¹ï¼Œä¸¤ä¸ªæŒ‡é’ˆæ¯æ¬¡åŒæ—¶ç§»åŠ¨ä¸€æ­¥ï¼Œç›¸é‡çš„ç‚¹å°±æ˜¯ç­”æ¡ˆã€‚
 class Solution {
 public:
-	int findDuplicate(vector<int>& nums) {
-		int slow = 0, fast = 0;
-		do {
-			slow = nums[slow];
-			fast = nums[nums[fast]];
-		} while (slow != fast);
-		slow = 0;
-		while (slow != fast) {
-			slow = nums[slow];
-			fast = nums[fast];
-		}
-		return slow;
-	}
+    int findDuplicate(vector<int>& nums) {
+        int slow = 0, fast = 0;
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+        slow = 0;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
 };

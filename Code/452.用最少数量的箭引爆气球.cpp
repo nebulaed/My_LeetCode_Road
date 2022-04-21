@@ -3,22 +3,22 @@
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºÌ°ĞÄËã·¨£¬Ê±¼ä 360 ms£¬¿Õ¼ä 87.7 MB
-// Óë435ÌâÀàËÆ£¬Î¨Ò»Çø±ğÊÇÓÒÖ¸ÕëÖ¸ÏòÇø¼äµÄ×ó½ç´óÓÚ×óÖ¸ÕëÖ¸ÏòÇø¼äµÄÓÒ½ç²ÅËµÃ÷ÎŞÖØµş£¬µÈÓÚÒ²ËãÖØµş
+// æˆ‘çš„è§£æ³•ï¼šè´ªå¿ƒç®—æ³•ï¼Œæ—¶é—´ 360 msï¼Œç©ºé—´ 87.7 MB
+// ä¸435é¢˜ç±»ä¼¼ï¼Œå”¯ä¸€åŒºåˆ«æ˜¯å³æŒ‡é’ˆæŒ‡å‘åŒºé—´çš„å·¦ç•Œå¤§äºå·¦æŒ‡é’ˆæŒ‡å‘åŒºé—´çš„å³ç•Œæ‰è¯´æ˜æ— é‡å ï¼Œç­‰äºä¹Ÿç®—é‡å 
 class Solution {
 public:
-	int findMinArrowShots(vector<vector<int>>& points) {
-		sort(points.begin(), points.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
-			return lhs[1] < rhs[1];
-			});
-		int count = 1;
-		size_t length = points.size(), left = 0;
-		for (size_t right = 1; right < length; ++right) {
-			if (points[right][0] > points[left][1]) {
-				++count;
-				left = right;
-			}
-		}
-		return count;
-	}
+    int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(), points.end(), [](const vector<int>& lhs, const vector<int>& rhs) {
+            return lhs[1] < rhs[1];
+        });
+        int count = 1;
+        size_t length = points.size(), left = 0;
+        for (size_t right = 1; right < length; ++right) {
+            if (points[right][0] > points[left][1]) {
+                ++count;
+                left = right;
+            }
+        }
+        return count;
+    }
 };

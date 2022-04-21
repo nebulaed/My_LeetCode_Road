@@ -4,188 +4,188 @@
 #include<algorithm>
 using namespace std;
 
-// Ö±½ÓÅÅĞò£¬Ê±¼äO(n log n) 8 ms£¬¿Õ¼ä 9.8 MB
+// ç›´æ¥æ’åºï¼Œæ—¶é—´O(n log n) 8 msï¼Œç©ºé—´ 9.8 MB
 class Solution {
 public:
-	int findKthLargest(vector<int>& nums, int k) {
-		sort(nums.begin(), nums.end(), compare);
-		return nums[k - 1];
-	}
+    int findKthLargest(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end(), compare);
+        return nums[k - 1];
+    }
 
-	static bool compare(int val1, int val2) {
-		return val1 > val2;
-	}
+    static bool compare(int val1, int val2) {
+        return val1 > val2;
+    }
 };
 
-// Ö±½Óµ÷ÓÃstd¿âÀïµÄ²¿·ÖÅÅĞòËã·¨£¬nth_element£¬Ê±¼äO(n) 4 ms£¬¿Õ¼ä 9.7 MB
+// ç›´æ¥è°ƒç”¨stdåº“é‡Œçš„éƒ¨åˆ†æ’åºç®—æ³•ï¼Œnth_elementï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´ 9.7 MB
 class Solution {
 public:
-	int findKthLargest(vector<int>& nums, int k) {
-		std::nth_element(nums.begin(), nums.end() - k, nums.end());
-		return nums[nums.size() - k];
-	}
+    int findKthLargest(vector<int>& nums, int k) {
+        std::nth_element(nums.begin(), nums.end() - k, nums.end());
+        return nums[nums.size() - k];
+    }
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä O(n logk) 8 ms£¬¿Õ¼äO(log n) 9.8 MB
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ O(n logk) 8 msï¼Œç©ºé—´O(log n) 9.8 MB
 class Solution {
 private:
-	void HeapAdjust(vector<int>& nums, int s, int m) {
-		int temp = nums[s];
-		for (int j = 2 * s + 1; j < m; j = j * 2 + 1) {
-			if (j < m - 1 && nums[j] < nums[j + 1]) {
-				++j;
-			}
-			if (temp >= nums[j]) {
-				break;
-			}
-			nums[s] = nums[j];
-			s = j;
-		}
-		nums[s] = temp;
-	}
+    void HeapAdjust(vector<int>& nums, int s, int m) {
+        int temp = nums[s];
+        for (int j = 2 * s + 1; j < m; j = j * 2 + 1) {
+            if (j < m - 1 && nums[j] < nums[j + 1]) {
+                ++j;
+            }
+            if (temp >= nums[j]) {
+                break;
+            }
+            nums[s] = nums[j];
+            s = j;
+        }
+        nums[s] = temp;
+    }
 
-	int HeapSort(vector<int>& nums, int k) {
-		int length = nums.size();
-		for (int i = length / 2 - 1; i >= 0; --i) {
-			HeapAdjust(nums, i, length);
-		}
-		for (int i = length; i > 1; --i) {
-			swap(nums[0], nums[i - 1]);
-			if (i - 1 == length - k) return nums[i - 1];
-			HeapAdjust(nums, 0, i - 1);
-		}
-		return nums[0];
-	}
+    int HeapSort(vector<int>& nums, int k) {
+        int length = nums.size();
+        for (int i = length / 2 - 1; i >= 0; --i) {
+            HeapAdjust(nums, i, length);
+        }
+        for (int i = length; i > 1; --i) {
+            swap(nums[0], nums[i - 1]);
+            if (i - 1 == length - k) return nums[i - 1];
+            HeapAdjust(nums, 0, i - 1);
+        }
+        return nums[0];
+    }
 
 public:
-	int findKthLargest(vector<int>& nums, int k) {
-		int ret = HeapSort(nums, k);
-		return ret;
-	}
+    int findKthLargest(vector<int>& nums, int k) {
+        int ret = HeapSort(nums, k);
+        return ret;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¿ìËÙÑ¡ÔñËã·¨(¿ìÅÅµÄ²¿·ÖÅÅĞò)£¬Ê±¼ä O(n) 8 ms£¬¿Õ¼äO(log n) 9.7 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå¿«é€Ÿé€‰æ‹©ç®—æ³•(å¿«æ’çš„éƒ¨åˆ†æ’åº)ï¼Œæ—¶é—´ O(n) 8 msï¼Œç©ºé—´O(log n) 9.7 MB
 class Solution {
 private:
-	int quickSelect(vector<int>& nums, int left, int right, int index) {
-		int q = randomPartition(nums, left, right);
-		if (q == index) {
-			return nums[q];
-		}
-		else {
-			return q < index ? quickSelect(nums, q + 1, right, index) : quickSelect(nums, left, q - 1, index);
-		}
-	}
+    int quickSelect(vector<int>& nums, int left, int right, int index) {
+        int q = randomPartition(nums, left, right);
+        if (q == index) {
+            return nums[q];
+        }
+        else {
+            return q < index ? quickSelect(nums, q + 1, right, index) : quickSelect(nums, left, q - 1, index);
+        }
+    }
 
-	// Ëæ»úÑ¡È¡ÊàÖá
-	inline int randomPartition(vector<int>& nums, int left, int right) {
-		int i = rand() % (right - left + 1) + left;
-		swap(nums[i], nums[right]);
-		return partition(nums, left, right);
-	}
+    // éšæœºé€‰å–æ¢è½´
+    inline int randomPartition(vector<int>& nums, int left, int right) {
+        int i = rand() % (right - left + 1) + left;
+        swap(nums[i], nums[right]);
+        return partition(nums, left, right);
+    }
 
-	inline int partition(vector<int>& nums, int left, int right) {
-		int x = nums[right], i = left - 1;
-		for (int j = left; j < right; ++j) {
-			if (nums[j] <= x) {
-				swap(nums[++i], nums[j]);
-			}
-		}
-		swap(nums[i + 1], nums[right]);
-		return i + 1;
-	}
+    inline int partition(vector<int>& nums, int left, int right) {
+        int x = nums[right], i = left - 1;
+        for (int j = left; j < right; ++j) {
+            if (nums[j] <= x) {
+                swap(nums[++i], nums[j]);
+            }
+        }
+        swap(nums[i + 1], nums[right]);
+        return i + 1;
+    }
 public:
-	int findKthLargest(vector<int>& nums, int k) {
-		srand(time(0));
-		return quickSelect(nums, 0, nums.size() - 1, nums.size() - k);
-	}
+    int findKthLargest(vector<int>& nums, int k) {
+        srand(time(0));
+        return quickSelect(nums, 0, nums.size() - 1, nums.size() - k);
+    }
 };
 
-// LeetCode 101½â·¨£º¿ìËÙÑ¡Ôñ£¬Ê±¼äO(n) 36 ms£¬¿Õ¼äO(1) 9.7 MB
+// LeetCode 101è§£æ³•ï¼šå¿«é€Ÿé€‰æ‹©ï¼Œæ—¶é—´O(n) 36 msï¼Œç©ºé—´O(1) 9.7 MB
 class Solution {
 private:
-	int quickSelection(vector<int>& nums, int left, int right)
-	{
-		int first = left, last = right, key = nums[first];
-		while (first < last) {
-			while (first < last && key <= nums[last]) {
-				--last;
-			}
-			nums[first] = nums[last];
-			while (first < last && nums[first] <= key) {
-				++first;
-			}
-			nums[last] = nums[first];
-		}
-		nums[first] = key;
-		return last;
-	}
+    int quickSelection(vector<int>& nums, int left, int right)
+    {
+        int first = left, last = right, key = nums[first];
+        while (first < last) {
+            while (first < last && key <= nums[last]) {
+                --last;
+            }
+            nums[first] = nums[last];
+            while (first < last && nums[first] <= key) {
+                ++first;
+            }
+            nums[last] = nums[first];
+        }
+        nums[first] = key;
+        return last;
+    }
 public:
-	int findKthLargest(vector<int>& nums, int k) {
-		int left = 0, right = nums.size() - 1, target = nums.size() - k;
-		while (left < right) {
-			int mid = quickSelection(nums, left, right);
-			if (mid == target) {
-				return nums[mid];
-			}
-			else if (mid < target) {
-				left = mid + 1;
-			}
-			else {
-				right = mid - 1;
-			}
-		}
-		return nums[left];
-	}
+    int findKthLargest(vector<int>& nums, int k) {
+        int left = 0, right = nums.size() - 1, target = nums.size() - k;
+        while (left < right) {
+            int mid = quickSelection(nums, left, right);
+            if (mid == target) {
+                return nums[mid];
+            }
+            else if (mid < target) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+        return nums[left];
+    }
 };
 
-// LeetCode 101½â·¨ÓÅ»¯£ºÈıÊıÈ¡ÖĞ+¿ìËÙÑ¡Ôñ£¬Ê±¼ä 4 ms 96.42%£¬¿Õ¼ä 9.7 MB 80.90%
+// LeetCode 101è§£æ³•ä¼˜åŒ–ï¼šä¸‰æ•°å–ä¸­+å¿«é€Ÿé€‰æ‹©ï¼Œæ—¶é—´ 4 ms 96.42%ï¼Œç©ºé—´ 9.7 MB 80.90%
 class Solution {
 private:
-	int quickSelection(vector<int>& nums, int left, int right)
-	{
-		//=====================================//
-		// ÈıÊıÈ¡ÖĞÑ¡È¡ÊàÖá
-		int mid = (left + right) >> 1;
-		if (nums[left] > nums[right]) {
-			swap(nums[left], nums[right]);
-		}
-		if (nums[mid] > nums[right]) {
-			swap(nums[right], nums[mid]);
-		}
-		if (nums[mid] > nums[left]) {
-			swap(nums[mid], nums[left]);
-		}
-		//=====================================//
-		int first = left, last = right, key = nums[first];
-		while (first < last) {
-			while (first < last && key <= nums[last]) {
-				--last;
-			}
-			nums[first] = nums[last];
-			while (first < last && nums[first] <= key) {
-				++first;
-			}
-			nums[last] = nums[first];
-		}
-		nums[first] = key;
-		return last;
-	}
+    int quickSelection(vector<int>& nums, int left, int right)
+    {
+        //=====================================//
+        // ä¸‰æ•°å–ä¸­é€‰å–æ¢è½´
+        int mid = (left + right) >> 1;
+        if (nums[left] > nums[right]) {
+            swap(nums[left], nums[right]);
+        }
+        if (nums[mid] > nums[right]) {
+            swap(nums[right], nums[mid]);
+        }
+        if (nums[mid] > nums[left]) {
+            swap(nums[mid], nums[left]);
+        }
+        //=====================================//
+        int first = left, last = right, key = nums[first];
+        while (first < last) {
+            while (first < last && key <= nums[last]) {
+                --last;
+            }
+            nums[first] = nums[last];
+            while (first < last && nums[first] <= key) {
+                ++first;
+            }
+            nums[last] = nums[first];
+        }
+        nums[first] = key;
+        return last;
+    }
 public:
-	int findKthLargest(vector<int>& nums, int k) {
-		int left = 0, right = nums.size() - 1, target = nums.size() - k;
-		while (left < right) {
-			int mid = quickSelection(nums, left, right);
-			if (mid == target) {
-				return nums[mid];
-			}
-			else if (mid < target) {
-				left = mid + 1;
-			}
-			else {
-				right = mid - 1;
-			}
-		}
-		return nums[left];
-	}
+    int findKthLargest(vector<int>& nums, int k) {
+        int left = 0, right = nums.size() - 1, target = nums.size() - k;
+        while (left < right) {
+            int mid = quickSelection(nums, left, right);
+            if (mid == target) {
+                return nums[mid];
+            }
+            else if (mid < target) {
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+        return nums[left];
+    }
 };

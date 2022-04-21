@@ -1,212 +1,212 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<set>
 #include<unordered_set>
 #include<algorithm>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨Ò»£º×Ô½¨¶ş²æÊ÷+ÖĞĞò±éÀú£¬Ê±¼ä 200 ms£¬¿Õ¼ä 28.5 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šè‡ªå»ºäºŒå‰æ ‘+ä¸­åºéå†ï¼Œæ—¶é—´ 200 msï¼Œç©ºé—´ 28.5 MB
 class Solution {
 private:
-	int maxLength = 0;
-	int temp = INT_MIN;
+    int maxLength = 0;
+    int temp = INT_MIN;
 public:
-	bool searchBST(TreeNode* T, int key, TreeNode* parent, TreeNode** p) {
-		if (T == nullptr) {
-			*p = parent;
-			return false;
-		}
-		else if (T->val == key) {
-			*p = T;
-			return true;
-		}
-		else if (T->val > key) return searchBST(T->left, key, T, p);
-		else return searchBST(T->right, key, T, p);
-	}
-	void createBST(TreeNode** T, int key) {
-		TreeNode* p;
-		if (searchBST(*T, key, nullptr, &p)) return;
-		TreeNode* node = new TreeNode(key);
-		if (p == nullptr) {
-			*T = node;
-		}
-		else if (p->val > key) {
-			p->left = node;
-		}
-		else {
-			p->right = node;
-		}
-	}
-	void inorderTraverse(TreeNode* T, int& length) {
-		if (T == nullptr) return;
-		inorderTraverse(T->left, length);
-		if (T->val == temp + 1) {
-			++length;
-		}
-		else {
-			length = 1;
-		}
-		temp = T->val;
-		maxLength = length > maxLength ? length : maxLength;
-		inorderTraverse(T->right, length);
-	}
-	int longestConsecutive(vector<int>& nums) {
-		TreeNode* root = nullptr;
-		for (const auto& num : nums) {
-			createBST(&root, num);
-		}
-		int length = 0;
-		inorderTraverse(root, length);
-		return maxLength;
-	}
+    bool searchBST(TreeNode* T, int key, TreeNode* parent, TreeNode** p) {
+        if (T == nullptr) {
+            *p = parent;
+            return false;
+        }
+        else if (T->val == key) {
+            *p = T;
+            return true;
+        }
+        else if (T->val > key) return searchBST(T->left, key, T, p);
+        else return searchBST(T->right, key, T, p);
+    }
+    void createBST(TreeNode** T, int key) {
+        TreeNode* p;
+        if (searchBST(*T, key, nullptr, &p)) return;
+        TreeNode* node = new TreeNode(key);
+        if (p == nullptr) {
+            *T = node;
+        }
+        else if (p->val > key) {
+            p->left = node;
+        }
+        else {
+            p->right = node;
+        }
+    }
+    void inorderTraverse(TreeNode* T, int& length) {
+        if (T == nullptr) return;
+        inorderTraverse(T->left, length);
+        if (T->val == temp + 1) {
+            ++length;
+        }
+        else {
+            length = 1;
+        }
+        temp = T->val;
+        maxLength = length > maxLength ? length : maxLength;
+        inorderTraverse(T->right, length);
+    }
+    int longestConsecutive(vector<int>& nums) {
+        TreeNode* root = nullptr;
+        for (const auto& num : nums) {
+            createBST(&root, num);
+        }
+        int length = 0;
+        inorderTraverse(root, length);
+        return maxLength;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºÀûÓÃset£¬Ê±¼ä 80 ms£¬¿Õ¼ä 32.1 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šåˆ©ç”¨setï¼Œæ—¶é—´ 80 msï¼Œç©ºé—´ 32.1 MB
 class Solution {
 public:
-	int longestConsecutive(vector<int>& nums) {
-		set<int> numSet;
-		for (const auto& num : nums) {
-			numSet.emplace(num);
-		}
-		int maxLength = 0, length = 0, temp = INT_MIN;
-		for (auto it = numSet.begin(); it != numSet.end(); ++it) {
-			if (*it == temp + 1) {
-				++length;
-			}
-			else {
-				length = 1;
-			}
-			temp = *it;
-			maxLength = length > maxLength ? length : maxLength;
-		}
-		return maxLength;
-	}
+    int longestConsecutive(vector<int>& nums) {
+        set<int> numSet;
+        for (const auto& num : nums) {
+            numSet.emplace(num);
+        }
+        int maxLength = 0, length = 0, temp = INT_MIN;
+        for (auto it = numSet.begin(); it != numSet.end(); ++it) {
+            if (*it == temp + 1) {
+                ++length;
+            }
+            else {
+                length = 1;
+            }
+            temp = *it;
+            maxLength = length > maxLength ? length : maxLength;
+        }
+        return maxLength;
+    }
 };
 
-// ÎÒµÄ½â·¨Èı£ºÖ±½Ósort£¬Ê±¼ä 36 ms£¬¿Õ¼ä 21.9 MB
+// æˆ‘çš„è§£æ³•ä¸‰ï¼šç›´æ¥sortï¼Œæ—¶é—´ 36 msï¼Œç©ºé—´ 21.9 MB
 class Solution {
 public:
-	int longestConsecutive(vector<int>& nums) {
-		sort(nums.begin(), nums.end());
-		int maxLength = 0, length = 0, temp = INT_MIN;
-		for (const auto& num : nums) {
-			if (num == temp) continue;
-			if (num == temp + 1) {
-				++length;
-			}
-			else {
-				length = 1;
-			}
-			temp = num;
-			maxLength = length > maxLength ? length : maxLength;
-		}
-		return maxLength;
-	}
+    int longestConsecutive(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int maxLength = 0, length = 0, temp = INT_MIN;
+        for (const auto& num : nums) {
+            if (num == temp) continue;
+            if (num == temp + 1) {
+                ++length;
+            }
+            else {
+                length = 1;
+            }
+            temp = num;
+            maxLength = length > maxLength ? length : maxLength;
+        }
+        return maxLength;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£º¹şÏ£±í£¬Ê±¼äO(n) 40 ms£¬¿Õ¼äO(n) 30.8 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šå“ˆå¸Œè¡¨ï¼Œæ—¶é—´O(n) 40 msï¼Œç©ºé—´O(n) 30.8 MB
 class Solution {
 public:
-	int longestConsecutive(vector<int>& nums) {
-		unordered_set<int> numSet;
-		for (const auto& num : nums) {
-			numSet.emplace(num);
-		}
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> numSet;
+        for (const auto& num : nums) {
+            numSet.emplace(num);
+        }
 
-		int maxLength = 0;
-		for (const auto& num : numSet) {
-			if (!numSet.count(num - 1)) {
-				int lengthFromCur = 1;
-				int temp = num;
-				while (numSet.count(temp + 1)) {
-					++temp;
-					++lengthFromCur;
-				}
-				maxLength = lengthFromCur > maxLength ? lengthFromCur : maxLength;
-				if (maxLength > nums.size() / 2) break;
-			}
-		}
-		return maxLength;
-	}
+        int maxLength = 0;
+        for (const auto& num : numSet) {
+            if (!numSet.count(num - 1)) {
+                int lengthFromCur = 1;
+                int temp = num;
+                while (numSet.count(temp + 1)) {
+                    ++temp;
+                    ++lengthFromCur;
+                }
+                maxLength = lengthFromCur > maxLength ? lengthFromCur : maxLength;
+                if (maxLength > nums.size() / 2) break;
+            }
+        }
+        return maxLength;
+    }
 };
 
-// ÎÒµÄµÚ¶ş´Î½â·¨£ºÊ±¼ä 52 ms 85%£¬¿Õ¼ä 30.1 MB 50%
+// æˆ‘çš„ç¬¬äºŒæ¬¡è§£æ³•ï¼šæ—¶é—´ 52 ms 85%ï¼Œç©ºé—´ 30.1 MB 50%
 class Solution {
 public:
-	int longestConsecutive(vector<int>& nums) {
-		if (nums.empty()) return 0;
-		int maxLength = 1;
-		unordered_map<int, int> numMap;
-		for (int num : nums) {
-			numMap[num] = 1;
-		}
-		for (auto& [curNum, curLength] : numMap) {
-			int nextNum = curNum;
-			while (numMap.count(++nextNum)) {
-				if (numMap[nextNum] != 1) {
-					curLength += numMap[nextNum];
-					numMap.erase(nextNum);
-					break;
-				}
-				else {
-					++curLength;
-					numMap.erase(nextNum);
-				}
-			}
-			int prevNum = curNum;
-			while (numMap.count(--prevNum)) {
-				++curLength;
-				numMap.erase(prevNum);
-			}
-			maxLength = max(curLength, maxLength);
-		}
-		return maxLength;
-	}
+    int longestConsecutive(vector<int>& nums) {
+        if (nums.empty()) return 0;
+        int maxLength = 1;
+        unordered_map<int, int> numMap;
+        for (int num : nums) {
+            numMap[num] = 1;
+        }
+        for (auto& [curNum, curLength] : numMap) {
+            int nextNum = curNum;
+            while (numMap.count(++nextNum)) {
+                if (numMap[nextNum] != 1) {
+                    curLength += numMap[nextNum];
+                    numMap.erase(nextNum);
+                    break;
+                }
+                else {
+                    ++curLength;
+                    numMap.erase(nextNum);
+                }
+            }
+            int prevNum = curNum;
+            while (numMap.count(--prevNum)) {
+                ++curLength;
+                numMap.erase(prevNum);
+            }
+            maxLength = max(curLength, maxLength);
+        }
+        return maxLength;
+    }
 };
 
-// LeetCode 101½â·¨£º¹şÏ£¼¯ºÏ£¬Ê±¼ä 52 ms 84.57%£¬¿Õ¼ä 28.3 MB 82.71%
-// °ÑËùÓĞÊı×Ö·Åµ½Ò»¸ö¹şÏ£±í£¬È»ºó²»¶ÏµØ´Ó¹şÏ£±íÖĞÈÎÒâÈ¡Ò»¸öÖµ£¬²¢É¾³ıµôÆäÖ®Ç°Ö®ºóµÄËùÓĞÁ¬ĞøÊı×Ö£¬È»ºó¸üĞÂÄ¿Ç°µÄ×î³¤Á¬ĞøĞòÁĞ³¤¶È¡£ÖØ¸´ÕâÒ»¹ı³Ì£¬ÎÒÃÇ¾Í¿ÉÒÔÕÒµ½ËùÓĞµÄÁ¬ĞøÊı×ÖĞòÁĞ¡£
+// LeetCode 101è§£æ³•ï¼šå“ˆå¸Œé›†åˆï¼Œæ—¶é—´ 52 ms 84.57%ï¼Œç©ºé—´ 28.3 MB 82.71%
+// æŠŠæ‰€æœ‰æ•°å­—æ”¾åˆ°ä¸€ä¸ªå“ˆå¸Œè¡¨ï¼Œç„¶åä¸æ–­åœ°ä»å“ˆå¸Œè¡¨ä¸­ä»»æ„å–ä¸€ä¸ªå€¼ï¼Œå¹¶åˆ é™¤æ‰å…¶ä¹‹å‰ä¹‹åçš„æ‰€æœ‰è¿ç»­æ•°å­—ï¼Œç„¶åæ›´æ–°ç›®å‰çš„æœ€é•¿è¿ç»­åºåˆ—é•¿åº¦ã€‚é‡å¤è¿™ä¸€è¿‡ç¨‹ï¼Œæˆ‘ä»¬å°±å¯ä»¥æ‰¾åˆ°æ‰€æœ‰çš„è¿ç»­æ•°å­—åºåˆ—ã€‚
 class Solution {
 public:
-	int longestConsecutive(vector<int>& nums) {
-		unordered_set<int> numSet(nums.begin(), nums.end());
-		int ret = 0;
-		while (!numSet.empty()) {
-			int cur = *(numSet.begin());
-			numSet.erase(cur);
-			int next = cur, prev = cur;
-			while (numSet.count(++next)) {
-				numSet.erase(next);
-			}
-			while (numSet.erase(--prev)) {
-				numSet.erase(prev);
-			}
-			ret = max(ret, next - prev - 1);
-		}
-		return ret;
-	}
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> numSet(nums.begin(), nums.end());
+        int ret = 0;
+        while (!numSet.empty()) {
+            int cur = *(numSet.begin());
+            numSet.erase(cur);
+            int next = cur, prev = cur;
+            while (numSet.count(++next)) {
+                numSet.erase(next);
+            }
+            while (numSet.erase(--prev)) {
+                numSet.erase(prev);
+            }
+            ret = max(ret, next - prev - 1);
+        }
+        return ret;
+    }
 };
 
 int main() {
 
-	vector<int> nums = { 100, 4, 200, 1, 3, 2 };
+    vector<int> nums = { 100, 4, 200, 1, 3, 2 };
 
-	Solution s;
-	int ret = s.longestConsecutive(nums);
+    Solution s;
+    int ret = s.longestConsecutive(nums);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

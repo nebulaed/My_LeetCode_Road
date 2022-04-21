@@ -3,59 +3,58 @@
 #include<algorithm>
 using namespace std;
 
-// ×ÔĞ´½â·¨
+// è‡ªå†™è§£æ³•
 class Solution {
 public:
-	bool isPalindrome(int x) {
-		string s = to_string(x);
-		int start = 0;
-		int median = (s.size() - 1) / 2;
-		int len1 = expandAroundCenter(s, median, median);
-		int len2 = expandAroundCenter(s, median, median + 1);
-		int len = max(len1, len2);
-		if (len == s.size()) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+    bool isPalindrome(int x) {
+        string s = to_string(x);
+        int start = 0;
+        int median = (s.size() - 1) / 2;
+        int len1 = expandAroundCenter(s, median, median);
+        int len2 = expandAroundCenter(s, median, median + 1);
+        int len = max(len1, len2);
+        if (len == s.size()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-	int expandAroundCenter(const string& s, int left, int right) {
-		while (left >= 0 && right < s.size() && s[left] == s[right]) {
-			--left;
-			++right;
-		}
-		return right - left - 1;
-	}
+    int expandAroundCenter(const string& s, int left, int right) {
+        while (left >= 0 && right < s.size() && s[left] == s[right]) {
+            --left;
+            ++right;
+        }
+        return right - left - 1;
+    }
 };
 
-// ¹Ù·½×ö·¨
-class Solution {
-public:
-	bool isPalindrome(int x) {
-		// µ±xÎª¸ºÊı»ò¸öÎ»Îª0(ÒòÎªÊ×Î»²»¿ÉÄÜÊÇ0)Ê±£¬x²»¿ÉÄÜÎª»ØÎÄÊı
-		if (x < 0 || (x % 10 == 0 && x != 0)) {
-			return false;
-		}
-
-		int revertedNumber = 0;
-		while (x > revertedNumber) {
-			revertedNumber = revertedNumber * 10 + x % 10;
-			x /= 10;
-		}
-		return x == revertedNumber || x == revertedNumber / 10;
-	}
-};
+// å®˜æ–¹åšæ³•
+//class Solution {
+//public:
+//	bool isPalindrome(int x) {
+//		// å½“xä¸ºè´Ÿæ•°æˆ–ä¸ªä½ä¸º0(å› ä¸ºé¦–ä½ä¸å¯èƒ½æ˜¯0)æ—¶ï¼Œxä¸å¯èƒ½ä¸ºå›æ–‡æ•°
+//		if (x < 0 || (x % 10 == 0 && x != 0)) {
+//			return false;
+//		}
+//
+//		int revertedNumber = 0;
+//		while (x > revertedNumber) {
+//			revertedNumber = revertedNumber * 10 + x % 10;
+//			x /= 10;
+//		}
+//		return x == revertedNumber || x == revertedNumber / 10;
+//	}
+//};
 
 int main() {
-	int input = 12121;
-	
-	Solution s;
-	bool ret = s.isPalindrome(input);
-	if (ret) cout << "true" << endl;
-	else cout << "false" << endl;
+    int input = 12121;
 
-	system("pause");
-	return 0;
+    Solution s;
+    bool ret = s.isPalindrome(input);
+    if (ret) cout << "true" << endl;
+    else cout << "false" << endl;
+
+    return 0;
 }

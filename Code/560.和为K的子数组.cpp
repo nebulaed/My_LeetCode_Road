@@ -2,63 +2,62 @@
 #include<vector>
 #include<unordered_map>
 
-using std::vector;
-using std::unordered_map;
+using namespace std;
 
-// ÎÒµÄ½â·¨£ºÇ°×ººÍ+¹şÏ£±í£¬Ê±¼ä 84 ms 25.68%£¬¿Õ¼ä 40.7 MB 13%
+// æˆ‘çš„è§£æ³•ï¼šå‰ç¼€å’Œ+å“ˆå¸Œè¡¨ï¼Œæ—¶é—´ 84 ms 25.68%ï¼Œç©ºé—´ 40.7 MB 13%
 class Solution {
 public:
-	int subarraySum(vector<int>& nums, int k) {
-		// count±íÊ¾²»´Ó0¿ªÊ¼µÄºÍÎªkµÄÁ¬ĞøÇø¼äÊıÁ¿
-		int prefixSum = 0, count = 0;
-		// Ç°×ººÍ³öÏÖ´ÎÊı¹şÏ£±í£¬keyÎªÇ°×ººÍ£¬valÎª³öÏÖ´ÎÊı
-		unordered_map<int, int> prefixSumFreq;
-		for (int num : nums) {
-			// µ±Ç°Î»ÖÃÇ°×ººÍ
-			prefixSum += num;
-			// ¸ÃÇ°×ººÍ³öÏÖ´ÎÊı+1
-			++prefixSumFreq[prefixSum];
-			// ÓÉÓÚprefixSum - (prefixSum - k) == k£¬ËùÒÔÇ°×ººÍµÈÓÚprefixSum - kµÄ³öÏÖ´ÎÊı¾ÍÊÇ²»´Ó0¿ªÊ¼µÄºÍÎªkµÄÁ¬ĞøÇø¼äÊıÁ¿
-			// µ±kÎª0Ê±£¬Òª×¢ÒâprefixSum - k == prefixSum£¬Òª-1È¥µô×Ô¼º
-			count += prefixSumFreq[prefixSum - k] + (k == 0 ? -1 : 0);
-		}
-		return prefixSumFreq[k] + count;
-	}
+    int subarraySum(vector<int>& nums, int k) {
+        // countè¡¨ç¤ºä¸ä»0å¼€å§‹çš„å’Œä¸ºkçš„è¿ç»­åŒºé—´æ•°é‡
+        int prefixSum = 0, count = 0;
+        // å‰ç¼€å’Œå‡ºç°æ¬¡æ•°å“ˆå¸Œè¡¨ï¼Œkeyä¸ºå‰ç¼€å’Œï¼Œvalä¸ºå‡ºç°æ¬¡æ•°
+        unordered_map<int, int> prefixSumFreq;
+        for (int num : nums) {
+            // å½“å‰ä½ç½®å‰ç¼€å’Œ
+            prefixSum += num;
+            // è¯¥å‰ç¼€å’Œå‡ºç°æ¬¡æ•°+1
+            ++prefixSumFreq[prefixSum];
+            // ç”±äºprefixSum - (prefixSum - k) == kï¼Œæ‰€ä»¥å‰ç¼€å’Œç­‰äºprefixSum - kçš„å‡ºç°æ¬¡æ•°å°±æ˜¯ä¸ä»0å¼€å§‹çš„å’Œä¸ºkçš„è¿ç»­åŒºé—´æ•°é‡
+            // å½“kä¸º0æ—¶ï¼Œè¦æ³¨æ„prefixSum - k == prefixSumï¼Œè¦-1å»æ‰è‡ªå·±
+            count += prefixSumFreq[prefixSum - k] + (k == 0 ? -1 : 0);
+        }
+        return prefixSumFreq[k] + count;
+    }
 };
 
-// ÎÒµÄ½â·¨Ğ¡ÓÅ»¯£ºÇ°×ººÍ+¹şÏ£±í£¬Ê±¼ä 84 ms 25.68%£¬¿Õ¼ä 40.7 MB 16.51%
+// æˆ‘çš„è§£æ³•å°ä¼˜åŒ–ï¼šå‰ç¼€å’Œ+å“ˆå¸Œè¡¨ï¼Œæ—¶é—´ 84 ms 25.68%ï¼Œç©ºé—´ 40.7 MB 16.51%
 class Solution {
 public:
-	int subarraySum(vector<int>& nums, int k) {
-		// count±íÊ¾²»´Ó0¿ªÊ¼µÄºÍÎªkµÄÁ¬ĞøÇø¼äÊıÁ¿
-		int prefixSum = 0, count = 0;
-		// Ç°×ººÍ³öÏÖ´ÎÊı¹şÏ£±í£¬keyÎªÇ°×ººÍ£¬valÎª³öÏÖ´ÎÊı
-		unordered_map<int, int> prefixSumFreq;
-		for (int num : nums) {
-			// µ±Ç°Î»ÖÃÇ°×ººÍ
-			prefixSum += num;
-			// ÓÉÓÚprefixSum - (prefixSum - k) == k£¬ËùÒÔÇ°×ººÍµÈÓÚprefixSum - kµÄ³öÏÖ´ÎÊı¾ÍÊÇ²»´Ó0¿ªÊ¼µÄºÍÎªkµÄÁ¬ĞøÇø¼äÊıÁ¿
-			count += prefixSumFreq[prefixSum - k];
-			// ¸ÃÇ°×ººÍ³öÏÖ´ÎÊı+1
-			++prefixSumFreq[prefixSum];
-		}
-		return prefixSumFreq[k] + count;
-	}
+    int subarraySum(vector<int>& nums, int k) {
+        // countè¡¨ç¤ºä¸ä»0å¼€å§‹çš„å’Œä¸ºkçš„è¿ç»­åŒºé—´æ•°é‡
+        int prefixSum = 0, count = 0;
+        // å‰ç¼€å’Œå‡ºç°æ¬¡æ•°å“ˆå¸Œè¡¨ï¼Œkeyä¸ºå‰ç¼€å’Œï¼Œvalä¸ºå‡ºç°æ¬¡æ•°
+        unordered_map<int, int> prefixSumFreq;
+        for (int num : nums) {
+            // å½“å‰ä½ç½®å‰ç¼€å’Œ
+            prefixSum += num;
+            // ç”±äºprefixSum - (prefixSum - k) == kï¼Œæ‰€ä»¥å‰ç¼€å’Œç­‰äºprefixSum - kçš„å‡ºç°æ¬¡æ•°å°±æ˜¯ä¸ä»0å¼€å§‹çš„å’Œä¸ºkçš„è¿ç»­åŒºé—´æ•°é‡
+            count += prefixSumFreq[prefixSum - k];
+            // è¯¥å‰ç¼€å’Œå‡ºç°æ¬¡æ•°+1
+            ++prefixSumFreq[prefixSum];
+        }
+        return prefixSumFreq[k] + count;
+    }
 };
 
-// LeetCode 101½â·¨£ºÇ°×ººÍ+¹şÏ£±í£¬Ê±¼ä 80 ms 31.49%£¬¿Õ¼ä 40.6 MB 22.97%
-// Ë¼Â·£ºÀûÓÃÇ°×ººÍ£¬²»Í¬µÄÊÇÕâÀïÎÒÃÇÊ¹ÓÃÒ»¸ö¹şÏ£±íhashmap£¬Æä¼üÊÇÇ°×ººÍ£¬¶øÖµÊÇ¸ÃÇ°×ººÍ³öÏÖµÄ´ÎÊı¡£ÔÚÎÒÃÇ±éÀúµ½Î»ÖÃi Ê±£¬¼ÙÉèµ±Ç°µÄÇ°×ººÍÊÇpsum£¬ÄÇÃ´hashmap[psum - k]¼´ÎªÒÔµ±Ç°Î»ÖÃ½áÎ²¡¢Âú×ãÌõ¼şµÄÇø¼ä¸öÊı¡£
+// LeetCode 101è§£æ³•ï¼šå‰ç¼€å’Œ+å“ˆå¸Œè¡¨ï¼Œæ—¶é—´ 80 ms 31.49%ï¼Œç©ºé—´ 40.6 MB 22.97%
+// æ€è·¯ï¼šåˆ©ç”¨å‰ç¼€å’Œï¼Œä¸åŒçš„æ˜¯è¿™é‡Œæˆ‘ä»¬ä½¿ç”¨ä¸€ä¸ªå“ˆå¸Œè¡¨hashmapï¼Œå…¶é”®æ˜¯å‰ç¼€å’Œï¼Œè€Œå€¼æ˜¯è¯¥å‰ç¼€å’Œå‡ºç°çš„æ¬¡æ•°ã€‚åœ¨æˆ‘ä»¬éå†åˆ°ä½ç½®i æ—¶ï¼Œå‡è®¾å½“å‰çš„å‰ç¼€å’Œæ˜¯psumï¼Œé‚£ä¹ˆhashmap[psum - k]å³ä¸ºä»¥å½“å‰ä½ç½®ç»“å°¾ã€æ»¡è¶³æ¡ä»¶çš„åŒºé—´ä¸ªæ•°ã€‚
 class Solution {
 public:
-	int subarraySum(vector<int>& nums, int k) {
-		int prefixSum = 0, count = 0;
-		unordered_map<int, int> prefixSumFreq;
-		prefixSumFreq[0] = 1;
-		for (int num : nums) {
-			prefixSum += num;
-			count += prefixSumFreq[prefixSum - k];
-			++prefixSumFreq[prefixSum];
-		}
-		return count;
-	}
+    int subarraySum(vector<int>& nums, int k) {
+        int prefixSum = 0, count = 0;
+        unordered_map<int, int> prefixSumFreq;
+        prefixSumFreq[0] = 1;
+        for (int num : nums) {
+            prefixSum += num;
+            count += prefixSumFreq[prefixSum - k];
+            ++prefixSumFreq[prefixSum];
+        }
+        return count;
+    }
 };

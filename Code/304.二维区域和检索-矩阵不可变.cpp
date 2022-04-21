@@ -2,35 +2,35 @@
 #include<vector>
 using namespace std;
 
-// ÎÒµÄ½â·¨£º¶şÎ¬ºÍ¾ØÕó£¬Ê±¼ä 352 ms 71%£¬¿Õ¼ä 144.5 MB 49%
-// ÎÒµÄ½â·¨£º¶şÎ¬ºÍ¾ØÕó+ÒÆ¶¯¹¹Ôìº¯Êı£¬Ê±¼ä 324 ms 98.27%£¬¿Õ¼ä 141.5 MB 99.28%
+// æˆ‘çš„è§£æ³•ï¼šäºŒç»´å’ŒçŸ©é˜µï¼Œæ—¶é—´ 352 ms 71%ï¼Œç©ºé—´ 144.5 MB 49%
+// æˆ‘çš„è§£æ³•ï¼šäºŒç»´å’ŒçŸ©é˜µ+ç§»åŠ¨æ„é€ å‡½æ•°ï¼Œæ—¶é—´ 324 ms 98.27%ï¼Œç©ºé—´ 141.5 MB 99.28%
 class NumMatrix {
 private:
-	vector<vector<int>> sumMatrix;
+    vector<vector<int>> sumMatrix;
 public:
-	// sumMatrix[i][j]µÈÓÚÒÔmatrix[0][0]Îª×óÉÏ½Ç£¬matrix[i][j]ÎªÓÒÏÂ½ÇµÄ¾ØÕóºÍ
-	NumMatrix(vector<vector<int>>& matrix) : sumMatrix(move(matrix)) {
-	//NumMatrix(vector<vector<int>> & matrix) : sumMatrix(matrix) {
-		size_t height = sumMatrix.size(), width = sumMatrix[0].size();
-		// ÏÈ¶ÔµÚÒ»ÁĞ´¦Àí£¬sumMatrix[0][i]µÈÓÚ´Ómatrix[0][0]µ½matrix[0][i]µÄ¾ØÕóºÍ
-		for (size_t i = 1; i < width; ++i) {
-			sumMatrix[0][i] += sumMatrix[0][i - 1];
-		}
-		for (size_t i = 1; i < height; ++i) {
-			// sumMatrix[i][j]µÈÓÚ´Ómatrix[i][0]µ½matrix[i][j]µÄ¾ØÕóºÍ
-			for (size_t j = 1; j < width; ++j) {
-				sumMatrix[i][j] += sumMatrix[i][j - 1];
-			}
-			// sumMatrix[i][j]µş¼ÓÉÏÒ»ĞĞµÄsumMatrix[i - 1][j]
-			for (size_t j = 0; j < width; ++j) {
-				sumMatrix[i][j] += sumMatrix[i - 1][j];
-			}
-		}
-	}
+    // sumMatrix[i][j]ç­‰äºä»¥matrix[0][0]ä¸ºå·¦ä¸Šè§’ï¼Œmatrix[i][j]ä¸ºå³ä¸‹è§’çš„çŸ©é˜µå’Œ
+    NumMatrix(vector<vector<int>>& matrix) : sumMatrix(move(matrix)) {
+        //NumMatrix(vector<vector<int>> & matrix) : sumMatrix(matrix) {
+        size_t height = sumMatrix.size(), width = sumMatrix[0].size();
+        // å…ˆå¯¹ç¬¬ä¸€åˆ—å¤„ç†ï¼ŒsumMatrix[0][i]ç­‰äºä»matrix[0][0]åˆ°matrix[0][i]çš„çŸ©é˜µå’Œ
+        for (size_t i = 1; i < width; ++i) {
+            sumMatrix[0][i] += sumMatrix[0][i - 1];
+        }
+        for (size_t i = 1; i < height; ++i) {
+            // sumMatrix[i][j]ç­‰äºä»matrix[i][0]åˆ°matrix[i][j]çš„çŸ©é˜µå’Œ
+            for (size_t j = 1; j < width; ++j) {
+                sumMatrix[i][j] += sumMatrix[i][j - 1];
+            }
+            // sumMatrix[i][j]å åŠ ä¸Šä¸€è¡Œçš„sumMatrix[i - 1][j]
+            for (size_t j = 0; j < width; ++j) {
+                sumMatrix[i][j] += sumMatrix[i - 1][j];
+            }
+        }
+    }
 
-	int sumRegion(int row1, int col1, int row2, int col2) {
-		return sumMatrix[row2][col2] - (row1 > 0 ? sumMatrix[row1 - 1][col2] : 0) - (col1 > 0 ? sumMatrix[row2][col1 - 1] : 0) + ((row1 > 0 && col1 > 0) ? sumMatrix[row1 - 1][col1 - 1] : 0);
-	}
+    int sumRegion(int row1, int col1, int row2, int col2) {
+        return sumMatrix[row2][col2] - (row1 > 0 ? sumMatrix[row1 - 1][col2] : 0) - (col1 > 0 ? sumMatrix[row2][col1 - 1] : 0) + ((row1 > 0 && col1 > 0) ? sumMatrix[row1 - 1][col1 - 1] : 0);
+    }
 };
 
 /**

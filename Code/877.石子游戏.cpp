@@ -2,7 +2,7 @@
 #include<list>
 using namespace std;
 
-// ÎÒµÄ½â·¨£ºË¼Â·´íÎó£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 7.5 MB 43.59%
+// æˆ‘çš„è§£æ³•ï¼šæ€è·¯é”™è¯¯ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 7.5 MB 43.59%
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
@@ -36,7 +36,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨2£ºË¼Â·´íÎó£¬Ê±¼ä 4 ms 69.03%£¬¿Õ¼ä 7.2 MB 88.87%
+// æˆ‘çš„è§£æ³•2ï¼šæ€è·¯é”™è¯¯ï¼Œæ—¶é—´ 4 ms 69.03%ï¼Œç©ºé—´ 7.2 MB 88.87%
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
@@ -65,7 +65,7 @@ public:
     }
 };
 
-// ¹Ù·½½â·¨£º¶¯Ì¬¹æ»®
+// å®˜æ–¹è§£æ³•ï¼šåŠ¨æ€è§„åˆ’
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
@@ -82,7 +82,7 @@ public:
         return dp[0][length - 1] > 0;
     }
 };
-// ¹Ù·½½â·¨£º¶¯Ì¬¹æ»®+¹ö¶¯Êı×é
+// å®˜æ–¹è§£æ³•ï¼šåŠ¨æ€è§„åˆ’+æ»šåŠ¨æ•°ç»„
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
@@ -99,7 +99,7 @@ public:
         return dp[length - 1] > 0;
     }
 };
-// ¹Ù·½½â·¨2£ºÊıÑ§£¬ÏÈÊÖ±ØÊ¤
+// å®˜æ–¹è§£æ³•2ï¼šæ•°å­¦ï¼Œå…ˆæ‰‹å¿…èƒœ
 class Solution {
 public:
     bool stoneGame(vector<int>& piles) {

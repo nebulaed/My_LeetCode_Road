@@ -2,93 +2,92 @@
 #include<stack>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨£ºÖĞĞò±éÀú£¬Ê±¼äO(n) 16 ms£¬¿Õ¼äO(n) 21.2 MB
+// æˆ‘çš„è§£æ³•ï¼šä¸­åºéå†ï¼Œæ—¶é—´O(n) 16 msï¼Œç©ºé—´O(n) 21.2 MB
 class Solution {
 public:
-	bool isValidBST(TreeNode* root) {
-		bool start = true;
-		int temp = 0;
-		stack<TreeNode*> stk;
-		while (root != nullptr || !stk.empty()) {
-			while (root != nullptr) {
-				stk.push(root);
-				root = root->left;
-			}
-			root = stk.top();
-			stk.pop();
-			if (root->val > temp || start) {
-				temp = root->val;
-				start = false;
-			}
-			else {
-				return false;
-			}
-			root = root->right;
-		}
-		return true;
-	}
+    bool isValidBST(TreeNode* root) {
+        bool start = true;
+        int temp = 0;
+        stack<TreeNode*> stk;
+        while (root != nullptr || !stk.empty()) {
+            while (root != nullptr) {
+                stk.push(root);
+                root = root->left;
+            }
+            root = stk.top();
+            stk.pop();
+            if (root->val > temp || start) {
+                temp = root->val;
+                start = false;
+            }
+            else {
+                return false;
+            }
+            root = root->right;
+        }
+        return true;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£ºÖĞĞò±éÀú£¬Ê±¼äO(n) 12 ms£¬¿Õ¼äO(n) 21.1 MB
+// å®˜æ–¹è§£æ³•äºŒï¼šä¸­åºéå†ï¼Œæ—¶é—´O(n) 12 msï¼Œç©ºé—´O(n) 21.1 MB
 class Solution {
 public:
-	bool isValidBST(TreeNode* root) {
-		stack<TreeNode*> stack;
-		long long inorder = (long long)INT_MIN - 1;
+    bool isValidBST(TreeNode* root) {
+        stack<TreeNode*> stack;
+        long long inorder = (long long)INT_MIN - 1;
 
-		while (!stack.empty() || root != nullptr) {
-			while (root != nullptr) {
-				stack.push(root);
-				root = root->left;
-			}
-			root = stack.top();
-			stack.pop();
-			// Èç¹ûÖĞĞò±éÀúµÃµ½µÄ½ÚµãµÄÖµĞ¡ÓÚµÈÓÚÇ°Ò»¸ö inorder£¬ËµÃ÷²»ÊÇ¶ş²æËÑË÷Ê÷
-			if (root->val <= inorder) {
-				return false;
-			}
-			inorder = root->val;
-			root = root->right;
-		}
-		return true;
-	}
+        while (!stack.empty() || root != nullptr) {
+            while (root != nullptr) {
+                stack.push(root);
+                root = root->left;
+            }
+            root = stack.top();
+            stack.pop();
+            // å¦‚æœä¸­åºéå†å¾—åˆ°çš„èŠ‚ç‚¹çš„å€¼å°äºç­‰äºå‰ä¸€ä¸ª inorderï¼Œè¯´æ˜ä¸æ˜¯äºŒå‰æœç´¢æ ‘
+            if (root->val <= inorder) {
+                return false;
+            }
+            inorder = root->val;
+            root = root->right;
+        }
+        return true;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºµİ¹é£¬Ê±¼äO(n) 12 ms£¬¿Õ¼äO(n) 21 MB
+// å®˜æ–¹è§£æ³•ä¸€ï¼šé€’å½’ï¼Œæ—¶é—´O(n) 12 msï¼Œç©ºé—´O(n) 21 MB
 class Solution {
 public:
-	bool helper(TreeNode* root, long long lower, long long upper) {
-		if (root == nullptr) return true;
-		if (root->val <= lower || root->val >= upper) return false;
-		return helper(root->left, lower, root->val) && helper(root->right, root->val, upper);
-	}
-	bool isValidBST(TreeNode* root) {
-		return helper(root, LONG_MIN, LONG_MAX);
-	}
+    bool helper(TreeNode* root, long long lower, long long upper) {
+        if (root == nullptr) return true;
+        if (root->val <= lower || root->val >= upper) return false;
+        return helper(root->left, lower, root->val) && helper(root->right, root->val, upper);
+    }
+    bool isValidBST(TreeNode* root) {
+        return helper(root, LONG_MIN, LONG_MAX);
+    }
 };
 
 int main() {
-	TreeNode* left2 = new TreeNode(3);
-	TreeNode* right1 = new TreeNode(2, left2, nullptr);
-	TreeNode* root = new TreeNode(1, nullptr, right1);
+    TreeNode* left2 = new TreeNode(3);
+    TreeNode* right1 = new TreeNode(2, left2, nullptr);
+    TreeNode* root = new TreeNode(1, nullptr, right1);
 
-	Solution s;
-	bool ret = s.isValidBST(root);
+    Solution s;
+    bool ret = s.isValidBST(root);
 
-	cout << ret << endl;
+    cout << ret << endl;
 
-	delete left2, right1, root;
+    delete left2, right1, root;
 
-	system("pause");
-	return 0;
+    return 0;
 }

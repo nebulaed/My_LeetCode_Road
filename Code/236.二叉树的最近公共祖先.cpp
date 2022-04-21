@@ -3,116 +3,116 @@
 #include<unordered_set>
 using namespace std;
 
-// ¶ş²æÊ÷½á¹¹
+// äºŒå‰æ ‘ç»“æ„
 struct TreeNode {
-	int val;
-	TreeNode* left;
-	TreeNode* right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
-// ÎÒµÄ½â·¨£º²Î¿¼¹Ù·½½â·¨Ò»Ë¼Â·£¬Ê±¼äO(n) 16 ms£¬¿Õ¼äO(n) 14 MB
-// Ë¼Â·£ºµİ¹é±éÀú¶ş²æÊ÷£¬ÔÚÍùÉî×ßÇ°£¬¼ì²éµ±Ç°½ÚµãÊÇ·ñÎªp»òq£¬¼´ÖªµÀT == p£¬T == q
-// È»ºó¿ªÊ¼µİ¹é£¬ÀàËÆÓÚºóĞò±éÀúÔÚµİ¹éºó¼ì²éµ±Ç°½ÚµãµÄ×ó×ÓÊ÷ÊÇ·ñ°üº¬p»òq£¬±íÊ¾Îªf_left£¬µ±Ç°½ÚµãµÄÓÒ×ÓÊ÷ÊÇ·ñ°üº¬p»òq£¬±íÊ¾Îªf_right£¬Ôòµ±Ç°½ÚµãÈç¹ûÂú×ã
+// æˆ‘çš„è§£æ³•ï¼šå‚è€ƒå®˜æ–¹è§£æ³•ä¸€æ€è·¯ï¼Œæ—¶é—´O(n) 16 msï¼Œç©ºé—´O(n) 14 MB
+// æ€è·¯ï¼šé€’å½’éå†äºŒå‰æ ‘ï¼Œåœ¨å¾€æ·±èµ°å‰ï¼Œæ£€æŸ¥å½“å‰èŠ‚ç‚¹æ˜¯å¦ä¸ºpæˆ–qï¼Œå³çŸ¥é“T == pï¼ŒT == q
+// ç„¶åå¼€å§‹é€’å½’ï¼Œç±»ä¼¼äºååºéå†åœ¨é€’å½’åæ£€æŸ¥å½“å‰èŠ‚ç‚¹çš„å·¦å­æ ‘æ˜¯å¦åŒ…å«pæˆ–qï¼Œè¡¨ç¤ºä¸ºf_leftï¼Œå½“å‰èŠ‚ç‚¹çš„å³å­æ ‘æ˜¯å¦åŒ…å«pæˆ–qï¼Œè¡¨ç¤ºä¸ºf_rightï¼Œåˆ™å½“å‰èŠ‚ç‚¹å¦‚æœæ»¡è¶³
 // (f_left && f_right) || ((T == p || T == q) && (f_left || f_right))
-// Ôòµ±Ç°½ÚµãÎªËùÑ°ÕÒµÄ×î½ü¹«¹²×æÏÈ
-// È»ºóÔÙ·µ»Øµ±Ç°½Úµã»òÕßµ±Ç°½ÚµãµÄ×ó×ÓÊ÷¡¢ÓÒ×ÓÊ÷ÖĞÊÇ·ñ°üº¬p»òq£¬ÒÔ¹©ÉÏ²ã½Úµã»ñÖª
+// åˆ™å½“å‰èŠ‚ç‚¹ä¸ºæ‰€å¯»æ‰¾çš„æœ€è¿‘å…¬å…±ç¥–å…ˆ
+// ç„¶åå†è¿”å›å½“å‰èŠ‚ç‚¹æˆ–è€…å½“å‰èŠ‚ç‚¹çš„å·¦å­æ ‘ã€å³å­æ ‘ä¸­æ˜¯å¦åŒ…å«pæˆ–qï¼Œä»¥ä¾›ä¸Šå±‚èŠ‚ç‚¹è·çŸ¥
 class Solution {
 private:
-	TreeNode* ptr = nullptr;
+    TreeNode* ptr = nullptr;
 
-	bool check(TreeNode* T, TreeNode* p, TreeNode* q) {
-		if (T == nullptr || ptr != nullptr) return false;
-		bool ret = false;
-		if (T == p || T == q) ret = true;
-		bool leftSon = check(T->left, p, q);
-		bool rightSon = check(T->right, p, q);
-		if (leftSon && rightSon || (ret && (leftSon || rightSon))) {
-			ptr = T;
-		}
-		return ret || leftSon || rightSon;
-	}
+    bool check(TreeNode* T, TreeNode* p, TreeNode* q) {
+        if (T == nullptr || ptr != nullptr) return false;
+        bool ret = false;
+        if (T == p || T == q) ret = true;
+        bool leftSon = check(T->left, p, q);
+        bool rightSon = check(T->right, p, q);
+        if (leftSon && rightSon || (ret && (leftSon || rightSon))) {
+            ptr = T;
+        }
+        return ret || leftSon || rightSon;
+    }
 public:
-	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		check(root, p, q);
-		return ptr;
-	}
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        check(root, p, q);
+        return ptr;
+    }
 };
 
-// ¹Ù·½Ìâ½â¶ş£º¹şÏ£±í´æ´¢¸¸½Úµã£¬Ê±¼äO(n) 16 ms£¬¿Õ¼äO(n) 17.2 MB
-// Ë¼Â·£º1.´Ó¸ù½Úµã¿ªÊ¼±éÀúÕû¿Å¶ş²æÊ÷£¬ÓÃ¹şÏ£±í¼ÇÂ¼Ã¿¸ö½ÚµãµÄ¸¸½ÚµãÖ¸Õë£¬¼´keyÎªleft»òright½ÚµãÖµ£¬value·Åµ±Ç°½ÚµãÖ¸Õë
-// 2.´Óp½Úµã½èÖúÉÏÃæ´æ´¢µÄ¹şÏ£±í²»¶Ï¿ªÊ¼Íù¸¸½ÚµãÒÆ¶¯Ö±µ½root£¬ÓÃ¹şÏ£±í¼ÇÂ¼ÏÂÒÑ·ÃÎÊµÄ½Úµã£¬key·Å¸Ã½ÚµãÖµ£¬value·Åtrue
-// Ò²¿ÉÒÔ½«ÒÑ·ÃÎÊµÄ½Úµã·ÅÈë¹şÏ£¼¯ºÏ
-// 3.ÔÙ´Óq½Úµã½èÖúÉÏÃæµÄ¹şÏ£±í²»¶ÏÍù¸¸½ÚµãÒÆ¶¯Ö±µ½root£¬Óöµ½µÚÒ»¸ö×æÏÈÂú×ãÔÚÉÏÃæµÄ·ÃÎÊ¹şÏ£±íµÄ¶ÔÓ¦µÄvalueÒÑÎªtrue£¬ËµÃ÷ÕâÊÇpºÍqµÄ×î½ü¹«¹²×æÏÈ
-// Ò²¿ÉÒÔÊÇÓöµ½µÚÒ»¸ö×æÏÈÔÚÉÏÃæµÄ¹şÏ£¼¯ºÏÖĞ
+// å®˜æ–¹é¢˜è§£äºŒï¼šå“ˆå¸Œè¡¨å­˜å‚¨çˆ¶èŠ‚ç‚¹ï¼Œæ—¶é—´O(n) 16 msï¼Œç©ºé—´O(n) 17.2 MB
+// æ€è·¯ï¼š1.ä»æ ¹èŠ‚ç‚¹å¼€å§‹éå†æ•´é¢—äºŒå‰æ ‘ï¼Œç”¨å“ˆå¸Œè¡¨è®°å½•æ¯ä¸ªèŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹æŒ‡é’ˆï¼Œå³keyä¸ºleftæˆ–rightèŠ‚ç‚¹å€¼ï¼Œvalueæ”¾å½“å‰èŠ‚ç‚¹æŒ‡é’ˆ
+// 2.ä»pèŠ‚ç‚¹å€ŸåŠ©ä¸Šé¢å­˜å‚¨çš„å“ˆå¸Œè¡¨ä¸æ–­å¼€å§‹å¾€çˆ¶èŠ‚ç‚¹ç§»åŠ¨ç›´åˆ°rootï¼Œç”¨å“ˆå¸Œè¡¨è®°å½•ä¸‹å·²è®¿é—®çš„èŠ‚ç‚¹ï¼Œkeyæ”¾è¯¥èŠ‚ç‚¹å€¼ï¼Œvalueæ”¾true
+// ä¹Ÿå¯ä»¥å°†å·²è®¿é—®çš„èŠ‚ç‚¹æ”¾å…¥å“ˆå¸Œé›†åˆ
+// 3.å†ä»qèŠ‚ç‚¹å€ŸåŠ©ä¸Šé¢çš„å“ˆå¸Œè¡¨ä¸æ–­å¾€çˆ¶èŠ‚ç‚¹ç§»åŠ¨ç›´åˆ°rootï¼Œé‡åˆ°ç¬¬ä¸€ä¸ªç¥–å…ˆæ»¡è¶³åœ¨ä¸Šé¢çš„è®¿é—®å“ˆå¸Œè¡¨çš„å¯¹åº”çš„valueå·²ä¸ºtrueï¼Œè¯´æ˜è¿™æ˜¯på’Œqçš„æœ€è¿‘å…¬å…±ç¥–å…ˆ
+// ä¹Ÿå¯ä»¥æ˜¯é‡åˆ°ç¬¬ä¸€ä¸ªç¥–å…ˆåœ¨ä¸Šé¢çš„å“ˆå¸Œé›†åˆä¸­
 class Solution {
 private:
-	unordered_map<int, TreeNode*> parent;
-	unordered_set<int> visited;
+    unordered_map<int, TreeNode*> parent;
+    unordered_set<int> visited;
 
-	void dfs(TreeNode* T) {
-		if (T->left != nullptr) {
-			parent[T->left->val] = T;
-			dfs(T->left);
-		}
-		if (T->right != nullptr) {
-			parent[T->right->val] = T;
-			dfs(T->right);
-		}
-	}
+    void dfs(TreeNode* T) {
+        if (T->left != nullptr) {
+            parent[T->left->val] = T;
+            dfs(T->left);
+        }
+        if (T->right != nullptr) {
+            parent[T->right->val] = T;
+            dfs(T->right);
+        }
+    }
 public:
-	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		parent[root->val] = nullptr;
-		dfs(root);
-		while (p != nullptr) {
-			visited.emplace(p->val);
-			p = parent[p->val];
-		}
-		while (q != nullptr) {
-			if (visited.count(q->val)) return q;
-			q = parent[q->val];
-		}
-		return nullptr;
-	}
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        parent[root->val] = nullptr;
+        dfs(root);
+        while (p != nullptr) {
+            visited.emplace(p->val);
+            p = parent[p->val];
+        }
+        while (q != nullptr) {
+            if (visited.count(q->val)) return q;
+            q = parent[q->val];
+        }
+        return nullptr;
+    }
 };
 
 
 
-// ¸ù¾İ¹Ù·½Ë¼Â·×ÔĞ´´úÂë£¬Ê±¼äO(n) 28 ms,¿Õ¼äO(n) 16.9 MB
+// æ ¹æ®å®˜æ–¹æ€è·¯è‡ªå†™ä»£ç ï¼Œæ—¶é—´O(n) 28 ms,ç©ºé—´O(n) 16.9 MB
 class Solution {
 private:
-	unordered_map<int, TreeNode*> parent;
-	unordered_set<int> visited;
+    unordered_map<int, TreeNode*> parent;
+    unordered_set<int> visited;
 
-	void dfs(TreeNode* T) {
-		if (T->left != nullptr) {
-			parent[T->left->val] = T;
-			dfs(T->left);
-		}
-		if (T->right != nullptr) {
-			parent[T->right->val] = T;
-			dfs(T->right);
-		}
-	}
+    void dfs(TreeNode* T) {
+        if (T->left != nullptr) {
+            parent[T->left->val] = T;
+            dfs(T->left);
+        }
+        if (T->right != nullptr) {
+            parent[T->right->val] = T;
+            dfs(T->right);
+        }
+    }
 public:
-	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		dfs(root);
-		while (true) {
-			visited.emplace(p->val);
-			if (p != root) {
-				p = parent[p->val];
-			}
-			else break;
-		}
-		while (true) {
-			if (visited.count(q->val)) return q;
-			if (q != root) {
-				q = parent[q->val];
-			}
-			else break;
-		}
-		return nullptr;
-	}
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        dfs(root);
+        while (true) {
+            visited.emplace(p->val);
+            if (p != root) {
+                p = parent[p->val];
+            }
+            else break;
+        }
+        while (true) {
+            if (visited.count(q->val)) return q;
+            if (q != root) {
+                q = parent[q->val];
+            }
+            else break;
+        }
+        return nullptr;
+    }
 };

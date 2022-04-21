@@ -1,14 +1,15 @@
 #include<iostream>
 #include<string>
+#include<climits>
 #include<algorithm>
 using namespace std;
 
-// 自己解法
+// 鑷繁瑙ｆ硶
 //class Solution {
 //public:
 //	int reverse(int x) {
 //		string temp = to_string(x);
-//		// 必须加std避免错误调用当前函数
+//		// 蹇呴』鍔爏td閬垮厤閿欒璋冪敤褰撳墠鍑芥暟
 //		std::reverse(temp.begin(), temp.end());
 //		int it = temp.find('-');
 //		bool sgn = true;
@@ -34,28 +35,27 @@ using namespace std;
 
 class Solution {
 public:
-	int reverse(int x) {
-		int rev = 0;
-		while (x != 0) {
-			if (rev < INT_MIN / 10 || rev > INT_MAX / 10) {
-				return 0;
-			}
-			int digit = x % 10;
-			x /= 10;
-			rev = rev * 10 + digit;
-		}
-		return rev;
-	}
+    int reverse(int x) {
+        int rev = 0;
+        while (x != 0) {
+            if (rev < INT_MIN / 10 || rev > INT_MAX / 10) {
+                return 0;
+            }
+            int digit = x % 10;
+            x /= 10;
+            rev = rev * 10 + digit;
+        }
+        return rev;
+    }
 };
 
 
 
 int main() {
-	int input = 1234567899;
-	Solution s;
-	int ret = s.reverse(input);
-	cout << ret << endl;
+    int input = 1234567899;
+    Solution s;
+    int ret = s.reverse(input);
+    cout << ret << endl;
 
-	system("pause");
-	return 0;
+    return 0;
 }

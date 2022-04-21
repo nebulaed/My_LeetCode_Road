@@ -1,35 +1,34 @@
 #include<iostream>
 #include<cmath>
 
-using std::fmod;
-using std::log10;
+using namespace std;
 
-//  ÎÒµÄ½â·¨£ºÊ±¼äO(log_3 n) 20 ms 34.95%£¬¿Õ¼ä 5.9 MB 33.51%
+//  æˆ‘çš„è§£æ³•ï¼šæ—¶é—´O(log_3 n) 20 ms 34.95%ï¼Œç©ºé—´ 5.9 MB 33.51%
 class Solution {
 public:
-	bool isPowerOfThree(int n) {
-		while (n >= 3) {
-			if (n % 3 != 0) break;
-			n /= 3;
-		}
-		return n == 1;
-	}
+    bool isPowerOfThree(int n) {
+        while (n >= 3) {
+            if (n % 3 != 0) break;
+            n /= 3;
+        }
+        return n == 1;
+    }
 };
 
-// LeetCode 101½â·¨Ò»£ºÀûÓÃ¶ÔÊý£¬Ê±¼ä 8 ms 91.91%£¬¿Õ¼ä 6 MB 7.24%
-// Éèlog_3^n = m£¬ÈônÊÇ3µÄÕûÊý´Î·½£¬ÄÇÃ´mÒ»¶¨ÊÇÕûÊý¡£
+// LeetCode 101è§£æ³•ä¸€ï¼šåˆ©ç”¨å¯¹æ•°ï¼Œæ—¶é—´ 8 ms 91.91%ï¼Œç©ºé—´ 6 MB 7.24%
+// è®¾log_3^n = mï¼Œè‹¥næ˜¯3çš„æ•´æ•°æ¬¡æ–¹ï¼Œé‚£ä¹ˆmä¸€å®šæ˜¯æ•´æ•°ã€‚
 class Solution {
 public:
-	bool isPowerOfThree(int n) {
-		return fmod(log10(n) / log10(3), 1) == 0;
-	}
+    bool isPowerOfThree(int n) {
+        return fmod(log10(n) / log10(3), 1) == 0;
+    }
 };
 
-// LeetCode 101½â·¨¶þ£ºÈ¡Ä££¬Ê±¼ä 12 ms 76.27%£¬¿Õ¼ä 5.8 MB 63.43%
-// int·¶Î§ÄÚ3µÄ×î´ó´Î·½ÊÇ3^19=1162261467£¬Èç¹ûnÊÇ3µÄÕûÊý´Î·½£¬1162261467 % n Ò»¶¨ÎªÁã¡£
+// LeetCode 101è§£æ³•äºŒï¼šå–æ¨¡ï¼Œæ—¶é—´ 12 ms 76.27%ï¼Œç©ºé—´ 5.8 MB 63.43%
+// intèŒƒå›´å†…3çš„æœ€å¤§æ¬¡æ–¹æ˜¯3^19=1162261467ï¼Œå¦‚æžœnæ˜¯3çš„æ•´æ•°æ¬¡æ–¹ï¼Œ1162261467 % n ä¸€å®šä¸ºé›¶ã€‚
 class Solution {
 public:
-	bool isPowerOfThree(int n) {
-		return n > 0 && 1162261467 % n == 0;
-	}
+    bool isPowerOfThree(int n) {
+        return n > 0 && 1162261467 % n == 0;
+    }
 };

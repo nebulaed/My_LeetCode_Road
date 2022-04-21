@@ -7,7 +7,7 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-// ÎÒµÄ½â·¨£ºÊ±¼ä O(n) 12 ms 38.12%£¬¿Õ¼ä 11.3 MB 49.75%
+// æˆ‘çš„è§£æ³•ï¼šæ—¶é—´ O(n) 12 ms 38.12%ï¼Œç©ºé—´ 11.3 MB 49.75%
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {

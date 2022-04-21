@@ -4,20 +4,20 @@
 using namespace std;
 
 
-// ÎÒµÄ½â·¨Ò»£ºÅÅĞò+Ì°ĞÄ£¬Ê±¼äO(m log m + n log n) 28 ms£¬¿Õ¼ä O(1) 17.1 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæ’åº+è´ªå¿ƒï¼Œæ—¶é—´O(m log m + n log n) 28 msï¼Œç©ºé—´ O(1) 17.1 MB
 class Solution {
 public:
-	int findContentChildren(vector<int>& g, vector<int>& s) {
-		sort(g.begin(), g.end());
-		sort(s.begin(), s.end());
-		size_t childrenPtr = 0, cookiesPtr = 0;
-		size_t childrenNum = g.size(), cookiesNum = s.size();
-		while (childrenPtr < childrenNum && cookiesPtr < cookiesNum) {
-			if (g[childrenPtr] <= s[cookiesPtr]) {
-				++childrenPtr;
-			}
-			++cookiesPtr;
-		}
-		return childrenPtr;
-	}
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        sort(g.begin(), g.end());
+        sort(s.begin(), s.end());
+        size_t childrenPtr = 0, cookiesPtr = 0;
+        size_t childrenNum = g.size(), cookiesNum = s.size();
+        while (childrenPtr < childrenNum && cookiesPtr < cookiesNum) {
+            if (g[childrenPtr] <= s[cookiesPtr]) {
+                ++childrenPtr;
+            }
+            ++cookiesPtr;
+        }
+        return childrenPtr;
+    }
 };

@@ -1,31 +1,32 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 using namespace std;
 
-// ×ö²»³öÀ´
+// åšä¸å‡ºæ¥
 //class Solution {
 //public:
 //	int threeSumClosest(vector<int>& nums, int target) {
 //		int n = nums.size();
 //		sort(nums.begin(), nums.end());
 //		int deviation = INT_MAX;
-//		// Ã¶¾Ù(a,b,c)ÖĞµÄa
+//		// æšä¸¾(a,b,c)ä¸­çš„a
 //		for (int first = 0; first < n; ++first) {
-//			// Ã¶¾ÙµÄa±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄaÊıÖµ²»µÈ
+//			// æšä¸¾çš„aå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„aæ•°å€¼ä¸ç­‰
 //			if (first > 0 && nums[first] == nums[first - 1]) {
 //				continue;
 //			}
-//			// c¶ÔÓ¦µÄÖ¸Õë³õÊ¼Ö¸ÏòÊı×éµÄ×îÓÒ¶Ë
+//			// cå¯¹åº”çš„æŒ‡é’ˆåˆå§‹æŒ‡å‘æ•°ç»„çš„æœ€å³ç«¯
 //			int third = n - 1;
 //			int cur_target = target - nums[first];
-//			// Ã¶¾Ùb
+//			// æšä¸¾b
 //			for (int second = first + 1; second < n && second != third; ++second) {
-//				// Í¬ÑùÒª±£Ö¤Ã¶¾ÙµÄb±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄbÊıÖµ²»µÈ
+//				// åŒæ ·è¦ä¿è¯æšä¸¾çš„bå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„bæ•°å€¼ä¸ç­‰
 //				if (second > first + 1 && nums[second] == nums[second - 1]) {
 //					continue;
 //				}
-//				// ĞèÒª±£Ö¤bµÄÖ¸ÕëÔÚcµÄÖ¸Õë×ó²à
+//				// éœ€è¦ä¿è¯bçš„æŒ‡é’ˆåœ¨cçš„æŒ‡é’ˆå·¦ä¾§
 //				while (second<third-1 && abs(cur_target - nums[second] - nums[third-1])<= abs(cur_target - nums[second] - nums[third])) {
 //					--third;
 //				}
@@ -38,61 +39,61 @@ using namespace std;
 //	}
 //};
 
-// ¹Ù·½½â´ğ1£ºÅÅĞò + Ë«Ö¸Õë
+// å®˜æ–¹è§£ç­”1ï¼šæ’åº + åŒæŒ‡é’ˆ
 class Solution {
 public:
-	int threeSumClosest(vector<int>& nums, int target) {
-		int n = nums.size();
-		sort(nums.begin(), nums.end());
-		int deviation = INT_MAX;
-		// Ã¶¾Ù(a,b,c)ÖĞµÄa
-		for (int first = 0; first < n; ++first) {
-			// Ã¶¾ÙµÄa±ØĞëÓëÉÏ¸öÃ¶¾ÙµÄaÊıÖµ²»µÈ
-			if (first > 0 && nums[first] == nums[first - 1]) {
-				continue;
-			}
-			// b¶ÔÓ¦µÄÖ¸Õë³õÊ¼Ö¸Ïòa+1£¬c¶ÔÓ¦µÄÖ¸Õë³õÊ¼Ö¸ÏòÊı×éµÄ×îÓÒ¶Ë
-			int third = n - 1;
-			int second = first + 1;
-			// Ê¹ÓÃË«Ö¸ÕëÃ¶¾ÙbºÍc
-			while (second < third) {
-				if (abs(target - nums[first] - nums[second] - nums[third]) < abs(deviation)) {
-					// ¸üĞÂ¾ø¶ÔÖµ×îĞ¡µÄdeviation
-					deviation = target - nums[first] - nums[second] - nums[third];
-					// Èôµ±Ç°ºÍµÈÓÚtargetÖ±½Ó·µ»Ø´ğ°¸
-					if (!deviation) return target;
-				}
-				// ÈôºÍ´óÓÚtarget£¬Ïò×óÒÆ¶¯c
-				if (nums[first] + nums[second] + nums[third] >= target) {
-					--third;
-					// ÈôcºÍc+1ÏàµÈ£¬ÔòcÔÙ´ÎÏò×óÒÆ¶¯
-					while (second < third && nums[third] == nums[third + 1]) {
-						--third;
-					}
-				}
-				// ÈôºÍĞ¡ÓÚtarget£¬ÏòÓÒÒÆ¶¯b
-				else {
-					++second;
-					// ÈôbºÍb-1ÏàµÈ£¬ÔòbÔÙ´ÎÏòÓÒÒÆ¶¯
-					while (second < third && nums[second] == nums[second - 1]) {
-						++second;
-					}
-				}
-			}
-		}
-		return target - deviation;
-	}
+    int threeSumClosest(vector<int>& nums, int target) {
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        int deviation = INT_MAX;
+        // æšä¸¾(a,b,c)ä¸­çš„a
+        for (int first = 0; first < n; ++first) {
+            // æšä¸¾çš„aå¿…é¡»ä¸ä¸Šä¸ªæšä¸¾çš„aæ•°å€¼ä¸ç­‰
+            if (first > 0 && nums[first] == nums[first - 1]) {
+                continue;
+            }
+            // bå¯¹åº”çš„æŒ‡é’ˆåˆå§‹æŒ‡å‘a+1ï¼Œcå¯¹åº”çš„æŒ‡é’ˆåˆå§‹æŒ‡å‘æ•°ç»„çš„æœ€å³ç«¯
+            int third = n - 1;
+            int second = first + 1;
+            // ä½¿ç”¨åŒæŒ‡é’ˆæšä¸¾bå’Œc
+            while (second < third) {
+                if (abs(target - nums[first] - nums[second] - nums[third]) < abs(deviation)) {
+                    // æ›´æ–°ç»å¯¹å€¼æœ€å°çš„deviation
+                    deviation = target - nums[first] - nums[second] - nums[third];
+                    // è‹¥å½“å‰å’Œç­‰äºtargetç›´æ¥è¿”å›ç­”æ¡ˆ
+                    if (!deviation) return target;
+                }
+                // è‹¥å’Œå¤§äºtargetï¼Œå‘å·¦ç§»åŠ¨c
+                if (nums[first] + nums[second] + nums[third] >= target) {
+                    --third;
+                    // è‹¥cå’Œc+1ç›¸ç­‰ï¼Œåˆ™cå†æ¬¡å‘å·¦ç§»åŠ¨
+                    while (second < third && nums[third] == nums[third + 1]) {
+                        --third;
+                    }
+                }
+                    // è‹¥å’Œå°äºtargetï¼Œå‘å³ç§»åŠ¨b
+                else {
+                    ++second;
+                    // è‹¥bå’Œb-1ç›¸ç­‰ï¼Œåˆ™bå†æ¬¡å‘å³ç§»åŠ¨
+                    while (second < third && nums[second] == nums[second - 1]) {
+                        ++second;
+                    }
+                }
+            }
+        }
+        return target - deviation;
+    }
 };
 
 
 int main() {
-	vector<int> nums = { 1,1,-1,-1,3 };
-	int target = -1;
+    vector<int> nums = { 1,1,-1,-1,3 };
+    int target = -1;
 
-	Solution s;
-	int ret = s.threeSumClosest(nums,target);
+    Solution s;
+    int ret = s.threeSumClosest(nums,target);
 
-	cout << ret << endl;
-	system("pause");
-	return 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    cout << ret << endl;
+
+    return 0;
 }

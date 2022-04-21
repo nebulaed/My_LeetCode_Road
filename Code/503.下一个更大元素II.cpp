@@ -4,12 +4,9 @@
 #include<algorithm>
 #include<functional>
 
-using std::vector;
-using std::stack;
-using std::upper_bound;
-using std::greater;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º±©Á¦±éÀú£¬Ê±¼ä O(n^2) 148 ms 7%£¬¿Õ¼ä O(1) 22.9 MB 99%
+// æˆ‘çš„è§£æ³•ä¸€ï¼šæš´åŠ›éå†ï¼Œæ—¶é—´ O(n^2) 148 ms 7%ï¼Œç©ºé—´ O(1) 22.9 MB 99%
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
@@ -43,7 +40,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºµ¥µ÷Õ»+Æ´½ÓÊı×é£¬Ê±¼ä O(n) 24 ms 94.20%£¬¿Õ¼ä O(n) 24.1 MB 17.71%
+// æˆ‘çš„è§£æ³•äºŒï¼šå•è°ƒæ ˆ+æ‹¼æ¥æ•°ç»„ï¼Œæ—¶é—´ O(n) 24 ms 94.20%ï¼Œç©ºé—´ O(n) 24.1 MB 17.71%
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
@@ -77,7 +74,7 @@ public:
     }
 };
 
-// ÎÒµÄ½â·¨Èı£ºµ¥µ÷Õ»+Á½´ÎÑ­»·£¬Ê±¼ä 24 ms 94.21%£¬¿Õ¼ä 22.9 MB 98.24%  
+// æˆ‘çš„è§£æ³•ä¸‰ï¼šå•è°ƒæ ˆ+ä¸¤æ¬¡å¾ªç¯ï¼Œæ—¶é—´ 24 ms 94.21%ï¼Œç©ºé—´ 22.9 MB 98.24%  
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
@@ -112,7 +109,7 @@ public:
 };
 
 
-// ¹Ù·½½â·¨£ºµ¥µ÷Õ»+È¡Ä££¬Ê±¼ä 24 ms 94.21%£¬¿Õ¼ä 23.1 MB 94.40%
+// å®˜æ–¹è§£æ³•ï¼šå•è°ƒæ ˆ+å–æ¨¡ï¼Œæ—¶é—´ 24 ms 94.21%ï¼Œç©ºé—´ 23.1 MB 94.40%
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
@@ -135,7 +132,7 @@ public:
     }
 };
 
-// ¹Ù·½½â·¨×ÔĞĞÓÅ»¯£ºµ¥µ÷Õ»+¶ş·Ö²éÕÒ£¬Ê±¼ä 20 ms 98.42%£¬¿Õ¼ä 23.2 MB 86.70%
+// å®˜æ–¹è§£æ³•è‡ªè¡Œä¼˜åŒ–ï¼šå•è°ƒæ ˆ+äºŒåˆ†æŸ¥æ‰¾ï¼Œæ—¶é—´ 20 ms 98.42%ï¼Œç©ºé—´ 23.2 MB 86.70%
 class Solution {
 private:
     int binarySearch(const vector<int>& inds, const vector<int>& nums, int target) {
@@ -160,13 +157,13 @@ public:
             int cur = i % n, num = nums[cur];
             if (!inds.empty()) {
                 int prev = binarySearch(inds, nums, num);
-                // ¶ş·Ö²éÕÒµ½µÄprevÈô´óÓÚµÈÓÚinds.size()ËµÃ÷Ã»²éÕÒµ½µÚÒ»¸ö¶ÔÓ¦µÄnums[prev]´óÓÚµÈÓÚnums[i%n]
+                // äºŒåˆ†æŸ¥æ‰¾åˆ°çš„prevè‹¥å¤§äºç­‰äºinds.size()è¯´æ˜æ²¡æŸ¥æ‰¾åˆ°ç¬¬ä¸€ä¸ªå¯¹åº”çš„nums[prev]å¤§äºç­‰äºnums[i%n]
                 if (prev < inds.size()) {
-                    // ¶Ôprev¼´ºóÃæµÄÃ¿Ò»¸öindsÖĞÔªËØ£¬ËüÃÇµÄÏÂÒ»¸ö¸ü´óÔªËØ¶¼ÊÇnum
+                    // å¯¹prevå³åé¢çš„æ¯ä¸€ä¸ªindsä¸­å…ƒç´ ï¼Œå®ƒä»¬çš„ä¸‹ä¸€ä¸ªæ›´å¤§å…ƒç´ éƒ½æ˜¯num
                     for (int j = prev; j < inds.size(); ++j) {
                         ret[inds[j]] = num;
                     }
-                    // prevµ½ºóÃæµÄÈ«²¿²Á³ı
+                    // prevåˆ°åé¢çš„å…¨éƒ¨æ“¦é™¤
                     inds.erase(inds.begin() + prev, inds.end());
                 }
             }
@@ -177,9 +174,6 @@ public:
 };
 
 int main() {
-
-    using std::cout;
-    using std::endl;
 
     vector<int> nums1 = { 1,2,1 };
     vector<int> nums2 = { 1,2,3,4,3 };
@@ -202,6 +196,5 @@ int main() {
     }
     cout << "]" << endl;
 
-    system("pause");
     return 0;
 }

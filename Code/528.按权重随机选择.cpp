@@ -3,25 +3,23 @@
 #include<numeric>
 #include<algorithm>
 
-using std::vector;
-using std::partial_sum;
-using std::lower_bound;
+using namespace std;
 
-// LeetCode 101½â·¨£ºÓÃpartial_sumÇóÇ°×ººÍ£¬¼´µ±Ç°Î»ÖÃºÍÇ°ÃæËùÓĞÊı×ÖµÄºÍ¡£½á¹ûÊı×é±ØÎªµ¥µ÷µİÔö¡£
-// Ê±¼ä 68 ms 90.99%£¬¿Õ¼ä 39.1 MB 95.42%
-// Ã¿´ÎĞèÒª²ÉÑùÊ±£¬ÏÈÔÚ[1,È¨ÖØºÍ]¼äËæ»ú²úÉúÒ»¸öÊı×Ö£¬È»ºóÓÃ¶ş·Ö²éÕÒÆäÔÚÇ°×ººÍÖĞµÄÎ»ÖÃ£¬Ä£Äâ¼ÓÈ¨²ÉÑù¹ı³Ì¡£
+// LeetCode 101è§£æ³•ï¼šç”¨partial_sumæ±‚å‰ç¼€å’Œï¼Œå³å½“å‰ä½ç½®å’Œå‰é¢æ‰€æœ‰æ•°å­—çš„å’Œã€‚ç»“æœæ•°ç»„å¿…ä¸ºå•è°ƒé€’å¢ã€‚
+// æ—¶é—´ 68 ms 90.99%ï¼Œç©ºé—´ 39.1 MB 95.42%
+// æ¯æ¬¡éœ€è¦é‡‡æ ·æ—¶ï¼Œå…ˆåœ¨[1,æƒé‡å’Œ]é—´éšæœºäº§ç”Ÿä¸€ä¸ªæ•°å­—ï¼Œç„¶åç”¨äºŒåˆ†æŸ¥æ‰¾å…¶åœ¨å‰ç¼€å’Œä¸­çš„ä½ç½®ï¼Œæ¨¡æ‹ŸåŠ æƒé‡‡æ ·è¿‡ç¨‹ã€‚
 class Solution {
 private:
-	vector<int> sums;
+    vector<int> sums;
 public:
-	Solution(vector<int>& w) : sums(move(w)) {
-		partial_sum(sums.begin(), sums.end(), sums.begin());
-	}
+    Solution(vector<int>& w) : sums(move(w)) {
+        partial_sum(sums.begin(), sums.end(), sums.begin());
+    }
 
-	int pickIndex() {
-		int pos = (rand() % sums.back()) + 1;
-		return lower_bound(sums.begin(), sums.end(), pos) - sums.begin();
-	}
+    int pickIndex() {
+        int pos = (rand() % sums.back()) + 1;
+        return lower_bound(sums.begin(), sums.end(), pos) - sums.begin();
+    }
 };
 
 /**

@@ -2,31 +2,30 @@
 #include<vector>
 #include<numeric>
 
-using std::vector;
-using std::accumulate;
+using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º¸ßË¹ÇóºÍ¹«Ê½£¬Ê±¼ä O(n) 16 ms 74.93%£¬¿Õ¼ä O(1) 17.5 MB 58.55%
+// æˆ‘çš„è§£æ³•ä¸€ï¼šé«˜æ–¯æ±‚å’Œå…¬å¼ï¼Œæ—¶é—´ O(n) 16 ms 74.93%ï¼Œç©ºé—´ O(1) 17.5 MB 58.55%
 class Solution {
 public:
-	int missingNumber(vector<int>& nums) {
-		int n = nums.size();
-		int expectedSum = (1 + n) * n / 2;
-		int realSum = accumulate(nums.begin(), nums.end(), 0);
-		return expectedSum - realSum;
-	}
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        int expectedSum = (1 + n) * n / 2;
+        int realSum = accumulate(nums.begin(), nums.end(), 0);
+        return expectedSum - realSum;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£ºÎ»ÔËËã-Òì»ò£¬Ê±¼ä O(n) 12 ms 93.25%£¬¿Õ¼ä O(1) 17.4 MB 91.53%
+// æˆ‘çš„è§£æ³•äºŒï¼šä½è¿ç®—-å¼‚æˆ–ï¼Œæ—¶é—´ O(n) 12 ms 93.25%ï¼Œç©ºé—´ O(1) 17.4 MB 91.53%
 class Solution {
 public:
-	int missingNumber(vector<int>& nums) {
-		int n = nums.size(), ret = 0;
-		for (int num : nums) {
-			ret ^= num;
-		}
-		for (int i = 0; i <= n; ++i) {
-			ret ^= i;
-		}
-		return ret;
-	}
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size(), ret = 0;
+        for (int num : nums) {
+            ret ^= num;
+        }
+        for (int i = 0; i <= n; ++i) {
+            ret ^= i;
+        }
+        return ret;
+    }
 };

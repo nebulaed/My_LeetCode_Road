@@ -1,146 +1,147 @@
 #include<iostream>
+#include<climits>
 #include<vector>
 #include<algorithm>
 using namespace std;
 
-// ÎÒµÄ½â·¨Ò»£º¶¯Ì¬¹æ»®£¬Ê±¼ä 4 ms£¬¿Õ¼ä 7.6 MB
+// æˆ‘çš„è§£æ³•ä¸€ï¼šåŠ¨æ€è§„åˆ’ï¼Œæ—¶é—´ 4 msï¼Œç©ºé—´ 7.6 MB
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> dp(n + 1, 0);
-		for (int i = 1; i <= n; ++i) {
-			int minOne = INT_MAX;
-			for (int j = 1; j <= i; j *= 2) {
-				minOne = min(minOne, dp[i - j]);
-			}
-			dp[i] = minOne + 1;
-		}
-		return dp;
-	}
+    vector<int> countBits(int n) {
+        vector<int> dp(n + 1, 0);
+        for (int i = 1; i <= n; ++i) {
+            int minOne = INT_MAX;
+            for (int j = 1; j <= i; j *= 2) {
+                minOne = min(minOne, dp[i - j]);
+            }
+            dp[i] = minOne + 1;
+        }
+        return dp;
+    }
 };
 
-// ÎÒµÄ½â·¨¶ş£º¶¯Ì¬¹æ»®+ÊıÑ§£¬Ê±¼ä 8 ms£¬¿Õ¼ä 7.7 MB
+// æˆ‘çš„è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’+æ•°å­¦ï¼Œæ—¶é—´ 8 msï¼Œç©ºé—´ 7.7 MB
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> dp(n + 1, 0);
-		for (int i = 1; i <= n; ++i) {
-			dp[i] = dp[i - pow(2, static_cast<int>(log2(i)))] + 1;
-		}
-		return dp;
-	}
+    vector<int> countBits(int n) {
+        vector<int> dp(n + 1, 0);
+        for (int i = 1; i <= n; ++i) {
+            dp[i] = dp[i - pow(2, static_cast<int>(log2(i)))] + 1;
+        }
+        return dp;
+    }
 };
 
-// ¹Ù·½½â·¨Ò»£ºBrian KernighanËã·¨£¬Ê±¼äO(n log n) 4 ms£¬¿Õ¼äO(1) 7.8 MB
-// ¶ÔÓÚÈÎÒâÕûÊıx£¬Áîx = x & (x - 1)£¬¸ÃËã·¨½«xµÄ¶ş½øÖÆ±íÊ¾µÄ×îºóÒ»¸ö1±ä³É0¡£¶ÔxÖØ¸´¸Ã²Ù×÷£¬Ö±µ½x±ä³É0£¬²Ù×÷´ÎÊı¼´ÎªxµÄÒ»±ÈÌØÊı¡£
+// å®˜æ–¹è§£æ³•ä¸€ï¼šBrian Kernighanç®—æ³•ï¼Œæ—¶é—´O(n log n) 4 msï¼Œç©ºé—´O(1) 7.8 MB
+// å¯¹äºä»»æ„æ•´æ•°xï¼Œä»¤x = x & (x - 1)ï¼Œè¯¥ç®—æ³•å°†xçš„äºŒè¿›åˆ¶è¡¨ç¤ºçš„æœ€åä¸€ä¸ª1å˜æˆ0ã€‚å¯¹xé‡å¤è¯¥æ“ä½œï¼Œç›´åˆ°xå˜æˆ0ï¼Œæ“ä½œæ¬¡æ•°å³ä¸ºxçš„ä¸€æ¯”ç‰¹æ•°ã€‚
 class Solution {
 private:
-	int countOnes(int x) {
-		int ones = 0;
-		while (x > 0) {
-			x &= (x - 1);
-			++ones;
-		}
-		return ones;
-	}
+    int countOnes(int x) {
+        int ones = 0;
+        while (x > 0) {
+            x &= (x - 1);
+            ++ones;
+        }
+        return ones;
+    }
 public:
-	vector<int> countBits(int n) {
-		vector<int> bits(n + 1, 0);
-		for (int i = 0; i <= n; ++i) {
-			bits[i] = countOnes(i);
-		}
-		return bits;
-	}
+    vector<int> countBits(int n) {
+        vector<int> bits(n + 1, 0);
+        for (int i = 0; i <= n; ++i) {
+            bits[i] = countOnes(i);
+        }
+        return bits;
+    }
 };
 
-// ¹Ù·½½â·¨¶ş£º¶¯Ì¬¹æ»®¡ª¡ª×î¸ßÓĞĞ§Î»£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(1) 7.7 MB
-// Ë¼Â·£ºµ±¼ÆËãiµÄÒ»±ÈÌØÊıÊ±£¬Èô´æÔÚ0<=j<i£¬jµÄÒ»±ÈÌØÊıÒÑÖª£¬ÇÒiºÍjÏà±È£¬iµÄ¶ş½øÖÆ±íÊ¾Ö»¶àÁËÒ»¸ö1£¬Ôò¿É¿ìËÙµÃµ½iµÄÒ»±ÈÌØÊı
-// Áîbits[i]±íÊ¾iµÄÒ»±ÈÌØÊı£¬ÓĞbits[i] = bits[j] + 1
-// ¶ÔÕıÕûÊıx£¬ÈôÖªµÀ×î´óµÄÕıÕûÊıy£¬Ê¹µÃy<=xÇÒyÊÇ2µÄÕûÊı´ÎÃİ£¬ÔòyµÄ¶ş½øÖÆ±íÊ¾ÖĞÖ»ÓĞ×î¸ßÎ»ÊÇ1£¬ÆäÓà¶¼Îª0£¬y³ÆÎªxµÄ×î¸ßÓĞĞ§Î»¡£
-// Áîz = x - y£¬ÏÔÈ»0<=z<x£¬Ôòbits[x] = bits[z] + 1
-// Ò»¸öÕıÕûÊıÊÇ²»ÊÇ2µÄÕûÊı´ÎÃİ£¬¿ÉÒÔÍ¨¹ıy&(y-1) == 0ÅĞ¶Ï
-// ÓÃhighBit±íÊ¾µ±Ç°Êı×î¸ßÓĞĞ§Î»£¬±éÀú´Ó1µ½nµÄÃ¿¸öÕıÕûÊıi£¬½øĞĞÈçÏÂ²Ù×÷
-// 1.Èôi&(i-1)==0£¬ÔòÁîhighBit = i£¬¸üĞÂµ±Ç°×î¸ßÓĞĞ§Î»
-// 2.Èôbits[i]±Èbits[i-highBit]¶à1£¬ÓÉÓÚÊÇ´ÓĞ¡µ½´ó±éÀú£¬¹Êbits[i-highBit]ÒÑÖª£¬Áîbits[i] = bits[i-highBit] + 1
+// å®˜æ–¹è§£æ³•äºŒï¼šåŠ¨æ€è§„åˆ’â€”â€”æœ€é«˜æœ‰æ•ˆä½ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(1) 7.7 MB
+// æ€è·¯ï¼šå½“è®¡ç®—içš„ä¸€æ¯”ç‰¹æ•°æ—¶ï¼Œè‹¥å­˜åœ¨0<=j<iï¼Œjçš„ä¸€æ¯”ç‰¹æ•°å·²çŸ¥ï¼Œä¸”iå’Œjç›¸æ¯”ï¼Œiçš„äºŒè¿›åˆ¶è¡¨ç¤ºåªå¤šäº†ä¸€ä¸ª1ï¼Œåˆ™å¯å¿«é€Ÿå¾—åˆ°içš„ä¸€æ¯”ç‰¹æ•°
+// ä»¤bits[i]è¡¨ç¤ºiçš„ä¸€æ¯”ç‰¹æ•°ï¼Œæœ‰bits[i] = bits[j] + 1
+// å¯¹æ­£æ•´æ•°xï¼Œè‹¥çŸ¥é“æœ€å¤§çš„æ­£æ•´æ•°yï¼Œä½¿å¾—y<=xä¸”yæ˜¯2çš„æ•´æ•°æ¬¡å¹‚ï¼Œåˆ™yçš„äºŒè¿›åˆ¶è¡¨ç¤ºä¸­åªæœ‰æœ€é«˜ä½æ˜¯1ï¼Œå…¶ä½™éƒ½ä¸º0ï¼Œyç§°ä¸ºxçš„æœ€é«˜æœ‰æ•ˆä½ã€‚
+// ä»¤z = x - yï¼Œæ˜¾ç„¶0<=z<xï¼Œåˆ™bits[x] = bits[z] + 1
+// ä¸€ä¸ªæ­£æ•´æ•°æ˜¯ä¸æ˜¯2çš„æ•´æ•°æ¬¡å¹‚ï¼Œå¯ä»¥é€šè¿‡y&(y-1) == 0åˆ¤æ–­
+// ç”¨highBitè¡¨ç¤ºå½“å‰æ•°æœ€é«˜æœ‰æ•ˆä½ï¼Œéå†ä»1åˆ°nçš„æ¯ä¸ªæ­£æ•´æ•°iï¼Œè¿›è¡Œå¦‚ä¸‹æ“ä½œ
+// 1.è‹¥i&(i-1)==0ï¼Œåˆ™ä»¤highBit = iï¼Œæ›´æ–°å½“å‰æœ€é«˜æœ‰æ•ˆä½
+// 2.è‹¥bits[i]æ¯”bits[i-highBit]å¤š1ï¼Œç”±äºæ˜¯ä»å°åˆ°å¤§éå†ï¼Œæ•…bits[i-highBit]å·²çŸ¥ï¼Œä»¤bits[i] = bits[i-highBit] + 1
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> dp(n + 1, 0);
-		int highBit = 0;
-		for (int i = 1; i <= n; ++i) {
-			if (i & (i - 1) == 0) {
-				highBit = i;
-			}
-			dp[i] = dp[i - highBit] + 1;
-		}
-		return dp;
-	}
+    vector<int> countBits(int n) {
+        vector<int> dp(n + 1, 0);
+        int highBit = 0;
+        for (int i = 1; i <= n; ++i) {
+            if (i & (i - 1) == 0) {
+                highBit = i;
+            }
+            dp[i] = dp[i - highBit] + 1;
+        }
+        return dp;
+    }
 };
 
-// ¹Ù·½½â·¨Èı£º¶¯Ì¬¹æ»®¡ª¡ª×îµÍÓĞĞ§Î»£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(1) 7.7 MB
-// ¶ÔÕıÕûÊıx£¬½«Æä¶ş½øÖÆÓÒÒÆÒ»Î»£¬µÃµ½int(x/2)£¬Èôbits(int(x/2))£¬Ôò¿ÉÖªµÀbits[x]:
-// 1.ÈôxÊÇÅ¼Êı£¬bits[x] = bits[int(x/2)]
-// 2.ÈôxÊÇÆæÊı£¬bits[x] = bits[int(x/2)] + 1
-// ÕâÁ½ÖÖÇé¿ö¿ÉÒÔºÏ²¢³Ébits[x] = bits[int(x/2)] + x % 2
-// ÓÃ¶ş½øÖÆËã·¨¼´bits[x] = bits[x>>1] + (x & 1)
+// å®˜æ–¹è§£æ³•ä¸‰ï¼šåŠ¨æ€è§„åˆ’â€”â€”æœ€ä½æœ‰æ•ˆä½ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(1) 7.7 MB
+// å¯¹æ­£æ•´æ•°xï¼Œå°†å…¶äºŒè¿›åˆ¶å³ç§»ä¸€ä½ï¼Œå¾—åˆ°int(x/2)ï¼Œè‹¥bits(int(x/2))ï¼Œåˆ™å¯çŸ¥é“bits[x]:
+// 1.è‹¥xæ˜¯å¶æ•°ï¼Œbits[x] = bits[int(x/2)]
+// 2.è‹¥xæ˜¯å¥‡æ•°ï¼Œbits[x] = bits[int(x/2)] + 1
+// è¿™ä¸¤ç§æƒ…å†µå¯ä»¥åˆå¹¶æˆbits[x] = bits[int(x/2)] + x % 2
+// ç”¨äºŒè¿›åˆ¶ç®—æ³•å³bits[x] = bits[x>>1] + (x & 1)
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> dp(n + 1, 0);
-		for (int i = 1; i <= n; ++i) {
-			dp[i] = dp[i >> 1] + (i & 1);
-		}
-		return dp;
-	}
+    vector<int> countBits(int n) {
+        vector<int> dp(n + 1, 0);
+        for (int i = 1; i <= n; ++i) {
+            dp[i] = dp[i >> 1] + (i & 1);
+        }
+        return dp;
+    }
 };
 
-// ¹Ù·½½â·¨ËÄ£º¶¯Ì¬¹æ»®¡ª¡ª×îµÍÉèÖÃÎ»£¬Ê±¼äO(n) 4 ms£¬¿Õ¼äO(1) 7.6 MB
-// ¶¨ÒåÕıÕûÊıxµÄ×îµÍÉèÖÃÎ»Î»xµÄ¶ş½øÖÆ±íÊ¾ÖĞ×îµÍµÄ1ËùÔÚÎ»£¬Èç10µÄ¶ş½øÖÆ±íÊ¾ÊÇ1010£¬×îµÍÉèÖÃÎ»Îª2
-// Áîy = x & (x - 1)£¬ÔòyÎª½«xµÄ×îµÍÉèÖÃÎ»´Ó1±ä0ºóµÄÊı£¬ÏÔÈ»0<=y<x£¬bits[x] = bits[y] + 1¡£
+// å®˜æ–¹è§£æ³•å››ï¼šåŠ¨æ€è§„åˆ’â€”â€”æœ€ä½è®¾ç½®ä½ï¼Œæ—¶é—´O(n) 4 msï¼Œç©ºé—´O(1) 7.6 MB
+// å®šä¹‰æ­£æ•´æ•°xçš„æœ€ä½è®¾ç½®ä½ä½xçš„äºŒè¿›åˆ¶è¡¨ç¤ºä¸­æœ€ä½çš„1æ‰€åœ¨ä½ï¼Œå¦‚10çš„äºŒè¿›åˆ¶è¡¨ç¤ºæ˜¯1010ï¼Œæœ€ä½è®¾ç½®ä½ä¸º2
+// ä»¤y = x & (x - 1)ï¼Œåˆ™yä¸ºå°†xçš„æœ€ä½è®¾ç½®ä½ä»1å˜0åçš„æ•°ï¼Œæ˜¾ç„¶0<=y<xï¼Œbits[x] = bits[y] + 1ã€‚
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> dp(n + 1, 0);
-		for (int i = 1; i <= n; ++i) {
-			dp[i] = dp[i & (i - 1)] + 1;
-		}
-		return dp;
-	}
+    vector<int> countBits(int n) {
+        vector<int> dp(n + 1, 0);
+        for (int i = 1; i <= n; ++i) {
+            dp[i] = dp[i & (i - 1)] + 1;
+        }
+        return dp;
+    }
 };
 
-// Ö±½ÓÊ¹ÓÃÄÚÖÃº¯Êı£¬Ê±¼ä 0 ms 100%£¬¿Õ¼ä 7.8 MB 36.09%
+// ç›´æ¥ä½¿ç”¨å†…ç½®å‡½æ•°ï¼Œæ—¶é—´ 0 ms 100%ï¼Œç©ºé—´ 7.8 MB 36.09%
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> ret(n + 1);
-		for (int i = 0; i <= n; ++i) {
-			ret[i] = __builtin_popcount(i);
-		}
-		return ret;
-	}
+    vector<int> countBits(int n) {
+        vector<int> ret(n + 1);
+        for (int i = 0; i <= n; ++i) {
+            ret[i] = __builtin_popcount(i);
+        }
+        return ret;
+    }
 };
 
-// LeetCode 101½â·¨£ºÊ±¼ä 8 ms 24.79%£¬¿Õ¼ä 7.7 MB 50.06%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 8 ms 24.79%ï¼Œç©ºé—´ 7.7 MB 50.06%
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> dp(n + 1, 0);
-		for (int i = 1; i <= n; ++i) {
-			dp[i] = i & 1 ? dp[i - 1] + 1 : dp[i >> 1];
-		}
-		return dp;
-	}
+    vector<int> countBits(int n) {
+        vector<int> dp(n + 1, 0);
+        for (int i = 1; i <= n; ++i) {
+            dp[i] = i & 1 ? dp[i - 1] + 1 : dp[i >> 1];
+        }
+        return dp;
+    }
 };
 
 
-// LeetCode 101½â·¨£ºÊ±¼ä 4 ms 86.73%£¬¿Õ¼ä 7.8 MB 40.80%
+// LeetCode 101è§£æ³•ï¼šæ—¶é—´ 4 ms 86.73%ï¼Œç©ºé—´ 7.8 MB 40.80%
 class Solution {
 public:
-	vector<int> countBits(int n) {
-		vector<int> dp(n + 1, 0);
-		for (int i = 1; i <= n; ++i) {
-			dp[i] = dp[i & (i - 1)] + 1;
-		}
-		return dp;
-	}
+    vector<int> countBits(int n) {
+        vector<int> dp(n + 1, 0);
+        for (int i = 1; i <= n; ++i) {
+            dp[i] = dp[i & (i - 1)] + 1;
+        }
+        return dp;
+    }
 };
