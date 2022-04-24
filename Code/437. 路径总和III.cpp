@@ -34,19 +34,24 @@ private:
     int dfs(TreeNode* T, long long prefix){
         if (!T) return 0;
         int cnt = 0;
+        // 前缀和更新为加上当前节点值
         prefix += T->val;
+        // 检查该前缀和减去目标和的结果是否在prefixFreq中出现过，若出现过，满足要求的路径数目增加对应频次
         auto it = prefixFreq.find(prefix - targetSum);
         if (it != prefixFreq.end()){
             cnt += it->second;
         }
+        // 该前缀和出现次数+1
         ++prefixFreq[prefix];
         cnt += dfs(T->left, prefix);
         cnt += dfs(T->right, prefix);
+        // 该前缀和出现次数-1
         --prefixFreq[prefix];   //不用检查是否为0进行擦除，否则时间空间会更差
         return cnt;
     }
 public:
     int pathSum(TreeNode* root, int targetSum) {
+        // 预先存下路径和为0的情况出现1次
         prefixFreq.emplace(0, 1);
         this->targetSum = targetSum;
         return dfs(root, 0);
