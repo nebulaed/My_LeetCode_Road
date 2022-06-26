@@ -109,3 +109,20 @@ public:
         return ret;
     }
 };
+
+// 2022.6.26解法：时间 O(n) 20 ms 71.41%，空间 O(1) 23.4 MB 59.52%
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        size_t len = nums.size();
+        int left = 1, right = 1;
+        vector<int> ret(len, 1);
+        for (size_t i = 0; i < len; ++i) {
+            ret[i] *= left;
+            left *= nums[i];
+            ret[len - i - 1] *= right;
+            right *= nums[len - i - 1];
+        }
+        return ret;
+    }
+};

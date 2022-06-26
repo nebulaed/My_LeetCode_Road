@@ -116,3 +116,28 @@ public:
         return nullptr;
     }
 };
+
+// 2022.6.26解法：递归，时间O(n) 16 ms 67.29%，空间O(n) 13.9 MB 59.73%
+class Solution {
+private:
+    TreeNode* ptr{nullptr};
+
+    bool dfs(TreeNode* T, TreeNode* p, TreeNode* q) {
+        if (T == nullptr || ptr != nullptr) return false;
+        bool curr{false};
+        if (T == p || T == q){
+            curr = true;
+        }
+        bool leftSon = dfs(T->left, p, q);
+        bool rightSon = dfs(T->right, p, q);
+        if ((leftSon && rightSon) || (curr && (leftSon || rightSon))) {
+            ptr = T;
+        }
+        return curr || leftSon || rightSon;
+    }
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        dfs(root, p, q);
+        return ptr;
+    }
+};
