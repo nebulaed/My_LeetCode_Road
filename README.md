@@ -56,9 +56,12 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 50   | [Pow(x, n)](./Code/50.Pow(x,n).cpp)                             | Pow(x, n)                                               |   37.7%    |    Medium    |
 | 51   | [N皇后](./Code/51.N皇后.cpp)                                    | N-Queens                                                |   73.8%    |    Hard    |
 | 52   | [N皇后 II](./Code/52.N皇后II.cpp)                               | N-Queens II                                             |   82.2%    |    Hard    |
-| 53   | [最大子序和](./Code/53.最大子序和.cpp)                               | Maximum Subarray | 55.3% | Easy | 
+| 53   | [最大子序和](./Code/53.最大子序和.cpp)                               | Maximum Subarray | 55.3% | Easy |
+| 54   | [螺旋矩阵](./Code/54.螺旋矩阵.cpp)                               | Spiral Matrix                                             |   48.9%    |    Medium    |
 | 55   | [跳跃游戏](./Code/55.跳跃游戏.cpp)                               | Jump Game                                             |   43.4%    |    Medium    |
 | 56   | [合并区间](./Code/56.合并区间.cpp) | Merge Intervals | 47.4% | Medium |
+| 59   | [螺旋矩阵II](./Code/59.螺旋矩阵II.cpp) | Spiral Matrix II | 76.1% | Medium |
+| 61   | [旋转链表](./Code/61.旋转链表.cpp) | Rotate List | 41.7% | Medium |
 | 62   | [不同路径](./Code/62.不同路径.cpp) | Unique Paths | 66.5% | Medium |
 | 64   | [最小路径和](./Code/64.最小路径和.cpp) | Minimum Path Sum | 68.9% | Medium |
 | 66   | [加一](./Code/66.加一.cpp) | Plus One | 46.0% | Easy |
@@ -66,17 +69,19 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 69   | [Sqrt(x)](./Code/69.Sqrt(x).cpp) | Sqrt(x) | 39.1% | Easy |
 | 70   | [爬楼梯](./Code/70.爬楼梯.cpp) | Climbing Stairs | 53.2% | Easy |
 | 72   | [编辑距离](./Code/72.编辑距离.cpp) | Edit Distance | 61.5% | Hard |
+| 73   | [矩阵置零](./Code/73.矩阵置零.cpp) | Set Matrix Zeroes | 62.1% | Medium |
 | 75   | [颜色分类](./Code/75.颜色分类.cpp) | Sort Colors | 59.9% | Medium |
 | 76   | [最小覆盖子串](./Code/76.最小覆盖子串.cpp) | Minimum Window Substring | 43.0% | Hard |
 | 77   | [组合](./Code/77.组合.cpp) | Combinations | 76.9% | Medium |
 | 78   | [子集](./Code/78.子集.cpp) | Subsets | 80.2% | Medium |
-| 79   | [单词搜索](./Code/79.单词搜索.cpp) | Word Search | 45.9% | Medium | 
+| 79   | [单词搜索](./Code/79.单词搜索.cpp) | Word Search | 45.9% | Medium |
 | 81   | [搜索旋转排序数组II](./Code/81.搜索旋转排序数组II.cpp) | Search in Rotated Sorted Array II | 41.4% | Medium |
 | 82   | [删除排序链表中的重复元素II](./Code/82.删除排序链表中的重复元素II.cpp) | Remove Duplicates from Sorted List II | 53.3% | Medium |
 | 83   | [删除排序链表中的重复元素](./Code/83.删除排序链表中的重复元素.cpp) | Remove Duplicates from Sorted List | 53.7% | Easy |
 | 84   | [柱状图中最大的矩形](./Code/84.柱状图中最大的矩形.cpp) | Largest Rectangle in Histogram | 43.4% | Hard |
 | 85   | [最大矩形](./Code/85.最大矩形.cpp) | Maximal Rectangle | 51.7% | Hard |
 | 88   | [合并两个有序数组](./Code/88.合并两个有序数组.cpp) | Merge Sorted Array | 52.0% | Easy |
+| 89   | [格雷编码](./Code/89.格雷编码.cpp) | Gray Code | 74.8% | Medium |
 | 91   | [解码方法](./Code/91.解码方法.cpp) | Decode Ways | 31.6% | Medium |
 | 92   | [反转链表II](./Code/92.反转链表II.cpp) | Reverse Linked List II | 55.2% | Medium |
 | 93   | [复原IP地址](./Code/93.复原IP地址.cpp) | Restore IP Addresses | 55.6% | Medium |
@@ -88,6 +93,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 103  | [二叉树的锯齿形层序遍历](./Code/103.二叉树的锯齿形层序遍历.cpp) | Binary Tree Zigzag Level Order Traversal | 57.2% | Medium |
 | 104  | [二叉树的最大深度](./Code/104.二叉树的最大深度.cpp) | Maximum Depth of Binary Tree | 76.7% | Easy |
 | 105  | [从前序与中序遍历序列构造二叉树](./Code/105.从前序与中序遍历序列构造二叉树.cpp) | Construct Binary Tree from Preorder and Inorder Traversal | 70.6% | Medium |
+| 108  | [将有序数组转换为二叉搜索树](./Code/108.将有序数组转换为二叉搜索树.cpp) | Convert Sorted Array to Binary Search Tree | 76.9% | Easy |
 | 110  | [平衡二叉树](./Code/110.平衡二叉树.cpp) | Balanced Binary Tree | 56.8% | Easy |
 | 114  | [二叉树展开为链表](./Code/114.二叉树展开为链表.cpp) | Flatten Binary Tree to Linked List | 72.7% | Medium |
 | 121  | [买卖股票的最佳时机](./Code/121.买卖股票的最佳时机.cpp) | Best Time to Buy and Sell Stock | 57.4% | Easy |
@@ -123,6 +129,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 200  | [岛屿数量](./Code/200.岛屿数量.cpp) | Number of Islands | 56.3% | Medium |
 | 202  | [快乐数](./Code/202.快乐数.cpp) | Happy Number | 62.3% | Easy |
 | 204  | [计数质数](./Code/204.计数质数.cpp) | Count Primes | 37.7% | Medium |
+| 205  | [同构字符串](./Code/205.同构字符串.cpp) | Isomorphic Strings | 49.9% | Easy |
 | 206  | [反转链表](./Code/206.反转链表.cpp) | Reverse Linked List | 72.4% | Easy |
 | 207  | [课程表](./Code/207.课程表.cpp) | Course Schedule | 54.1% | Medium |
 | 208  | [实现Trie(前缀树)](./Code/208.实现Trie(前缀树).cpp) | Implement Trie (Prefix Tree) | 71.8% | Medium |
@@ -136,9 +143,13 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 225  | [用队列实现栈](./Code/225.用队列实现栈.cpp) | Implement Stack using Queues | 67.6% | Easy |
 | 226  | [翻转二叉树](./Code/226.翻转二叉树.cpp) | Invert Binary Tree | 78.8% | Easy |
 | 227  | [基本计算器II](./Code/227.基本计算器II.cpp) | Basic Calculator II | 43.8% | Medium |
+| 230  | [二叉搜索树中第K小的元素](./Code/230.二叉搜索树中第K小的元素.cpp) | Kth Smallest Element in a BST | 75.5% | Medium |
+| 231  | [2的幂](./Code/231.2的幂.cpp) | Power of Two | 50.5% | Easy |
 | 232  | [用栈实现队列](./Code/232.用栈实现队列.cpp) | Implement Queue using Stacks | 69.0% | Easy |
 | 234  | [回文链表](./Code/234.回文链表.cpp) | Palindrome Linked List | 50.2% | Easy |
+| 235  | [二叉搜索树的最近公共祖先](./Code/235.二叉搜索树的最近公共祖先.cpp) | Lowest Common Ancestor of a Binary Search Tree | 67.5% | Easy |
 | 236  | [二叉树的最近公共祖先](./Code/236.二叉树的最近公共祖先.cpp) | Lowest Common Ancestor of a Binary Tree | 68.3% | Medium |
+| 237  | [删除链表中的节点](./Code/237.删除链表中的节点.cpp) | Delete Node in a Linked List | 85.9% | Easy |
 | 238  | [除自身以外数组的乘积](./Code/238.除自身以外数组的乘积.cpp) | Product of Array Except Self | 72.5% | Medium |
 | 239  | [滑动窗口最大值](./Code/239.滑动窗口最大值.cpp) | Sliding Window Maximum | 49.7% | Hard |
 | 240  | [搜索二维矩阵II](./Code/240.搜索二维矩阵II.cpp) | Search a 2D Matrix II | 49.8% | Medium |
@@ -147,10 +158,13 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 253  | [会议室II](./Code/253.会议室II.cpp) | Meeting Rooms II | 50.5% | Medium |
 | 257  | [二叉树的所有路径](./Code/257.二叉树的所有路径.cpp) | Binary Tree Paths | 68.9% | Easy |
 | 260  | [只出现一次的数字III](./Code/260.只出现一次的数字III.cpp) | Single Number III | 74.0% | Medium |
+| 264  | [丑数II](./Code/264.丑数II.cpp) | Ugly Number II | 58.6% | Medium |
 | 268  | [丢失的数字](./Code/268.丢失的数字.cpp) | Missing Number | 65.3% | Easy |
 | 279  | [完全平方数](./Code/279.完全平方数.cpp) | Perfect Squares | 63.6% | Medium |
 | 283  | [移动零](./Code/283.移动零.cpp) | Move Zeroes | 64.0% | Easy |
 | 287  | [寻找重复数](./Code/287.寻找重复数.cpp) | Find the Duplicate Number | 65.5% | Medium |
+| 292  | [Nim游戏](./Code/292.Nim游戏.cpp) | Nim Game | 70.7% | Easy |
+| 293  | [翻转游戏](./Code/293.翻转游戏.cpp) | Flip Game | 71.9% | Easy |
 | 295  | [数据流的中位数](./Code/295.数据流的中位数.cpp) | Find Median from Data Stream | 52.3% | Hard |
 | 297  | [二叉树的序列化和反序列化](./Code/297.二叉树的序列化和反序列化.cpp) | Serialize and Deserialize Binary Tree | 56.4% | Hard |
 | 300  | [最长递增子序列](./Code/300.最长递增子序列.cpp) | Longest Increasing Subsequence | 52.2% | Medium |
@@ -160,6 +174,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 309  | [最佳买卖股票时机含冷冻期](./Code/309.最佳买卖股票时机含冷冻期.cpp) | Best Time to Buy and Sell Stock with Cooldown | 61.7% | Medium |
 | 310  | [最小高度树](./Code/310.最小高度树.cpp) | Minimum Height Trees | 38.4% | Medium |
 | 312  | [戳气球](./Code/312.戳气球.cpp) | Burst Balloons | 68.5% | Hard |
+| 313  | [超级丑数](./Code/313.超级丑数.cpp) | Super Ugly Number | 59.3% | Medium |
 | 318  | [最长单词长度乘积](./Code/318.最长单词长度乘积.cpp) | Maximum Product of Word Lengths | 73.8% | Medium |
 | 322  | [零钱兑换](./Code/322.零钱兑换.cpp) | Coin Change | 44.8% | Medium |
 | 326  | [3的幂](./Code/326.3的幂.cpp) | Power of Three | 50.5% | Easy |
@@ -170,8 +185,12 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 340  | [至多包含K个不同字符的最长子串](./Code/340.至多包含K个不同字符的最长子串.cpp) | Longest Substring with At Most K Distinct Characters | 49.8% | Medium |
 | 342  | [4的幂](./Code/342.4的幂.cpp) | Power of Four | 51.9% | Easy |
 | 343  | [整数拆分](./Code/343.整数拆分.cpp) | Integer Break | 61.2% | Medium |
+| 344  | [反转字符串](./Code/344.反转字符串.cpp) | Reverse String | 78.8% | Easy |
 | 347  | [前 K 个高频元素](./Code/347.前K个高频元素.cpp) | Top K Frequent Elements | 62.4% | Medium |
+| 373  | [查找和最小的K对数字](./Code/373.查找和最小的K对数字.cpp) | Find K Pairs with Smallest Sums | 41.4% | Medium |
 | 376  | [摆动序列](./Code/376.摆动序列.cpp) | Wiggle Subsequence | 46.9% | Medium |
+| 380  | [O(1)时间插入、删除和获取随机元素](./Code/380.O(1)时间插入、删除和获取随机元素.cpp) | Insert Delete GetRandom O(1) | 52.8% | Medium |
+| 381  | [O(1)时间插入、删除和获取随机元素-允许重复](./Code/381.O(1)时间插入、删除和获取随机元素-允许重复.cpp) | Insert Delete GetRandom O(1) - Duplicates allowed | 43.0% | Hard |
 | 382  | [链表随机节点](./Code/382.链表随机节点.cpp) | Linked List Random Node | 71.7% | Medium |
 | 384  | [打乱数组](./Code/384.打乱数组.cpp) | Shuffle an Array | 60.9% | Medium |
 | 394  | [字符串解码](./Code/394.字符串解码.cpp) | Decode String | 55.5% | Medium |
@@ -183,6 +202,8 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 416  | [分割等和子集](./Code/416.分割等和子集.cpp) | Partition Equal Subset Sum | 51.1% | Medium |
 | 417  | [太平洋大西洋水流问题](./Code/417.太平洋大西洋水流问题.cpp) | Pacific Atlantic Water Flow | 48.9% | Medium |
 | 435  | [无重叠区间](./Code/435.无重叠区间.cpp) | Non-overlapping Intervals | 50.7% | Medium |
+| 437  | [路径总和III](./Code/437.路径总和III.cpp) | Path Sum III | 56.2% | Medium |
+| 438  | [找到字符串中所有字母异位词](./Code/438.找到字符串中所有字母异位词.cpp) | Find All Anagrams in a String | 54.6% | Medium |
 | 445  | [两数相加II](./Code/445.两数相加II.cpp) | Add Two Numbers II | 59.4% | Medium |
 | 448  | [找到所有数组中消失的数字](./Code/448.找到所有数组中消失的数字.cpp) | Find All Numbers Disappeared in an Array | 65.1% | Easy |
 | 451  | [根据字符出现频率排序](./Code/451.根据字符出现频率排序.cpp) | Sort Characters By Frequency | 71.3% | Medium |
@@ -200,14 +221,19 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 504  | [七进制数](./Code/504.七进制数.cpp) | Base 7 | 50.3% | Easy |
 | 524  | [通过删除字母匹配到字典里最长单词](./Code/524.通过删除字母匹配到字典里最长单词.cpp) | Longest Word in Dictionary through Deleting | 49.7% | Medium |
 | 528  | [按权重随机选择](./Code/528.按权重随机选择.cpp) | Random Pick with Weight | 48.0% | Medium |
+| 538  | [把二叉搜索树转换为累加树](./Code/538.把二叉搜索树转换为累加树.cpp) | Convert BST to Greater Tree | 74.2% | Medium |
 | 540  | [有序数组中的单一元素](./Code/540.有序数组中的单一元素.cpp) | Single Element in a Sorted Array | 58.4% | Medium |
 | 542  | [01矩阵](./Code/542.01矩阵.cpp) | 01 Matrix | 45.8% | Medium |
 | 543  | [二叉树的直径](./Code/543.二叉树的直径.cpp) | Diameter of Binary Tree | 56.5% | Easy |
 | 547  | [省份数量](./Code/547.省份数量.cpp) | Number of Provinces | 61.9% | Medium |
+| 557  | [反转字符串中的单词III](./Code/557.反转字符串中的单词III.cpp) | Reverse Words in a String III | 74.2% | Easy |
 | 560  | [和为K的子数组](./Code/560.和为K的子数组.cpp) | Subarray Sum Equals K | 44.7% | Medium |
 | 566  | [重塑矩阵](./Code/566.重塑矩阵.cpp) | Reshape the Matrix | 67.5% | Easy |
+| 581  | [最短无序连续子数组](./Code/581.最短无序连续子数组.cpp) | Shortest Unsorted Continuous Subarray | 41.3% | Medium |
 | 583  | [两个字符串的删除操作](./Code/583.两个字符串的删除操作.cpp) | Delete Operation for Two Strings | 63.0% | Medium |
 | 605  | [种花问题](./Code/605.种花问题.cpp) | Can Place Flowers | 33.2% | Easy |
+| 617  | [合并二叉树](./Code/617.合并二叉树.cpp) | Merge Two Binary Trees | 79.0% | Easy |
+| 621  | [任务调度器](./Code/621.任务调度器.cpp) | Task Scheduler | 58.5% | Medium |
 | 633  | [平方数之和](./Code/633.平方数之和.cpp) | Sum of Square Numbers | 39.5% | Medium |
 | 646  | [最长数对链](./Code/646.最长数对链.cpp) | Maximum Length of Pair Chain | 58.0% | Medium |
 | 647  | [回文子串](./Code/647.回文子串.cpp) | Palindromic Substrings | 66.1% | Medium |
@@ -231,6 +257,7 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 922  | [按奇偶排序数组II](./Code/922.按奇偶排序数组II.cpp) | Sort Array By Parity II | 71.3% | Easy |
 | 932  | [漂亮数组](./Code/932.漂亮数组.cpp) | Beautiful Array | 63.8% | Medium |
 | 934  | [最短的桥](./Code/934.最短的桥.cpp) | Shortest Bridge | 47.1% | Medium |
+| 946  | [验证栈序列](./Code/946.验证栈序列.cpp) | Validate Stack Sequences | 63.9% | Medium |
 | 990  | [等式方程的可满足性](./Code/990.等式方程的可满足性.cpp) | Satisfiability of Equality Equations | 50.8% | Medium |
 | 1009  | [十进制整数的反码](./Code/1009.十进制整数的反码.cpp) | Complement of Base 10 Integer | 59.0% | Easy |
 | 1031  | [两个非重叠子数组的最大和](./Code/1031.两个非重叠子数组的最大和.cpp) | Maximum Sum of Two Non-Overlapping Subarrays | 58.3% | Medium |
