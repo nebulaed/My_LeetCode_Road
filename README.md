@@ -103,25 +103,33 @@ This is my record of practicing programming skills on LeetCode since 2021.
 | 128  | [最长连续序列](./Code/128.最长连续序列.cpp) | Longest Consecutive Sequence | 54.4% | Hard |
 | 129  | [求根节点到叶节点数字之和](./Code/129.求根节点到叶节点数字之和.cpp) | Sum Root to Leaf Numbers | 68.8% | Medium |
 | 130  | [被围绕的区域](./Code/130.被围绕的区域.cpp) | Surrounded Regions | 45.1% | Medium |
+| 131  | [分割回文串](./Code/131.分割回文串.cpp) | Palindrome Partitioning | 73.2% | Medium |
+| 134  | [加油站](./Code/134.加油站.cpp) | Gas Station | 53.4% | Medium |
 | 135  | [分发糖果](./Code/135.分发糖果.cpp) | Candy | 48.7% | Hard |
 | 136  | [只出现一次的数字](./Code/136.只出现一次的数字.cpp) | Single Number | 64.8% | Easy |
+| 138  | [复制带随机指针的链表](./Code/138.复制带随机指针的链表.cpp) | Copy List with Random Pointer | 67.1% | Medium |
 | 139  | [单词拆分](./Code/139.单词拆分.cpp) | Word Break | 42.9% | Medium |
+| 140  | [单词拆分II](./Code/140.单词拆分II.cpp) | Word Break II | 54.2% | Hard |
 | 141  | [环形链表](./Code/141.环形链表.cpp) | Linked List Cycle | 45.5% | Easy |
 | 142  | [环形链表 II](./Code/142.环形链表II.cpp) | Linked List Cycle II | 55.4% | Medium |
 | 146  | [LRU缓存机制](./Code/146.LRU缓存机制.cpp) | LRU Cache | 52.4% | Medium |
 | 147  | [对链表进行插入排序](./Code/147.对链表进行插入排序.cpp) | Insertion Sort List | 68.7% | Medium |
 | 148  | [排序链表](./Code/148.排序链表.cpp) | Sort List | 66.6% | Medium |
 | 149  | [直线上最多的点数](./Code/149.直线上最多的点数.cpp) | Max Points on a Line | 35.5% | Hard |
+| 150  | [逆波兰表达式求值](./Code/150.逆波兰表达式求值.cpp) | Evaluate Reverse Polish Notation | 53.8% | Medium |
 | 151  | [颠倒字符串中的单词](./Code/151.颠倒字符串中的单词.cpp) | Reverse Words in a String | 49.8% | Medium |
 | 152  | [乘积最大子数组](./Code/152.乘积最大子数组.cpp) | Maximum Product Subarray | 42.2% | Medium |
 | 153  | [寻找旋转排序数组中的最小值](./Code/153.寻找旋转排序数组中的最小值.cpp) | Find Minimum in Rotated Sorted Array | 56.8% | Medium |
 | 154  | [寻找旋转排序数组中的最小值II](./Code/154.寻找旋转排序数组中的最小值II.cpp) | Find Minimum in Rotated Sorted Array II | 53.1% | Hard |
 | 155  | [最小栈](./Code/155.最小栈.cpp) | Min Stack | 57.5% | Easy |
 | 160  | [相交链表](./Code/160.相交链表.cpp) | Intersection of Two Linked Lists | 61.8% | Easy |
+| 162  | [寻找峰值](./Code/162.寻找峰值.cpp) | Find Peak Element | 49.5% | Medium |
+| 163  | [缺失的区间](./Code/163.缺失的区间.cpp) | Missing Ranges | 34.9% | Easy |
 | 166  | [分数到小数](./Code/166.分数到小数.cpp) | Fraction to Recurring Decimal | 33.2% | Medium |
 | 167  | [两数之和II-输入有序数组](./Code/167.两数之和II-输入有序数组.cpp) | Two Sum II - Input Array Is Sorted | 58.7% | Easy |
 | 168  | [Excel表列名称](./Code/168.Excel表列名称.cpp) | Excel Sheet Column Title | 43.4% | Easy |
 | 169  | [多数元素](./Code/169.多数元素.cpp) | Majority Element | 66.5% | Easy |
+| 171  | [Excel表列序号](./Code/171.Excel表列序号.cpp) | Excel Sheet Column Number | 71.6% | Easy |
 | 172  | [阶乘后的零](./Code/172.阶乘后的零.cpp) | Factorial Trailing Zeroes | 44.8% | Medium |
 | 188  | [买卖股票的最佳时机IV](./Code/188.买卖股票的最佳时机IV.cpp) | Best Time to Buy and Sell Stock IV | 40.2% | Hard |
 | 190  | [颠倒二进制位](./Code/190.颠倒二进制位.cpp) | Reverse Bits | 70.4% | Easy |
