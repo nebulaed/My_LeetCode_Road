@@ -17,9 +17,9 @@ public:
         ListNode* dummyHead = new ListNode(-1, head);
         ListNode* temp = dummyHead, * p = dummyHead;
         while (checkout(temp, k)) {
-            vector<ListNode*> list;
+            vector<ListNode*> list(k, nullptr);
             for (int i = 0; i < k; ++i) {
-                list.push_back(p->next);
+                list[i] = p->next;
                 p = p->next;
             }
             temp->next = list[k - 1];
@@ -28,6 +28,7 @@ public:
                 list[i]->next = list[i - 1];
             }
             temp = list[0];
+            p = temp;
         }
         return dummyHead->next;
     }
